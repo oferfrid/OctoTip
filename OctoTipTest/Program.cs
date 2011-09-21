@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTipTest
+namespace OctoTip.OctoTipTest
 {
 	class Program
 	{
@@ -17,6 +17,9 @@ namespace OctoTipTest
 			Console.WriteLine("Hello World!");
 			
 			// TODO: Implement Functionality Here
+			
+			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
+			RP.TestJob();
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);

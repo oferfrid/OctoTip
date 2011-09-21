@@ -17,8 +17,11 @@ namespace OctoTip.OctoTipLib
 	/// </summary>
 	public class RobotJob
 	{
+		private enum ImpVarParams {Name=0, File=1, Type=2, DefaultValue=3, HasHeader=8};
+		
 		FileInfo ScriptFile;
 		List<RobotJobParameter> RobotJobParameters;
+		const string ImportVariableFunctionName = "ImportVariable";
 		
 		public RobotJob(FileInfo ScriptFile)
 		{
@@ -44,10 +47,52 @@ namespace OctoTip.OctoTipLib
 			this.RobotJobParameters = RobotJobParameters;
 		}
 		
-		public void TestParameters()
+		public void TestJob()
+		{
+			List<RobotJobParameter> ScriptParameters = ParseScriptParameters();
+		}
+		
+		private List<RobotJobParameter> ParseScriptParameters()
 		{
 			
+			
+			List<RobotJobParameter> ScriptParameters = new List<RobotJobParameter>();
+			
+			StreamReader sr = new StreamReader(ScriptFile.OpenRead());
+			while (!sr.EndOfStream)
+			{
+				
+				string Line = sr.ReadLine();
+				
+				
+				
+				
+				if (Line.Length > ImportVariableFunctionName.Length  && Line.Substring(0,ImportVariableFunctionName.Length).Equals(ImportVariableFunctionName))
+				{
+					
+					//ImportVariable(Var1#Var2,"C:\Documents and Settings\Tecan\Desktop\testVar.csv",0#1,"0.000000#0",0,1,0,1,1);
+					string[] parameters =  Line.Substring(ImportVariableFunctionName.Length+1, Line.Length - ImportVariableFunctionName.Length+1 - 4).Split(',');
+					string[] Names = parameters[(int)ImpVarParams.Name].Split('#');
+					string[] Types = parameters[(int)ImpVarParams.Type].Split('#');
+					
+					for (int i=0;i< Names.Length;i++)
+					{
+						
+						RobotJobParameter RP = new RobotJobParameter(Names[i], (RobotJobParameterType)Convert.ToInt32(Types[i]));
+						ScriptParameters.Add(RP);
+					}
+				}
+				
+				
+			}
+			
+			return ScriptParameters;
+			
+			
+			
 		}
+		
+		
 		
 		
 	}
@@ -60,6 +105,13 @@ namespace OctoTip.OctoTipLib
 		public string stringValue;
 		public double? doubleValue;
 		
+		public RobotJobParameter(string Name, RobotJobParameterType Type)
+		{
+			this.Name = Name;
+			this.Type = Type;
+			this.stringValue = string.Empty;
+			this.doubleValue = null;
+		}
 		public RobotJobParameter(string Name, RobotJobParameterType Type,string Value)
 		{
 			this.Name = Name;
@@ -69,7 +121,7 @@ namespace OctoTip.OctoTipLib
 		}
 		public RobotJobParameter(string Name, RobotJobParameterType Type,int Value)
 		{
-				this.Name = Name;
+			this.Name = Name;
 			this.Type = Type;
 			this.doubleValue = Value;
 			this.stringValue = string.Empty;
@@ -79,6 +131,6 @@ namespace OctoTip.OctoTipLib
 	}
 	
 	public enum RobotJobParameterType
-	{String,Number};
+	{String=1,Number=0};
 	
 }
