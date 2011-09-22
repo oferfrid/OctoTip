@@ -23,6 +23,9 @@ namespace OctoTip.OctoTipLib
 		List<RobotJobParameter> RobotJobParameters;
 		const string ImportVariableFunctionName = "ImportVariable";
 		
+		
+		#region RobotJob constructors
+
 		public RobotJob(FileInfo ScriptFile)
 		{
 			this.ScriptFile = ScriptFile;
@@ -46,6 +49,9 @@ namespace OctoTip.OctoTipLib
 			this.ScriptFile = ScriptFile;
 			this.RobotJobParameters = RobotJobParameters;
 		}
+		
+		
+		#endregion
 		
 		public void TestJob()
 		{
