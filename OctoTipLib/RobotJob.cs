@@ -9,21 +9,28 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace OctoTip.OctoTipLib
 {
 	/// <summary>
 	/// Description of RobotJob.
 	/// </summary>
+	[Serializable]
 	public class RobotJob : IComparable<RobotJob>
 	{
 		private enum ImpVarParams {Name=0, File=1, Type=2, DefaultValue=3, HasHeader=8};
 		
-		
+			
 		const string ImportVariableFunctionName = "ImportVariable";
 		
+		
 		private double _Priority;
-		public FileInfo ScriptFile;
+		
+		//public FileInfo ScriptFile;
+		
+		public string _ScriptFilePath ;
+		
 		public List<RobotJobParameter> RobotJobParameters;
 		
 		
@@ -34,20 +41,25 @@ namespace OctoTip.OctoTipLib
 			
 		}
 		
+		public RobotJob()
+		{
+			
+		}
+		
 		public RobotJob(string ScriptFilePath):this(new FileInfo(ScriptFilePath),0.5)
 		{
 			
 		}
 		
-		public RobotJob(FileInfo ScriptFile,double Priority)
-		{
-			this.ScriptFile = ScriptFile;
-			this.Priority = Priority;
-		}
-		
-		public RobotJob(string ScriptFilePath,double Priority):this(new FileInfo(ScriptFilePath),Priority)
+		public RobotJob(FileInfo ScriptFile,double Priority):this(ScriptFile.FullName,Priority)
 		{
 			
+		}
+		
+		public RobotJob(string ScriptFilePath,double Priority)
+		{
+			this.ScriptFilePath = ScriptFilePath;
+			this.Priority = Priority;
 		}
 		
 		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters):this(ScriptFile,RobotJobParameters,0.5)
@@ -55,16 +67,16 @@ namespace OctoTip.OctoTipLib
 			
 		}
 		
-		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters):this(new FileInfo(ScriptFilePath),RobotJobParameters,0.5)
+		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters)
 		{
-			
-		}
-		
-		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters,double Priority)
-		{
-			this.ScriptFile = ScriptFile;
+			this.ScriptFilePath = ScriptFilePath;
 			this.RobotJobParameters = RobotJobParameters;
 			this.Priority = Priority;
+		}
+		
+		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters,double Priority):this(ScriptFile.FullName,RobotJobParameters,0.5)
+		{
+			
 		}
 		
 		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters,double Priority):this(new FileInfo(ScriptFilePath),RobotJobParameters,Priority)
@@ -81,13 +93,26 @@ namespace OctoTip.OctoTipLib
 		{
 			get { return this.ScriptFile.Name; }
 		}
-
+		
 		
 		public string ScriptFilePath
 		{
-			get { return this.ScriptFile.FullName; }
+			get { return _ScriptFilePath; }
+			set { _ScriptFilePath = value;}
 		}
 
+	
+		public FileInfo ScriptFile
+		{
+			get { return new FileInfo(this.ScriptFilePath); }
+		}
+		
+		
+//		public string ScriptFilePath
+//		{
+//			get { return this.ScriptFile.FullName; }
+//		}
+		
 		public string RobotJobDisplayParameters
 		{
 			get {

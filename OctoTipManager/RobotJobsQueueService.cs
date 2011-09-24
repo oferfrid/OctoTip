@@ -19,7 +19,11 @@ namespace OctoTip.OctoTipManager
 	public interface IRobotJobsQueueService
 	{
 		[OperationContract]
-		string SayHello(string name);
+		string TestConnection(string name);
+		[OperationContract]
+		void AddRobotJob(RobotJob RJ);
+		[OperationContract]
+		string GetRobotStatus();
 	}
 
 
@@ -28,21 +32,39 @@ namespace OctoTip.OctoTipManager
 	/// </summary>
 	public class RobotJobsQueueService:IRobotJobsQueueService
 	{
-		 LogString logger;
+		
+		LogString logger;
 		public RobotJobsQueueService()
 		{
-			     logger = LogString.GetLogString(OctoTipManager.MainForm.LOG_NAME);
-			      logger.Add("RobotJobsQueueService started");
-            
+			logger = LogString.GetLogString(OctoTipManager.MainForm.LOG_NAME);
 		}
 		
-		public string SayHello(string name)
+		public string TestConnection(string name)
 		{
-			
-			
-			string response = string.Format("Hello, {0}", name);
-                logger.Add(response);
+			string response = string.Format("Test Connection from {0}", name);
+			logger.Add(response);
 			return string.Format(response);
+		}
+		
+		
+		public void AddRobotJob(RobotJob RJ)
+		{
+			OctoTip.OctoTipManager.MainForm.RJQ.InsertRobotJob(RJ);
+			string response = string.Format("Added new job, {0}", RJ.ScriptName );
+			
+			logger.Add(response);
+		}
+		
+		
+	
+		public string GetRobotStatus()
+		{
+			string RobotStatus = "OK";
+			string LogEntery = string.Format("GetRobotStatus, responed {0}", RobotStatus);
+			
+			logger.Add(LogEntery);
+			//TODO: DoIT!
+			return RobotStatus;
 		}
 		
 	}

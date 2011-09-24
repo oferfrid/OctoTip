@@ -123,4 +123,31 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>128, 17</value>
   </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>237, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButtonRefreshQueue.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPpZNRDsAgCEM5+m7u5nRasAR0JCZ+2EdBEJlR
+        nmvmgERfSxSQgEIi/euuRgctEAqQq4lAiGUqiAtAiIH5gCqyBzOwMqZVtN1B1t4WgNWWBijba0NzTRyN
+        2wV8TTwC/PoFzMhmwJvGcBLTcxAuhbMPmVW2b+QG2x4388lAlrsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonRemoveJob.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIQSURBVDhPlZLPSxRhHMZHbLVN8CB46Z/oWNAlqL3kQUl3
+        cQ9RtNIlUCSNELFLursu/XIPQaRSJGhCF03RanegLUWUnTbdmdIZzcScCdzKdZXN5vH7zky7rblGLzy8
+        n5nv8314f3HlrUPHjrSO3Chqyepwy3Dmez9mftYHoICzNw968S0GLD+11A9ZmTmAB8D8Rh8LKG7sCyjy
+        FEKhboTDPeD5B3j8MkzcvT+HHoL5WZ8Z0NAXWNvWEfuu4z1pbkPHs1ktLzMf87O+TIBGP8QfOiRq/rip
+        Y2hOzc/kY/5sAC1FUpMYnlXxnBpH4xqeTCwdyMyfs4VEGlA2TS1vA2OShsXUHt4CxkUNUoTH6lsetqv9
+        1hZoBZ/jcQj3fBCCfrwjvWq/mctUi0wKGIypCPt9kCtPwFVx3gqgJKXLh42OJiTqa5FocJuq/z3XIkm1
+        OAVPV5/BvOccUnfasFhzCiNHC09zxRQgd/nx87oH6StOkmuPnFSrw4dgpxGwcPY40persOJ24FZ5odN4
+        B6ooQqIQkUzM+NrbDulPppowJWCUDjkS8GO16iQqHa77HMeVcDa6zx0dSP0ylSaeUb5ii+a/WNagveGx
+        nnOIFPBlPYkoFaOKBoH0IvopP5OP+TPXaDefZM5YS9B9WiMfW30FXNkFb7X90u1Hhy5mVfQPtnvu9pbW
+        XHMYT5mGzTiM/5eNBewCmLTC3zTb61MAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>

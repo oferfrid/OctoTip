@@ -7,7 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.ServiceModel;
+using OctoTip.OctoTipLib;
+
 
 namespace OctoTip.OctoTipTest
 {
@@ -15,21 +16,23 @@ namespace OctoTip.OctoTipTest
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
-			
+			Console.WriteLine("start init RobotJobsQueueServiceClient!");
+			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
+			Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
+				
+				
 			
 			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
-			RP.TestJob();
-			OctoTipLib.RobotJobsQueue RJQ = new OctoTipLib.RobotJobsQueue();
-			RJQ.InsertRobotJob(RP);
+			Random r = new Random();
+			RP.Priority = (double)r.Next()/int.MaxValue;
+			RC.TestConnection("tt");
+			RC.AddRobotJob(RP);
 			
-			OctoTip.OctoTipLib.RobotJob RP1 = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript2.esc");
-			RJQ.InsertRobotJob(RP1);
-			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
-			RC.SayHello("OFER");
 			
-			Console.Write("Press any key to continue . . . ");
-			Console.ReadKey(true);
+			
+			//Console.Write("Press any key to continue . . . ");
+			//Console.ReadKey(true);
 		}
 	}
 }
+

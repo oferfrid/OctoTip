@@ -9,11 +9,12 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using System.Configuration;
-
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.Xml.Serialization;
 
 using OctoTip.OctoTipLib;
 
@@ -28,9 +29,9 @@ namespace OctoTip.OctoTipManager
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
 		
-		public RobotJobsQueue RJQ;
+		static public RobotJobsQueue RJQ;
 		ServiceHost host = null;
-		Uri baseAddress = new Uri("http://localhost:"+ ConfigurationManager.AppSettings["ListeningPort"] +"/hello");
+		Uri baseAddress = new Uri("http://localhost:"+ ConfigurationManager.AppSettings["ListeningPort"] +"/RobotJobsQueueListener");
 		
 		
 		public MainForm()
@@ -45,42 +46,56 @@ namespace OctoTip.OctoTipManager
 			// Add update callback delegate
 			myLogger.OnLogUpdate += new LogString.LogUpdateDelegate(this.LogUpdate);
 			
-			
-			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
-			
-			RP.RobotJobParameters = new List<RobotJobParameter>();
-			RP.RobotJobParameters.Add(new RobotJobParameter("rr",RobotJobParameterType.String,"Fdsgs"));
-			RP.RobotJobParameters.Add(new RobotJobParameter("N",RobotJobParameterType.Number,444));
-			RP.TestJob();
-			RJQ = new OctoTipLib.RobotJobsQueue();
-			RJQ.InsertRobotJob(RP);
-			
-			OctoTip.OctoTipLib.RobotJob RP1 = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript2.esc",0.7);
-			RJQ.InsertRobotJob(RP1);
-			
-			OctoTip.OctoTipLib.RobotJob RP2 = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript2.esc",0.1);
-			RJQ.InsertRobotJob(RP2);
-			
 			BindRobotJobsQueue();
 			
+			RJQ = new RobotJobsQueue();
 		}
+		
+		void MainFormLoad(object sender, EventArgs e)
+		{
+			txtLog.Text = myLogger.Log;
+		}
+		
+		
+		#region Private mathods
+		
+		
+		// Updates that come from a different thread can not directly change the
+		// TextBox component. This must be done through Invoke().
+		private delegate void UpdateDelegate();
+		private void LogUpdate()
+		{
+			Invoke(new UpdateDelegate(
+				delegate
+				{
+					txtLog.Text = myLogger.Log;
+					//TODO: Quick-and-dirty solution for updating the Q
+					BindRobotJobsQueue();
+				})
+			      );
+		}
+
+		
 		
 		private void BindRobotJobsQueue()
 		{
 
+			BindingSource BS = new BindingSource();
+			BS.DataSource =RJQ;
+			
+			
+			
 			dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
-			dataGridViewRobotJobsQueue.DataSource = RJQ;
+			dataGridViewRobotJobsQueue.DataSource = BS;
+			
 
-
-			//dataGridViewRobotJobsQueue.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+			dataGridViewRobotJobsQueue.Columns.Clear();
 			DataGridViewColumn column;
 			column = new DataGridViewTextBoxColumn();
 			column.DataPropertyName = "Priority";
 			column.Name = "Priority";
 			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
 			dataGridViewRobotJobsQueue.Columns.Add(column);
-
-
 
 			column = new DataGridViewTextBoxColumn();
 			column.DataPropertyName = "ScriptName";
@@ -103,6 +118,54 @@ namespace OctoTip.OctoTipManager
 			//dataGridViewRobotJobsQueue.AutoResizeColumns(  DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader);
 		}
 		
+		
+		private void WriteRobotJobQueue2File(string fileName)
+		{
+			XmlSerializer writer =	new System.Xml.Serialization.XmlSerializer(typeof(RobotJobsQueue));
+			System.IO.StreamWriter file = new System.IO.StreamWriter(fileName);
+			writer.Serialize(file,RJQ );
+			file.Close();
+		}
+		
+				private void LoadRobotJobQueueFile(string fileName)
+		{
+			XmlSerializer reader =	new XmlSerializer(typeof(RobotJobsQueue));
+			System.IO.StreamReader file = new System.IO.StreamReader(fileName);
+			//RobotJobsQueue S = new RobotJobsQueue();
+			RJQ = (RobotJobsQueue)reader.Deserialize(file);
+			BindRobotJobsQueue();
+		}
+		
+		#endregion
+		
+		
+
+		
+		
+		#region Event handeling
+		
+		void ToolStripButtonRefreshQueueClick(object sender, EventArgs e)
+		{
+			BindRobotJobsQueue();
+		}
+		
+		void ToolStripButtonRemoveJobClick(object sender, EventArgs e)
+		{
+			
+			
+			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
+			{
+				RJQ.Remove((RobotJob)Row.DataBoundItem);
+			}
+			BindRobotJobsQueue();
+			
+		}
+		void ClearLogButtonClick(object sender, EventArgs e)
+		{
+			myLogger.Clear();
+		}
+		
+		
 		void CheckBoxServerStateCheckedChanged(object sender, EventArgs e)
 		{
 			if (checkBoxServerState.Checked)
@@ -114,6 +177,29 @@ namespace OctoTip.OctoTipManager
 				smb.HttpGetEnabled = true;
 				smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
 				host.Description.Behaviors.Add(smb);
+				
+				
+				//debug me
+				ServiceDebugBehavior debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();
+
+				// if not found - add behavior with setting turned on
+				if (debug == null)
+				{
+					host.Description.Behaviors.Add(
+						new ServiceDebugBehavior() { IncludeExceptionDetailInFaults = true });
+				}
+				else
+				{
+					// make sure setting is turned ON
+					if (!debug.IncludeExceptionDetailInFaults)
+					{
+						debug.IncludeExceptionDetailInFaults = true;
+					}
+				}
+
+				
+				
+				
 
 				// Open the ServiceHost to start listening for messages. Since
 				// no endpoints are explicitly configured, the runtime will create
@@ -131,30 +217,29 @@ namespace OctoTip.OctoTipManager
 				checkBoxServerState.Text = "Start Server";
 			}
 		}
-		
-		
-		
-		void ClearLogButtonClick(object sender, EventArgs e)
+		void EToolStripMenuItemExitClick(object sender, EventArgs e)
 		{
-			 myLogger.Clear();
+			Application.Exit();
 		}
 		
-		void MainFormLoad(object sender, EventArgs e)
+		void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			 txtLog.Text = myLogger.Log;
+			WriteRobotJobQueue2File("temp.xml"	);
 		}
-		// Updates that come from a different thread can not directly change the
-        // TextBox component. This must be done through Invoke().
-        private delegate void UpdateDelegate();
-        private void LogUpdate()
-        {
-            Invoke(new UpdateDelegate(
-                delegate
-                {
-                    txtLog.Text = myLogger.Log;
-                })
-            );
-        }
+		
+		
+		void LoadToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			LoadRobotJobQueueFile("temp.xml");
+		}
+		#endregion
+		
+
+		
+		
+		
+		
+		
 	}
 	
 	
