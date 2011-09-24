@@ -21,10 +21,10 @@ namespace OctoTip.OctoTipTest
 			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
 			RP.TestJob();
 			OctoTipLib.RobotJobsQueue RJQ = new OctoTipLib.RobotJobsQueue();
-			RJQ.Enqueue(RP,0.9);
+			RJQ.InsertRobotJob(RP);
 			
 			OctoTip.OctoTipLib.RobotJob RP1 = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript2.esc");
-			RJQ.Enqueue(RP1,0.9);
+			RJQ.InsertRobotJob(RP1);
 			
 			
 			Console.Write("Press any key to continue . . . ");

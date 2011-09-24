@@ -15,71 +15,38 @@ namespace OctoTip.OctoTipLib
 	/// <summary>
 	/// Description of RobotJobsQueue.
 	/// </summary>
-	public class RobotJobsQueue:SortedList<double,RobotJob>
+	public class RobotJobsQueue:List<RobotJob>
 	{
 		
 		public RobotJobsQueue():base()
 		{
 			
 		}
-		/// <summary>
-		/// Adds an element to the PriorityQueue.
-		/// </summary>
-		/// <param name="RJ">RobotJob</param>
-		/// <param name="Priority">Priority , 0 first 1 end</param>
-		public void Enqueue(RobotJob RJ,double Priority)
+		
+		public RobotJob GetNextRobotJob()
 		{
-			if (Priority<0 || Priority >= 1)
-			{
-				throw new Exception ("Priority is [0,1)");
-			}
-
-			Priority = GetPriority(Priority);
-			base.Add(Priority,RJ);
+			this.Sort();
+			RobotJob RJ = this[0];
+			 this.RemoveAt(0);
+			 return RJ;
+			
 			
 		}
 		
 		
-		public void Enqueue(RobotJob RJ)
+		public void InsertRobotJob(RobotJob RJ)
 		{
-			Enqueue(RJ,0.5);
+		     int index = this.BinarySearch(RJ);
+        if (index < 0)
+        {
+            this.Insert(~index, RJ);
+        }
+        else
+        {
+        	this.Insert(index, RJ);
+        }
 		}
-		
-		private double GetPriority(double Priority)
-		{
-			if (this.ContainsKey(Priority))
-			{
-				// add the new after the last similer key
-				double[] Keys = new double[base.Count];
-				base.Keys.CopyTo(Keys,0);
-				for (int i=0;i<Keys.Length;i++)
-				{
-					if (Keys[i]==Priority)
-					{
-						if (i+1<Keys.Length)
-						{
-							Priority=(Keys[i]+Keys[i+1])/2.0;
-						}
-						else
-						{
-							Priority=(Keys[i]+1.0)/2.0;
-						}
-					}
-				}
-				
-				
-			}
-			return Priority;
-		}
-		/// <summary>
-		/// Removes the element from the head of the PriorityQueue.
-		/// </summary>
-		/// <returns>RobotJob</returns>
-		public RobotJob Dequeue()
-		{
-			RobotJob Rj = base[base.Keys[0]];
-			return Rj;
-		}
+	
 	}
 	
 	

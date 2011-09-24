@@ -15,43 +15,125 @@ namespace OctoTip.OctoTipLib
 	/// <summary>
 	/// Description of RobotJob.
 	/// </summary>
-	public class RobotJob
+	public class RobotJob : IComparable<RobotJob>
 	{
 		private enum ImpVarParams {Name=0, File=1, Type=2, DefaultValue=3, HasHeader=8};
 		
-		FileInfo ScriptFile;
-		List<RobotJobParameter> RobotJobParameters;
+		
 		const string ImportVariableFunctionName = "ImportVariable";
+		
+		private double _Priority;
+		public FileInfo ScriptFile;
+		public List<RobotJobParameter> RobotJobParameters;
 		
 		
 		#region RobotJob constructors
 
-		public RobotJob(FileInfo ScriptFile)
-		{
-			this.ScriptFile = ScriptFile;
-		}
-		
-		public RobotJob(string ScriptFilePath)
+		public RobotJob(FileInfo ScriptFile):this(ScriptFile,0.5)
 		{
 			
-			this.ScriptFile = new FileInfo(ScriptFilePath);
 		}
 		
-		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters)
+		public RobotJob(string ScriptFilePath):this(new FileInfo(ScriptFilePath),0.5)
 		{
 			
-			this.ScriptFile = new FileInfo(ScriptFilePath);
-			this.RobotJobParameters = RobotJobParameters;
 		}
 		
-		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters)
+		public RobotJob(FileInfo ScriptFile,double Priority)
+		{
+			this.ScriptFile = ScriptFile;
+			this.Priority = Priority;
+		}
+		
+		public RobotJob(string ScriptFilePath,double Priority):this(new FileInfo(ScriptFilePath),Priority)
+		{
+			
+		}
+		
+		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters):this(ScriptFile,RobotJobParameters,0.5)
+		{
+			
+		}
+		
+		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters):this(new FileInfo(ScriptFilePath),RobotJobParameters,0.5)
+		{
+			
+		}
+		
+		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters,double Priority)
 		{
 			this.ScriptFile = ScriptFile;
 			this.RobotJobParameters = RobotJobParameters;
+			this.Priority = Priority;
+		}
+		
+		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters,double Priority):this(new FileInfo(ScriptFilePath),RobotJobParameters,Priority)
+		{
+			
 		}
 		
 		
 		#endregion
+		
+		#region RobotJob Properties
+		
+		public string ScriptName
+		{
+			get { return this.ScriptFile.Name; }
+		}
+
+		
+		public string ScriptFilePath
+		{
+			get { return this.ScriptFile.FullName; }
+		}
+
+		public string RobotJobDisplayParameters
+		{
+			get {
+				string ParamView = string.Empty ;
+				if (!(RobotJobParameters==null))
+				{
+					foreach (RobotJobParameter RJP in RobotJobParameters)
+					{
+						if(RJP.Type == RobotJobParameterType.Number)
+						{
+							ParamView += RJP.Name + "(" + RJP.Type.ToString() + ")=" + RJP.doubleValue.ToString() + "\n";
+						}
+						else
+						{
+							ParamView += RJP.Name + "(" + RJP.Type.ToString() + ")=" + RJP.stringValue + "\n";
+						}
+					}
+				}
+				return ParamView;
+				
+				
+			}
+		}
+		
+		
+		
+		
+		public double Priority
+		{
+			get { return this._Priority; }
+			set {
+				if (Priority<0 || Priority >= 1)
+				{
+					throw new Exception ("Priority is [0,1)");
+				}
+				
+				this._Priority = value;
+			}
+		}
+		#endregion
+		
+		public int CompareTo(RobotJob RJ)
+		{
+			return this.Priority.CompareTo(RJ.Priority);
+		}
+		
 		
 		public void TestJob()
 		{
