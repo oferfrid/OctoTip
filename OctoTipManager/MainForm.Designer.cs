@@ -43,12 +43,17 @@ namespace OctoTip.OctoTipManager
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
 			this.dataGridViewRobotJobsQueue = new System.Windows.Forms.DataGridView();
+			this.checkBoxServerState = new System.Windows.Forms.CheckBox();
+			this.ClearLogButton = new System.Windows.Forms.Button();
+			this.txtLog = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitHorizontal)).BeginInit();
 			this.splitHorizontal.Panel1.SuspendLayout();
+			this.splitHorizontal.Panel2.SuspendLayout();
 			this.splitHorizontal.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitVertical)).BeginInit();
 			this.splitVertical.Panel1.SuspendLayout();
+			this.splitVertical.Panel2.SuspendLayout();
 			this.splitVertical.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotJobsQueue)).BeginInit();
 			this.SuspendLayout();
@@ -95,6 +100,11 @@ namespace OctoTip.OctoTipManager
 			// splitHorizontal.Panel1
 			// 
 			this.splitHorizontal.Panel1.Controls.Add(this.splitVertical);
+			// 
+			// splitHorizontal.Panel2
+			// 
+			this.splitHorizontal.Panel2.Controls.Add(this.ClearLogButton);
+			this.splitHorizontal.Panel2.Controls.Add(this.txtLog);
 			this.splitHorizontal.Size = new System.Drawing.Size(713, 484);
 			this.splitHorizontal.SplitterDistance = 386;
 			this.splitHorizontal.TabIndex = 2;
@@ -108,6 +118,10 @@ namespace OctoTip.OctoTipManager
 			// splitVertical.Panel1
 			// 
 			this.splitVertical.Panel1.Controls.Add(this.dataGridViewRobotJobsQueue);
+			// 
+			// splitVertical.Panel2
+			// 
+			this.splitVertical.Panel2.Controls.Add(this.checkBoxServerState);
 			this.splitVertical.Size = new System.Drawing.Size(713, 386);
 			this.splitVertical.SplitterDistance = 477;
 			this.splitVertical.TabIndex = 0;
@@ -121,6 +135,35 @@ namespace OctoTip.OctoTipManager
 			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(477, 386);
 			this.dataGridViewRobotJobsQueue.TabIndex = 0;
 			// 
+			// checkBoxServerState
+			// 
+			this.checkBoxServerState.Appearance = System.Windows.Forms.Appearance.Button;
+			this.checkBoxServerState.Location = new System.Drawing.Point(4, 359);
+			this.checkBoxServerState.Name = "checkBoxServerState";
+			this.checkBoxServerState.Size = new System.Drawing.Size(76, 24);
+			this.checkBoxServerState.TabIndex = 0;
+			this.checkBoxServerState.Text = "Start Server";
+			this.checkBoxServerState.UseVisualStyleBackColor = true;
+			this.checkBoxServerState.CheckedChanged += new System.EventHandler(this.CheckBoxServerStateCheckedChanged);
+			// 
+			// ClearLogButton
+			// 
+			this.ClearLogButton.Location = new System.Drawing.Point(613, 4);
+			this.ClearLogButton.Name = "ClearLogButton";
+			this.ClearLogButton.Size = new System.Drawing.Size(97, 23);
+			this.ClearLogButton.TabIndex = 1;
+			this.ClearLogButton.Text = "Clear Log";
+			this.ClearLogButton.UseVisualStyleBackColor = true;
+			this.ClearLogButton.Click += new System.EventHandler(this.ClearLogButtonClick);
+			// 
+			// txtLog
+			// 
+			this.txtLog.Location = new System.Drawing.Point(3, 3);
+			this.txtLog.Multiline = true;
+			this.txtLog.Name = "txtLog";
+			this.txtLog.Size = new System.Drawing.Size(604, 88);
+			this.txtLog.TabIndex = 0;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,18 +174,25 @@ namespace OctoTip.OctoTipManager
 			this.Controls.Add(this.menuStrip1);
 			this.Name = "MainForm";
 			this.Text = "OctoTipManager";
+			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.splitHorizontal.Panel1.ResumeLayout(false);
+			this.splitHorizontal.Panel2.ResumeLayout(false);
+			this.splitHorizontal.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitHorizontal)).EndInit();
 			this.splitHorizontal.ResumeLayout(false);
 			this.splitVertical.Panel1.ResumeLayout(false);
+			this.splitVertical.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitVertical)).EndInit();
 			this.splitVertical.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotJobsQueue)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox txtLog;
+		private System.Windows.Forms.Button ClearLogButton;
+		private System.Windows.Forms.CheckBox checkBoxServerState;
 		private System.Windows.Forms.DataGridView dataGridViewRobotJobsQueue;
 		private System.Windows.Forms.SplitContainer splitVertical;
 		private System.Windows.Forms.SplitContainer splitHorizontal;

@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.ServiceModel;
 
 namespace OctoTip.OctoTipTest
 {
@@ -16,7 +17,6 @@ namespace OctoTip.OctoTipTest
 		{
 			Console.WriteLine("Hello World!");
 			
-			// TODO: Implement Functionality Here
 			
 			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
 			RP.TestJob();
@@ -25,7 +25,8 @@ namespace OctoTip.OctoTipTest
 			
 			OctoTip.OctoTipLib.RobotJob RP1 = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript2.esc");
 			RJQ.InsertRobotJob(RP1);
-			
+			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
+			RC.SayHello("OFER");
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
