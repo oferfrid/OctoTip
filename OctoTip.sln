@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipLib", "OctoTipLib\Oc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipManager", "OctoTipManager\OctoTipManager.csproj", "{C5E67D8F-83DF-4C9F-A7A9-5E24CB131530}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipExperimentControl", "OctoTipExperimentControl\OctoTipExperimentControl.csproj", "{8D2FBCE2-C42F-4176-AB36-0035560298BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -36,5 +38,13 @@ Global
 		{C5E67D8F-83DF-4C9F-A7A9-5E24CB131530}.Release|x86.ActiveCfg = Release|x86
 		{C5E67D8F-83DF-4C9F-A7A9-5E24CB131530}.Release|BPC.Build.0 = Release|x86
 		{C5E67D8F-83DF-4C9F-A7A9-5E24CB131530}.Release|BPC.ActiveCfg = Release|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Debug|x86.Build.0 = Debug|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Debug|x86.ActiveCfg = Debug|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Debug|BPC.Build.0 = Debug|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Debug|BPC.ActiveCfg = Debug|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Release|x86.Build.0 = Release|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Release|x86.ActiveCfg = Release|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Release|BPC.Build.0 = Release|x86
+		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Release|BPC.ActiveCfg = Release|x86
 	EndGlobalSection
 EndGlobal

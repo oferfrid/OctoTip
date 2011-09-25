@@ -36,7 +36,6 @@ namespace OctoTip.OctoTipManager
 		
 		public MainForm()
 		{
-			
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
@@ -59,7 +58,6 @@ namespace OctoTip.OctoTipManager
 		
 		#region Private mathods
 		
-		
 		// Updates that come from a different thread can not directly change the
 		// TextBox component. This must be done through Invoke().
 		private delegate void UpdateDelegate();
@@ -70,24 +68,19 @@ namespace OctoTip.OctoTipManager
 				{
 					txtLog.Text = myLogger.Log;
 					//TODO: Quick-and-dirty solution for updating the Q
-					BindRobotJobsQueue();
+					UpdateRobotJobsQueue();
 				})
 			      );
 		}
 
-		
-		
 		private void BindRobotJobsQueue()
 		{
 
 			BindingSource BS = new BindingSource();
 			BS.DataSource =RJQ;
 			
-			
-			
 			dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
 			dataGridViewRobotJobsQueue.DataSource = BS;
-			
 
 			dataGridViewRobotJobsQueue.Columns.Clear();
 			DataGridViewColumn column;
@@ -118,6 +111,15 @@ namespace OctoTip.OctoTipManager
 			//dataGridViewRobotJobsQueue.AutoResizeColumns(  DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader);
 		}
 		
+		private void UpdateRobotJobsQueue()
+		{
+			WriteRobotJobQueue2File("RobotJobsQueueState.xml");
+			BindingSource BS = new BindingSource();
+			BS.DataSource =RJQ;
+			dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
+			dataGridViewRobotJobsQueue.DataSource = BS;
+		}
+		
 		
 		private void WriteRobotJobQueue2File(string fileName)
 		{
@@ -127,26 +129,23 @@ namespace OctoTip.OctoTipManager
 			file.Close();
 		}
 		
-				private void LoadRobotJobQueueFile(string fileName)
+		private void LoadRobotJobQueueFile(string fileName)
 		{
 			XmlSerializer reader =	new XmlSerializer(typeof(RobotJobsQueue));
 			System.IO.StreamReader file = new System.IO.StreamReader(fileName);
 			//RobotJobsQueue S = new RobotJobsQueue();
 			RJQ = (RobotJobsQueue)reader.Deserialize(file);
-			BindRobotJobsQueue();
+			UpdateRobotJobsQueue();
 		}
 		
 		#endregion
-		
-		
-
 		
 		
 		#region Event handeling
 		
 		void ToolStripButtonRefreshQueueClick(object sender, EventArgs e)
 		{
-			BindRobotJobsQueue();
+			UpdateRobotJobsQueue();
 		}
 		
 		void ToolStripButtonRemoveJobClick(object sender, EventArgs e)
@@ -157,7 +156,7 @@ namespace OctoTip.OctoTipManager
 			{
 				RJQ.Remove((RobotJob)Row.DataBoundItem);
 			}
-			BindRobotJobsQueue();
+			UpdateRobotJobsQueue();
 			
 		}
 		void ClearLogButtonClick(object sender, EventArgs e)
@@ -179,7 +178,7 @@ namespace OctoTip.OctoTipManager
 				host.Description.Behaviors.Add(smb);
 				
 				
-				//debug me
+				
 				ServiceDebugBehavior debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();
 
 				// if not found - add behavior with setting turned on
@@ -196,9 +195,6 @@ namespace OctoTip.OctoTipManager
 						debug.IncludeExceptionDetailInFaults = true;
 					}
 				}
-
-				
-				
 				
 
 				// Open the ServiceHost to start listening for messages. Since
@@ -233,12 +229,6 @@ namespace OctoTip.OctoTipManager
 			LoadRobotJobQueueFile("temp.xml");
 		}
 		#endregion
-		
-
-		
-		
-		
-		
 		
 	}
 	

@@ -108,11 +108,6 @@ namespace OctoTip.OctoTipLib
 		}
 		
 		
-//		public string ScriptFilePath
-//		{
-//			get { return this.ScriptFile.FullName; }
-//		}
-		
 		public string RobotJobDisplayParameters
 		{
 			get {

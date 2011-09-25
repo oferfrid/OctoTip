@@ -17,7 +17,11 @@ namespace OctoTip.OctoTipTest
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("start init RobotJobsQueueServiceClient!");
+			
+			
 			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
+			
+			
 			Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
 				
 				
@@ -25,10 +29,10 @@ namespace OctoTip.OctoTipTest
 			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
 			Random r = new Random();
 			RP.Priority = (double)r.Next()/int.MaxValue;
-			RC.TestConnection("tt");
+			//RC.TestConnection("tt");
 			RC.AddRobotJob(RP);
 			
-			
+		
 			
 			//Console.Write("Press any key to continue . . . ");
 			//Console.ReadKey(true);
