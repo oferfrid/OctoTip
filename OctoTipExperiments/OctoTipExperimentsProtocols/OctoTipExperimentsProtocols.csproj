@@ -1,22 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
-    <ProjectGuid>{8D2FBCE2-C42F-4176-AB36-0035560298BF}</ProjectGuid>
+    <ProjectGuid>{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>OctoTip.OctoTipExperimentControl</RootNamespace>
-    <AssemblyName>OctoTip.OctoTipExperimentControl</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>OctoTip.OctoTipExperiments.Protocols</RootNamespace>
+    <AssemblyName>OctoTip.OctoTipExperiments.Protocols</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
@@ -35,43 +44,23 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs" />
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="EvoProtocol.cs" />
+    <Compile Include="MICProtocol.cs" />
+    <Compile Include="MPNProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProtocolUserControl.cs" />
-    <Compile Include="ProtocolUserControl.Designer.cs">
-      <DependentUpon>ProtocolUserControl.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProtocolUserControl.resx">
-      <DependentUpon>ProtocolUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OctoTipExperiments\OctoTipExperimentsBase\OctoTipExperimentsBase.csproj">
+    <ProjectReference Include="..\OctoTipExperimentsBase\OctoTipExperimentsBase.csproj">
       <Project>{54AF0F6B-C812-4FA6-A6E5-EC55D5D12A6A}</Project>
       <Name>OctoTipExperimentsBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OctoTipExperiments\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj">
+    <ProjectReference Include="..\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj">
       <Project>{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}</Project>
       <Name>OctoTipExperimentsCore</Name>
     </ProjectReference>
