@@ -14,6 +14,7 @@ using System.IO;
 
 using OctoTip.OctoTipExperiments.Interfaces;
 using OctoTip.OctoTipExperiments.Attributes;
+using OctoTip.OctoTipExperiments.Base;
 
 namespace OctoTip.OctoTipExperiments.Core
 {
@@ -110,6 +111,12 @@ namespace OctoTip.OctoTipExperiments.Core
 			// conver the list of Objects to an instantiated list of IProtocols
 			return ProtocolList.ConvertAll<IProtocol>(delegate(Type t) { return Activator.CreateInstance(t) as IProtocol; });
 		}
+		
+		public static Protocol GetProtocol(Type ProtocolType)
+		{
+			return Activator.CreateInstance(ProtocolType) as Protocol;
+		}
+		
 		
 		static List<Type> GetAvalbleProtocolPlugIns(List<Assembly> assemblies)
 		{

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using OctoTipExperimentControl;
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.OctoTipExperiments.Attributes;
+using OctoTip.OctoTipExperiments.Base;
 
 namespace OctoTip.OctoTipExperimentControl
 {
@@ -22,6 +23,7 @@ namespace OctoTip.OctoTipExperimentControl
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		
 		public MainForm()
 		{
 			//
@@ -34,17 +36,10 @@ namespace OctoTip.OctoTipExperimentControl
 			//
 		}
 		
-		
-		
-		
-		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			
 			AddAvailableProtocols();
-			
-			
 		}
 		
 		#region Private function
@@ -67,25 +62,24 @@ namespace OctoTip.OctoTipExperimentControl
 				BTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 				BTN.ToolTipText = ((ProtocolAttribute)ProtocolData.GetCustomAttributes(typeof(ProtocolAttribute), true)[0]).Description;
 				BTN.Click += new System.EventHandler(this.AvailableProtocolClick);
+				BTN.Tag = ProtocolData;
 				
 				this.ProtocoltoolStrip.Items.Add(BTN);
             }
 		}
 		
-		private void AddProtocolUserControl(string ProtocolName)
+		private void AddProtocolUserControl(Type ProtocolType)
 		{
-		
 				
 				if (Protocolpanel.Controls.Count==0)
 				{
-					ProtocolUserControl P	 = new ProtocolUserControl(ProtocolName);
+					ProtocolUserControl P	 = new ProtocolUserControl(ProtocolType);
 					this.Protocolpanel.Controls.Add(P);
 				}
 				else
 				{
 					ProtocolUserControl LastProtocolUserControl = (ProtocolUserControl)Protocolpanel.Controls[Protocolpanel.Controls.Count-1];
-					ProtocolUserControl newProtocolUserControl = new ProtocolUserControl(ProtocolName);
-					//newProtocolUserControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+					ProtocolUserControl newProtocolUserControl = new ProtocolUserControl(ProtocolType);
 					newProtocolUserControl.Location = new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
 					Protocolpanel.Controls.Add(newProtocolUserControl);
 				}
@@ -96,29 +90,36 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		#endregion
 		
+		
+		
+		
 		#region Event Handeling
-		void ToolStripButtonRefreshProtocolsClick(object sender, EventArgs e)
+			void ToolStripButtonRefreshProtocolsClick(object sender, EventArgs e)
 		{
 			AddAvailableProtocols();
 		}
 		
 		
-		
-		
-		
-		
 		void AvailableProtocolClick(object sender, EventArgs e)
 		{
+			Type ProtocolType;
+			if (!(((ToolStripButton)sender).Tag==null))
+			{
+				ProtocolType = (Type)((ToolStripButton)sender).Tag;
+				AddProtocolUserControl(ProtocolType);
+			}
 			
-			
-			AddProtocolUserControl(((ToolStripButton)sender).Text);
 		}
 		
-		#endregion
-		
+		//TODO:Delete!
 		void Protocol1Click(object sender, EventArgs e)
 		{
 			
 		}
+		
+		
+		#endregion
+		
+		
 	}
 }

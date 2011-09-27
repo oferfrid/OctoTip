@@ -56,10 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OctoTipExperimentsBase\OctoTipExperimentsBase.csproj">
-      <Project>{54AF0F6B-C812-4FA6-A6E5-EC55D5D12A6A}</Project>
-      <Name>OctoTipExperimentsBase</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj">
       <Project>{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}</Project>
       <Name>OctoTipExperimentsCore</Name>

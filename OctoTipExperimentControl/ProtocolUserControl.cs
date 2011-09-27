@@ -12,6 +12,8 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using OctoTip.OctoTipExperiments.Base;
+using OctoTip.OctoTipExperiments.Core;
+
 
 namespace OctoTipExperimentControl
 {
@@ -21,6 +23,9 @@ namespace OctoTipExperimentControl
 	public partial class ProtocolUserControl : UserControl
 	{
 		
+		
+		Protocol UserControlProtocol;
+		Type UserControlProtocolType;
 		
 		public ProtocolUserControl()
 		{
@@ -34,10 +39,12 @@ namespace OctoTipExperimentControl
 			//
 		}
 		
-		public ProtocolUserControl(string UserControlProtocol)
+		public ProtocolUserControl(Type ProtocolType):this()
 		{
-				InitializeComponent();
-			this.textBox1.Text = UserControlProtocol;
+			this.UserControlProtocolType  =ProtocolType;
+			this.textBox1.Text = ProtocolType.Name;
+			
+			UserControlProtocol = ProtocolHostProvider.GetProtocol(ProtocolType);
 		}
 		
 		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
