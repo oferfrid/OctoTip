@@ -10,7 +10,7 @@ using System;
 
 using OctoTip.OctoTipLib;
 using OctoTip.OctoTipExperiments.Core;
-
+using OctoTip.OctoTipManager;
 
 
 namespace OctoTip.OctoTipTest
@@ -37,13 +37,15 @@ namespace OctoTip.OctoTipTest
 //			
 //		
 			
-			foreach (Type ProtocolData in ProtocolHostProvider.ProtocolsData)
-            {
-				Console.WriteLine(ProtocolData.Name);
-            }
-
-  
+//			foreach (Type ProtocolData in ProtocolHostProvider.ProtocolsData)
+//            {
+//				Console.WriteLine(ProtocolData.Name);
+//            }
 			
+			RobotWrapper RW = new RobotWrapper();
+			RW.RunScript("Temp");
+
+									
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);

@@ -70,6 +70,10 @@
       <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
       <Name>OctoTipLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OctoTipManager\OctoTipManager.csproj">
+      <Project>{C5E67D8F-83DF-4C9F-A7A9-5E24CB131530}</Project>
+      <Name>OctoTipManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
