@@ -36,6 +36,7 @@ namespace OctoTip.OctoTipExperimentControl
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProtocolUserControl));
 			this.textBoxStatus = new System.Windows.Forms.TextBox();
 			this.textBoxData = new System.Windows.Forms.TextBox();
 			this.buttonStop = new System.Windows.Forms.Button();
@@ -55,28 +56,35 @@ namespace OctoTip.OctoTipExperimentControl
 			this.textBoxData.Location = new System.Drawing.Point(101, 3);
 			this.textBoxData.Multiline = true;
 			this.textBoxData.Name = "textBoxData";
-			this.textBoxData.Size = new System.Drawing.Size(100, 93);
+			this.textBoxData.Size = new System.Drawing.Size(158, 93);
 			this.textBoxData.TabIndex = 1;
 			// 
 			// buttonStop
 			// 
-			this.buttonStop.Location = new System.Drawing.Point(246, 46);
+			this.buttonStop.Enabled = false;
+			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
+			this.buttonStop.Location = new System.Drawing.Point(265, 30);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(52, 49);
+			this.buttonStop.Size = new System.Drawing.Size(55, 30);
 			this.buttonStop.TabIndex = 2;
-			this.buttonStop.Text = "buttonStop";
+			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
 			this.buttonStop.Click += new System.EventHandler(this.ButtonStopClick);
 			// 
 			// checkBoxStartPause
 			// 
 			this.checkBoxStartPause.Appearance = System.Windows.Forms.Appearance.Button;
-			this.checkBoxStartPause.Location = new System.Drawing.Point(344, 46);
+			this.checkBoxStartPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.checkBoxStartPause.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPause.Image")));
+			this.checkBoxStartPause.Location = new System.Drawing.Point(265, 66);
 			this.checkBoxStartPause.Name = "checkBoxStartPause";
-			this.checkBoxStartPause.Size = new System.Drawing.Size(66, 48);
+			this.checkBoxStartPause.Size = new System.Drawing.Size(55, 30);
 			this.checkBoxStartPause.TabIndex = 3;
-			this.checkBoxStartPause.Text = "checkBoxStartPause";
+			this.checkBoxStartPause.Text = "Start";
+			this.checkBoxStartPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.checkBoxStartPause.UseVisualStyleBackColor = true;
+			this.checkBoxStartPause.CheckedChanged += new System.EventHandler(this.CheckBoxStartPauseCheckedChanged);
 			// 
 			// ProtocolUserControl
 			// 
@@ -87,7 +95,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Controls.Add(this.textBoxData);
 			this.Controls.Add(this.textBoxStatus);
 			this.Name = "ProtocolUserControl";
-			this.Size = new System.Drawing.Size(442, 99);
+			this.Size = new System.Drawing.Size(323, 99);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
