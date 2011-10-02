@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTip.OctoTipExperiments.Attributes
+namespace OctoTip.OctoTipExperiments.Core.Attributes
 {
 	/// <summary>
 	/// Description of ProtocolAttribute.

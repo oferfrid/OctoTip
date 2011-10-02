@@ -12,9 +12,9 @@ using System.Reflection;
 using System.IO;
 
 
-using OctoTip.OctoTipExperiments.Interfaces;
-using OctoTip.OctoTipExperiments.Attributes;
-using OctoTip.OctoTipExperiments.Base;
+using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.OctoTipExperiments.Core.Attributes;
+using OctoTip.OctoTipExperiments.Core.Base;
 
 namespace OctoTip.OctoTipExperiments.Core
 {
@@ -118,6 +118,37 @@ namespace OctoTip.OctoTipExperiments.Core
 		}
 		
 		
+		public static List<Type> GetProtocolStates(Type ProtocolType)
+		{
+			
+			List<Type> ProtocolStates = new List<Type>(0) ;
+			foreach (  MethodInfo mi in ProtocolType.GetMethods(BindingFlags.Static |BindingFlags.Public))
+			{
+				if(mi.Name == "ProtocolStates")
+				{
+					ProtocolStates = mi.Invoke(null,null) as List<Type>;
+				}
+			
+			}
+			return ProtocolStates;
+		}
+		
+		
+		public static List<Type> GetStateNextStates(Type StateType)
+		{
+			
+			List<Type> NextStates = new List<Type>(0) ;
+			foreach (  MethodInfo mi in StateType.GetMethods(BindingFlags.Static |BindingFlags.Public))
+			{
+				if(mi.Name == "NextStates")
+				{
+					NextStates = mi.Invoke(null,null) as List<Type>;
+				}
+			
+			}
+			return NextStates;
+		}
+		
 		static List<Type> GetAvalbleProtocolPlugIns(List<Assembly> assemblies)
 		{
 			List<Type> availableTypes = new List<Type>();
@@ -139,6 +170,10 @@ namespace OctoTip.OctoTipExperiments.Core
 			
 			return ProtocolList;
 		}
+		
+		
+		
+		
 		
 	}
 }

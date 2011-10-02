@@ -142,7 +142,6 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Protocol1.Size = new System.Drawing.Size(88, 20);
 			this.Protocol1.Text = "Protocol1";
 			this.Protocol1.ToolTipText = "Protocol1gt";
-			this.Protocol1.Click += new System.EventHandler(this.Protocol1Click);
 			// 
 			// menuStrip1
 			// 

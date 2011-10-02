@@ -7,9 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using OctoTip.OctoTipExperiments.Base;
-using OctoTip.OctoTipExperiments.Attributes;
-using OctoTip.OctoTipExperiments.Interfaces;
+using System.Collections.Generic;
+
+using OctoTip.OctoTipExperiments.Core.Base;
+using OctoTip.OctoTipExperiments.Core.Attributes;
+using OctoTip.OctoTipExperiments.Core.Interfaces;
 
 namespace OctoTip.OctoTipExperiments.Protocols
 {
@@ -19,13 +21,36 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	[ProtocolAttribute("Preform an MPN Evaluarion Of coulture")]
 	public class MPNProtocol:Protocol
 	{
+		
+		#region static
+		public static new List<Type> ProtocolStates()
+		{
+			return new List<Type>{ typeof(PrepareState)};
+		}
+		#endregion
+		
+		
 		public MPNProtocol()
 		{
+			this.CurentState = new WaitState(this);
 		}
 		
-		public override void Start()
+		public override void OnStatusChanged(ProtocolStatusChangeEventArgs e)
 		{
-			throw new NotImplementedException();
+			// Do any specific processing here.
+
+			// Call the base class event invocation method.
+			base.OnStatusChanged(e);
+		}
+		
+		protected override void OnProtocolStart()
+		{
+			//throw new NotImplementedException();
+		}
+		
+		protected override void OnProtocolEnd()
+		{
+			//throw new NotImplementedException();
 		}
 	}
 }
