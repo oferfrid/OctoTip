@@ -50,9 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EvoProtocol.cs" />
-    <Compile Include="MICProtocol.cs" />
     <Compile Include="MPNProtocol.cs" />
+    <Compile Include="MPNProtocolParameters.cs" />
     <Compile Include="PrepareState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaitState.cs" />

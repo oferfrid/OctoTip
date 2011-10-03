@@ -30,9 +30,14 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		#endregion
 		
 		
-		public MPNProtocol()
+		public MPNProtocol():base()
 		{
-			this.CurentState = new WaitState(this);
+			
+		}
+		
+		public MPNProtocol(MPNProtocolParameters Parameters):base((IProtocolParameters)Parameters)
+		{
+			
 		}
 		
 		public override void OnStatusChanged(ProtocolStatusChangeEventArgs e)
@@ -46,11 +51,13 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		protected override void OnProtocolStart()
 		{
 			//throw new NotImplementedException();
+			this.CurentState = new WaitState(this);
 		}
 		
 		protected override void OnProtocolEnd()
 		{
 			//throw new NotImplementedException();
+			this.CurentState = null;
 		}
 	}
 }

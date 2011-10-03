@@ -35,6 +35,23 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		private volatile bool _ShouldStop = false;
 		private volatile bool _ShouldPause = false;
 		
+		public  IProtocolParameters ProtocolParameters;
+		
+		public  Protocol(IProtocolParameters ProtocolParameters)
+		{
+			this.ProtocolParameters = ProtocolParameters;
+		}
+			public  Protocol()
+		{
+		
+		}
+			
+			
+			
+			public void SetNewProtocolParameters(IProtocolParameters ProtocolParameters)
+			{
+				this.ProtocolParameters = ProtocolParameters;
+			}
 		#region Public Propertis
 		public ProtocolStatus Status
 		{

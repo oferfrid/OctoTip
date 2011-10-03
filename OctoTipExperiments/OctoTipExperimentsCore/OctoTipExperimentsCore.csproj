@@ -41,10 +41,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ProtocolParameterAtribute.cs" />
     <Compile Include="Attributes\ProtocolAttribute.cs" />
     <Compile Include="Base\Protocol.cs" />
     <Compile Include="Base\State.cs" />
     <Compile Include="Interfaces\IProtocol.cs" />
+    <Compile Include="Interfaces\IProtocolParameters.cs" />
     <Compile Include="Interfaces\IState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolHost.cs" />

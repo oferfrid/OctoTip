@@ -25,9 +25,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		DateTime WaitStarted;
 			TimeSpan PauseTime;
 			DateTime PauseStarted;
-		
 	
-		
 		int minutes2Wait;
 		
 		public WaitState(Protocol RunningInProtocol ):base(RunningInProtocol)
@@ -37,7 +35,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 			
 			tmr.Elapsed += tmr_Elapsed; // Uses an event instead of a delegate
 			
-			minutes2Wait=2;
+			minutes2Wait = ((MPNProtocolParameters)RunningInProtocol.ProtocolParameters).UpdateTime;
 			ZeroCounters();
 		}
 		
@@ -75,7 +73,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 					this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,"Countdwone resumed"));
 				}
 				
-				System.Threading.Thread.Sleep(5000);
+				System.Threading.Thread.Sleep(1000);
 				
 			}
 			

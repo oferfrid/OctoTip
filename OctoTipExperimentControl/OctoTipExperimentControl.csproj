@@ -53,6 +53,31 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\BaseFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\BaseFieldUserControl.Designer.cs">
+      <DependentUpon>BaseFieldUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolParametersFieldUserControls\DoubleArrayFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\DoubleArrayFieldUserControl.Designer.cs">
+      <DependentUpon>DoubleArrayFieldUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolParametersFieldUserControls\IFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\IntArrayFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\IntArrayFieldUserControl.Designer.cs">
+      <DependentUpon>IntArrayFieldUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolParametersFieldUserControls\IntFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\IntFieldUserControl.Designer.cs">
+      <DependentUpon>IntFieldUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolParametersFieldUserControls\StringFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\StringFieldUserControl.Designer.cs">
+      <DependentUpon>StringFieldUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolParametersForm.cs" />
+    <Compile Include="ProtocolParametersForm.Designer.cs">
+      <DependentUpon>ProtocolParametersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProtocolUserControl.cs" />
     <Compile Include="ProtocolUserControl.Designer.cs">
       <DependentUpon>ProtocolUserControl.cs</DependentUpon>
@@ -61,6 +86,12 @@
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProtocolParametersFieldUserControls\BaseFieldUserControl.resx">
+      <DependentUpon>BaseFieldUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProtocolParametersForm.resx">
+      <DependentUpon>ProtocolParametersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProtocolUserControl.resx">
       <DependentUpon>ProtocolUserControl.cs</DependentUpon>
@@ -71,6 +102,9 @@
       <Project>{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}</Project>
       <Name>OctoTipExperimentsCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ProtocolParametersFieldUserControls" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

@@ -12,9 +12,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading;
-
 using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipExperiments.Core;
+using OctoTip.OctoTipExperiments.Core.Interfaces;
 
 namespace OctoTip.OctoTipExperimentControl
 {
@@ -25,6 +25,10 @@ namespace OctoTip.OctoTipExperimentControl
 	{
 		Protocol UserControlProtocol;
 		Type UserControlProtocolType;
+		
+		IProtocolParameters UserControlProtocolParameters;
+		
+		
 		Thread ProtocolworkerThread;
 		
 		
@@ -36,10 +40,11 @@ namespace OctoTip.OctoTipExperimentControl
 		public ProtocolUserControl(Type ProtocolType):this()
 		{
 			this.UserControlProtocolType  =ProtocolType;
-			UserControlProtocol = ProtocolHostProvider.GetProtocol(ProtocolType);
 			
-			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
-			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
+			ProtocolParametersForm PPF = new ProtocolParametersForm(this,UserControlProtocolType);
+			PPF.ShowDialog();
+			
+			
 		}
 		
 		
@@ -48,10 +53,17 @@ namespace OctoTip.OctoTipExperimentControl
 		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
 		{
 			
-			System.Diagnostics.Debug.WriteLine(this.checkBoxStartPause.Checked);
+			
 			
 			if (this.checkBoxStartPause.Checked)
 			{
+				if (UserControlProtocol==null)
+				{
+					
+					InitUserControlProtocol();
+				}
+				
+				
 				if(UserControlProtocol.Status ==  Protocol.ProtocolStatus.Paused)
 				{
 					UserControlProtocol.RequestResume();
@@ -60,12 +72,15 @@ namespace OctoTip.OctoTipExperimentControl
 				{
 					if(ProtocolworkerThread==null)
 					{
-					ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);	
+						InitUserControlProtocol();
+						ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);
 					}
 					else
 					{
-					ProtocolworkerThread.Abort();
-					ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);
+						
+						ProtocolworkerThread.Abort();
+						InitUserControlProtocol();
+						ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);
 					}
 					ProtocolworkerThread.Start();
 				}
@@ -78,7 +93,7 @@ namespace OctoTip.OctoTipExperimentControl
 				{
 				}
 				else
-				{					
+				{
 					UserControlProtocol.RequestPause();
 				}
 				
@@ -86,8 +101,14 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		
 		
-		
-		
+		private void InitUserControlProtocol()
+		{
+			
+			UserControlProtocol = ProtocolHostProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
+			
+			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
+			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
+		}
 		
 		void ButtonStopClick(object sender, EventArgs e)
 		{
@@ -126,15 +147,15 @@ namespace OctoTip.OctoTipExperimentControl
 			string checkBoxStartPauseText = "start";
 			bool checkBoxStartPauseChecked = false;
 			
-				
-				switch (e.NewStatus)
+			
+			switch (e.NewStatus)
 			{
 				case Protocol.ProtocolStatus.Stopped:
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Start";
 					checkBoxStartPauseChecked = false;
-			
+					
 					
 					break;
 				case Protocol.ProtocolStatus.Stoping:
@@ -142,28 +163,28 @@ namespace OctoTip.OctoTipExperimentControl
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Start";
 					checkBoxStartPauseChecked = true;
-			
+					
 					break;
 				case Protocol.ProtocolStatus.Started:
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Pause";
 					checkBoxStartPauseChecked = true;
-			
+					
 					break;
 				case Protocol.ProtocolStatus.Starting:
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Pause";
 					checkBoxStartPauseChecked = true;
-			
+					
 					break;
 				case Protocol.ProtocolStatus.Paused:
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Resturt";
 					checkBoxStartPauseChecked = false;
-			
+					
 					break;
 				case Protocol.ProtocolStatus.Pausing:
 					buttonStopEnabled = false;
@@ -171,7 +192,7 @@ namespace OctoTip.OctoTipExperimentControl
 					checkBoxStartPauseText = "Resturt";
 					checkBoxStartPauseChecked = false;
 					checkBoxStartPauseChecked = true;
-			
+					
 					break;
 					
 			}
@@ -210,5 +231,24 @@ namespace OctoTip.OctoTipExperimentControl
 			textBoxData.BeginInvoke(action);
 		}
 		
+		
+		void EditParametersbuttonClick(object sender, EventArgs e)
+		{
+			ProtocolParametersForm PPF;
+			if (UserControlProtocolParameters==null)
+			{
+				PPF = new ProtocolParametersForm(this,UserControlProtocolType);
+			}
+			else
+			{
+				PPF = new ProtocolParametersForm(this,UserControlProtocolParameters);
+			}
+			PPF.ShowDialog();
+		}
+		
+		public void SetNewUserControlProtocolParameters(IProtocolParameters ProtocolParameters)
+		{
+			this.UserControlProtocolParameters = ProtocolParameters;
+		}
 	}
 }
