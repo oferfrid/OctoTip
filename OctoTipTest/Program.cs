@@ -9,36 +9,43 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-
+using System.Xml.Serialization;
+using OctoTip.OctoTipExperiments.Protocols;
 using OctoTip.OctoTipLib;
-using OctoTip.OctoTipExperiments.Core;
+using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipManager;
-
 
 namespace OctoTip.OctoTipTest
 {
+	
 	class Program
 	{
 		public static void Main(string[] args)
 		{
+			
+			XmlSerializer writer =	new XmlSerializer(typeof(WaitState));
+			
+			
+			
+			
 //			Console.WriteLine("start init RobotJobsQueueServiceClient!");
-//			
-//			
+//
+//
 //			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
-//			
-//			
+//
+//
 //			Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
-//				
-//				
-//			
+//
+//
+//
 //			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
 //			Random r = new Random();
 //			RP.Priority = (double)r.Next()/int.MaxValue;
 //			//RC.TestConnection("tt");
 //			RC.AddRobotJob(RP);
-//			
-//		
-		
+//
+//
+			
 			
 //			List<Type> ProtocolList = availableTypes.FindAll(delegate(Type t)
 //			                                                 {
@@ -46,21 +53,21 @@ namespace OctoTip.OctoTipTest
 //			                                                 	object[] arr = t.GetCustomAttributes(typeof(ProtocolAttribute), true);
 //			                                                 	return !(arr == null || arr.Length == 0) && interfaceTypes.Contains(typeof(IProtocol));
 //			                                                 });
-//			
+//
 			
 //			foreach (Type ProtocolData in ProtocolProvider.ProtocolsData)
-//            {
+			//            {
 //			foreach (Type ProtocolData in ProtocolHostProvider.ProtocolsData)
-//            {
+			//            {
 //				Console.WriteLine(ProtocolData.Name);
-//            }
+			//            }
 			
-			RobotWrapper RW = new RobotWrapper();
-			RW.RunScript("Temp");
+//			RobotWrapper RW = new RobotWrapper();
+//			RW.RunScript("Temp");
 //				Console.WriteLine(ProtocolData.Name);
-//            }
+			//            }
 
-									
+			
 			
 //			Console.Write("Press any key to continue . . . ");
 //			Console.ReadKey(true);

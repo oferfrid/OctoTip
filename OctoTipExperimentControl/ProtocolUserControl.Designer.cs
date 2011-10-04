@@ -51,7 +51,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.textBoxStatus.Location = new System.Drawing.Point(3, 3);
 			this.textBoxStatus.Multiline = true;
 			this.textBoxStatus.Name = "textBoxStatus";
-			this.textBoxStatus.Size = new System.Drawing.Size(92, 94);
+			this.textBoxStatus.Size = new System.Drawing.Size(185, 89);
 			this.textBoxStatus.TabIndex = 0;
 			// 
 			// textBoxData
@@ -59,10 +59,10 @@ namespace OctoTip.OctoTipExperimentControl
 			this.textBoxData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxData.Location = new System.Drawing.Point(101, 3);
+			this.textBoxData.Location = new System.Drawing.Point(194, 3);
 			this.textBoxData.Multiline = true;
 			this.textBoxData.Name = "textBoxData";
-			this.textBoxData.Size = new System.Drawing.Size(162, 94);
+			this.textBoxData.Size = new System.Drawing.Size(267, 89);
 			this.textBoxData.TabIndex = 1;
 			// 
 			// buttonStop
@@ -71,9 +71,9 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-			this.buttonStop.Location = new System.Drawing.Point(270, 29);
+			this.buttonStop.Location = new System.Drawing.Point(468, 28);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(55, 30);
+			this.buttonStop.Size = new System.Drawing.Size(55, 28);
 			this.buttonStop.TabIndex = 2;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
@@ -83,9 +83,10 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.checkBoxStartPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkBoxStartPause.Appearance = System.Windows.Forms.Appearance.Button;
+			this.checkBoxStartPause.Enabled = false;
 			this.checkBoxStartPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.checkBoxStartPause.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPause.Image")));
-			this.checkBoxStartPause.Location = new System.Drawing.Point(270, 65);
+			this.checkBoxStartPause.Location = new System.Drawing.Point(468, 60);
 			this.checkBoxStartPause.Name = "checkBoxStartPause";
 			this.checkBoxStartPause.Size = new System.Drawing.Size(55, 30);
 			this.checkBoxStartPause.TabIndex = 3;
@@ -97,25 +98,26 @@ namespace OctoTip.OctoTipExperimentControl
 			// EditParametersbutton
 			// 
 			this.EditParametersbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.EditParametersbutton.Location = new System.Drawing.Point(270, 3);
+			this.EditParametersbutton.BackColor = System.Drawing.Color.Red;
+			this.EditParametersbutton.Location = new System.Drawing.Point(468, 3);
 			this.EditParametersbutton.Name = "EditParametersbutton";
 			this.EditParametersbutton.Size = new System.Drawing.Size(55, 20);
 			this.EditParametersbutton.TabIndex = 4;
 			this.EditParametersbutton.Text = "Edit Parameters";
-			this.EditParametersbutton.UseVisualStyleBackColor = true;
+			this.EditParametersbutton.UseVisualStyleBackColor = false;
 			this.EditParametersbutton.Click += new System.EventHandler(this.EditParametersbuttonClick);
 			// 
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-			this.AutoSize = true;
 			this.Controls.Add(this.EditParametersbutton);
 			this.Controls.Add(this.checkBoxStartPause);
 			this.Controls.Add(this.buttonStop);
 			this.Controls.Add(this.textBoxData);
 			this.Controls.Add(this.textBoxStatus);
 			this.Name = "ProtocolUserControl";
-			this.Size = new System.Drawing.Size(332, 100);
+			this.Size = new System.Drawing.Size(530, 95);
+			this.Load += new System.EventHandler(this.ProtocolUserControlLoad);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}

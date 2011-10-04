@@ -22,13 +22,18 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	{
 		
 		Timer tmr ;
-		DateTime WaitStarted;
-		TimeSpan PauseTime;
-		DateTime PauseStarted;
+		public DateTime WaitStarted;
+		public TimeSpan PauseTime;
+		public DateTime PauseStarted;
 		
-		int Cycle;
+		public int Cycle;
 		
-		double[] minutes2Wait;
+		public double[] minutes2Wait;
+		
+		public WaitState():base()
+		{
+			
+		}
 		
 		public WaitState(Protocol RunningInProtocol ,int Cycle):base(RunningInProtocol)
 		{
@@ -53,7 +58,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(WaitState), typeof(PrepareState)};
+			return new List<Type>{typeof(WaitState)};
 		}
 		
 		public override void DoWork()

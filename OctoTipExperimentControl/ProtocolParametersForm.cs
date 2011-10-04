@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using System.Reflection;
 
 using OctoTip.OctoTipExperiments.Core;
-using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls;
 
@@ -24,7 +24,7 @@ namespace OctoTip.OctoTipExperimentControl
 	/// </summary>
 	public partial class ProtocolParametersForm : Form
 	{
-		IProtocolParameters ProtocolParameters;
+		ProtocolParameters FormProtocolParameters;
 		FieldInfo[] ProtocolParametersFields;
 		
 		ProtocolUserControl ParentProtocolUserControl;
@@ -38,11 +38,11 @@ namespace OctoTip.OctoTipExperimentControl
 			
 		}
 		
-		public ProtocolParametersForm(ProtocolUserControl ParentProtocolUserControl,IProtocolParameters ProtocolParameters):this()
+		public ProtocolParametersForm(ProtocolUserControl ParentProtocolUserControl,ProtocolParameters ProtocolParameters):this()
 		{
 			this.ParentProtocolUserControl = ParentProtocolUserControl;
-			this.ProtocolParameters = ProtocolParameters;
-			ProtocolParametersFields = ProtocolProvider.GetProtocolParametersFields(ProtocolParameters);
+			this.FormProtocolParameters = ProtocolParameters;
+			ProtocolParametersFields = ProtocolProvider.GetProtocolParametersFields(FormProtocolParameters);
 		}
 		
 		
@@ -55,7 +55,7 @@ namespace OctoTip.OctoTipExperimentControl
 				if (ProtocolParametersField.FieldType==typeof(int))
 				{
 					
-					int Value = (int)(ProtocolParametersField.GetValue(ProtocolParameters));
+					int Value = (int)(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
 					ProtocolParametersFieldUserControls.IntFieldUserControl IUC =
 						new ProtocolParametersFieldUserControls.IntFieldUserControl(title,Value);
@@ -65,7 +65,7 @@ namespace OctoTip.OctoTipExperimentControl
 				}
 				else if(ProtocolParametersField.FieldType==typeof(string))
 				{
-					string Value = (string)(ProtocolParametersField.GetValue(ProtocolParameters));
+					string Value = (string)(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
 					StringFieldUserControl IUC =
 						new StringFieldUserControl(title,Value);
@@ -73,7 +73,7 @@ namespace OctoTip.OctoTipExperimentControl
 				}
 				else if(ProtocolParametersField.FieldType==typeof(double[]))
 				{
-					double[] Value = (double[])(ProtocolParametersField.GetValue(ProtocolParameters));
+					double[] Value = (double[])(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
 					DoubleArrayFieldUserControl IUC =
 						new  DoubleArrayFieldUserControl(title,Value);
@@ -115,9 +115,9 @@ namespace OctoTip.OctoTipExperimentControl
 				{
 					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).ClearError();
 					Value = ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).GetObjectValue();
-					ProtocolParametersFields[i].SetValue(ProtocolParameters,Value);
+					ProtocolParametersFields[i].SetValue(FormProtocolParameters,Value);
 				}
-				catch (System.FormatException ex)
+				catch (System.FormatException )
 				{
 					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetError(string.Empty);
 						ErrorFlag = true;
@@ -127,7 +127,7 @@ namespace OctoTip.OctoTipExperimentControl
 			}
 			if(!ErrorFlag)
 			{
-			ParentProtocolUserControl.SetNewUserControlProtocolParameters(ProtocolParameters);
+			ParentProtocolUserControl.SetNewUserControlProtocolParameters(FormProtocolParameters);
 			this.Close();
 			}
 			

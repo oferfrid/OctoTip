@@ -11,7 +11,7 @@ using System;
 namespace OctoTip.OctoTipExperiments.Core.Interfaces
 {
 	/// <summary>
-	/// Description of IProtocolParameters.
+	/// Description of ProtocolParameters.
 	/// </summary>
 	public interface IProtocolParameters
 	{

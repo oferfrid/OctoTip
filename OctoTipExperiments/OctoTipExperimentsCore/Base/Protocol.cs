@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using OctoTip.OctoTipExperiments.Core.Interfaces;
 
@@ -27,17 +28,22 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		#endregion
 		
 		
-		protected State CurentState;
-		protected ProtocolStatus _Status = ProtocolStatus.Stopped;
+		public State CurentState;
+		
+		
+		public ProtocolStatus _Status = ProtocolStatus.Stopped;
 		
 		// Volatile is used as hint to the compiler that this data
 		// member will be accessed by multiple threads.
 		private volatile bool _ShouldStop = false;
 		private volatile bool _ShouldPause = false;
 		
-		public  IProtocolParameters ProtocolParameters;
 		
-		public  Protocol(IProtocolParameters ProtocolParameters)
+		
+		
+		public  ProtocolParameters ProtocolParameters;
+		
+		public  Protocol(ProtocolParameters ProtocolParameters)
 		{
 			this.ProtocolParameters = ProtocolParameters;
 		}
@@ -48,7 +54,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			
 			
 			
-			public void SetNewProtocolParameters(IProtocolParameters ProtocolParameters)
+			public void SetNewProtocolParameters(ProtocolParameters ProtocolParameters)
 			{
 				this.ProtocolParameters = ProtocolParameters;
 			}

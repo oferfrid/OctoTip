@@ -41,13 +41,17 @@ namespace OctoTip.OctoTipExperimentControl
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.Protocolpanel = new System.Windows.Forms.Panel();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabelProtocolCount = new System.Windows.Forms.ToolStripStatusLabel();
 			this.ProtocoltoolStrip = new System.Windows.Forms.ToolStrip();
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.Protocol1 = new System.Windows.Forms.ToolStripButton();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.protocolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveProtocolsAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshProtocols = new System.Windows.Forms.ToolStripButton();
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -55,6 +59,7 @@ namespace OctoTip.OctoTipExperimentControl
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			this.ProtocoltoolStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -68,7 +73,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.statusStrip1);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(750, 548);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(834, 538);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			// 
 			// toolStripContainer1.LeftToolStripPanel
@@ -77,7 +82,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(840, 597);
+			this.toolStripContainer1.Size = new System.Drawing.Size(924, 587);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -95,8 +100,8 @@ namespace OctoTip.OctoTipExperimentControl
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.Protocolpanel);
-			this.splitContainer1.Size = new System.Drawing.Size(750, 526);
-			this.splitContainer1.SplitterDistance = 536;
+			this.splitContainer1.Size = new System.Drawing.Size(834, 516);
+			this.splitContainer1.SplitterDistance = 596;
 			this.splitContainer1.TabIndex = 1;
 			// 
 			// Protocolpanel
@@ -105,16 +110,24 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Protocolpanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.Protocolpanel.Location = new System.Drawing.Point(0, 0);
 			this.Protocolpanel.Name = "Protocolpanel";
-			this.Protocolpanel.Size = new System.Drawing.Size(536, 526);
+			this.Protocolpanel.Size = new System.Drawing.Size(596, 516);
 			this.Protocolpanel.TabIndex = 0;
 			// 
 			// statusStrip1
 			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 526);
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.toolStripStatusLabelProtocolCount});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 516);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(750, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(834, 22);
 			this.statusStrip1.TabIndex = 0;
 			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// toolStripStatusLabelProtocolCount
+			// 
+			this.toolStripStatusLabelProtocolCount.Name = "toolStripStatusLabelProtocolCount";
+			this.toolStripStatusLabelProtocolCount.Size = new System.Drawing.Size(61, 17);
+			this.toolStripStatusLabelProtocolCount.Text = "Protocols:0";
 			// 
 			// ProtocoltoolStrip
 			// 
@@ -147,10 +160,11 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.fileToolStripMenuItem});
+									this.fileToolStripMenuItem,
+									this.protocolsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(840, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(924, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -159,6 +173,22 @@ namespace OctoTip.OctoTipExperimentControl
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
 			this.fileToolStripMenuItem.Text = "File";
+			// 
+			// protocolsToolStripMenuItem
+			// 
+			this.protocolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.saveProtocolsAsToolStripMenuItem,
+									this.openToolStripMenuItem});
+			this.protocolsToolStripMenuItem.Name = "protocolsToolStripMenuItem";
+			this.protocolsToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+			this.protocolsToolStripMenuItem.Text = "Protocols";
+			// 
+			// saveProtocolsAsToolStripMenuItem
+			// 
+			this.saveProtocolsAsToolStripMenuItem.Name = "saveProtocolsAsToolStripMenuItem";
+			this.saveProtocolsAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveProtocolsAsToolStripMenuItem.Text = "Save As...";
+			this.saveProtocolsAsToolStripMenuItem.Click += new System.EventHandler(this.SaveProtocolsAsToolStripMenuItemClick);
 			// 
 			// toolStrip1
 			// 
@@ -181,11 +211,18 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripButtonRefreshProtocols.Text = "Refresh Protocols";
 			this.toolStripButtonRefreshProtocols.Click += new System.EventHandler(this.ToolStripButtonRefreshProtocolsClick);
 			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.openToolStripMenuItem.Text = "Open";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(840, 597);
+			this.ClientSize = new System.Drawing.Size(924, 587);
 			this.Controls.Add(this.toolStripContainer1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
@@ -202,6 +239,8 @@ namespace OctoTip.OctoTipExperimentControl
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ProtocoltoolStrip.ResumeLayout(false);
 			this.ProtocoltoolStrip.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
@@ -210,6 +249,10 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStrip1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveProtocolsAsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem protocolsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelProtocolCount;
 		private System.Windows.Forms.Panel Protocolpanel;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.ToolStripButton toolStripButtonRefreshProtocols;

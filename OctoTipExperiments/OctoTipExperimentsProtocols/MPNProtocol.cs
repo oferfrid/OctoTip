@@ -25,7 +25,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		#region static
 		public static new List<Type> ProtocolStates()
 		{
-			return new List<Type>{ typeof(PrepareState)};
+			return new List<Type>{ typeof(WaitState)};
 		}
 		#endregion
 		
@@ -35,7 +35,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 			
 		}
 		
-		public MPNProtocol(MPNProtocolParameters Parameters):base((IProtocolParameters)Parameters)
+		public MPNProtocol(MPNProtocolParameters Parameters):base((ProtocolParameters)Parameters)
 		{
 			
 		}

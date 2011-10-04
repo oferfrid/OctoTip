@@ -115,15 +115,15 @@ namespace OctoTip.OctoTipManager
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-			this.saveAsToolStripMenuItem.Text = "Save as";
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveAsToolStripMenuItem.Text = "Save As...";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
 			// 
 			// loadToolStripMenuItem
 			// 
 			this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-			this.loadToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-			this.loadToolStripMenuItem.Text = "Load";
+			this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.loadToolStripMenuItem.Text = "Open...";
 			this.loadToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItemClick);
 			// 
 			// helpToolStripMenuItem

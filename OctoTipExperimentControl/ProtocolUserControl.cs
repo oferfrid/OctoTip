@@ -26,7 +26,7 @@ namespace OctoTip.OctoTipExperimentControl
 		Protocol UserControlProtocol;
 		Type UserControlProtocolType;
 		
-		IProtocolParameters UserControlProtocolParameters;
+		ProtocolParameters UserControlProtocolParameters;
 		
 		
 		Thread ProtocolworkerThread;
@@ -40,11 +40,22 @@ namespace OctoTip.OctoTipExperimentControl
 		public ProtocolUserControl(Type ProtocolType):this()
 		{
 			this.UserControlProtocolType  =ProtocolType;
+		}
+		
+		public ProtocolUserControl(Protocol UserControlProtocol):this()
+		{
+			this.UserControlProtocolType  =UserControlProtocol.GetType();
+			this.UserControlProtocol  =UserControlProtocol;
+			UserControlProtocolParameters = this.UserControlProtocol.ProtocolParameters;
 			
-			ProtocolParametersForm PPF = new ProtocolParametersForm(this,UserControlProtocolType);
-			PPF.ShowDialog();
-			
-			
+			ActivateUserControlProtocol();
+		}
+		
+		private void ActivateUserControlProtocol()
+		{
+			this.EditParametersbutton.BackColor = System.Drawing.SystemColors.Control;
+			this.buttonStop.Enabled = false;
+			this.checkBoxStartPause.Enabled = true;
 		}
 		
 		
@@ -57,13 +68,6 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			if (this.checkBoxStartPause.Checked)
 			{
-				if (UserControlProtocol==null)
-				{
-					
-					InitUserControlProtocol();
-				}
-				
-				
 				if(UserControlProtocol.Status ==  Protocol.ProtocolStatus.Paused)
 				{
 					UserControlProtocol.RequestResume();
@@ -104,23 +108,33 @@ namespace OctoTip.OctoTipExperimentControl
 		private void InitUserControlProtocol()
 		{
 			
-			UserControlProtocol = ProtocolProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
+			if (UserControlProtocol!=null)
+			{
+				//remove the courent Protocol from the List;
+				
+				((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
+				this.UserControlProtocol = null;
+			}
 			
+			UserControlProtocol = ProtocolProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
 			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
 			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
+			((MainForm)this.ParentForm).AddProtocol(this.UserControlProtocol);
+			
+			ActivateUserControlProtocol();
+			
+			
+			
 		}
 		
 		void ButtonStopClick(object sender, EventArgs e)
 		{
 
 			UserControlProtocol.RequestStop();
-			checkBoxStartPause.Checked = false;
+			//checkBoxStartPause.Checked = false;
 		}
 		
-		
-		
 		#endregion
-
 
 		void ProtocolUserControlLoad(object sender, EventArgs e)
 		{
@@ -135,6 +149,10 @@ namespace OctoTip.OctoTipExperimentControl
 				this.textBoxData.Text+= ")";
 			}
 			this.textBoxData.Text+= Environment.NewLine;
+			
+			
+			//ProtocolParametersForm PPF = new ProtocolParametersForm(this,UserControlProtocolType);
+			//PPF.ShowDialog();
 		}
 		
 		
@@ -145,7 +163,7 @@ namespace OctoTip.OctoTipExperimentControl
 			bool buttonStopEnabled = false;
 			bool checkBoxStartPauseEnabled = true;
 			string checkBoxStartPauseText = "start";
-		
+			
 			
 			
 			switch (e.NewStatus)
@@ -245,9 +263,10 @@ namespace OctoTip.OctoTipExperimentControl
 			PPF.ShowDialog();
 		}
 		
-		public void SetNewUserControlProtocolParameters(IProtocolParameters ProtocolParameters)
+		public void SetNewUserControlProtocolParameters(ProtocolParameters ProtocolParameters)
 		{
 			this.UserControlProtocolParameters = ProtocolParameters;
+			InitUserControlProtocol();
 		}
 	}
 }
