@@ -47,8 +47,8 @@ namespace OctoTip.OctoTipTest
 
 									
 			
-			Console.Write("Press any key to continue . . . ");
-			Console.ReadKey(true);
+//			Console.Write("Press any key to continue . . . ");
+//			Console.ReadKey(true);
 		}
 	}
 }
