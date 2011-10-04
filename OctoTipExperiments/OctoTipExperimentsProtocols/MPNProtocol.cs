@@ -51,7 +51,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		protected override void OnProtocolStart()
 		{
 			//throw new NotImplementedException();
-			this.CurentState = new WaitState(this);
+			this.CurentState = new WaitState(this,0);
 		}
 		
 		protected override void OnProtocolEnd()

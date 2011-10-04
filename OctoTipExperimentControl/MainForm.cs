@@ -40,7 +40,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			
-			List<Type> ProtocolsData =  ProtocolHostProvider.ProtocolsData;
+			List<Type> ProtocolsData =  ProtocolProvider.ProtocolsData;
 			
 			ToolStripItem[] ToolStripProtocols =new ToolStripItem[ProtocolsData.Count];
 			

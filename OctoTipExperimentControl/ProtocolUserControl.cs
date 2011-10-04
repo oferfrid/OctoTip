@@ -104,7 +104,7 @@ namespace OctoTip.OctoTipExperimentControl
 		private void InitUserControlProtocol()
 		{
 			
-			UserControlProtocol = ProtocolHostProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
+			UserControlProtocol = ProtocolProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
 			
 			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
 			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
@@ -125,10 +125,10 @@ namespace OctoTip.OctoTipExperimentControl
 		void ProtocolUserControlLoad(object sender, EventArgs e)
 		{
 			this.textBoxData.Text = UserControlProtocolType.Name + Environment.NewLine;
-			foreach (Type t in ProtocolHostProvider.GetProtocolStates(UserControlProtocolType))
+			foreach (Type t in ProtocolProvider.GetProtocolStates(UserControlProtocolType))
 			{
 				this.textBoxData.Text+= "," + t.Name + "(" ;
-				foreach (Type ts in ProtocolHostProvider.GetStateNextStates(t))
+				foreach (Type ts in ProtocolProvider.GetStateNextStates(t))
 				{
 					this.textBoxData.Text+=ts.Name + ",";
 				}
@@ -145,7 +145,7 @@ namespace OctoTip.OctoTipExperimentControl
 			bool buttonStopEnabled = false;
 			bool checkBoxStartPauseEnabled = true;
 			string checkBoxStartPauseText = "start";
-			bool checkBoxStartPauseChecked = false;
+		
 			
 			
 			switch (e.NewStatus)
@@ -154,7 +154,7 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Start";
-					checkBoxStartPauseChecked = false;
+					
 					
 					
 					break;
@@ -162,36 +162,35 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Start";
-					checkBoxStartPauseChecked = true;
+					
 					
 					break;
 				case Protocol.ProtocolStatus.Started:
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Pause";
-					checkBoxStartPauseChecked = true;
+					
 					
 					break;
 				case Protocol.ProtocolStatus.Starting:
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Pause";
-					checkBoxStartPauseChecked = true;
+					
 					
 					break;
 				case Protocol.ProtocolStatus.Paused:
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Resturt";
-					checkBoxStartPauseChecked = false;
+					
 					
 					break;
 				case Protocol.ProtocolStatus.Pausing:
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Resturt";
-					checkBoxStartPauseChecked = false;
-					checkBoxStartPauseChecked = true;
+					
 					
 					break;
 					

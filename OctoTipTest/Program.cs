@@ -48,7 +48,7 @@ namespace OctoTip.OctoTipTest
 //			                                                 });
 //			
 			
-//			foreach (Type ProtocolData in ProtocolHostProvider.ProtocolsData)
+//			foreach (Type ProtocolData in ProtocolProvider.ProtocolsData)
 //            {
 //				Console.WriteLine(ProtocolData.Name);
 //            }

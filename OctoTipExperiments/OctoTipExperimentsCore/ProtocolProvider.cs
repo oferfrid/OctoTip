@@ -19,9 +19,9 @@ using OctoTip.OctoTipExperiments.Core.Base;
 namespace OctoTip.OctoTipExperiments.Core
 {
 	/// <summary>
-	/// Description of ProtocolHostProvider.
+	/// Description of ProtocolProvider.
 	/// </summary>
-	public static class ProtocolHostProvider
+	public static class ProtocolProvider
 	{
 		//TODO:remove unused enteries
 //		private static List<ProtocolHost> m_Protocols;

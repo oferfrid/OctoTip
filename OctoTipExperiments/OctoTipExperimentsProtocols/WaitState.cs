@@ -23,27 +23,32 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		
 		Timer tmr ;
 		DateTime WaitStarted;
-			TimeSpan PauseTime;
-			DateTime PauseStarted;
-	
-		int minutes2Wait;
+		TimeSpan PauseTime;
+		DateTime PauseStarted;
 		
-		public WaitState(Protocol RunningInProtocol ):base(RunningInProtocol)
+		int Cycle;
+		
+		double[] minutes2Wait;
+		
+		public WaitState(Protocol RunningInProtocol ,int Cycle):base(RunningInProtocol)
 		{
+			this.Cycle = Cycle;
+			
 			tmr = new Timer();       // Doesn't require any args
 			tmr.Interval = 100;
 			
 			tmr.Elapsed += tmr_Elapsed; // Uses an event instead of a delegate
 			
-			minutes2Wait = ((MPNProtocolParameters)RunningInProtocol.ProtocolParameters).UpdateTime;
+			minutes2Wait = ((MPNProtocolParameters)RunningInProtocol.ProtocolParameters).WaitTimes;
+			
 			ZeroCounters();
 		}
 		
 		private void ZeroCounters()
 		{
-			 WaitStarted=DateTime.MaxValue;
-			 PauseTime = TimeSpan.Zero;
-			 PauseStarted =DateTime.MaxValue;
+			WaitStarted=DateTime.MaxValue;
+			PauseTime = TimeSpan.Zero;
+			PauseStarted =DateTime.MaxValue;
 		}
 		
 		public static new List<Type> NextStates()
@@ -52,7 +57,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		}
 		
 		public override void DoWork()
-		{	
+		{
 			WaitStarted	= DateTime.Now;
 			tmr.Start();
 			
@@ -79,11 +84,15 @@ namespace OctoTip.OctoTipExperiments.Protocols
 			
 			tmr.Stop();
 			ZeroCounters();
+			if (this.minutes2Wait.Length > (Cycle+1))
+			{
+				RunningInProtocol.ChangeState(new WaitState(RunningInProtocol,Cycle+1));
+			}
 		}
 		
 		private TimeSpan GetRemainingTime()
 		{
-			TimeSpan Time2Wait = (WaitStarted.AddMinutes(minutes2Wait) - DateTime.Now);
+			TimeSpan Time2Wait = (WaitStarted.AddMinutes(minutes2Wait[Cycle]) - DateTime.Now);
 			Time2Wait = Time2Wait.Add(PauseTime);
 			
 			if(PauseStarted!=DateTime.MaxValue)

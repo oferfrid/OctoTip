@@ -33,7 +33,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			InitializeComponent();
 		}
-		public ProtocolParametersForm(ProtocolUserControl ParentProtocolUserControl,Type ProtocolData):this(ParentProtocolUserControl,ProtocolHostProvider.GetProtocolParameters(ProtocolData))
+		public ProtocolParametersForm(ProtocolUserControl ParentProtocolUserControl,Type ProtocolData):this(ParentProtocolUserControl,ProtocolProvider.GetProtocolParameters(ProtocolData))
 		{
 			
 		}
@@ -42,7 +42,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			this.ParentProtocolUserControl = ParentProtocolUserControl;
 			this.ProtocolParameters = ProtocolParameters;
-			ProtocolParametersFields = ProtocolHostProvider.GetProtocolParametersFields(ProtocolParameters);
+			ProtocolParametersFields = ProtocolProvider.GetProtocolParametersFields(ProtocolParameters);
 		}
 		
 		

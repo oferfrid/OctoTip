@@ -162,10 +162,6 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		/// </summary>
 		protected abstract  void OnProtocolEnd();
 		
-		
-
-		
-		
 	}
 	
 	

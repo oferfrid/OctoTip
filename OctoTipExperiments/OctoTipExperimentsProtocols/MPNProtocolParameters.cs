@@ -18,11 +18,9 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	
 	public struct MPNProtocolParameters :IProtocolParameters
 	{
-		[ProtocolParameterAtribute("Wait Time")]
-		public int UpdateTime;
 		[ProtocolParameterAtribute("Name")]
 		public string Name;
-		[ProtocolParameterAtribute("Sampling Time array")]
-		public double[] SampleTime;
+		[ProtocolParameterAtribute("wait per cycle (minuts)")]
+		public double[] WaitTimes;
 	}
 }

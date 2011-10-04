@@ -37,7 +37,7 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 			double[]  Values = new double[StringValues.Length];
 			for (int i=0;i<Values.Length;i++)
 			{
-				Values[i] = Convert.ToInt32(StringValues[i]);
+				Values[i] = Convert.ToDouble(StringValues[i]);
 			}
 			
 			
@@ -52,7 +52,7 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 		
 		public override void SetError(string Error)
 		{
-			errorProvider.SetError(this.ValueTextBox, "Value Not In the write fromat (int,int,int...)\n" + Error);
+			errorProvider.SetError(this.ValueTextBox, "Value Not In the write fromat (double,double,double...)\n" + Error);
 		}
 	}
 }

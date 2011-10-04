@@ -36,6 +36,7 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 		/// </summary>
 		private void InitializeComponent()
 		{
+			
 			// 
 			// DoubleArrayFieldUserControl
 			// 
