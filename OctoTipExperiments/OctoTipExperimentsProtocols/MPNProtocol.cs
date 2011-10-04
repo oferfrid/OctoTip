@@ -7,9 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using OctoTip.OctoTipExperiments.Base;
-using OctoTip.OctoTipExperiments.Attributes;
-using OctoTip.OctoTipExperiments.Interfaces;
+using System.Collections.Generic;
+
+using OctoTip.OctoTipExperiments.Core.Base;
+using OctoTip.OctoTipExperiments.Core.Attributes;
+using OctoTip.OctoTipExperiments.Core.Interfaces;
 
 namespace OctoTip.OctoTipExperiments.Protocols
 {
@@ -19,13 +21,43 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	[ProtocolAttribute("Preform an MPN Evaluarion Of coulture")]
 	public class MPNProtocol:Protocol
 	{
-		public MPNProtocol()
+		
+		#region static
+		public static new List<Type> ProtocolStates()
 		{
+			return new List<Type>{ typeof(PrepareState)};
+		}
+		#endregion
+		
+		
+		public MPNProtocol():base()
+		{
+			
 		}
 		
-		public override void Start()
+		public MPNProtocol(MPNProtocolParameters Parameters):base((IProtocolParameters)Parameters)
 		{
-			throw new NotImplementedException();
+			
+		}
+		
+		public override void OnStatusChanged(ProtocolStatusChangeEventArgs e)
+		{
+			// Do any specific processing here.
+
+			// Call the base class event invocation method.
+			base.OnStatusChanged(e);
+		}
+		
+		protected override void OnProtocolStart()
+		{
+			//throw new NotImplementedException();
+			this.CurentState = new WaitState(this,0);
+		}
+		
+		protected override void OnProtocolEnd()
+		{
+			//throw new NotImplementedException();
+			this.CurentState = null;
 		}
 	}
 }

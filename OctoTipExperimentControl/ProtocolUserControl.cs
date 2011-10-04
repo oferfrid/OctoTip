@@ -1,8 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: oferfrid
- * Date: 27/09/2011
- * Time: 08:21
+ * Date: 02/10/2011
+ * Time: 10:26
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -10,55 +10,244 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-
-using OctoTip.OctoTipExperiments.Base;
+using System.Collections.Generic;
+using System.Threading;
+using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipExperiments.Core;
+using OctoTip.OctoTipExperiments.Core.Interfaces;
 
-
-namespace OctoTipExperimentControl
+namespace OctoTip.OctoTipExperimentControl
 {
 	/// <summary>
 	/// Description of ProtocolUserControl.
 	/// </summary>
 	public partial class ProtocolUserControl : UserControl
 	{
-		
-		
 		Protocol UserControlProtocol;
 		Type UserControlProtocolType;
 		
+		IProtocolParameters UserControlProtocolParameters;
+		
+		
+		Thread ProtocolworkerThread;
+		
+		
 		public ProtocolUserControl()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 		
 		public ProtocolUserControl(Type ProtocolType):this()
 		{
 			this.UserControlProtocolType  =ProtocolType;
-			this.textBox1.Text = ProtocolType.Name;
 			
-			UserControlProtocol = ProtocolHostProvider.GetProtocol(ProtocolType);
+			ProtocolParametersForm PPF = new ProtocolParametersForm(this,UserControlProtocolType);
+			PPF.ShowDialog();
+			
+			
 		}
+		
+		
+		#region Handeling events
 		
 		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
 		{
+			
+			
+			
 			if (this.checkBoxStartPause.Checked)
 			{
-				// StartProtocol.
-				this.checkBoxStartPause.Text = "Pause";
+				if (UserControlProtocol==null)
+				{
+					
+					InitUserControlProtocol();
+				}
+				
+				
+				if(UserControlProtocol.Status ==  Protocol.ProtocolStatus.Paused)
+				{
+					UserControlProtocol.RequestResume();
+				}
+				else
+				{
+					if(ProtocolworkerThread==null)
+					{
+						InitUserControlProtocol();
+						ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);
+					}
+					else
+					{
+						
+						ProtocolworkerThread.Abort();
+						InitUserControlProtocol();
+						ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);
+					}
+					ProtocolworkerThread.Start();
+				}
+				
 			}
 			else
 			{
-			//PauseProtocol.
-				this.checkBoxStartPause.Text = "Start";
+				//PauseProtocol.
+				if(UserControlProtocol.Status ==  Protocol.ProtocolStatus.Stoping || UserControlProtocol.Status ==  Protocol.ProtocolStatus.Stopped  )
+				{
+				}
+				else
+				{
+					UserControlProtocol.RequestPause();
+				}
+				
 			}
+		}
+		
+		
+		private void InitUserControlProtocol()
+		{
+			
+			UserControlProtocol = ProtocolProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
+			
+			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
+			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
+		}
+		
+		void ButtonStopClick(object sender, EventArgs e)
+		{
+
+			UserControlProtocol.RequestStop();
+			checkBoxStartPause.Checked = false;
+		}
+		
+		
+		
+		#endregion
+
+
+		void ProtocolUserControlLoad(object sender, EventArgs e)
+		{
+			this.textBoxData.Text = UserControlProtocolType.Name + Environment.NewLine;
+			foreach (Type t in ProtocolProvider.GetProtocolStates(UserControlProtocolType))
+			{
+				this.textBoxData.Text+= "," + t.Name + "(" ;
+				foreach (Type ts in ProtocolProvider.GetStateNextStates(t))
+				{
+					this.textBoxData.Text+=ts.Name + ",";
+				}
+				this.textBoxData.Text+= ")";
+			}
+			this.textBoxData.Text+= Environment.NewLine;
+		}
+		
+		
+		private void HandleProtocolStatusChanged(object sender, ProtocolStatusChangeEventArgs e)
+		{
+			
+			
+			bool buttonStopEnabled = false;
+			bool checkBoxStartPauseEnabled = true;
+			string checkBoxStartPauseText = "start";
+		
+			
+			
+			switch (e.NewStatus)
+			{
+				case Protocol.ProtocolStatus.Stopped:
+					buttonStopEnabled = false;
+					checkBoxStartPauseEnabled = true;
+					checkBoxStartPauseText = "Start";
+					
+					
+					
+					break;
+				case Protocol.ProtocolStatus.Stoping:
+					buttonStopEnabled = false;
+					checkBoxStartPauseEnabled = false;
+					checkBoxStartPauseText = "Start";
+					
+					
+					break;
+				case Protocol.ProtocolStatus.Started:
+					buttonStopEnabled = true;
+					checkBoxStartPauseEnabled = true;
+					checkBoxStartPauseText = "Pause";
+					
+					
+					break;
+				case Protocol.ProtocolStatus.Starting:
+					buttonStopEnabled = false;
+					checkBoxStartPauseEnabled = false;
+					checkBoxStartPauseText = "Pause";
+					
+					
+					break;
+				case Protocol.ProtocolStatus.Paused:
+					buttonStopEnabled = true;
+					checkBoxStartPauseEnabled = true;
+					checkBoxStartPauseText = "Resturt";
+					
+					
+					break;
+				case Protocol.ProtocolStatus.Pausing:
+					buttonStopEnabled = false;
+					checkBoxStartPauseEnabled = false;
+					checkBoxStartPauseText = "Resturt";
+					
+					
+					break;
+					
+			}
+			
+			
+			MethodInvoker textBoxStatusaction = delegate
+			{
+				textBoxStatus.Text =e.NewStatus + ">" +e.Messege;
+			};
+			textBoxData.BeginInvoke(textBoxStatusaction);
+			
+			
+			MethodInvoker buttonStopaction = delegate
+			{
+				buttonStop.Enabled = buttonStopEnabled ;
+				//buttonStop.Image = buttonStopImage;
+			};
+			buttonStop.BeginInvoke(buttonStopaction);
+			
+			
+			MethodInvoker checkBoxStartPauseaction = delegate
+			{
+				checkBoxStartPause.Enabled = checkBoxStartPauseEnabled ;
+				checkBoxStartPause.Text = checkBoxStartPauseText ;
+				//checkBoxStartPause.Checked = checkBoxStartPauseChecked;
+				//checkBoxStartPause.Image = checkBoxStartPauseImage;
+				
+			};
+			checkBoxStartPause.BeginInvoke(checkBoxStartPauseaction);
+		}
+		
+		private void HandleDisplayedDataChange(object sender, ProtocolDisplayedDataChangeEventArgs e)
+		{
+			MethodInvoker action = delegate
+			{ textBoxData.Text =e.Messege; };
+			textBoxData.BeginInvoke(action);
+		}
+		
+		
+		void EditParametersbuttonClick(object sender, EventArgs e)
+		{
+			ProtocolParametersForm PPF;
+			if (UserControlProtocolParameters==null)
+			{
+				PPF = new ProtocolParametersForm(this,UserControlProtocolType);
+			}
+			else
+			{
+				PPF = new ProtocolParametersForm(this,UserControlProtocolParameters);
+			}
+			PPF.ShowDialog();
+		}
+		
+		public void SetNewUserControlProtocolParameters(IProtocolParameters ProtocolParameters)
+		{
+			this.UserControlProtocolParameters = ProtocolParameters;
 		}
 	}
 }

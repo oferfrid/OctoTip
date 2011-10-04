@@ -12,29 +12,30 @@ using System.Reflection;
 using System.IO;
 
 
-using OctoTip.OctoTipExperiments.Interfaces;
-using OctoTip.OctoTipExperiments.Attributes;
-using OctoTip.OctoTipExperiments.Base;
+using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.OctoTipExperiments.Core.Attributes;
+using OctoTip.OctoTipExperiments.Core.Base;
 
 namespace OctoTip.OctoTipExperiments.Core
 {
 	/// <summary>
-	/// Description of ProtocolHostProvider.
+	/// Description of ProtocolProvider.
 	/// </summary>
-	public static class ProtocolHostProvider
+	public static class ProtocolProvider
 	{
-		private static List<ProtocolHost> m_Protocols;
-		
-		public static List<ProtocolHost> Protocols
-		{
-			get
-			{
-				if (null == m_Protocols)
-					Reload();
-
-				return m_Protocols;
-			}
-		}
+		//TODO:remove unused enteries
+//		private static List<ProtocolHost> m_Protocols;
+//		
+//		public static List<ProtocolHost> Protocols
+//		{
+//			get
+//			{
+//				if (null == m_Protocols)
+//					Reload();
+//
+//				return m_Protocols;
+//			}
+//		}
 
 		public static List<Type> ProtocolsData
 		{
@@ -46,21 +47,21 @@ namespace OctoTip.OctoTipExperiments.Core
 		}
 		
 
-		public static void Reload()
-		{
-			if (null == m_Protocols)
-				m_Protocols = new List<ProtocolHost>();
-			else
-				m_Protocols.Clear();
-
-			List<Assembly> plugInAssemblies = LoadPlugInAssemblies();
-			List<IProtocol> plugIns = GetPlugIns(plugInAssemblies);
-
-			foreach (IProtocol Protocol in plugIns)
-			{
-				m_Protocols.Add(new ProtocolHost(Protocol));
-			}
-		}
+//		public static void Reload()
+//		{
+//			if (null == m_Protocols)
+//				m_Protocols = new List<ProtocolHost>();
+//			else
+//				m_Protocols.Clear();
+//
+//			List<Assembly> plugInAssemblies = LoadPlugInAssemblies();
+//			List<IProtocol> plugIns = GetPlugIns(plugInAssemblies);
+//
+//			foreach (IProtocol Protocol in plugIns)
+//			{
+//				m_Protocols.Add(new ProtocolHost(Protocol));
+//			}
+//		}
 
 		private static List<Assembly> LoadPlugInAssemblies()
 		{
@@ -112,11 +113,42 @@ namespace OctoTip.OctoTipExperiments.Core
 			return ProtocolList.ConvertAll<IProtocol>(delegate(Type t) { return Activator.CreateInstance(t) as IProtocol; });
 		}
 		
-		public static Protocol GetProtocol(Type ProtocolType)
+		public static Protocol GetProtocol(Type ProtocolType,IProtocolParameters ProtocolParameters)
 		{
-			return Activator.CreateInstance(ProtocolType) as Protocol;
+			return Activator.CreateInstance(ProtocolType,ProtocolParameters) as Protocol;
 		}
 		
+		
+		public static List<Type> GetProtocolStates(Type ProtocolType)
+		{
+			
+			List<Type> ProtocolStates = new List<Type>(0) ;
+			foreach (  MethodInfo mi in ProtocolType.GetMethods(BindingFlags.Static |BindingFlags.Public))
+			{
+				if(mi.Name == "ProtocolStates")
+				{
+					ProtocolStates = mi.Invoke(null,null) as List<Type>;
+				}
+			
+			}
+			return ProtocolStates;
+		}
+		
+		
+		public static List<Type> GetStateNextStates(Type StateType)
+		{
+			
+			List<Type> NextStates = new List<Type>(0) ;
+			foreach (  MethodInfo mi in StateType.GetMethods(BindingFlags.Static |BindingFlags.Public))
+			{
+				if(mi.Name == "NextStates")
+				{
+					NextStates = mi.Invoke(null,null) as List<Type>;
+				}
+			
+			}
+			return NextStates;
+		}
 		
 		static List<Type> GetAvalbleProtocolPlugIns(List<Assembly> assemblies)
 		{
@@ -138,6 +170,36 @@ namespace OctoTip.OctoTipExperiments.Core
 
 			
 			return ProtocolList;
+		}
+		
+		
+		
+		public static IProtocolParameters GetProtocolParameters(Type ProtocolData)
+		{
+			Type ProtocolParametersType=null;
+			ConstructorInfo[] ProtocolConstructorInfos = ProtocolData.GetConstructors(BindingFlags.Public| BindingFlags.Instance);
+			foreach (ConstructorInfo ProtocolConstructorInfo in ProtocolConstructorInfos)
+			{
+				ParameterInfo[] ProtocolConstructorParameterInfos = ProtocolConstructorInfo.GetParameters();
+				foreach (ParameterInfo ProtocolConstructorParameterInfo in ProtocolConstructorParameterInfos)
+				{
+					
+					if (ProtocolConstructorParameterInfo.ParameterType.GetInterface("OctoTip.OctoTipExperiments.Core.Interfaces.IProtocolParameters")!=null)
+					{
+						ProtocolParametersType = ProtocolConstructorParameterInfo.ParameterType;
+						break;
+					}
+				}
+			}
+			IProtocolParameters  ProtocolParameters = Activator.CreateInstance(ProtocolParametersType) as IProtocolParameters;
+			return ProtocolParameters;
+		}
+		
+		public static FieldInfo[] GetProtocolParametersFields(IProtocolParameters ProtocolParameters )
+		//public static void GetProtocolParametersTypes(IProtocolParameters ProtocolParameters )
+		{
+			FieldInfo[] ProtocolParametersFields= ProtocolParameters.GetType().GetFields();
+			return ProtocolParametersFields;
 		}
 		
 	}

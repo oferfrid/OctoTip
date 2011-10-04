@@ -7,6 +7,8 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 using OctoTip.OctoTipLib;
 using OctoTip.OctoTipExperiments.Core;
@@ -36,7 +38,18 @@ namespace OctoTip.OctoTipTest
 //			RC.AddRobotJob(RP);
 //			
 //		
+		
 			
+//			List<Type> ProtocolList = availableTypes.FindAll(delegate(Type t)
+//			                                                 {
+//			                                                 	List<Type> interfaceTypes = new List<Type>(t.GetInterfaces());
+//			                                                 	object[] arr = t.GetCustomAttributes(typeof(ProtocolAttribute), true);
+//			                                                 	return !(arr == null || arr.Length == 0) && interfaceTypes.Contains(typeof(IProtocol));
+//			                                                 });
+//			
+			
+//			foreach (Type ProtocolData in ProtocolProvider.ProtocolsData)
+//            {
 //			foreach (Type ProtocolData in ProtocolHostProvider.ProtocolsData)
 //            {
 //				Console.WriteLine(ProtocolData.Name);
@@ -44,6 +57,8 @@ namespace OctoTip.OctoTipTest
 			
 			RobotWrapper RW = new RobotWrapper();
 			RW.RunScript("Temp");
+//				Console.WriteLine(ProtocolData.Name);
+//            }
 
 									
 			

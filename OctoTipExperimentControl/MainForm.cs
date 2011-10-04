@@ -11,10 +11,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using OctoTipExperimentControl;
+
 using OctoTip.OctoTipExperiments.Core;
-using OctoTip.OctoTipExperiments.Attributes;
-using OctoTip.OctoTipExperiments.Base;
+using OctoTip.OctoTipExperiments.Core.Attributes;
+using OctoTip.OctoTipExperiments.Core.Base;
 
 namespace OctoTip.OctoTipExperimentControl
 {
@@ -26,14 +26,7 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -47,7 +40,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			
-			List<Type> ProtocolsData =  ProtocolHostProvider.ProtocolsData;
+			List<Type> ProtocolsData =  ProtocolProvider.ProtocolsData;
 			
 			ToolStripItem[] ToolStripProtocols =new ToolStripItem[ProtocolsData.Count];
 			
@@ -110,13 +103,7 @@ namespace OctoTip.OctoTipExperimentControl
 			}
 			
 		}
-		
-		//TODO:Delete!
-		void Protocol1Click(object sender, EventArgs e)
-		{
-			
-		}
-		
+				
 		
 		#endregion
 		
