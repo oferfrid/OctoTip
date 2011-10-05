@@ -18,12 +18,6 @@ using OctoTip.OctoTipExperiments.Core.Base;
 
 //using System.Xml.Serialization;
 
-
-
-
-
-
-
 namespace OctoTip.OctoTipExperimentControl
 {
 	/// <summary>

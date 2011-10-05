@@ -12,6 +12,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.Msagl.Drawing;
+using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
@@ -28,7 +30,7 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		ProtocolParameters UserControlProtocolParameters;
 		
-		
+		Graph graph ;
 		Thread ProtocolworkerThread;
 		
 		
@@ -63,9 +65,6 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
 		{
-			
-			
-			
 			if (this.checkBoxStartPause.Checked)
 			{
 				if(UserControlProtocol.Status ==  Protocol.ProtocolStatus.Paused)
@@ -119,6 +118,8 @@ namespace OctoTip.OctoTipExperimentControl
 			UserControlProtocol = ProtocolProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
 			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
 			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
+			UserControlProtocol.StateStatusChange += HandleStateStatusChange;
+			
 			((MainForm)this.ParentForm).AddProtocol(this.UserControlProtocol);
 			
 			ActivateUserControlProtocol();
@@ -138,24 +139,35 @@ namespace OctoTip.OctoTipExperimentControl
 
 		void ProtocolUserControlLoad(object sender, EventArgs e)
 		{
-			this.textBoxData.Text = UserControlProtocolType.Name + Environment.NewLine;
-			foreach (Type t in ProtocolProvider.GetProtocolStates(UserControlProtocolType))
-			{
-				this.textBoxData.Text+= "," + t.Name + "(" ;
-				foreach (Type ts in ProtocolProvider.GetStateNextStates(t))
-				{
-					this.textBoxData.Text+=ts.Name + ",";
-				}
-				this.textBoxData.Text+= ")";
-			}
-			this.textBoxData.Text+= Environment.NewLine;
-			
-			
-			//ProtocolParametersForm PPF = new ProtocolParametersForm(this,UserControlProtocolType);
-			//PPF.ShowDialog();
+			DrowProtocolStates();
 		}
 		
 		
+		private void DrowProtocolStates()
+		{
+			graph = new Graph("graph");
+			foreach (Type t in ProtocolProvider.GetProtocolStates(UserControlProtocolType))
+			{
+				string NodeFrom = ProtocolProvider.GetNodeDesplayName(t);
+				foreach (Type ts in ProtocolProvider.GetStateNextStates(t))
+				{
+					voidUpdateEdgeNodesAttr(graph.AddEdge(NodeFrom,ProtocolProvider.GetNodeDesplayName(ts)));	
+				}
+			}
+
+			graph.Attr.LayerDirection =LayerDirection.LR;
+			
+			ProtocolStatesViewer.Graph = graph;
+			
+			
+			
+		}
+		
+		private void voidUpdateEdgeNodesAttr(Edge E)
+		{
+			E.SourceNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Ellipse ;
+			E.TargetNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Ellipse ;
+		}
 		private void HandleProtocolStatusChanged(object sender, ProtocolStatusChangeEventArgs e)
 		{
 			
@@ -247,7 +259,22 @@ namespace OctoTip.OctoTipExperimentControl
 			{ textBoxData.Text =e.Messege; };
 			textBoxData.BeginInvoke(action);
 		}
-		
+		private void HandleStateStatusChange(object sender, ProtocolStateStatusChangeEventArgs e)
+		{
+			Node N;
+			if(e.PreviuseState!=null)
+			{
+			 N = graph.FindNode(ProtocolProvider.GetNodeDesplayName(e.PreviuseState));
+			N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Transparent;
+			}
+			
+			 N = graph.FindNode(ProtocolProvider.GetNodeDesplayName(e.CurentState));
+			N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MediumSeaGreen;
+			
+			MethodInvoker action = delegate
+			{ ProtocolStatesViewer.Refresh(); };
+			ProtocolStatesViewer.BeginInvoke(action);
+		}
 		
 		void EditParametersbuttonClick(object sender, EventArgs e)
 		{

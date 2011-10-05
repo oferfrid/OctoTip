@@ -206,5 +206,14 @@ namespace OctoTip.OctoTipExperiments.Core
 		}
 		
 		
+		public static string GetNodeDesplayName(Type StateType)
+		{
+			return ((StateAttribute)StateType.GetCustomAttributes(typeof(StateAttribute),true)[0]).DisplayName;
+		}
+		public static string GetNodeDesplayName(State State)
+		{
+			return GetNodeDesplayName(State.GetType());
+		}
+		
 	}
 }

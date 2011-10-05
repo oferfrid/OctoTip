@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IncubateState.cs" />
     <Compile Include="MPNProtocol.cs" />
     <Compile Include="MPNProtocolParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

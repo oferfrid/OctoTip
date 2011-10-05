@@ -17,7 +17,6 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	/// <summary>
 	/// Description of State.
 	/// </summary>
-	
 	public abstract class State:IState
 	{
 		
@@ -37,6 +36,9 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		}
 		
 		public abstract void DoWork();
+	
+
+public enum Status {StateChanged,StateStatusChanged }
 		
 	}
 }

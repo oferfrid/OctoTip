@@ -18,17 +18,18 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	/// <summary>
 	/// Description of MPNProtocol.
 	/// </summary>
-	[ProtocolAttribute("Preform an MPN Evaluarion Of coulture")]
+	[Protocol("Preform an MPN Evaluarion Of coulture")]
 	public class MPNProtocol:Protocol
 	{
 		
 		#region static
 		public static new List<Type> ProtocolStates()
 		{
-			return new List<Type>{ typeof(WaitState)};
+			return new List<Type>{ typeof(WaitState),typeof(IncubateState)};
 		}
 		#endregion
 		
+		int Cycle =0;
 		
 		public MPNProtocol():base()
 		{
@@ -51,13 +52,30 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		protected override void OnProtocolStart()
 		{
 			//throw new NotImplementedException();
-			this.CurentState = new WaitState(this,0);
+			
+			while(Cycle<MPNProtocolParameters.WaitTimes.Length)
+			{
+				this.ChangeState( new WaitState(this,MPNProtocolParameters.WaitTimes[Cycle]));
+				CurentState.DoWork();
+				Cycle++;
+				if (!(Cycle<MPNProtocolParameters.WaitTimes.Length))
+				{
+					break;
+				}
+				this.ChangeState( new IncubateState(this,MPNProtocolParameters.WaitTimes[Cycle]));
+				CurentState.DoWork();
+				Cycle++;
+			}
+			
+			
+			
 		}
 		
-		protected override void OnProtocolEnd()
+		
+		
+		protected MPNProtocolParameters MPNProtocolParameters
 		{
-			//throw new NotImplementedException();
-			this.CurentState = null;
+			get{return (MPNProtocolParameters)this.ProtocolParameters;}
 		}
 	}
 }

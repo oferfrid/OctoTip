@@ -31,6 +31,15 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Msagl">
+      <HintPath>..\OctoTipExperiments\OctoTipExperimentsProtocols\Microsoft Automatic Graph Layout\bin\Microsoft.Msagl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Msagl.Drawing">
+      <HintPath>..\OctoTipExperiments\OctoTipExperimentsProtocols\Microsoft Automatic Graph Layout\bin\Microsoft.Msagl.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Msagl.GraphViewerGdi">
+      <HintPath>..\OctoTipExperiments\OctoTipExperimentsProtocols\Microsoft Automatic Graph Layout\bin\Microsoft.Msagl.GraphViewerGdi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>

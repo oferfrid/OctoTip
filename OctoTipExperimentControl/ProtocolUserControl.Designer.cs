@@ -37,32 +37,23 @@ namespace OctoTip.OctoTipExperimentControl
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProtocolUserControl));
-			this.textBoxStatus = new System.Windows.Forms.TextBox();
 			this.textBoxData = new System.Windows.Forms.TextBox();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.checkBoxStartPause = new System.Windows.Forms.CheckBox();
 			this.EditParametersbutton = new System.Windows.Forms.Button();
+			this.ProtocolStatesViewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
+			this.textBoxStatus = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
-			// 
-			// textBoxStatus
-			// 
-			this.textBoxStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left)));
-			this.textBoxStatus.Location = new System.Drawing.Point(3, 3);
-			this.textBoxStatus.Multiline = true;
-			this.textBoxStatus.Name = "textBoxStatus";
-			this.textBoxStatus.Size = new System.Drawing.Size(185, 89);
-			this.textBoxStatus.TabIndex = 0;
 			// 
 			// textBoxData
 			// 
 			this.textBoxData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxData.Location = new System.Drawing.Point(194, 3);
+			this.textBoxData.Location = new System.Drawing.Point(390, 47);
 			this.textBoxData.Multiline = true;
 			this.textBoxData.Name = "textBoxData";
-			this.textBoxData.Size = new System.Drawing.Size(267, 89);
+			this.textBoxData.Size = new System.Drawing.Size(71, 45);
 			this.textBoxData.TabIndex = 1;
 			// 
 			// buttonStop
@@ -107,24 +98,63 @@ namespace OctoTip.OctoTipExperimentControl
 			this.EditParametersbutton.UseVisualStyleBackColor = false;
 			this.EditParametersbutton.Click += new System.EventHandler(this.EditParametersbuttonClick);
 			// 
+			// ProtocolStatesViewer
+			// 
+			this.ProtocolStatesViewer.AsyncLayout = false;
+			this.ProtocolStatesViewer.AutoScroll = true;
+			this.ProtocolStatesViewer.BackwardEnabled = false;
+			this.ProtocolStatesViewer.BuildHitTree = true;
+			this.ProtocolStatesViewer.CurrentLayoutMethod = Microsoft.Msagl.GraphViewerGdi.LayoutMethod.SugiyamaScheme;
+			this.ProtocolStatesViewer.ForwardEnabled = false;
+			this.ProtocolStatesViewer.Graph = null;
+			this.ProtocolStatesViewer.LayoutAlgorithmSettingsButtonVisible = true;
+			this.ProtocolStatesViewer.LayoutEditingEnabled = true;
+			this.ProtocolStatesViewer.Location = new System.Drawing.Point(3, 3);
+			this.ProtocolStatesViewer.MouseHitDistance = 0.05D;
+			this.ProtocolStatesViewer.Name = "ProtocolStatesViewer";
+			this.ProtocolStatesViewer.NavigationVisible = true;
+			this.ProtocolStatesViewer.NeedToCalculateLayout = true;
+			this.ProtocolStatesViewer.PanButtonPressed = false;
+			this.ProtocolStatesViewer.SaveAsImageEnabled = true;
+			this.ProtocolStatesViewer.SaveAsMsaglEnabled = true;
+			this.ProtocolStatesViewer.SaveButtonVisible = true;
+			this.ProtocolStatesViewer.SaveGraphButtonVisible = true;
+			this.ProtocolStatesViewer.SaveInVectorFormatEnabled = true;
+			this.ProtocolStatesViewer.Size = new System.Drawing.Size(381, 89);
+			this.ProtocolStatesViewer.TabIndex = 5;
+			this.ProtocolStatesViewer.ToolBarIsVisible = false;
+			this.ProtocolStatesViewer.ZoomF = 1D;
+			this.ProtocolStatesViewer.ZoomFraction = 0.5D;
+			this.ProtocolStatesViewer.ZoomWindowThreshold = 0.05D;
+			// 
+			// textBoxStatus
+			// 
+			this.textBoxStatus.Location = new System.Drawing.Point(390, 3);
+			this.textBoxStatus.Multiline = true;
+			this.textBoxStatus.Name = "textBoxStatus";
+			this.textBoxStatus.Size = new System.Drawing.Size(71, 38);
+			this.textBoxStatus.TabIndex = 6;
+			// 
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+			this.Controls.Add(this.textBoxStatus);
+			this.Controls.Add(this.ProtocolStatesViewer);
 			this.Controls.Add(this.EditParametersbutton);
 			this.Controls.Add(this.checkBoxStartPause);
 			this.Controls.Add(this.buttonStop);
 			this.Controls.Add(this.textBoxData);
-			this.Controls.Add(this.textBoxStatus);
 			this.Name = "ProtocolUserControl";
 			this.Size = new System.Drawing.Size(530, 95);
 			this.Load += new System.EventHandler(this.ProtocolUserControlLoad);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox textBoxStatus;
+		private Microsoft.Msagl.GraphViewerGdi.GViewer ProtocolStatesViewer;
 		private System.Windows.Forms.Button EditParametersbutton;
 		private System.Windows.Forms.CheckBox checkBoxStartPause;
 		private System.Windows.Forms.Button buttonStop;
-		private System.Windows.Forms.TextBox textBoxStatus;
 		private System.Windows.Forms.TextBox textBoxData;
 	}
 }
