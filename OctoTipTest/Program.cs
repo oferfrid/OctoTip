@@ -23,28 +23,34 @@ namespace OctoTip.OctoTipTest
 		public static void Main(string[] args)
 		{
 			
-			XmlSerializer writer =	new XmlSerializer(typeof(WaitState));
+			//XmlSerializer writer =	new XmlSerializer(typeof(WaitState));
 			
 			
 			
 			
-//			Console.WriteLine("start init RobotJobsQueueServiceClient!");
-//
-//
-//			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
-//
-//
-//			Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
-//
-//
-//
-//			OctoTip.OctoTipLib.RobotJob RP = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "NewScript1.esc");
-//			Random r = new Random();
-//			RP.Priority = (double)r.Next()/int.MaxValue;
-//			//RC.TestConnection("tt");
-//			RC.AddRobotJob(RP);
-//
-//
+			Console.WriteLine("start init RobotJobsQueueServiceClient!");
+
+
+			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
+
+
+			Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
+
+
+			List<RobotJobParameter> RP= new List<RobotJobParameter>();
+			RP.Add(new RobotJobParameter("v1",RobotJobParameterType.Number,4.4));
+			RP.Add(new RobotJobParameter("v1",RobotJobParameterType.String,"dfasd"));
+			       
+			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "Temp.esc",RP);
+			//RJ.CreateScript();
+			
+			
+			Random r = new Random();
+			RJ.Priority = (double)r.Next()/int.MaxValue;
+			RC.TestConnection("tt");
+			RC.AddRobotJob(RJ);
+
+
 			
 			
 //			List<Type> ProtocolList = availableTypes.FindAll(delegate(Type t)

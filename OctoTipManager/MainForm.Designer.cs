@@ -49,6 +49,8 @@ namespace OctoTip.OctoTipManager
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
 			this.dataGridViewRobotJobsQueue = new System.Windows.Forms.DataGridView();
+			this.checkBoxStartPuse = new System.Windows.Forms.CheckBox();
+			this.buttonStop = new System.Windows.Forms.Button();
 			this.checkBoxServerState = new System.Windows.Forms.CheckBox();
 			this.ClearLogButton = new System.Windows.Forms.Button();
 			this.txtLog = new System.Windows.Forms.TextBox();
@@ -115,14 +117,14 @@ namespace OctoTip.OctoTipManager
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
 			this.saveAsToolStripMenuItem.Text = "Save As...";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
 			// 
 			// loadToolStripMenuItem
 			// 
 			this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-			this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.loadToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
 			this.loadToolStripMenuItem.Text = "Open...";
 			this.loadToolStripMenuItem.Click += new System.EventHandler(this.LoadToolStripMenuItemClick);
 			// 
@@ -171,6 +173,8 @@ namespace OctoTip.OctoTipManager
 			// 
 			// splitVertical.Panel2
 			// 
+			this.splitVertical.Panel2.Controls.Add(this.checkBoxStartPuse);
+			this.splitVertical.Panel2.Controls.Add(this.buttonStop);
 			this.splitVertical.Panel2.Controls.Add(this.checkBoxServerState);
 			this.splitVertical.Size = new System.Drawing.Size(713, 386);
 			this.splitVertical.SplitterDistance = 477;
@@ -187,6 +191,32 @@ namespace OctoTip.OctoTipManager
 			this.dataGridViewRobotJobsQueue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(471, 355);
 			this.dataGridViewRobotJobsQueue.TabIndex = 0;
+			// 
+			// checkBoxStartPuse
+			// 
+			this.checkBoxStartPuse.Appearance = System.Windows.Forms.Appearance.Button;
+			this.checkBoxStartPuse.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.checkBoxStartPuse.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPuse.Image")));
+			this.checkBoxStartPuse.Location = new System.Drawing.Point(86, 359);
+			this.checkBoxStartPuse.Name = "checkBoxStartPuse";
+			this.checkBoxStartPuse.Size = new System.Drawing.Size(39, 24);
+			this.checkBoxStartPuse.TabIndex = 3;
+			this.checkBoxStartPuse.Text = "Start";
+			this.checkBoxStartPuse.UseVisualStyleBackColor = true;
+			this.checkBoxStartPuse.CheckedChanged += new System.EventHandler(this.CheckBoxStartPuseCheckedChanged);
+			// 
+			// buttonStop
+			// 
+			this.buttonStop.Enabled = false;
+			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
+			this.buttonStop.Location = new System.Drawing.Point(131, 359);
+			this.buttonStop.Name = "buttonStop";
+			this.buttonStop.Size = new System.Drawing.Size(41, 24);
+			this.buttonStop.TabIndex = 2;
+			this.buttonStop.Text = "Stop";
+			this.buttonStop.UseVisualStyleBackColor = true;
+			this.buttonStop.Click += new System.EventHandler(this.ButtonStopClick);
 			// 
 			// checkBoxServerState
 			// 
@@ -277,6 +307,8 @@ namespace OctoTip.OctoTipManager
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button buttonStop;
+		private System.Windows.Forms.CheckBox checkBoxStartPuse;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;

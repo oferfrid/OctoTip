@@ -10,12 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Xml.Serialization;
-
 using OctoTip.OctoTipLib;
 
 namespace OctoTip.OctoTipManager
@@ -33,6 +33,8 @@ namespace OctoTip.OctoTipManager
 		ServiceHost host = null;
 		Uri baseAddress = new Uri("http://localhost:"+ ConfigurationManager.AppSettings["ListeningPort"] +"/RobotJobsQueueListener");
 		
+		private Thread RobotWorkerThread;
+		private RobotWorker FormRobotWorker ;
 		
 		public MainForm()
 		{
@@ -48,6 +50,8 @@ namespace OctoTip.OctoTipManager
 			BindRobotJobsQueue();
 			
 			RJQ = new RobotJobsQueue();
+			FormRobotWorker = new RobotWorker();
+			RobotWorkerThread = new Thread(FormRobotWorker.StartReadingQueue);
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -236,10 +240,8 @@ namespace OctoTip.OctoTipManager
 			
 		}
 		
-		
 		void LoadToolStripMenuItemClick(object sender, EventArgs e)
 		{
-		
 			OpenFileDialog  OpenFileDialog1 = new OpenFileDialog ();
 			OpenFileDialog1.Filter = "XML File|*.XML";
 			OpenFileDialog1.Title = "Load a Job File";
@@ -250,12 +252,54 @@ namespace OctoTip.OctoTipManager
 			{
 				LoadRobotJobQueueFile(OpenFileDialog1.FileName);
 			}
-			
+		}
+		
+		void CheckBoxStartPuseCheckedChanged(object sender, EventArgs e)
+		{
+			if (this.checkBoxStartPuse.Checked)
+			{
+				if (!RobotWorkerThread.IsAlive)
+				{//init RobotWorkerThread
+					RobotWorkerThread.Abort();
+					RobotWorkerThread = null;
+					RobotWorkerThread = new Thread(FormRobotWorker.StartReadingQueue);
+				}
+				
+				if (FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Paused)
+				{// reqest resume
+					FormRobotWorker.RequestResume();
+					buttonStop.Enabled = true;
+				}
+				else if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Stopped)
+				{// Start Thred
+					RobotWorkerThread.Start();
+					buttonStop.Enabled = true;
+				}
+			}
+			else
+			{
+				if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Started)
+				{// reqest resume
+					FormRobotWorker.RequestPause();
+					buttonStop.Enabled = true;
+				}
+			}
 			
 		}
+		void ButtonStopClick(object sender, EventArgs e)
+		{
+			
+			FormRobotWorker.RequestStop();
+			buttonStop.Enabled=false;
+			checkBoxStartPuse.Checked = false;
+		}
 		#endregion
-		
 	}
 	
 	
+	
+	
 }
+
+
+

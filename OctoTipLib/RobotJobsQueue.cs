@@ -27,8 +27,8 @@ namespace OctoTip.OctoTipLib
 		{
 			this.Sort();
 			RobotJob RJ = this[0];
-			 this.RemoveAt(0);
-			 return RJ;
+			this.RemoveAt(0);
+			return RJ;
 			
 			
 		}
@@ -36,17 +36,17 @@ namespace OctoTip.OctoTipLib
 		
 		public void InsertRobotJob(RobotJob RJ)
 		{
-		     int index = this.BinarySearch(RJ);
-        if (index < 0)
-        {
-            this.Insert(~index, RJ);
-        }
-        else
-        {
-        	this.Insert(index, RJ);
-        }
+			int index = this.BinarySearch(RJ);
+			if (index < 0)
+			{
+				this.Insert(~index, RJ);
+			}
+			else
+			{
+				this.Insert(index, RJ);
+			}
 		}
-	
+		
 	}
 	
 	

@@ -60,6 +60,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotJobsQueueService.cs" />
+    <Compile Include="RobotWorker.cs" />
     <Compile Include="RobotWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
