@@ -287,15 +287,15 @@ namespace OctoTip.OctoTipLib
 					                                                                     	switch (RJP.Type)
 					                                                                     	{
 					                                                                     		case RobotJobParameterType.Number:
-					                                                                     			Value = Convert.ToString(RJP.doubleValue);
+					                                                                     			V = Convert.ToString(RJP.doubleValue);
 					                                                                     			break;
 					                                                                     			case RobotJobParameterType.String:
-					                                                                     			Value = string.Format("\"{0}\"",RJP.stringValue);
+					                                                                     			V = string.Format("\"{0}\"",RJP.stringValue);
 					                                                                     			break;
 					                                                                     	}
 					                                                                     	return V;
 					                                                                     }).ToArray());
-					
+					file.WriteLine(Value);
 					file.Close();
 
 				}

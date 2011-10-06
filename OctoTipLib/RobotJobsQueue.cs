@@ -18,6 +18,23 @@ namespace OctoTip.OctoTipLib
 	public class RobotJobsQueue:List<RobotJob>
 	{
 		
+		public event EventHandler<RobotJobsQueueChangedEventArgs> RobotJobsQueueChanged;
+		
+		private  void OnRobotJobsQueueChanged(RobotJobsQueueChangedEventArgs e)
+		{
+			// Make a temporary copy of the event to avoid possibility of
+			// a race condition if the last subscriber unsubscribes
+			// immediately after the null check and before the event is raised.
+			EventHandler<RobotJobsQueueChangedEventArgs> handler = RobotJobsQueueChanged;
+			if (handler != null)
+			{
+				handler(this, e);
+			}
+		}
+		
+		
+		
+		
 		public RobotJobsQueue():base()
 		{
 			
@@ -31,11 +48,12 @@ namespace OctoTip.OctoTipLib
 				this.Sort();
 				RJ = this[0];
 				this.RemoveAt(0);
+				OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("remove 1"));
 			}
 			return RJ;
-			
-		}
 		
+		}
+				
 		
 		public Guid InsertRobotJob(RobotJob RJ)
 		{
@@ -49,11 +67,23 @@ namespace OctoTip.OctoTipLib
 			{
 				this.Insert(index, RJ);
 			}
-			
+			OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("Insert 1"));
 			return UniqueID;
 		}
 		
 	}
+	public class RobotJobsQueueChangedEventArgs : EventArgs
+	{
+	private string _Massege	;
+	public RobotJobsQueueChangedEventArgs(string Massege)
+		{
+	this._Massege = Massege;
+	}
 	
+	public string Massege
+	{
+		get {return _Massege;}
+	}
+	}
 	
 }

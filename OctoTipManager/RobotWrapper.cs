@@ -117,14 +117,14 @@ namespace OctoTip.OctoTipManager
 				while(ScriptStatus == SC_ScriptStatus.SS_BUSY && !_ShouldStop)
 				{		
 					
-					System.Threading.Thread.Sleep(1000);
+					System.Threading.Thread.Sleep(100);
 					// Handeling pause request
 					if (_ShouldPause)
 					{
 						Evo.Pause();
 						while (_ShouldPause)
 						{
-							System.Threading.Thread.Sleep(1000);
+							System.Threading.Thread.Sleep(100);
 						}
 						Evo.Resume();
 					}
@@ -182,7 +182,7 @@ namespace OctoTip.OctoTipManager
 		/// Runs a script on the Robot.
 		/// </summary>
 		/// <param name="ScriptName">Name of script</param>
-		public void RunScript(object _ScriptName)
+		public ScriptStatuses RunScript(object _ScriptName)
 		{		
 			string ScriptName =(string)_ScriptName;
 			ScriptStatuses STS = ScriptStatuses.Success;
@@ -206,6 +206,8 @@ namespace OctoTip.OctoTipManager
 			{
 				Logoff();
 			}
+			
+			return STS;
 		}
 
 		public bool ShouldStop

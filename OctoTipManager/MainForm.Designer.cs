@@ -48,7 +48,7 @@ namespace OctoTip.OctoTipManager
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
-			this.dataGridViewRobotJobsQueue = new System.Windows.Forms.DataGridView();
+			this.dataGridViewRobotJobsQueue = new OctoTip.OctoTipManager.ControlWrapper();
 			this.checkBoxStartPuse = new System.Windows.Forms.CheckBox();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.checkBoxServerState = new System.Windows.Forms.CheckBox();
@@ -183,13 +183,12 @@ namespace OctoTip.OctoTipManager
 			// dataGridViewRobotJobsQueue
 			// 
 			this.dataGridViewRobotJobsQueue.AllowUserToAddRows = false;
-			this.dataGridViewRobotJobsQueue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.dataGridViewRobotJobsQueue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridViewRobotJobsQueue.Location = new System.Drawing.Point(3, 28);
+			this.dataGridViewRobotJobsQueue.Location = new System.Drawing.Point(12, 28);
 			this.dataGridViewRobotJobsQueue.Name = "dataGridViewRobotJobsQueue";
 			this.dataGridViewRobotJobsQueue.ReadOnly = true;
 			this.dataGridViewRobotJobsQueue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(471, 355);
+			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(462, 346);
 			this.dataGridViewRobotJobsQueue.TabIndex = 0;
 			// 
 			// checkBoxStartPuse
@@ -307,6 +306,7 @@ namespace OctoTip.OctoTipManager
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private OctoTip.OctoTipManager.ControlWrapper dataGridViewRobotJobsQueue;
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.CheckBox checkBoxStartPuse;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -321,7 +321,6 @@ namespace OctoTip.OctoTipManager
 		private System.Windows.Forms.TextBox txtLog;
 		private System.Windows.Forms.Button ClearLogButton;
 		private System.Windows.Forms.CheckBox checkBoxServerState;
-		private System.Windows.Forms.DataGridView dataGridViewRobotJobsQueue;
 		private System.Windows.Forms.SplitContainer splitVertical;
 		private System.Windows.Forms.SplitContainer splitHorizontal;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

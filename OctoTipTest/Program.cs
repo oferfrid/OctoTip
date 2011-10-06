@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 using OctoTip.OctoTipExperiments.Protocols;
 using OctoTip.OctoTipLib;
 using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipManager;
+
 
 namespace OctoTip.OctoTipTest
 {
@@ -37,25 +37,30 @@ namespace OctoTip.OctoTipTest
 			Console.WriteLine("start init RobotJobsQueueServiceClient!");
 
 
-			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
+			
 
 
-			Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
+			
 
 
 			List<RobotJobParameter> RP= new List<RobotJobParameter>();
-			RP.Add(new RobotJobParameter("v1",RobotJobParameterType.Number,4.4));
+			RP.Add(new RobotJobParameter("v1",RobotJobParameterType.Number,Convert.ToInt32(args[0])));
 			RP.Add(new RobotJobParameter("v1",RobotJobParameterType.String,"dfasd"));
 			       
-			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\SampleData\" + "Temp.esc",RP);
+			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\" + "Temp.esc",RP);
 			//RJ.CreateScript();
 			
 			
 			Random r = new Random();
 			RJ.Priority = (double)r.Next()/int.MaxValue;
+			
+			RJ.CreateScript();
+			
+			
+			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
+			Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
 			RC.TestConnection("tt");
 			Guid G = RC.AddRobotJob(RJ);
-
 			Console.WriteLine(G);
 			Console.ReadKey();
 			

@@ -50,9 +50,25 @@ namespace OctoTip.OctoTipManager
 			BindRobotJobsQueue();
 			
 			RJQ = new RobotJobsQueue();
+			
+			RJQ.RobotJobsQueueChanged += RJQ_RobotJobsQueueChanged;
+			
 			FormRobotWorker = new RobotWorker();
 			RobotWorkerThread = new Thread(FormRobotWorker.StartReadingQueue);
+			
+			FormRobotWorker.StatusChanged += FormRobotWorker_StatusChanged;
 		}
+		
+		void RJQ_RobotJobsQueueChanged(object source,RobotJobsQueueChangedEventArgs e)
+		{
+			MethodInvoker dataGridViewRobotJobsQueueChange = delegate
+			{
+				UpdateRobotJobsQueue();
+				dataGridViewRobotJobsQueue.Update();
+			};
+			dataGridViewRobotJobsQueue.BeginInvoke(dataGridViewRobotJobsQueueChange);
+		}
+		
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
@@ -72,7 +88,7 @@ namespace OctoTip.OctoTipManager
 				{
 					txtLog.Text = myLogger.Log;
 					//TODO: Quick-and-dirty solution for updating the Q
-					UpdateRobotJobsQueue();
+					//UpdateRobotJobsQueue();
 				})
 			      );
 		}
@@ -118,10 +134,19 @@ namespace OctoTip.OctoTipManager
 		private void UpdateRobotJobsQueue()
 		{
 			WriteRobotJobQueue2File("RobotJobsQueueState.xml");
+			
+			if (RJQ.Count>0)
+			{
 			BindingSource BS = new BindingSource();
 			BS.DataSource =RJQ;
 			dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
+			
 			dataGridViewRobotJobsQueue.DataSource = BS;
+			}
+			else
+			{
+				dataGridViewRobotJobsQueue.DataSource = null;
+			}
 		}
 		
 		
@@ -140,7 +165,7 @@ namespace OctoTip.OctoTipManager
 			//RobotJobsQueue S = new RobotJobsQueue();
 			RJQ = (RobotJobsQueue)reader.Deserialize(file);
 			file.Close();
-			UpdateRobotJobsQueue();
+			//UpdateRobotJobsQueue();
 		}
 		
 		#endregion
@@ -161,7 +186,7 @@ namespace OctoTip.OctoTipManager
 			{
 				RJQ.Remove((RobotJob)Row.DataBoundItem);
 			}
-			UpdateRobotJobsQueue();
+			
 			
 		}
 		void ClearLogButtonClick(object sender, EventArgs e)
@@ -269,20 +294,23 @@ namespace OctoTip.OctoTipManager
 				{// reqest resume
 					FormRobotWorker.RequestResume();
 					buttonStop.Enabled = true;
+					checkBoxStartPuse.Text = "Pause";
 				}
 				else if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Stopped)
 				{// Start Thred
 					RobotWorkerThread.Start();
 					buttonStop.Enabled = true;
+					checkBoxStartPuse.Text = "Pause";
 				}
 			}
 			else
 			{
 				if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.WaitingForQueuedItems||
-				  FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.RunningJub)
+				   FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.RunningJub)
 				{// reqest resume
 					FormRobotWorker.RequestPause();
 					buttonStop.Enabled = true;
+					checkBoxStartPuse.Text = "Start";
 				}
 			}
 			
@@ -294,7 +322,49 @@ namespace OctoTip.OctoTipManager
 			buttonStop.Enabled=false;
 			checkBoxStartPuse.Checked = false;
 		}
+		
+		void FormRobotWorker_StatusChanged(object sender, RobotWorkerStatusChangeEventArgs e)
+		{
+			myLogger.Add(string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Messege));
+			
+		}
+		
+		
+		
 		#endregion
+		
+		void DataGridViewRobotJobsQueueDataError(object sender, DataGridViewDataErrorEventArgs anError)
+		{			
+			myLogger.Add("Error happened " + anError.Context.ToString());
+
+			if (anError.Context == DataGridViewDataErrorContexts.Commit)
+			{
+				myLogger.Add("Commit error");
+			}
+			if (anError.Context == DataGridViewDataErrorContexts.CurrentCellChange)
+			{
+				myLogger.Add("Cell change");
+			}
+			if (anError.Context == DataGridViewDataErrorContexts.Parsing)
+			{
+				myLogger.Add("parsing error");
+			}
+			if (anError.Context == DataGridViewDataErrorContexts.LeaveControl)
+			{
+				myLogger.Add("leave control error");
+			}
+
+			if ((anError.Exception) is  System.Data.ConstraintException)
+			{
+				DataGridView view = (DataGridView)sender;
+				view.Rows[anError.RowIndex].ErrorText = "an error";
+				view.Rows[anError.RowIndex].Cells[anError.ColumnIndex].ErrorText = "an error";
+
+				anError.ThrowException = false;
+			}
+
+		}
+		
 	}
 	
 	
