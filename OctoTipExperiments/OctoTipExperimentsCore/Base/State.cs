@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using OctoTip.OctoTipExperiments.Core.Interfaces;
 
@@ -18,10 +19,15 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	/// </summary>
 	public abstract class State:IState
 	{
+		
 		protected Protocol RunningInProtocol;
 		public State(Protocol RunningInProtocol )
 		{
 			this.RunningInProtocol = RunningInProtocol;
+		}
+		public State( )
+		{
+		
 		}
 		
 		public static  List<Type> NextStates()
@@ -30,6 +36,9 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		}
 		
 		public abstract void DoWork();
+	
+
+public enum Status {StateChanged,StateStatusChanged }
 		
 	}
 }

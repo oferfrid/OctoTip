@@ -34,9 +34,8 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 		/// Do not change the method contents inside the source code editor. The Forms designer might
 		/// not be able to load this method if it was changed manually.
 		/// </summary>
-		private void InitializeComponent()
+		private  void  InitializeComponent()
 		{
-			
 			// 
 			// DoubleArrayFieldUserControl
 			// 

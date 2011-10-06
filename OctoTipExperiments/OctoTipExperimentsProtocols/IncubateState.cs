@@ -9,7 +9,6 @@
 using System;
 using System.Collections.Generic;
 using System.Timers;
-	
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 
@@ -18,8 +17,8 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	/// <summary>
 	/// Description of WaitState.
 	/// </summary>
-	[State("Wait","What for sum time")]
-	public class WaitState:State
+	[State("Incubate","What for sum time in incubatir")]
+	public class IncubateState:State
 	{
 		
 		Timer tmr ;
@@ -27,19 +26,18 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		public TimeSpan PauseTime;
 		public DateTime PauseStarted;
 		
-
+		public int Cycle;
 		
 		public double minutes2Wait;
 		
-		public WaitState():base()
+		public IncubateState():base()
 		{
 			
 		}
 		
-		public WaitState(Protocol RunningInProtocol ,double minutes2Wait):base(RunningInProtocol)
+		public IncubateState(Protocol RunningInProtocol , double minutes2Wait ):base(RunningInProtocol)
 		{
-		
-			
+						
 			tmr = new Timer();       // Doesn't require any args
 			tmr.Interval = 100;
 			
@@ -59,7 +57,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(WaitState),typeof(IncubateState)};
+			return new List<Type>{typeof(WaitState)};
 		}
 		
 		public override void DoWork()
@@ -90,7 +88,6 @@ namespace OctoTip.OctoTipExperiments.Protocols
 			
 			tmr.Stop();
 			ZeroCounters();
-			
 			
 		}
 		

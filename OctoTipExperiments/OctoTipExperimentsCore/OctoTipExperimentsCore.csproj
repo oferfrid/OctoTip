@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="Attributes\ProtocolParameterAtribute.cs" />
     <Compile Include="Attributes\ProtocolAttribute.cs" />
+    <Compile Include="Attributes\StateAttribute.cs" />
     <Compile Include="Base\Protocol.cs" />
+    <Compile Include="Base\ProtocolParameters.cs" />
     <Compile Include="Base\State.cs" />
     <Compile Include="Interfaces\IProtocol.cs" />
     <Compile Include="Interfaces\IProtocolParameters.cs" />

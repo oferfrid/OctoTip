@@ -1,0 +1,10 @@
+Microsoft (r) Automatic Graph Layout 2007 redistributable code
+==============================================================
+The following files can be redistributed with your application:
+Microsoft.GLEE.dll
+Microsoft.GLEE.Drawing.dll
+Microsoft.GLEE.GraphViewerGDI.dll
+Microsoft.GLEE.pdb
+Microsoft.GLEE.Drawing.pdb
+Microsoft.GLEE.GraphViewerGDI.pdb
+

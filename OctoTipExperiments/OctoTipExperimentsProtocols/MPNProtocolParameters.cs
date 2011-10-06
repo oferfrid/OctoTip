@@ -8,7 +8,7 @@
  */
 using System;
 using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.OctoTipExperiments.Core.Base;
 
 namespace OctoTip.OctoTipExperiments.Protocols
 {
@@ -16,10 +16,8 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	/// Description of MPNProtocolParameters.
 	/// </summary>
 	
-	public struct MPNProtocolParameters :IProtocolParameters
+	public class MPNProtocolParameters :ProtocolParameters
 	{
-		[ProtocolParameterAtribute("Name")]
-		public string Name;
 		[ProtocolParameterAtribute("wait per cycle (minuts)")]
 		public double[] WaitTimes;
 	}

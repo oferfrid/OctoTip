@@ -135,6 +135,7 @@ namespace OctoTip.OctoTipManager
 			System.IO.StreamReader file = new System.IO.StreamReader(fileName);
 			//RobotJobsQueue S = new RobotJobsQueue();
 			RJQ = (RobotJobsQueue)reader.Deserialize(file);
+			file.Close();
 			UpdateRobotJobsQueue();
 		}
 		
@@ -220,13 +221,37 @@ namespace OctoTip.OctoTipManager
 		
 		void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			WriteRobotJobQueue2File("temp.xml"	);
+			
+			SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+			saveFileDialog1.Filter = "XML File|*.XML";
+			saveFileDialog1.Title = "Save a Job File";
+			saveFileDialog1.ShowDialog();
+
+			// If the file name is not an empty string open it for saving.
+			if(saveFileDialog1.FileName != "")
+			{
+				WriteRobotJobQueue2File(saveFileDialog1.FileName);
+			}
+			
+			
 		}
 		
 		
 		void LoadToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			LoadRobotJobQueueFile("temp.xml");
+		
+			OpenFileDialog  OpenFileDialog1 = new OpenFileDialog ();
+			OpenFileDialog1.Filter = "XML File|*.XML";
+			OpenFileDialog1.Title = "Load a Job File";
+			OpenFileDialog1.ShowDialog();
+
+			// If the file name is not an empty string open it for saving.
+			if(OpenFileDialog1.FileName != "")
+			{
+				LoadRobotJobQueueFile(OpenFileDialog1.FileName);
+			}
+			
+			
 		}
 		#endregion
 		
