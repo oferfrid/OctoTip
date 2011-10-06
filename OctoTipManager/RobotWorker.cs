@@ -19,6 +19,8 @@ namespace OctoTip.OctoTipManager
 	/// </summary>
 	public class RobotWorker
 	{
+
+
 		
 		
 		public RobotWorkerStatus _Status = RobotWorkerStatus.Stopped;
@@ -27,17 +29,17 @@ namespace OctoTip.OctoTipManager
 		// member will be accessed by multiple threads.
 		private volatile bool _ShouldStop = false;
 		private volatile bool _ShouldPause = false;
-		
+		private RobotWrapper Robot;		
 		
 		public RobotWorker()
 		{
+			Robot = new RobotWrapper();
+			Robot.StatusChangeEvent += OnRobot_StatusChangeEvent;
 		}
-		
-		
 		
 		public void StartReadingQueue()
 		{
-			_Status = RobotWorkerStatus.Started;
+			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,null,"Initilasing..."));
 			while (!_ShouldStop)
 			{
 				
@@ -45,7 +47,13 @@ namespace OctoTip.OctoTipManager
 				{
 					
 					RobotJob RJ =  MainForm.RJQ.GetNextRobotJob();
-					
+					if(RJ!=null)
+					{
+						RJ.CreateScript();
+						Robot.RunScript(RJ.ScriptFilePath);
+						
+						
+					}
 					
 				}
 				else
@@ -61,19 +69,45 @@ namespace OctoTip.OctoTipManager
 		
 		public void   RequestStop()
 		{
-			//OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stoping,"Trying to Stopped"));
 			_ShouldStop = true;
 		}
 		public void RequestPause()
 		{
-			//OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Pausing,"Trying to Pause"));
 			_ShouldPause  = true;
 		}
 		public void RequestResume()
 		{
-			//OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Starting,"Resuming"));
 			_ShouldPause  = false;
 			
+		}
+		
+		
+		// The event. Note that by using the generic EventHandler<T> event type
+		// we do not need to declare a separate delegate type.
+		public event EventHandler<RobotWorkerStatusChangeEventArgs> StatusChanged;
+		//The event-invoking method that derived classes can override.
+		public virtual void OnStatusChanged(RobotWorkerStatusChangeEventArgs e)
+		{
+			this._Status = e.RobotWorkerStatus;
+			// Make a temporary copy of the event to avoid possibility of
+			// a race condition if the last subscriber unsubscribes
+			// immediately after the null check and before the event is raised.
+			EventHandler<RobotWorkerStatusChangeEventArgs> handler = StatusChanged;
+			if (handler != null)
+			{
+				handler(this, e);
+			}
+		}
+		
+		
+		private void OnRobot_StatusChangeEvent(object sender, RobotWrapperEventArgs e)
+		{
+			switch (e.ScriptStatus)
+			{
+			case ScriptStatuses.Failed:
+				break;
+			}
+				
 		}
 		
 		
@@ -84,6 +118,39 @@ namespace OctoTip.OctoTipManager
 		}
 		
 		public enum RobotWorkerStatus
-		{Stopped,Started,Paused}
+		{Stopped,WaitingForQueuedItems,RunningJub,Paused}
+	}
+	
+	public class RobotWorkerStatusChangeEventArgs : EventArgs
+	{
+		
+		private RobotWorker.RobotWorkerStatus _RobotWorkerStatus;
+		private RobotJob _CurentJub;
+		private RobotJob _PreviuseJub;
+		private string _Message;
+		
+		public RobotWorkerStatusChangeEventArgs(RobotWorker.RobotWorkerStatus RobotWorkerStatus,RobotJob CurentJub,RobotJob PreviuseJub,string Message)
+		{
+			_RobotWorkerStatus = RobotWorkerStatus;
+			_CurentJub=CurentJub;
+			_PreviuseJub =PreviuseJub;
+			_Message = Message;
+		}
+		public RobotWorker.RobotWorkerStatus RobotWorkerStatus
+		{
+			get { return _RobotWorkerStatus; }
+		}
+		public RobotJob CurentJub
+		{
+			get { return _CurentJub; }
+		}
+		public RobotJob PreviuseJub
+		{
+			get { return PreviuseJub; }
+		}
+		public string Messege
+		{
+			get { return _Message; }
+		}
 	}
 }

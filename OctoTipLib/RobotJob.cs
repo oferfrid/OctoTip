@@ -21,25 +21,18 @@ namespace OctoTip.OctoTipLib
 	public class RobotJob : IComparable<RobotJob>
 	{
 		private enum ImpVarParams {Name=0, File=1, Type=2, DefaultValue=3, HasHeader=8};
-		
-		
+				
 		const string ImportVariableFunctionName = "ImportVariable";
-		
-		
-		public double _Priority;
-		
+				
+		private Guid _UniqueID;
 		private string _ScriptFilePath = string.Empty;
-		
-		public List<RobotJobParameter> RobotJobParameters;
-		
-		public string _ScriptName ;
+		private string _ScriptName ;
 		
 		public string ParametersFilePath = string.Empty;
 		public bool PrametersFileHasHeader = true;
-		
-		
 		public string Script;
-		
+		public double _Priority;
+		public List<RobotJobParameter> RobotJobParameters;		
 		#region RobotJob constructors
 
 		public RobotJob()
@@ -100,6 +93,13 @@ namespace OctoTip.OctoTipLib
 			set { _ScriptFilePath = value;}
 		}
 		
+		public Guid UniqueID
+		{
+			get { return _UniqueID; }
+			set { _UniqueID = value;}
+		}
+		
+		
 		public string RobotJobDisplayParameters
 		{
 			get {
@@ -146,6 +146,8 @@ namespace OctoTip.OctoTipLib
 		}
 		#endregion
 		
+		#region public Methods
+				
 		public int CompareTo(RobotJob RJ)
 		{
 			return this.Priority.CompareTo(RJ.Priority);
@@ -156,6 +158,26 @@ namespace OctoTip.OctoTipLib
 		{
 			List<RobotJobParameter> ScriptParameters = ParseScriptParameters();
 		}
+		
+		public void CreateScript()
+		{
+			// Write the string to a file.
+			string ScriptFileName = string.Format("{0}\\{1}",ConfigurationManager.AppSettings["DefultScriptFolder"],ScriptName);
+			StreamWriter file = new StreamWriter(ScriptFileName);
+			file.Write(Script);
+			file.Close();
+			_ScriptFilePath = ScriptFileName;
+			WriteParameterFile();
+		}
+		
+		public Guid GenerateUniqueID()
+		{
+			UniqueID = Guid.NewGuid();
+			return UniqueID;
+		}
+		#endregion
+		
+		#region Private Methods
 		
 		private List<RobotJobParameter> ParseScriptParameters()
 		{
@@ -215,7 +237,7 @@ namespace OctoTip.OctoTipLib
 			PrametersFileHasHeader = true;
 			
 		}
-		#region Private
+
 		
 		
 		private void InitScript( string ScriptPath)
@@ -282,17 +304,8 @@ namespace OctoTip.OctoTipLib
 		}
 		#endregion
 		
-		public void CreateScript()
-		{
-			// Write the string to a file.
-			string ScriptFileName = string.Format("{0}\\{1}",ConfigurationManager.AppSettings["DefultScriptFolder"],ScriptName);
-			StreamWriter file = new StreamWriter(ScriptFileName);
-			file.Write(Script);
-			file.Close();
-			_ScriptFilePath = ScriptFileName;
-			WriteParameterFile();
-		}
 		
+			
 		
 	}
 	

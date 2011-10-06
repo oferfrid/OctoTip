@@ -20,7 +20,7 @@ namespace OctoTip.OctoTipLib
 		string TestConnection(string name);
 		
 		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/AddRobotJob", ReplyAction="http://tempuri.org/IRobotJobsQueueService/AddRobotJobResponse")]
-		void AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ);
+		System.Guid AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ);
 		
 		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/GetRobotStatus", ReplyAction="http://tempuri.org/IRobotJobsQueueService/GetRobotStatusResponse")]
 		string GetRobotStatus();
@@ -65,9 +65,9 @@ namespace OctoTip.OctoTipLib
 			return base.Channel.TestConnection(name);
 		}
 		
-		public void AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ)
+		public System.Guid AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ)
 		{
-			base.Channel.AddRobotJob(RJ);
+			return base.Channel.AddRobotJob(RJ);
 		}
 		
 		public string GetRobotStatus()

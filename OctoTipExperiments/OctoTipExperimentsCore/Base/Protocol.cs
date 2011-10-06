@@ -221,7 +221,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		private State _PreviuseState;
 		private State.Status _StateStatus;
 		
-		public ProtocolStateStatusChangeEventArgs(State CurentState,State PreviuseState,State.Status StateStatus,string Messege)
+		public ProtocolStateStatusChangeEventArgs(State CurentState,State PreviuseState,State.Status StateStatus,string Message)
 		{
 			this._CurentState  = CurentState;
 			this._PreviuseState  = PreviuseState;

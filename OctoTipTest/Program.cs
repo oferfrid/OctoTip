@@ -21,11 +21,11 @@ namespace OctoTip.OctoTipTest
 	
 	class Program
 	{
-		static void  HandleChangeStatusEvent(object sender, RobotWrapperEventArgs e)
-		{
-			Console.WriteLine("received this message: {0}", e.ScriptTerminationStatus.ToString());
-		}
-		
+//		static void  HandleChangeStatusEvent(object sender, RobotWrapperEventArgs e)
+//		{
+//			Console.WriteLine("received this message: {0}", e.ScriptTerminationStatus.ToString());
+//		}
+//		
 		public static void Main(string[] args)
 		{
 			
@@ -54,9 +54,10 @@ namespace OctoTip.OctoTipTest
 			Random r = new Random();
 			RJ.Priority = (double)r.Next()/int.MaxValue;
 			RC.TestConnection("tt");
-			RC.AddRobotJob(RJ);
+			Guid G = RC.AddRobotJob(RJ);
 
-
+			Console.WriteLine(G);
+			Console.ReadKey();
 			
 			
 //			List<Type> ProtocolList = availableTypes.FindAll(delegate(Type t)
@@ -75,47 +76,47 @@ namespace OctoTip.OctoTipTest
 			//            }
 	
 			
-			
-			RobotWrapper RW = new RobotWrapper();
-			//pub.RaiseCustomEvent += HandleCustomEvent;
-			RW.StatusChangeEvent += HandleChangeStatusEvent; //HandleChangeStatusEvent;
-			
-			try
-			{
-				Thread T = new Thread(RW.RunScript);
-				T.Start("temp");
-				System.Threading.Thread.Sleep(20000);
-				Console.WriteLine("requesting pause");
-				RW.RequestPause();
-
-				System.Threading.Thread.Sleep(20000);
-				Console.WriteLine("requesting resume");
-				RW.RequestResume();
-				
-//				RW.CheckScriptStatus();
-				
-//				if (STS != ScriptTerminationStatusType.Success)
-//				{
-//					Console.WriteLine("script failed");
-//				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.ToString());
-				Console.Write("Press any key to continue . . . ");
-				Console.ReadKey(true);
-			}
+//			
 //			RobotWrapper RW = new RobotWrapper();
-//			RW.RunScript("Temp");
-//				Console.WriteLine(ProtocolData.Name);
-			//            }
-
-			
-			Console.Write("Press any key to continue . . . ");
-			Console.ReadKey(true);
-			
+//			//pub.RaiseCustomEvent += HandleCustomEvent;
+//			RW.StatusChangeEvent += HandleChangeStatusEvent; //HandleChangeStatusEvent;
+//			
+//			try
+//			{
+//				Thread T = new Thread(RW.RunScript);
+//				T.Start("temp");
+//				System.Threading.Thread.Sleep(20000);
+//				Console.WriteLine("requesting pause");
+//				RW.RequestPause();
+//
+//				System.Threading.Thread.Sleep(20000);
+//				Console.WriteLine("requesting resume");
+//				RW.RequestResume();
+//				
+////				RW.CheckScriptStatus();
+//				
+////				if (STS != ScriptTerminationStatusType.Success)
+////				{
+////					Console.WriteLine("script failed");
+////				}
+//			}
+//			catch (Exception e)
+//			{
+//				Console.WriteLine(e.ToString());
+//				Console.Write("Press any key to continue . . . ");
+//				Console.ReadKey(true);
+//			}
+////			RobotWrapper RW = new RobotWrapper();
+////			RW.RunScript("Temp");
+////				Console.WriteLine(ProtocolData.Name);
+//			//            }
+//
+//			
 //			Console.Write("Press any key to continue . . . ");
 //			Console.ReadKey(true);
+//			
+////			Console.Write("Press any key to continue . . . ");
+////			Console.ReadKey(true);
 		}
 		
 	}

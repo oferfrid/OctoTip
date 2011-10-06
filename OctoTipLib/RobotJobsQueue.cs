@@ -25,17 +25,21 @@ namespace OctoTip.OctoTipLib
 		
 		public RobotJob GetNextRobotJob()
 		{
-			this.Sort();
-			RobotJob RJ = this[0];
-			this.RemoveAt(0);
+			RobotJob RJ = null;
+			if (this.Count>0)
+			{
+				this.Sort();
+				RJ = this[0];
+				this.RemoveAt(0);
+			}
 			return RJ;
-			
 			
 		}
 		
 		
-		public void InsertRobotJob(RobotJob RJ)
+		public Guid InsertRobotJob(RobotJob RJ)
 		{
+			Guid UniqueID =  RJ.GenerateUniqueID();
 			int index = this.BinarySearch(RJ);
 			if (index < 0)
 			{
@@ -45,6 +49,8 @@ namespace OctoTip.OctoTipLib
 			{
 				this.Insert(index, RJ);
 			}
+			
+			return UniqueID;
 		}
 		
 	}

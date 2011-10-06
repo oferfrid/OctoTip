@@ -106,7 +106,7 @@ namespace OctoTip.OctoTipManager
 		{
 			SC_ScriptStatus   ScriptStatusEx = SC_ScriptStatus.SS_UNKNOWN;
 			SC_ScriptStatus   ScriptStatus   = SC_ScriptStatus.SS_UNKNOWN;
-			ScriptTerminationStatusType  STS = ScriptTerminationStatusType.RuntimeError;
+			ScriptStatuses  STS = ScriptStatuses.RuntimeError;
 			DateTime               StartTime = DateTime.Now;
 			TimeSpan                      TS = DateTime.Now - StartTime;
 
@@ -137,22 +137,22 @@ namespace OctoTip.OctoTipManager
 				switch (ScriptStatusEx)
 				{				
 					case SC_ScriptStatus.SS_IDLE:
-						STS = ScriptTerminationStatusType.Success;
+						STS = ScriptStatuses.Success;
 					break;
 					case SC_ScriptStatus.SS_BUSY:
-						STS = ScriptTerminationStatusType.Running;
+						STS = ScriptStatuses.Running;
 					break;	
 					case SC_ScriptStatus.SS_STOPPED:
-						STS = ScriptTerminationStatusType.TerminatedByUser;
+						STS = ScriptStatuses.TerminatedByUser;
 					break;
 					case SC_ScriptStatus.SS_ABORTED:
-						STS = ScriptTerminationStatusType.TerminatedByUser;
+						STS = ScriptStatuses.TerminatedByUser;
 					break;
 					case SC_ScriptStatus.SS_STATUS_ERROR:
-						STS = ScriptTerminationStatusType.Failed;
+						STS = ScriptStatuses.Failed;
 					break;
 					default:
-						STS = ScriptTerminationStatusType.RuntimeError;
+						STS = ScriptStatuses.RuntimeError;
 					break;
 				}
 				
@@ -160,7 +160,7 @@ namespace OctoTip.OctoTipManager
 				if (_ShouldStop)
 				{
 					Evo.Stop();
-					STS = ScriptTerminationStatusType.TerminatedByUser;
+					STS = ScriptStatuses.TerminatedByUser;
 				}
 				
 			}
@@ -168,7 +168,7 @@ namespace OctoTip.OctoTipManager
 			{
 				myLogger.Add("Run Script Error");
 				myLogger.Add(e.ToString());
-				STS = ScriptTerminationStatusType.Failed;
+				STS = ScriptStatuses.Failed;
 				
 				throw e;
 			}
@@ -185,7 +185,7 @@ namespace OctoTip.OctoTipManager
 		public void RunScript(object _ScriptName)
 		{		
 			string ScriptName =(string)_ScriptName;
-			ScriptTerminationStatusType STS = ScriptTerminationStatusType.Success;
+			ScriptStatuses STS = ScriptStatuses.Success;
 			
 			try
 			{
@@ -198,7 +198,7 @@ namespace OctoTip.OctoTipManager
 			{
 				myLogger.Add("Run Script Error");
 				myLogger.Add(e.ToString());
-				STS = ScriptTerminationStatusType.Failed;
+				STS = ScriptStatuses.Failed;
 				OnStatusChangeEvent(new RobotWrapperEventArgs(STS));
 				throw e;
 			}
@@ -236,18 +236,18 @@ namespace OctoTip.OctoTipManager
 	
 	}
 	
-	public enum ScriptTerminationStatusType
+	public enum ScriptStatuses
 	{Success=0, Running=1, RuntimeError=2, Failed=3, TerminatedByUser = 4};
 	
 	public class RobotWrapperEventArgs : EventArgs
 	{
-		private ScriptTerminationStatusType ScriptTerm;
-		public RobotWrapperEventArgs(ScriptTerminationStatusType _ScriptTerm)
+		private ScriptStatuses ScriptTerm;
+		public RobotWrapperEventArgs(ScriptStatuses _ScriptTerm)
 		{
 			ScriptTerm = _ScriptTerm;
 		}
 		
-		public ScriptTerminationStatusType ScriptTerminationStatus
+		public ScriptStatuses ScriptStatus
 		{
 			get { return ScriptTerm; }
 			set { ScriptTerm = value;}

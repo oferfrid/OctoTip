@@ -107,8 +107,8 @@ namespace OctoTip.OctoTipManager
 			dataGridViewRobotJobsQueue.Columns.Add(column);
 			
 			column = new DataGridViewTextBoxColumn();
-			column.DataPropertyName = "ScriptFilePath";
-			column.Name = "Script File Path";
+			column.DataPropertyName = "UniqueID";
+			column.Name = "Unique ID";
 			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
 			dataGridViewRobotJobsQueue.Columns.Add(column);
 			//TODO: AutoResizeColumns
@@ -278,7 +278,8 @@ namespace OctoTip.OctoTipManager
 			}
 			else
 			{
-				if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Started)
+				if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.WaitingForQueuedItems||
+				  FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.RunningJub)
 				{// reqest resume
 					FormRobotWorker.RequestPause();
 					buttonStop.Enabled = true;

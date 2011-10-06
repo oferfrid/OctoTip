@@ -21,7 +21,7 @@ namespace OctoTip.OctoTipManager
 		[OperationContract]
 		string TestConnection(string name);
 		[OperationContract]
-		void AddRobotJob(RobotJob RJ);
+		Guid AddRobotJob(RobotJob RJ);
 		[OperationContract]
 		string GetRobotStatus();
 	}
@@ -47,12 +47,12 @@ namespace OctoTip.OctoTipManager
 		}
 		
 		
-		public void AddRobotJob(RobotJob RJ)
+		public Guid AddRobotJob(RobotJob RJ)
 		{
-			OctoTip.OctoTipManager.MainForm.RJQ.InsertRobotJob(RJ);
-			string response = string.Format("Added new job, {0}", RJ.ScriptName );
-			
-			logger.Add(response);
+			Guid UniqueID = OctoTip.OctoTipManager.MainForm.RJQ.InsertRobotJob(RJ);
+			string Messege = string.Format("Added new job, {0} as UniqueID: {1}", RJ.ScriptName,UniqueID );
+			logger.Add(Messege);
+			return UniqueID;
 		}
 		
 		
