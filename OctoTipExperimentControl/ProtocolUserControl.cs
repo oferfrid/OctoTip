@@ -61,6 +61,27 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		
 		
+		private void InitUserControlProtocol()
+		{
+			
+			if (UserControlProtocol!=null)
+			{
+				//remove the courent Protocol from the List;
+				
+				((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
+				this.UserControlProtocol = null;
+			}
+			
+			UserControlProtocol = ProtocolProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
+			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
+			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
+			UserControlProtocol.StateStatusChange += HandleStateStatusChange;
+			
+			((MainForm)this.ParentForm).AddProtocol(this.UserControlProtocol);
+			
+			ActivateUserControlProtocol();		
+		}
+		
 		#region Handeling events
 		
 		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
@@ -104,30 +125,6 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		
 		
-		private void InitUserControlProtocol()
-		{
-			
-			if (UserControlProtocol!=null)
-			{
-				//remove the courent Protocol from the List;
-				
-				((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
-				this.UserControlProtocol = null;
-			}
-			
-			UserControlProtocol = ProtocolProvider.GetProtocol(UserControlProtocolType,UserControlProtocolParameters);
-			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
-			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
-			UserControlProtocol.StateStatusChange += HandleStateStatusChange;
-			
-			((MainForm)this.ParentForm).AddProtocol(this.UserControlProtocol);
-			
-			ActivateUserControlProtocol();
-			
-			
-			
-		}
-		
 		void ButtonStopClick(object sender, EventArgs e)
 		{
 
@@ -135,39 +132,7 @@ namespace OctoTip.OctoTipExperimentControl
 			//checkBoxStartPause.Checked = false;
 		}
 		
-		#endregion
-
-		void ProtocolUserControlLoad(object sender, EventArgs e)
-		{
-			DrowProtocolStates();
-		}
 		
-		
-		private void DrowProtocolStates()
-		{
-			graph = new Graph("graph");
-			foreach (Type t in ProtocolProvider.GetProtocolStates(UserControlProtocolType))
-			{
-				string NodeFrom = ProtocolProvider.GetNodeDesplayName(t);
-				foreach (Type ts in ProtocolProvider.GetStateNextStates(t))
-				{
-					voidUpdateEdgeNodesAttr(graph.AddEdge(NodeFrom,ProtocolProvider.GetNodeDesplayName(ts)));	
-				}
-			}
-
-			graph.Attr.LayerDirection =LayerDirection.LR;
-			
-			ProtocolStatesViewer.Graph = graph;
-			
-			
-			
-		}
-		
-		private void voidUpdateEdgeNodesAttr(Edge E)
-		{
-			E.SourceNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Ellipse ;
-			E.TargetNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Ellipse ;
-		}
 		private void HandleProtocolStatusChanged(object sender, ProtocolStatusChangeEventArgs e)
 		{
 			
@@ -184,22 +149,23 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Start";
-					
-					
-					
+					MethodInvoker checkBoxStartPauseStopaction = delegate
+					{
+						checkBoxStartPause.Checked = false;
+					};
+					checkBoxStartPause.BeginInvoke(checkBoxStartPauseStopaction);
+					DrowProtocolStates();
 					break;
 				case Protocol.ProtocolStatus.Stoping:
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Start";
-					
-					
+
 					break;
 				case Protocol.ProtocolStatus.Started:
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Pause";
-					
 					
 					break;
 				case Protocol.ProtocolStatus.Starting:
@@ -207,20 +173,17 @@ namespace OctoTip.OctoTipExperimentControl
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Pause";
 					
-					
 					break;
 				case Protocol.ProtocolStatus.Paused:
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Resturt";
 					
-					
 					break;
 				case Protocol.ProtocolStatus.Pausing:
 					buttonStopEnabled = false;
 					checkBoxStartPauseEnabled = false;
 					checkBoxStartPauseText = "Resturt";
-					
 					
 					break;
 					
@@ -248,7 +211,6 @@ namespace OctoTip.OctoTipExperimentControl
 				checkBoxStartPause.Text = checkBoxStartPauseText ;
 				//checkBoxStartPause.Checked = checkBoxStartPauseChecked;
 				//checkBoxStartPause.Image = checkBoxStartPauseImage;
-				
 			};
 			checkBoxStartPause.BeginInvoke(checkBoxStartPauseaction);
 		}
@@ -264,17 +226,55 @@ namespace OctoTip.OctoTipExperimentControl
 			Node N;
 			if(e.PreviuseState!=null)
 			{
-			 N = graph.FindNode(ProtocolProvider.GetNodeDesplayName(e.PreviuseState));
-			N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Transparent;
+				N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.PreviuseState));
+				N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Transparent;
 			}
 			
-			 N = graph.FindNode(ProtocolProvider.GetNodeDesplayName(e.CurentState));
+			N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurentState));
 			N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MediumSeaGreen;
 			
 			MethodInvoker action = delegate
 			{ ProtocolStatesViewer.Refresh(); };
 			ProtocolStatesViewer.BeginInvoke(action);
 		}
+		
+		
+		#endregion
+
+		void ProtocolUserControlLoad(object sender, EventArgs e)
+		{
+			DrowProtocolStates();
+		}
+		
+		#region Private mathods
+		
+		private void DrowProtocolStates()
+		{
+			graph = new Graph("graph");
+			foreach (Type t in ProtocolProvider.GetProtocolStates(UserControlProtocolType))
+			{
+				string NodeFrom = ProtocolProvider.GetStateDesplayName(t);
+				foreach (Type ts in ProtocolProvider.GetStateNextStates(t))
+				{
+					UpdateEdgeNodesAttr(graph.AddEdge(NodeFrom,ProtocolProvider.GetStateDesplayName(ts)));
+				}
+			}
+
+			graph.Attr.LayerDirection =LayerDirection.LR;
+			
+			ProtocolStatesViewer.Graph = graph;
+			
+			
+			
+		}
+		
+		private void UpdateEdgeNodesAttr(Edge E)
+		{
+			E.SourceNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Ellipse ;
+			E.TargetNode.Attr.Shape = Microsoft.Msagl.Drawing.Shape.Ellipse ;
+		}
+		
+		#endregion
 		
 		void EditParametersbuttonClick(object sender, EventArgs e)
 		{
@@ -295,5 +295,37 @@ namespace OctoTip.OctoTipExperimentControl
 			this.UserControlProtocolParameters = ProtocolParameters;
 			InitUserControlProtocol();
 		}
+		
+		void ProtocolStatesViewerSelectionChanged(object sender, EventArgs e)
+		{
+			object selectedObject = ProtocolStatesViewer.SelectedObject;
+			
+			if ( selectedObject!= null)
+			{
+				if (selectedObject is Edge)
+				{
+					Edge SelectedEdge = selectedObject as Edge;
+				}
+				else if (selectedObject is Node)
+				{
+					Node SelectedNode = selectedObject as Node;
+					string DescriptionAttribute = ProtocolProvider.GetStateDescription(ProtocolProvider.GetStatePlugInByDesplayName(SelectedNode.Id));
+					ProtocolStatesViewer.SetToolTip(new ToolTip(),DescriptionAttribute);
+				}
+
+				
+			}
+
+			//here you can use e.Attr.Id to get back to your data
+			//this.gViewer.SetToolTip(toolTip1, String.Format("node {0}", (selectedObject as Node).Attr.Id));
+			ProtocolStatesViewer.Invalidate();
+			
+
+			
+		}
 	}
 }
+
+
+
+

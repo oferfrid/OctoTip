@@ -126,6 +126,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ProtocolStatesViewer.ZoomF = 1D;
 			this.ProtocolStatesViewer.ZoomFraction = 0.5D;
 			this.ProtocolStatesViewer.ZoomWindowThreshold = 0.05D;
+			this.ProtocolStatesViewer.SelectionChanged += new System.EventHandler(this.ProtocolStatesViewerSelectionChanged);
 			// 
 			// textBoxStatus
 			// 

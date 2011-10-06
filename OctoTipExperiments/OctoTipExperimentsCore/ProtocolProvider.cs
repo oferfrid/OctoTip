@@ -121,7 +121,7 @@ namespace OctoTip.OctoTipExperiments.Core
 			return GetAvalbleProtocolPlugIns(LoadPlugInAssemblies());
 		}
 		
-		
+				
 		static List<Type> GetAvalbleProtocolPlugIns(List<Assembly> assemblies)
 		{
 			List<Type> availableTypes = new List<Type>();
@@ -142,6 +142,41 @@ namespace OctoTip.OctoTipExperiments.Core
 
 			
 			return ProtocolList;
+		}
+		
+		
+		public static Type  GetStatePlugInByDesplayName(string StateDesplayName)
+		{
+			return GetStatePlugInByDesplayName(LoadPlugInAssemblies(),StateDesplayName);
+		}
+		
+				
+		static Type GetStatePlugInByDesplayName(List<Assembly> assemblies,string StateDesplayName)
+		{
+			List<Type> availableTypes = new List<Type>();
+
+			foreach (Assembly currentAssembly in assemblies)
+			{
+				availableTypes.AddRange(currentAssembly.GetTypes());
+			}
+
+			// get a list of objects that implement the IProtocol interface AND
+			// have the CalculationPlugInAttribute
+			List<Type> StateList = availableTypes.FindAll(delegate(Type t)
+			                                                 {
+			                                                 	List<Type> interfaceTypes = new List<Type>(t.GetInterfaces());
+			                                                 	StateAttribute[] arr = t.GetCustomAttributes(typeof(StateAttribute), true) as StateAttribute[];
+			                                                 	bool IsState = false;
+			                                                 	foreach (StateAttribute SA in arr)
+			                                                 	{
+			                                                 		IsState = SA.DisplayName ==StateDesplayName;
+			                                                 	}
+			                                                 	return  IsState &&!(arr == null || arr.Length == 0) && interfaceTypes.Contains(typeof(IState));
+			                                                 });
+			
+			
+				
+			return StateList[0];
 		}
 		
 		
@@ -206,13 +241,22 @@ namespace OctoTip.OctoTipExperiments.Core
 		}
 		
 		
-		public static string GetNodeDesplayName(Type StateType)
+		public static string GetStateDesplayName(Type StateType)
 		{
 			return ((StateAttribute)StateType.GetCustomAttributes(typeof(StateAttribute),true)[0]).DisplayName;
 		}
-		public static string GetNodeDesplayName(State State)
+		public static string GetStateDesplayName(State State)
 		{
-			return GetNodeDesplayName(State.GetType());
+			return GetStateDesplayName(State.GetType());
+		}
+		
+		public static string GetStateDescription(Type StateType)
+		{
+			return ((StateAttribute)StateType.GetCustomAttributes(typeof(StateAttribute),true)[0]).Description;
+		}
+		public static string GetStateDescription(State State)
+		{
+			return GetStateDescription(State.GetType());
 		}
 		
 	}

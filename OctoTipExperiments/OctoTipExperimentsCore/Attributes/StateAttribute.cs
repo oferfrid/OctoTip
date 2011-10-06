@@ -17,7 +17,7 @@ namespace OctoTip.OctoTipExperiments.Core.Attributes
 	public class StateAttribute: Attribute
 	{
 		
-		public StateAttribute(string DisplayName,string description)
+		public StateAttribute(string DisplayName,string Description)
 		{
 			m_Description = Description;
 			m_DisplayName = DisplayName;
