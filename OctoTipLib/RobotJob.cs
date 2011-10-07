@@ -20,19 +20,22 @@ namespace OctoTip.OctoTipLib
 	[Serializable]
 	public class RobotJob : IComparable<RobotJob>
 	{
+		
+		
 		private enum ImpVarParams {Name=0, File=1, Type=2, DefaultValue=3, HasHeader=8};
-				
+		
 		const string ImportVariableFunctionName = "ImportVariable";
-				
+		
 		private Guid _UniqueID;
 		private string _ScriptFilePath = string.Empty;
 		private string _ScriptName ;
 		
+		public RobotJob.Status JobStatus = RobotJob.Status.Created;
 		public string ParametersFilePath = string.Empty;
 		public bool PrametersFileHasHeader = true;
 		public string Script;
 		public double _Priority;
-		public List<RobotJobParameter> RobotJobParameters;		
+		public List<RobotJobParameter> RobotJobParameters;
 		#region RobotJob constructors
 
 		public RobotJob()
@@ -108,7 +111,7 @@ namespace OctoTip.OctoTipLib
 				{
 					foreach (RobotJobParameter RJP in RobotJobParameters)
 					{
-						if(RJP.Type == RobotJobParameterType.Number)
+						if(RJP.Type == RobotJobParameter.ParameterType.Number)
 						{
 							ParamView += RJP.Name + "(" + RJP.Type.ToString() + ")=" + RJP.doubleValue.ToString() + "\n";
 						}
@@ -147,7 +150,7 @@ namespace OctoTip.OctoTipLib
 		#endregion
 		
 		#region public Methods
-				
+		
 		public int CompareTo(RobotJob RJ)
 		{
 			return this.Priority.CompareTo(RJ.Priority);
@@ -202,7 +205,7 @@ namespace OctoTip.OctoTipLib
 					for (int i=0;i< Names.Length;i++)
 					{
 						
-						RobotJobParameter RP = new RobotJobParameter(Names[i], (RobotJobParameterType)Convert.ToInt32(Types[i]));
+						RobotJobParameter RP = new RobotJobParameter(Names[i], (RobotJobParameter.ParameterType)Convert.ToInt32(Types[i]));
 						ScriptParameters.Add(RP);
 					}
 					
@@ -263,49 +266,60 @@ namespace OctoTip.OctoTipLib
 		{
 			if (ParametersFilePath!=string.Empty)
 			{
-			// Write the string to a file.
-			
-			//TODO:TestParameters
-			if ((RobotJobParameters==null || RobotJobParameters.Count<0) && ParametersFilePath !=string.Empty)
-			{
-				throw new Exception(string.Format("Script {0} contains parameter file, but parameters was not supplied",ParametersFilePath));
-			}
-			else
-			{
-				if (RobotJobParameters.Count>0)
+				// Write the string to a file.
+				
+				//TODO:TestParameters
+				if ((RobotJobParameters==null || RobotJobParameters.Count<0) && ParametersFilePath !=string.Empty)
 				{
-					StreamWriter file = new StreamWriter(ParametersFilePath);
-					
-					//return ProtocolList.ConvertAll<IProtocol>(delegate(Type t) { return Activator.CreateInstance(t) as IProtocol; });
-					
-					string Header = string.Join(",",RobotJobParameters.ConvertAll<string>(delegate(RobotJobParameter RJP) { return RJP.Name ; }).ToArray());
-
-					file.WriteLine(Header);
-					
-					string Value = string.Join(",",RobotJobParameters.ConvertAll<string>(delegate(RobotJobParameter RJP) { 
-					                                                                     	string V = string.Empty;
-					                                                                     	switch (RJP.Type)
-					                                                                     	{
-					                                                                     		case RobotJobParameterType.Number:
-					                                                                     			V = Convert.ToString(RJP.doubleValue);
-					                                                                     			break;
-					                                                                     			case RobotJobParameterType.String:
-					                                                                     			V = string.Format("\"{0}\"",RJP.stringValue);
-					                                                                     			break;
-					                                                                     	}
-					                                                                     	return V;
-					                                                                     }).ToArray());
-					file.WriteLine(Value);
-					file.Close();
-
+					throw new Exception(string.Format("Script {0} contains parameter file, but parameters was not supplied",ParametersFilePath));
 				}
-			}
+				else
+				{
+					if (RobotJobParameters.Count>0)
+					{
+						StreamWriter file = new StreamWriter(ParametersFilePath);
+						
+						//return ProtocolList.ConvertAll<IProtocol>(delegate(Type t) { return Activator.CreateInstance(t) as IProtocol; });
+						
+						string Header = string.Join(",",RobotJobParameters.ConvertAll<string>(delegate(RobotJobParameter RJP) { return RJP.Name ; }).ToArray());
+
+						file.WriteLine(Header);
+						
+						string Value = string.Join(",",RobotJobParameters.ConvertAll<string>(delegate(RobotJobParameter RJP) {
+						                                                                     	string V = string.Empty;
+						                                                                     	switch (RJP.Type)
+						                                                                     	{
+						                                                                     		case RobotJobParameter.ParameterType.Number:
+						                                                                     			V = Convert.ToString(RJP.doubleValue);
+						                                                                     			break;
+						                                                                     		case RobotJobParameter.ParameterType.String:
+						                                                                     			V = string.Format("\"{0}\"",RJP.stringValue);
+						                                                                     			break;
+						                                                                     	}
+						                                                                     	return V;
+						                                                                     }).ToArray());
+						file.WriteLine(Value);
+						file.Close();
+
+					}
+				}
 			}
 		}
 		#endregion
 		
+		public enum Status
+		{
+			Created,
+			Queued,
+			Enqueued,
+			Running, 
+			Paused,
+			Finished,
+			RuntimeError, 
+			Failed, 
+			TerminatedByUser
+		};
 		
-			
 		
 	}
 	
@@ -313,36 +327,33 @@ namespace OctoTip.OctoTipLib
 	public struct RobotJobParameter
 	{
 		public string Name;
-		public RobotJobParameterType Type;
+		public ParameterType Type;
 		public string stringValue;
 		public double? doubleValue;
 		
-		public RobotJobParameter(string Name, RobotJobParameterType Type)
+		public RobotJobParameter(string Name, ParameterType Type)
 		{
 			this.Name = Name;
 			this.Type = Type;
 			this.stringValue = string.Empty;
 			this.doubleValue = null;
 		}
-		public RobotJobParameter(string Name, RobotJobParameterType Type,string Value)
+		public RobotJobParameter(string Name, ParameterType Type,string Value)
 		{
 			this.Name = Name;
 			this.Type = Type;
 			this.stringValue = Value;
 			this.doubleValue = null;
 		}
-		public RobotJobParameter(string Name, RobotJobParameterType Type,double Value)
+		public RobotJobParameter(string Name, ParameterType Type,double Value)
 		{
 			this.Name = Name;
 			this.Type = Type;
 			this.doubleValue = Value;
 			this.stringValue = string.Empty;
 		}
-		
-		
+
+		public enum ParameterType
+		{String=1,Number=0};
 	}
-	
-	public enum RobotJobParameterType
-	{String=1,Number=0};
-	
 }

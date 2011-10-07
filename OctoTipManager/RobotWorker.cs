@@ -20,7 +20,8 @@ namespace OctoTip.OctoTipManager
 	public class RobotWorker
 	{
 
-
+		public  const string LOG_NAME = "OctoTipManager";
+		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
 		
 		public RobotWorkerStatus _Status = RobotWorkerStatus.Stopped;
@@ -30,6 +31,17 @@ namespace OctoTip.OctoTipManager
 		private volatile bool _ShouldStop = false;
 		private volatile bool _ShouldPause = false;
 		private RobotWrapper Robot;
+		
+		
+		public bool ShouldStop
+		{
+			get { return _ShouldStop;}
+		}
+		
+		public bool ShouldPause
+		{
+			get { return _ShouldPause;}
+		}
 		
 		public RobotWorker()
 		{
@@ -47,22 +59,25 @@ namespace OctoTip.OctoTipManager
 				if (!_ShouldPause && !Paused)
 				{
 					
-					RobotJob RJ =  MainForm.RJQ.GetNextRobotJob();
+					RobotJob RJ =  MainForm.FormRobotJobsQueue.GetNextRobotJob();
 					if(RJ!=null)
 					{
+						MainForm.FormRobotJobsQueueHestoryDictionary.Add(RJ.UniqueID,OctoTip.OctoTipLib.RobotJob.Status.Running);
 						RJ.CreateScript();
-						OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJub,RJ,"Running...."));
-						 ScriptStatuses STS = Robot.RunScript(RJ.ScriptFilePath);
+						OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,RJ,"Running...."));
+						OctoTip.OctoTipLib.RobotJob.Status STS = Robot.RunScript(RJ.ScriptFilePath);
+						//running ended
+						MainForm.FormRobotJobsQueueHestoryDictionary[RJ.UniqueID]=STS;
 						switch (STS)
 						{
-							case ScriptStatuses.Success:
-								OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Jub terminated Successfuly "));
+							case OctoTip.OctoTipLib.RobotJob.Status.Finished:
+								OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job terminated Successfuly "));
 								break;
-								case ScriptStatuses.TerminatedByUser:
-								OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Jub Terminated By the User "));
+							case OctoTip.OctoTipLib.RobotJob.Status.TerminatedByUser:
+								OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job Terminated By the User "));
 								break;
-								case ScriptStatuses.Failed:
-								OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Jub Failed"));
+							case OctoTip.OctoTipLib.RobotJob.Status.Failed:
+								OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job Failed"));
 								break;
 						}
 						
@@ -71,14 +86,14 @@ namespace OctoTip.OctoTipManager
 					
 				}
 				if (!Paused && _ShouldPause)
-					{
+				{
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,null,"Paused...."));
 					Paused = true;
 					Robot.RequestPause();
-					}
+				}
 				if (Paused && !_ShouldPause)
 				{
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJub,null,"Jub Resumed...."));
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Job Resumed...."));
 					Paused = false;
 					Robot.RequestResume();
 				}
@@ -94,15 +109,27 @@ namespace OctoTip.OctoTipManager
 		
 		public void   RequestStop()
 		{
+			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,null,"Paused...."));
 			_ShouldStop = true;
+			_ShouldPause = false;
+			
+			Robot.RequestStop();
 		}
 		public void RequestPause()
 		{
+			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,null,"Paused...."));
 			_ShouldPause  = true;
+			myLogger.Add("B4 asking RW Pause");
+			Robot.RequestPause();
+			myLogger.Add("after asking RW Pause");
 		}
 		public void RequestResume()
 		{
+			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Paused...."));
 			_ShouldPause  = false;
+			myLogger.Add("B4 asking RW Resume");
+			Robot.RequestResume();
+			myLogger.Add("after asking RW Resume");
 			
 		}
 		
@@ -129,9 +156,18 @@ namespace OctoTip.OctoTipManager
 		{
 			switch (e.ScriptStatus)
 			{
-				case ScriptStatuses.RuntimeError:
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJub,null,"Jub Runtime Error"));
+				case OctoTip.OctoTipLib.RobotJob.Status.RuntimeError:
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Job Runtime Error"));
 					break;
+				case OctoTip.OctoTipLib.RobotJob.Status.Paused:
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Job Paused"));
+					break;
+				case OctoTip.OctoTipLib.RobotJob.Status.Running:
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Job Resumed"));
+					break;
+					
+					
+					
 			}
 			
 		}
@@ -144,29 +180,29 @@ namespace OctoTip.OctoTipManager
 		}
 		
 		public enum RobotWorkerStatus
-		{Stopped,WaitingForQueuedItems,RunningJub,FinishRunningJub,Paused}
+		{Stopped,WaitingForQueuedItems,RunningJob,FinishRunningJob,Paused}
 	}
 	
 	public class RobotWorkerStatusChangeEventArgs : EventArgs
 	{
 		
 		private RobotWorker.RobotWorkerStatus _RobotWorkerStatus;
-		private RobotJob _CurentJub;
+		private RobotJob _CurentJob;
 		private string _Message;
 		
-		public RobotWorkerStatusChangeEventArgs(RobotWorker.RobotWorkerStatus RobotWorkerStatus,RobotJob CurentJub,string Message)
+		public RobotWorkerStatusChangeEventArgs(RobotWorker.RobotWorkerStatus RobotWorkerStatus,RobotJob CurentJob,string Message)
 		{
 			_RobotWorkerStatus = RobotWorkerStatus;
-			_CurentJub=CurentJub;
+			_CurentJob=CurentJob;
 			_Message = Message;
 		}
 		public RobotWorker.RobotWorkerStatus RobotWorkerStatus
 		{
 			get { return _RobotWorkerStatus; }
 		}
-		public RobotJob CurentJub
+		public RobotJob CurentJob
 		{
-			get { return _CurentJub; }
+			get { return _CurentJob; }
 		}
 		public string Messege
 		{

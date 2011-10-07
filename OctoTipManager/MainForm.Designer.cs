@@ -49,7 +49,7 @@ namespace OctoTip.OctoTipManager
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
 			this.dataGridViewRobotJobsQueue = new OctoTip.OctoTipManager.ControlWrapper();
-			this.checkBoxStartPuse = new System.Windows.Forms.CheckBox();
+			this.checkBoxStartPause = new System.Windows.Forms.CheckBox();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.checkBoxServerState = new System.Windows.Forms.CheckBox();
 			this.ClearLogButton = new System.Windows.Forms.Button();
@@ -173,7 +173,7 @@ namespace OctoTip.OctoTipManager
 			// 
 			// splitVertical.Panel2
 			// 
-			this.splitVertical.Panel2.Controls.Add(this.checkBoxStartPuse);
+			this.splitVertical.Panel2.Controls.Add(this.checkBoxStartPause);
 			this.splitVertical.Panel2.Controls.Add(this.buttonStop);
 			this.splitVertical.Panel2.Controls.Add(this.checkBoxServerState);
 			this.splitVertical.Size = new System.Drawing.Size(713, 386);
@@ -191,27 +191,28 @@ namespace OctoTip.OctoTipManager
 			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(462, 346);
 			this.dataGridViewRobotJobsQueue.TabIndex = 0;
 			// 
-			// checkBoxStartPuse
+			// checkBoxStartPause
 			// 
-			this.checkBoxStartPuse.Appearance = System.Windows.Forms.Appearance.Button;
-			this.checkBoxStartPuse.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-			this.checkBoxStartPuse.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPuse.Image")));
-			this.checkBoxStartPuse.Location = new System.Drawing.Point(86, 359);
-			this.checkBoxStartPuse.Name = "checkBoxStartPuse";
-			this.checkBoxStartPuse.Size = new System.Drawing.Size(39, 24);
-			this.checkBoxStartPuse.TabIndex = 3;
-			this.checkBoxStartPuse.Text = "Start";
-			this.checkBoxStartPuse.UseVisualStyleBackColor = true;
-			this.checkBoxStartPuse.CheckedChanged += new System.EventHandler(this.CheckBoxStartPuseCheckedChanged);
+			this.checkBoxStartPause.Appearance = System.Windows.Forms.Appearance.Button;
+			this.checkBoxStartPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.checkBoxStartPause.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPause.Image")));
+			this.checkBoxStartPause.Location = new System.Drawing.Point(86, 353);
+			this.checkBoxStartPause.Name = "checkBoxStartPause";
+			this.checkBoxStartPause.Size = new System.Drawing.Size(50, 30);
+			this.checkBoxStartPause.TabIndex = 3;
+			this.checkBoxStartPause.Text = "Start";
+			this.checkBoxStartPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.checkBoxStartPause.UseVisualStyleBackColor = true;
+			this.checkBoxStartPause.CheckedChanged += new System.EventHandler(this.CheckBoxStartPauseCheckedChanged);
 			// 
 			// buttonStop
 			// 
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-			this.buttonStop.Location = new System.Drawing.Point(131, 359);
+			this.buttonStop.Location = new System.Drawing.Point(142, 353);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(41, 24);
+			this.buttonStop.Size = new System.Drawing.Size(53, 30);
 			this.buttonStop.TabIndex = 2;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
@@ -308,7 +309,7 @@ namespace OctoTip.OctoTipManager
 		}
 		private OctoTip.OctoTipManager.ControlWrapper dataGridViewRobotJobsQueue;
 		private System.Windows.Forms.Button buttonStop;
-		private System.Windows.Forms.CheckBox checkBoxStartPuse;
+		private System.Windows.Forms.CheckBox checkBoxStartPause;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;

@@ -48,6 +48,7 @@ namespace OctoTip.OctoTipLib
 				this.Sort();
 				RJ = this[0];
 				this.RemoveAt(0);
+				RJ.JobStatus = RobotJob.Status.Enqueued;
 				OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("remove 1"));
 			}
 			return RJ;
@@ -58,6 +59,7 @@ namespace OctoTip.OctoTipLib
 		public Guid InsertRobotJob(RobotJob RJ)
 		{
 			Guid UniqueID =  RJ.GenerateUniqueID();
+			RJ.UniqueID = UniqueID;
 			int index = this.BinarySearch(RJ);
 			if (index < 0)
 			{
@@ -67,6 +69,7 @@ namespace OctoTip.OctoTipLib
 			{
 				this.Insert(index, RJ);
 			}
+			RJ.JobStatus = RobotJob.Status.Queued;
 			OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("Insert 1"));
 			return UniqueID;
 		}

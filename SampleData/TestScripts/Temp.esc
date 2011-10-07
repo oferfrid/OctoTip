@@ -1,5 +1,5 @@
-7FBC0CFA
-20111007_013000 Tecan           
+E7BECE38
+20111007_123432 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -127,7 +127,7 @@ V;200
 998;22;
 996;0;0;
 --{ RPG }--
-ImportVariable(v1#v2,"C:\Documents and Settings\Tecan\Desktop\XFile.csv",0#1,"1#asrg",0,1,0,1,1);
+ImportVariable(v1#v2,"C:\Documents and Settings\Tecan\Desktop\XFile.csv",0#1,"0#asrg",0,1,0,1,1);
 BeginLoop("V1","Wash");
 Wash(255,1,1,1,0,"3.0",500,"4.0",500,10,70,30,0,0,1000,0);
 EndLoop();

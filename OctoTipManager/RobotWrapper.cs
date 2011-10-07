@@ -102,11 +102,11 @@ namespace OctoTip.OctoTipManager
 		/// Runs in a loop to check script execution status.
 		/// Also checks if a pause or stop request arrived.
 		/// </summary>
-		private void CheckScriptStatus()
+		private RobotJob.Status CheckScriptStatus()
 		{
 			SC_ScriptStatus   ScriptStatusEx = SC_ScriptStatus.SS_UNKNOWN;
 			SC_ScriptStatus   ScriptStatus   = SC_ScriptStatus.SS_UNKNOWN;
-			ScriptStatuses  STS = ScriptStatuses.RuntimeError;
+			RobotJob.Status  STS = RobotJob.Status.RuntimeError;
 			DateTime               StartTime = DateTime.Now;
 			TimeSpan                      TS = DateTime.Now - StartTime;
 
@@ -116,17 +116,25 @@ namespace OctoTip.OctoTipManager
 				ScriptStatus   = Evo.GetScriptStatus(ScriptID);
 				while(ScriptStatus == SC_ScriptStatus.SS_BUSY && !_ShouldStop)
 				{		
-					
 					System.Threading.Thread.Sleep(100);
 					// Handeling pause request
 					if (_ShouldPause)
 					{
+						myLogger.Add("Robot B4 Pauseed");
 						Evo.Pause();
+						myLogger.Add("Robot Pauseed");
+						OnStatusChangeEvent(new RobotWrapperEventArgs(RobotJob.Status.Paused));
 						while (_ShouldPause)
 						{
 							System.Threading.Thread.Sleep(100);
 						}
+						if (!_ShouldStop)
+						{
+						myLogger.Add("Robot B4 Resume");
 						Evo.Resume();
+						myLogger.Add("Robot Resume");
+						OnStatusChangeEvent(new RobotWrapperEventArgs(RobotJob.Status.Running));
+						}
 					}
 					ScriptStatus = Evo.GetScriptStatus(ScriptID);
 				}				
@@ -137,22 +145,22 @@ namespace OctoTip.OctoTipManager
 				switch (ScriptStatusEx)
 				{				
 					case SC_ScriptStatus.SS_IDLE:
-						STS = ScriptStatuses.Success;
+						STS = RobotJob.Status.Finished;
 					break;
 					case SC_ScriptStatus.SS_BUSY:
-						STS = ScriptStatuses.Running;
+						STS = RobotJob.Status.Running;
 					break;	
 					case SC_ScriptStatus.SS_STOPPED:
-						STS = ScriptStatuses.TerminatedByUser;
+						STS = RobotJob.Status.TerminatedByUser;
 					break;
 					case SC_ScriptStatus.SS_ABORTED:
-						STS = ScriptStatuses.TerminatedByUser;
+						STS = RobotJob.Status.TerminatedByUser;
 					break;
 					case SC_ScriptStatus.SS_STATUS_ERROR:
-						STS = ScriptStatuses.Failed;
+						STS = RobotJob.Status.Failed;
 					break;
 					default:
-						STS = ScriptStatuses.RuntimeError;
+						STS = RobotJob.Status.RuntimeError;
 					break;
 				}
 				
@@ -160,7 +168,7 @@ namespace OctoTip.OctoTipManager
 				if (_ShouldStop)
 				{
 					Evo.Stop();
-					STS = ScriptStatuses.TerminatedByUser;
+					STS = RobotJob.Status.TerminatedByUser;
 				}
 				
 			}
@@ -168,24 +176,26 @@ namespace OctoTip.OctoTipManager
 			{
 				myLogger.Add("Run Script Error");
 				myLogger.Add(e.ToString());
-				STS = ScriptStatuses.Failed;
+				STS = RobotJob.Status.Failed;
 				
 				throw e;
 			}
 			finally
 			{
 				OnStatusChangeEvent(new RobotWrapperEventArgs(STS));
+				
 			}
+			return STS;
 		}
 		
 		/// <summary>
 		/// Runs a script on the Robot.
 		/// </summary>
 		/// <param name="ScriptName">Name of script</param>
-		public ScriptStatuses RunScript(object _ScriptName)
+		public RobotJob.Status RunScript(object _ScriptName)
 		{		
 			string ScriptName =(string)_ScriptName;
-			ScriptStatuses STS = ScriptStatuses.Success;
+			RobotJob.Status STS = RobotJob.Status.Finished;
 			
 			try
 			{
@@ -198,7 +208,7 @@ namespace OctoTip.OctoTipManager
 			{
 				myLogger.Add("Run Script Error");
 				myLogger.Add(e.ToString());
-				STS = ScriptStatuses.Failed;
+				STS = RobotJob.Status.Failed;
 				OnStatusChangeEvent(new RobotWrapperEventArgs(STS));
 				throw e;
 			}
@@ -232,24 +242,23 @@ namespace OctoTip.OctoTipManager
 		
 		public void RequestStop()
 		{
-			_ShouldStop  = true;	
+			_ShouldStop  = true;
+			_ShouldPause=false;
 						
-		}		
-	
+		}				
 	}
 	
-	public enum ScriptStatuses
-	{Success=0, Running=1, RuntimeError=2, Failed=3, TerminatedByUser = 4};
+	
 	
 	public class RobotWrapperEventArgs : EventArgs
 	{
-		private ScriptStatuses ScriptTerm;
-		public RobotWrapperEventArgs(ScriptStatuses _ScriptTerm)
+		private OctoTip.OctoTipLib.RobotJob.Status ScriptTerm;
+		public RobotWrapperEventArgs(OctoTip.OctoTipLib.RobotJob.Status _ScriptTerm)
 		{
 			ScriptTerm = _ScriptTerm;
 		}
 		
-		public ScriptStatuses ScriptStatus
+		public OctoTip.OctoTipLib.RobotJob.Status ScriptStatus
 		{
 			get { return ScriptTerm; }
 			set { ScriptTerm = value;}

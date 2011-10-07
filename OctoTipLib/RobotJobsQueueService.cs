@@ -22,6 +22,9 @@ namespace OctoTip.OctoTipLib
 		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/AddRobotJob", ReplyAction="http://tempuri.org/IRobotJobsQueueService/AddRobotJobResponse")]
 		System.Guid AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ);
 		
+		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/GetJobStatus", ReplyAction="http://tempuri.org/IRobotJobsQueueService/GetJobStatusResponse")]
+		OctoTip.OctoTipLib.RobotJob.Status GetJobStatus(System.Guid UniqueID);
+		
 		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/GetRobotStatus", ReplyAction="http://tempuri.org/IRobotJobsQueueService/GetRobotStatusResponse")]
 		string GetRobotStatus();
 	}
@@ -68,6 +71,11 @@ namespace OctoTip.OctoTipLib
 		public System.Guid AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ)
 		{
 			return base.Channel.AddRobotJob(RJ);
+		}
+		
+		public OctoTip.OctoTipLib.RobotJob.Status GetJobStatus(System.Guid UniqueID)
+		{
+			return base.Channel.GetJobStatus(UniqueID);
 		}
 		
 		public string GetRobotStatus()

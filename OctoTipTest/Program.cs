@@ -44,8 +44,8 @@ namespace OctoTip.OctoTipTest
 
 
 			List<RobotJobParameter> RP= new List<RobotJobParameter>();
-			RP.Add(new RobotJobParameter("v1",RobotJobParameterType.Number,Convert.ToInt32(args[0])));
-			RP.Add(new RobotJobParameter("v1",RobotJobParameterType.String,"dfasd"));
+			RP.Add(new RobotJobParameter("v1",RobotJobParameter.ParameterType.Number,Convert.ToInt32(args[0])));
+			RP.Add(new RobotJobParameter("v2",RobotJobParameter.ParameterType.String,"dfasd"));
 			       
 			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\" + "Temp.esc",RP);
 			//RJ.CreateScript();
@@ -62,7 +62,15 @@ namespace OctoTip.OctoTipTest
 			RC.TestConnection("tt");
 			Guid G = RC.AddRobotJob(RJ);
 			Console.WriteLine(G);
-			Console.ReadKey();
+				
+			
+//			Console.WriteLine("GetStatus?");
+//			Console.ReadKey();
+//			
+//			
+//			Console.WriteLine(RC.GetJobStatus(G));
+//			Console.WriteLine("exit?");
+//			Console.ReadKey();
 			
 			
 //			List<Type> ProtocolList = availableTypes.FindAll(delegate(Type t)

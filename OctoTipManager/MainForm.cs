@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Windows.Forms;
 using System.Configuration;
@@ -29,7 +30,9 @@ namespace OctoTip.OctoTipManager
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
 		
-		static public RobotJobsQueue RJQ;
+		static public RobotJobsQueue FormRobotJobsQueue;
+		static public Dictionary<Guid, OctoTip.OctoTipLib.RobotJob.Status> FormRobotJobsQueueHestoryDictionary;
+		
 		ServiceHost host = null;
 		Uri baseAddress = new Uri("http://localhost:"+ ConfigurationManager.AppSettings["ListeningPort"] +"/RobotJobsQueueListener");
 		
@@ -49,9 +52,10 @@ namespace OctoTip.OctoTipManager
 			
 			BindRobotJobsQueue();
 			
-			RJQ = new RobotJobsQueue();
+			FormRobotJobsQueue = new RobotJobsQueue();
+			FormRobotJobsQueueHestoryDictionary =new Dictionary<Guid, RobotJob.Status>();
 			
-			RJQ.RobotJobsQueueChanged += RJQ_RobotJobsQueueChanged;
+			FormRobotJobsQueue.RobotJobsQueueChanged += FormRobotJobsQueue_RobotJobsQueueChanged;
 			
 			FormRobotWorker = new RobotWorker();
 			RobotWorkerThread = new Thread(FormRobotWorker.StartReadingQueue);
@@ -59,7 +63,7 @@ namespace OctoTip.OctoTipManager
 			FormRobotWorker.StatusChanged += FormRobotWorker_StatusChanged;
 		}
 		
-		void RJQ_RobotJobsQueueChanged(object source,RobotJobsQueueChangedEventArgs e)
+		void FormRobotJobsQueue_RobotJobsQueueChanged(object source,RobotJobsQueueChangedEventArgs e)
 		{
 			MethodInvoker dataGridViewRobotJobsQueueChange = delegate
 			{
@@ -97,7 +101,7 @@ namespace OctoTip.OctoTipManager
 		{
 
 			BindingSource BS = new BindingSource();
-			BS.DataSource =RJQ;
+			BS.DataSource =FormRobotJobsQueue;
 			
 			dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
 			dataGridViewRobotJobsQueue.DataSource = BS;
@@ -135,10 +139,10 @@ namespace OctoTip.OctoTipManager
 		{
 			WriteRobotJobQueue2File("RobotJobsQueueState.xml");
 			
-			if (RJQ.Count>0)
+			if (FormRobotJobsQueue.Count>0)
 			{
 			BindingSource BS = new BindingSource();
-			BS.DataSource =RJQ;
+			BS.DataSource =FormRobotJobsQueue;
 			dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
 			
 			dataGridViewRobotJobsQueue.DataSource = BS;
@@ -154,7 +158,7 @@ namespace OctoTip.OctoTipManager
 		{
 			XmlSerializer writer =	new System.Xml.Serialization.XmlSerializer(typeof(RobotJobsQueue));
 			System.IO.StreamWriter file = new System.IO.StreamWriter(fileName);
-			writer.Serialize(file,RJQ );
+			writer.Serialize(file,FormRobotJobsQueue );
 			file.Close();
 		}
 		
@@ -163,7 +167,7 @@ namespace OctoTip.OctoTipManager
 			XmlSerializer reader =	new XmlSerializer(typeof(RobotJobsQueue));
 			System.IO.StreamReader file = new System.IO.StreamReader(fileName);
 			//RobotJobsQueue S = new RobotJobsQueue();
-			RJQ = (RobotJobsQueue)reader.Deserialize(file);
+			FormRobotJobsQueue = (RobotJobsQueue)reader.Deserialize(file);
 			file.Close();
 			//UpdateRobotJobsQueue();
 		}
@@ -184,7 +188,7 @@ namespace OctoTip.OctoTipManager
 			
 			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
 			{
-				RJQ.Remove((RobotJob)Row.DataBoundItem);
+				FormRobotJobsQueue.Remove((RobotJob)Row.DataBoundItem);
 			}
 			
 			
@@ -279,9 +283,9 @@ namespace OctoTip.OctoTipManager
 			}
 		}
 		
-		void CheckBoxStartPuseCheckedChanged(object sender, EventArgs e)
+		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
 		{
-			if (this.checkBoxStartPuse.Checked)
+			if (this.checkBoxStartPause.Checked)
 			{
 				if (!RobotWorkerThread.IsAlive)
 				{//init RobotWorkerThread
@@ -289,28 +293,30 @@ namespace OctoTip.OctoTipManager
 					RobotWorkerThread = null;
 					RobotWorkerThread = new Thread(FormRobotWorker.StartReadingQueue);
 				}
-				
-				if (FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Paused)
+				if (FormRobotWorker.ShouldPause)
 				{// reqest resume
+					myLogger.Add("in Requesting resume");
 					FormRobotWorker.RequestResume();
 					buttonStop.Enabled = true;
-					checkBoxStartPuse.Text = "Pause";
+					checkBoxStartPause.Text = "Pause";
 				}
+				//TODO:Move2 ShouldPause and not statuses
 				else if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Stopped)
 				{// Start Thred
 					RobotWorkerThread.Start();
 					buttonStop.Enabled = true;
-					checkBoxStartPuse.Text = "Pause";
+					checkBoxStartPause.Text = "Pause";
 				}
 			}
 			else
 			{
 				if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.WaitingForQueuedItems||
-				   FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.RunningJub)
-				{// reqest resume
+				   FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.RunningJob)
+				{// reqest Pause
+					myLogger.Add("in Requesting Pause");
 					FormRobotWorker.RequestPause();
 					buttonStop.Enabled = true;
-					checkBoxStartPuse.Text = "Start";
+					checkBoxStartPause.Text = "Start";
 				}
 			}
 			
@@ -320,7 +326,7 @@ namespace OctoTip.OctoTipManager
 			
 			FormRobotWorker.RequestStop();
 			buttonStop.Enabled=false;
-			checkBoxStartPuse.Checked = false;
+			checkBoxStartPause.Checked = false;
 		}
 		
 		void FormRobotWorker_StatusChanged(object sender, RobotWorkerStatusChangeEventArgs e)

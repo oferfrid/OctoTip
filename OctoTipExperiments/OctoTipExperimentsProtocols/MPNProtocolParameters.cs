@@ -20,5 +20,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	{
 		[ProtocolParameterAtribute("wait per cycle (minuts)")]
 		public double[] WaitTimes;
+		[ProtocolParameterAtribute("Well ID")]
+		public int WellID;
 	}
 }
