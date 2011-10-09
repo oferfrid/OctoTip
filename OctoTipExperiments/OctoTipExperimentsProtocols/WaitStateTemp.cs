@@ -19,7 +19,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	/// Description of WaitState.
 	/// </summary>
 	[State("Wait","What for sum time")]
-	public class WaitState:State
+	public class WaitStateTemp:State
 	{
 		
 		Timer tmr ;
@@ -31,12 +31,12 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		
 		public double minutes2Wait;
 		
-		public WaitState():base()
+		public WaitStateTemp():base()
 		{
 			
 		}
 		
-		public WaitState(Protocol RunningInProtocol ,double minutes2Wait):base(RunningInProtocol)
+		public WaitStateTemp(Protocol RunningInProtocol ,double minutes2Wait):base(RunningInProtocol)
 		{
 		
 			

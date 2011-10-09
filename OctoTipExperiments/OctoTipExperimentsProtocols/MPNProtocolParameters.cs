@@ -18,8 +18,8 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	
 	public class MPNProtocolParameters :ProtocolParameters
 	{
-		[ProtocolParameterAtribute("wait per cycle (minuts)")]
-		public double[] WaitTimes;
+		[ProtocolParameterAtribute("# of cycle")]
+		public int NumberOfSycles;
 		[ProtocolParameterAtribute("Well ID")]
 		public int WellID;
 	}

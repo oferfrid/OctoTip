@@ -18,18 +18,20 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	public abstract class WaitState:State
 	{
 		
-		public double? WaitMinutes = null;
+		public TimeSpan WaitTime = TimeSpan.Zero;
 		public DateTime? WaitUntil = null;
-		private TimeSpan TotalPause = TimeSpan.Zero;
-		private DateTime? PauseStarted = null;
+		
+		public TimeSpan TotalPause = TimeSpan.Zero;
+		public DateTime PauseStarted = DateTime.MaxValue;
+		public DateTime WaitStarted = DateTime.MaxValue;
 			
 		public WaitState():base()
 		{}
 		
 		
-		public WaitState(Protocol RunningInProtocol ,double WaitMinutes):base(RunningInProtocol)
+		public WaitState(Protocol RunningInProtocol ,TimeSpan WaitTime):base(RunningInProtocol)
 		{
-			this.WaitMinutes = WaitMinutes;
+			this.WaitTime = WaitTime;
 		}
 		
 		public WaitState(Protocol RunningInProtocol ,DateTime WaitUntil):base(RunningInProtocol)
@@ -47,10 +49,10 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 							throw new NullReferenceException("AppSettings key for StateSamplelingRate is null");
 						}
 						
-			if	(WaitMinutes!=null)
+			if	(WaitTime!= TimeSpan.Zero)
 			{
-				while (!RunningInProtocol.ShouldStop &&
-				       RemainingTime().TotalMinutes<0)
+				WaitStarted = DateTime.Now;
+				while (!RunningInProtocol.ShouldStop && RemainingTime().TotalMinutes>0)
 				{
 					if (this.RunningInProtocol.ShouldPause)
 					{
@@ -59,9 +61,12 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Paused,String.Empty));
 						while(this.RunningInProtocol.ShouldPause && !this.RunningInProtocol.ShouldStop)
 						{
-							Thread.Sleep(StateSamplelingRate);			
+							Thread.Sleep(StateSamplelingRate);
 						}
 						
+						
+						TotalPause += (DateTime.Now - PauseStarted );
+						PauseStarted = DateTime.MaxValue;
 						
 						if (this.RunningInProtocol.ShouldStop)
 						{
@@ -73,6 +78,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 						}
 					}
 					
+					this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
 					Thread.Sleep(StateSamplelingRate);	
 				}
 				
@@ -80,8 +86,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			else if(WaitUntil!=null)
 			{
 				
-				while (!RunningInProtocol.ShouldStop &&
-				       RemainingTime().TotalMinutes<0)
+				while (!RunningInProtocol.ShouldStop &&  RemainingTime().TotalMinutes>0)
 				{
 					if (this.RunningInProtocol.ShouldPause)
 					{
@@ -89,6 +94,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Paused,String.Empty));
 						while(this.RunningInProtocol.ShouldPause && !this.RunningInProtocol.ShouldStop)
 						{
+							this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
 							Thread.Sleep(StateSamplelingRate);			
 						}
 						
@@ -101,7 +107,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 							this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,String.Empty));
 						}
 					}
-					
+					this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
 					Thread.Sleep(StateSamplelingRate);
 					
 				}
@@ -123,9 +129,9 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		private TimeSpan RemainingTime()
 		{
 			TimeSpan RemainingTime = TimeSpan.Zero;
-			if	(WaitMinutes!=null)
+			if	(WaitTime!=TimeSpan.Zero)
 			{
-				
+				RemainingTime = (WaitTime.Add(TotalPause)).Subtract(DateTime.Now - WaitStarted) ;
 			}
 			else if(WaitUntil!=null)
 			{
