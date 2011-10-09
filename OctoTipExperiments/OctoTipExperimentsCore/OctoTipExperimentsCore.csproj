@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -47,6 +48,7 @@
     <Compile Include="Base\Protocol.cs" />
     <Compile Include="Base\ProtocolParameters.cs" />
     <Compile Include="Base\State.cs" />
+    <Compile Include="Base\WaitState.cs" />
     <Compile Include="Interfaces\IProtocol.cs" />
     <Compile Include="Interfaces\IProtocolParameters.cs" />
     <Compile Include="Interfaces\IState.cs" />

@@ -34,17 +34,22 @@ namespace OctoTip.OctoTipManager
 		static public Dictionary<Guid, OctoTip.OctoTipLib.RobotJob.Status> FormRobotJobsQueueHestoryDictionary;
 		
 		ServiceHost host = null;
-		Uri baseAddress = new Uri("http://localhost:"+ ConfigurationManager.AppSettings["ListeningPort"] +"/RobotJobsQueueListener");
+		Uri baseAddress;
 		
 		private Thread RobotWorkerThread;
 		private RobotWorker FormRobotWorker ;
 		
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
+			
+			string ListeningPort = ConfigurationManager.AppSettings["ListeningPort"];
+			if (ListeningPort == null)
+			{
+				throw new System.NullReferenceException("AppSetting ListeningPort is null");
+			}
+			baseAddress = new Uri("http://localhost:"+ ListeningPort +"/RobotJobsQueueListener");
+			
 			txtLog.ScrollBars = ScrollBars.Both; // use scroll bars; no text wrapping
 			txtLog.MaxLength = myLogger.MaxChars + 100;
 			// Add update callback delegate

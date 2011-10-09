@@ -98,7 +98,12 @@ namespace OctoTip.OctoTipManager
 					Robot.RequestResume();
 				}
 				
-				Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["QueueSumplelingRate"]));
+				int QueueSumplelingRate = Convert.ToInt32(ConfigurationManager.AppSettings["QueueSumplelingRate"]);
+				if (QueueSumplelingRate == 0)
+				{
+					throw new NullReferenceException("AppSettings QueueSumplelingRate is null");
+				}
+				Thread.Sleep(QueueSumplelingRate);
 				
 			}
 			_ShouldStop = false;

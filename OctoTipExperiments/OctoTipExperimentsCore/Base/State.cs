@@ -21,7 +21,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	{
 		
 		protected Protocol RunningInProtocol;
-		public State(Protocol RunningInProtocol )
+		public  State(Protocol RunningInProtocol )
 		{
 			this.RunningInProtocol = RunningInProtocol;
 		}
