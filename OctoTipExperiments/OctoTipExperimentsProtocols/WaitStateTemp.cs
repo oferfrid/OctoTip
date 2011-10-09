@@ -13,7 +13,7 @@ using System.Timers;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 
-namespace OctoTip.OctoTipExperiments.Protocols
+namespace OctoTip.OctoTipExperiments
 {
 	/// <summary>
 	/// Description of WaitState.
@@ -59,7 +59,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(WaitState),typeof(IncubateState)};
+			return new List<Type>{typeof(WaitState),typeof(RoboRunState1)};
 		}
 		
 		public override void DoWork()

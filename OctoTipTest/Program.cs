@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Xml.Serialization;
-using OctoTip.OctoTipExperiments.Protocols;
+using OctoTip.OctoTipExperiments;
 using OctoTip.OctoTipLib;
 using OctoTip.OctoTipExperiments.Core.Base;
 

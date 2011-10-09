@@ -12,7 +12,7 @@ using System.Timers;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 
-namespace OctoTip.OctoTipExperiments.Protocols
+namespace OctoTip.OctoTipExperiments
 {
 	/// <summary>
 	/// Description of WaitState.

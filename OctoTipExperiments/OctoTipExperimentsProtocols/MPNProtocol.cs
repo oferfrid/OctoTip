@@ -13,7 +13,7 @@ using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
 
-namespace OctoTip.OctoTipExperiments.Protocols
+namespace OctoTip.OctoTipExperiments
 {
 	/// <summary>
 	/// Description of MPNProtocol.
@@ -25,7 +25,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		#region static
 		public static new List<Type> ProtocolStates()
 		{
-			return new List<Type>{ typeof(WaitState1),typeof(WaitState2)};
+			return new List<Type>{ typeof(WaitState1),typeof(RoboRunState1)};
 		}
 		#endregion
 		
@@ -68,8 +68,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		}
 		
 		
-		
-		protected MPNProtocolParameters MPNProtocolParameters
+		public MPNProtocolParameters MPNProtocolParameters
 		{
 			get{return (MPNProtocolParameters)this.ProtocolParameters;}
 		}

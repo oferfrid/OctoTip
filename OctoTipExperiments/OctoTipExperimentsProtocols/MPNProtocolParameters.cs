@@ -10,7 +10,7 @@ using System;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 
-namespace OctoTip.OctoTipExperiments.Protocols
+namespace OctoTip.OctoTipExperiments
 {
 	/// <summary>
 	/// Description of MPNProtocolParameters.
@@ -20,7 +20,7 @@ namespace OctoTip.OctoTipExperiments.Protocols
 	{
 		[ProtocolParameterAtribute("# of cycle")]
 		public int NumberOfSycles;
-		[ProtocolParameterAtribute("Well ID")]
-		public int WellID;
+		[ProtocolParameterAtribute("Times To whash")]
+		public int Whash;
 	}
 }

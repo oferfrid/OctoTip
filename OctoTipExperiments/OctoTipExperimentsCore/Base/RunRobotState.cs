@@ -24,9 +24,9 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		{
 		}
 		
-		public RunRobotState(Protocol RunningInProtocol, RobotJob _RobotJob):base(RunningInProtocol)
+		public RunRobotState(Protocol RunningInProtocol):base(RunningInProtocol)
 		{
-			RunRobotJob = _RobotJob;
+			
 		}
 		
 		public abstract RobotJob GetRobotJob();
