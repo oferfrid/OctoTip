@@ -21,7 +21,6 @@ namespace OctoTip.OctoTipManager
 	public class RobotWrapper
 	{
 		private EVOAPILib.System Evo;
-		int     ScriptID;
 		
 		public  const string LOG_NAME = "OctoTipManager";
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
@@ -102,7 +101,7 @@ namespace OctoTip.OctoTipManager
 		/// Runs in a loop to check script execution status.
 		/// Also checks if a pause or stop request arrived.
 		/// </summary>
-		private RobotJob.Status CheckScriptStatus()
+		private RobotJob.Status CheckScriptStatus(RobotJob Job,int ScriptID)
 		{
 			SC_ScriptStatus   ScriptStatusEx = SC_ScriptStatus.SS_UNKNOWN;
 			SC_ScriptStatus   ScriptStatus   = SC_ScriptStatus.SS_UNKNOWN;
@@ -123,7 +122,7 @@ namespace OctoTip.OctoTipManager
 						myLogger.Add("Robot B4 Pauseed");
 						Evo.Pause();
 						myLogger.Add("Robot Pauseed");
-						OnStatusChangeEvent(new RobotWrapperEventArgs(RobotJob.Status.Paused));
+						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.Paused));
 						while (_ShouldPause)
 						{
 							System.Threading.Thread.Sleep(100);
@@ -133,10 +132,19 @@ namespace OctoTip.OctoTipManager
 						myLogger.Add("Robot B4 Resume");
 						Evo.Resume();
 						myLogger.Add("Robot Resume");
-						OnStatusChangeEvent(new RobotWrapperEventArgs(RobotJob.Status.Running));
+						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.Running));
 						}
 					}
 					ScriptStatus = Evo.GetScriptStatus(ScriptID);
+					if(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR)
+					{
+						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.RuntimeError));
+						while(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR)
+						{
+							System.Threading.Thread.Sleep(100);
+						}
+					}
+						
 				}				
 				
 				ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
@@ -182,7 +190,7 @@ namespace OctoTip.OctoTipManager
 			}
 			finally
 			{
-				OnStatusChangeEvent(new RobotWrapperEventArgs(STS));
+				OnStatusChangeEvent(new RobotWrapperEventArgs(Job,STS));
 				
 			}
 			return STS;
@@ -192,24 +200,24 @@ namespace OctoTip.OctoTipManager
 		/// Runs a script on the Robot.
 		/// </summary>
 		/// <param name="ScriptName">Name of script</param>
-		public RobotJob.Status RunScript(object _ScriptName)
+		public RobotJob.Status RunScript(object _Job)
 		{		
-			string ScriptName =(string)_ScriptName;
+			RobotJob Job =(RobotJob)_Job;
 			RobotJob.Status STS = RobotJob.Status.Finished;
 			
 			try
 			{
 				Logon();
-				ScriptID = Evo.PrepareScript(ScriptName);
+				int ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
 				Evo.StartScript(ScriptID, 0, 0);
-				CheckScriptStatus();
+				CheckScriptStatus(Job,ScriptID);
 			}
 			catch(Exception e)
 			{
 				myLogger.Add("Run Script Error");
 				myLogger.Add(e.ToString());
 				STS = RobotJob.Status.Failed;
-				OnStatusChangeEvent(new RobotWrapperEventArgs(STS));
+				OnStatusChangeEvent(new RobotWrapperEventArgs(Job,STS));
 				throw e;
 			}
 			finally
@@ -252,16 +260,24 @@ namespace OctoTip.OctoTipManager
 	
 	public class RobotWrapperEventArgs : EventArgs
 	{
-		private OctoTip.OctoTipLib.RobotJob.Status ScriptTerm;
-		public RobotWrapperEventArgs(OctoTip.OctoTipLib.RobotJob.Status _ScriptTerm)
+		private OctoTip.OctoTipLib.RobotJob.Status _ScriptStatus;
+		private OctoTip.OctoTipLib.RobotJob _Job;
+		
+		public RobotWrapperEventArgs(RobotJob Job,OctoTip.OctoTipLib.RobotJob.Status ScriptStatus)
 		{
-			ScriptTerm = _ScriptTerm;
+			this._ScriptStatus = ScriptStatus;
+			this._Job = Job;
 		}
 		
 		public OctoTip.OctoTipLib.RobotJob.Status ScriptStatus
 		{
-			get { return ScriptTerm; }
-			set { ScriptTerm = value;}
+			get { return _ScriptStatus; }
+			//set { _ScriptStatus = value;}
+		}
+		public OctoTip.OctoTipLib.RobotJob Job
+		{
+			get { return _Job; }
+		//	set { _ScriptStatus = value;}
 		}
 	}
 }

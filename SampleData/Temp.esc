@@ -1,5 +1,5 @@
-E7BECE38
-20111007_123432 Tecan           
+36B14FEF
+20111009_180345 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -131,3 +131,4 @@ ImportVariable(v1#v2,"C:\Documents and Settings\Tecan\Desktop\XFile.csv",0#1,"0#
 BeginLoop("V1","Wash");
 Wash(255,1,1,1,0,"3.0",500,"4.0",500,10,70,30,0,0,1000,0);
 EndLoop();
+UserPrompt("~v1~",0,-1);

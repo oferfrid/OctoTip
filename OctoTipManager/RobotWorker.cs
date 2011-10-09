@@ -62,10 +62,20 @@ namespace OctoTip.OctoTipManager
 					RobotJob RJ =  MainForm.FormRobotJobsQueue.GetNextRobotJob();
 					if(RJ!=null)
 					{
-						MainForm.FormRobotJobsQueueHestoryDictionary.Add(RJ.UniqueID,OctoTip.OctoTipLib.RobotJob.Status.Running);
+						MainForm.FormRobotJobsQueueHestoryDictionary[RJ.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.Running;
 						RJ.CreateScript();
 						OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,RJ,"Running...."));
-						OctoTip.OctoTipLib.RobotJob.Status STS = Robot.RunScript(RJ.ScriptFilePath);
+						OctoTip.OctoTipLib.RobotJob.Status STS = RJ.JobStatus;
+						try
+						{
+							STS = Robot.RunScript(RJ);
+						}
+						catch (System.Runtime.InteropServices.COMException e)
+						{
+							myLogger.Add("************* Error COMException:" +  e.Message + "*************");
+							MainForm.FormRobotJobsQueueHestoryDictionary[RJ.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.Failed;
+							_ShouldStop = true;
+						}
 						//running ended
 						MainForm.FormRobotJobsQueueHestoryDictionary[RJ.UniqueID]=STS;
 						switch (STS)
@@ -162,16 +172,17 @@ namespace OctoTip.OctoTipManager
 			switch (e.ScriptStatus)
 			{
 				case OctoTip.OctoTipLib.RobotJob.Status.RuntimeError:
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Job Runtime Error"));
+					MainForm.FormRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.RuntimeError;
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runtime Error"));
 					break;
 				case OctoTip.OctoTipLib.RobotJob.Status.Paused:
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Job Paused"));
+					MainForm.FormRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.Paused;
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Paused"));
 					break;
 				case OctoTip.OctoTipLib.RobotJob.Status.Running:
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Job Resumed"));
+					MainForm.FormRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.Running;
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Resumed"));
 					break;
-					
-					
 					
 			}
 			

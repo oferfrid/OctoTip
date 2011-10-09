@@ -62,10 +62,6 @@ namespace OctoTip.OctoTipManager
 		{
 			RobotJob.Status SS = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueueHestoryDictionary[UniqueID];
 			
-			
-			
-			
-			
 			string Messege = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
 			logger.Add(Messege);
 			return SS;
@@ -75,12 +71,12 @@ namespace OctoTip.OctoTipManager
 		public string GetRobotStatus()
 		{
 			throw new NotImplementedException("Ha Ha Ha");
-			string RobotStatus = "OK";
-			string LogEntery = string.Format("GetRobotStatus, responed {0}", RobotStatus);
-			
-			logger.Add(LogEntery);
-			//TODO: DoIT!
-			return RobotStatus;
+//			string RobotStatus = "OK";
+//			string LogEntery = string.Format("GetRobotStatus, responed {0}", RobotStatus);
+//			
+//			logger.Add(LogEntery);
+//TODO: DoIT!
+//			return RobotStatus;
 		}
 		
 	}
