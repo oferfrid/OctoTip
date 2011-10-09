@@ -25,11 +25,11 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		#region static
 		public static new List<Type> ProtocolStates()
 		{
-			return new List<Type>{ typeof(WaitState),typeof(IncubateState)};
+			return new List<Type>{ typeof(WaitState1),typeof(WaitState2)};
 		}
 		#endregion
 		
-		int Cycle =0;
+
 		
 		public MPNProtocol():base()
 		{
@@ -53,18 +53,14 @@ namespace OctoTip.OctoTipExperiments.Protocols
 		{
 			//throw new NotImplementedException();
 			
-			while(Cycle<MPNProtocolParameters.WaitTimes.Length)
+			for( int i=0 ;i<MPNProtocolParameters.NumberOfSycles;i++)
 			{
-				this.ChangeState( new WaitState(this,MPNProtocolParameters.WaitTimes[Cycle]));
+				this.ChangeState(new WaitState1(this,DateTime.Now.AddMinutes(0.1)));
 				CurentState.DoWork();
-				Cycle++;
-				if (!(Cycle<MPNProtocolParameters.WaitTimes.Length))
-				{
-					break;
-				}
-				this.ChangeState( new IncubateState(this,MPNProtocolParameters.WaitTimes[Cycle]));
+				
+				this.ChangeState( new WaitState2(this,new TimeSpan(0,0,30)));
 				CurentState.DoWork();
-				Cycle++;
+				
 			}
 			
 			

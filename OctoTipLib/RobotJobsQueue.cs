@@ -52,9 +52,9 @@ namespace OctoTip.OctoTipLib
 				OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("remove 1"));
 			}
 			return RJ;
-		
+			
 		}
-				
+		
 		
 		public Guid InsertRobotJob(RobotJob RJ)
 		{
@@ -77,16 +77,16 @@ namespace OctoTip.OctoTipLib
 	}
 	public class RobotJobsQueueChangedEventArgs : EventArgs
 	{
-	private string _Massege	;
-	public RobotJobsQueueChangedEventArgs(string Massege)
+		private string _Massege	;
+		public RobotJobsQueueChangedEventArgs(string Massege)
 		{
-	this._Massege = Massege;
-	}
-	
-	public string Massege
-	{
-		get {return _Massege;}
-	}
+			this._Massege = Massege;
+		}
+		
+		public string Massege
+		{
+			get {return _Massege;}
+		}
 	}
 	
 }

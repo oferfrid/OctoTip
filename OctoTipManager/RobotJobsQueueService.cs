@@ -52,6 +52,7 @@ namespace OctoTip.OctoTipManager
 		public Guid AddRobotJob(RobotJob RJ)
 		{
 			Guid UniqueID = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueue.InsertRobotJob(RJ);
+			MainForm.FormRobotJobsQueueHestoryDictionary.Add(RJ.UniqueID,RobotJob.Status.Queued);
 			string Messege = string.Format("Added new job, {0} as UniqueID: {1}", RJ.ScriptName,UniqueID );
 			logger.Add(Messege);
 			return UniqueID;
@@ -60,6 +61,11 @@ namespace OctoTip.OctoTipManager
 		public RobotJob.Status GetJobStatus(Guid UniqueID)
 		{
 			RobotJob.Status SS = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueueHestoryDictionary[UniqueID];
+			
+			
+			
+			
+			
 			string Messege = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
 			logger.Add(Messege);
 			return SS;
@@ -68,6 +74,7 @@ namespace OctoTip.OctoTipManager
 	
 		public string GetRobotStatus()
 		{
+			throw new NotImplementedException("Ha Ha Ha");
 			string RobotStatus = "OK";
 			string LogEntery = string.Format("GetRobotStatus, responed {0}", RobotStatus);
 			
