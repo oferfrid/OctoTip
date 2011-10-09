@@ -157,9 +157,14 @@ namespace OctoTip.OctoTipLib
 		}
 		
 		
-		public void TestJob()
+		public void TestJobParameters()
 		{
 			List<RobotJobParameter> ScriptParameters = ParseScriptParameters();
+			if (ScriptParameters!=RobotJobParameters)
+			{
+				throw new Exception("Script Parameters and JobParameters don't match");
+			}
+			
 		}
 		
 		public void CreateScript()

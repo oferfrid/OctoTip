@@ -36,6 +36,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -47,6 +50,7 @@
     <Compile Include="Attributes\StateAttribute.cs" />
     <Compile Include="Base\Protocol.cs" />
     <Compile Include="Base\ProtocolParameters.cs" />
+    <Compile Include="Base\RunRobotState.cs" />
     <Compile Include="Base\State.cs" />
     <Compile Include="Base\WaitState.cs" />
     <Compile Include="Interfaces\IProtocol.cs" />
@@ -59,6 +63,12 @@
     <Folder Include="Interfaces" />
     <Folder Include="Attributes" />
     <Folder Include="Base" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\OctoTipLib\OctoTipLib.csproj">
+      <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
+      <Name>OctoTipLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
