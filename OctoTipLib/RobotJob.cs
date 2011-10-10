@@ -69,21 +69,22 @@ namespace OctoTip.OctoTipLib
 			
 		}
 		
-		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters)
+		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters):this(ScriptFilePath, RobotJobParameters,0.5)
+		{
+		
+
+		}
+		
+		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters,double Priority):this(ScriptFile.FullName,RobotJobParameters,Priority)
+		{
+			
+		}
+		
+		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters,double Priority)
 		{
 			InitScript(ScriptFilePath);
 			this.RobotJobParameters = RobotJobParameters;
 			this.Priority = Priority;
-		}
-		
-		public RobotJob(FileInfo ScriptFile,List<RobotJobParameter> RobotJobParameters,double Priority):this(ScriptFile.FullName,RobotJobParameters,0.5)
-		{
-			
-		}
-		
-		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters,double Priority):this(new FileInfo(ScriptFilePath),RobotJobParameters,Priority)
-		{
-			
 		}
 		
 		#endregion
