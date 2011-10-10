@@ -190,6 +190,7 @@ namespace OctoTip.OctoTipManager
 			this.dataGridViewRobotJobsQueue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(462, 346);
 			this.dataGridViewRobotJobsQueue.TabIndex = 0;
+			this.dataGridViewRobotJobsQueue.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGridViewRobotJobsQueueDataError);
 			// 
 			// checkBoxStartPause
 			// 
@@ -289,6 +290,7 @@ namespace OctoTip.OctoTipManager
 			this.Controls.Add(this.menuStrip1);
 			this.Name = "MainForm";
 			this.Text = "OctoTip Manager";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormFormClosed);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();

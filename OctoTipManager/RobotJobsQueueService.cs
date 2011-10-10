@@ -44,7 +44,7 @@ namespace OctoTip.OctoTipManager
 		public string TestConnection(string name)
 		{
 			string response = string.Format("Test Connection from {0}", name);
-			logger.Add(response);
+			//logger.Add(response);
 			return string.Format(response);
 		}
 		
@@ -54,7 +54,7 @@ namespace OctoTip.OctoTipManager
 			Guid UniqueID = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueue.InsertRobotJob(RJ);
 			MainForm.FormRobotJobsQueueHestoryDictionary.Add(RJ.UniqueID,RobotJob.Status.Queued);
 			string Messege = string.Format("Added new job, {0} as UniqueID: {1}", RJ.ScriptName,UniqueID );
-			logger.Add(Messege);
+			//logger.Add(Messege);
 			return UniqueID;
 		}
 		
@@ -63,7 +63,7 @@ namespace OctoTip.OctoTipManager
 			RobotJob.Status SS = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueueHestoryDictionary[UniqueID];
 			
 			string Messege = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
-			logger.Add(Messege);
+			//logger.Add(Messege);
 			return SS;
 		}
 		

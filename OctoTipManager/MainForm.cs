@@ -300,7 +300,7 @@ namespace OctoTip.OctoTipManager
 				}
 				if (FormRobotWorker.ShouldPause)
 				{// reqest resume
-					myLogger.Add("in Requesting resume");
+					//myLogger.Add("in Requesting resume");
 					FormRobotWorker.RequestResume();
 					buttonStop.Enabled = true;
 					checkBoxStartPause.Text = "Pause";
@@ -376,6 +376,11 @@ namespace OctoTip.OctoTipManager
 
 		}
 		
+		
+		void MainFormFormClosed(object sender, FormClosedEventArgs e)
+		{
+			RobotWorkerThread.Abort();
+		}
 	}
 	
 	

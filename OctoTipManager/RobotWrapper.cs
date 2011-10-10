@@ -119,9 +119,9 @@ namespace OctoTip.OctoTipManager
 					// Handeling pause request
 					if (_ShouldPause)
 					{
-						myLogger.Add("Robot B4 Pauseed");
+						//myLogger.Add("Robot B4 Pauseed");
 						Evo.Pause();
-						myLogger.Add("Robot Pauseed");
+						//myLogger.Add("Robot Pauseed");
 						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.Paused));
 						while (_ShouldPause)
 						{
@@ -129,9 +129,9 @@ namespace OctoTip.OctoTipManager
 						}
 						if (!_ShouldStop)
 						{
-						myLogger.Add("Robot B4 Resume");
+						//myLogger.Add("Robot B4 Resume");
 						Evo.Resume();
-						myLogger.Add("Robot Resume");
+						//myLogger.Add("Robot Resume");
 						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.Running));
 						}
 					}

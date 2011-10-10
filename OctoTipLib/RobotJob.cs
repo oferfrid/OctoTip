@@ -160,7 +160,7 @@ namespace OctoTip.OctoTipLib
 		public void TestJobParameters()
 		{
 			List<RobotJobParameter> ScriptParameters = ParseScriptParameters();
-			if (ScriptParameters!=RobotJobParameters)
+			if (!this.HasSameParameters(ScriptParameters))
 			{
 				throw new Exception("Script Parameters and JobParameters don't match");
 			}
@@ -317,13 +317,42 @@ namespace OctoTip.OctoTipLib
 			Created,
 			Queued,
 			Enqueued,
-			Running, 
+			Running,
 			Paused,
 			Finished,
-			RuntimeError, 
-			Failed, 
+			RuntimeError,
+			Failed,
 			TerminatedByUser
 		};
+		
+		
+		
+		public  bool HasSameParameters( List<RobotJobParameter> RJP)
+		{
+			bool Equal = true;
+			if(this.RobotJobParameters.Count == RJP.Count)
+			{
+				for(int i=0;i<this.RobotJobParameters.Count;i++)
+				{
+					if((this.RobotJobParameters[i].Name != RJP[i].Name)
+					   || (this.RobotJobParameters[i].Type != RJP[i].Type))
+					   {
+					   	Equal = false;
+					   	break; 
+					   }
+				}
+			}
+			else
+			{
+				Equal = false;
+			}
+			return Equal;
+			
+		}
+		
+		
+			
+		
 		
 		
 	}

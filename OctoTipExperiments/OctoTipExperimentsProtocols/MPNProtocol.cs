@@ -55,10 +55,10 @@ namespace OctoTip.OctoTipExperiments
 			
 			for( int i=0 ;i<MPNProtocolParameters.NumberOfSycles;i++)
 			{
-				this.ChangeState(new WaitState1(this,DateTime.Now.AddMinutes(0.1)));
+				this.ChangeState(new WaitState1(this,DateTime.Now.AddMinutes(1)));
 				CurentState.DoWork();
 				
-				this.ChangeState( new WaitState2(this,new TimeSpan(0,0,30)));
+				this.ChangeState( new RoboRunState1(this));
 				CurentState.DoWork();
 				
 			}

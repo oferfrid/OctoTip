@@ -134,9 +134,9 @@ namespace OctoTip.OctoTipManager
 		{
 			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,null,"Paused...."));
 			_ShouldPause  = true;
-			myLogger.Add("B4 asking RW Pause");
+			//myLogger.Add("B4 asking RW Pause");
 			Robot.RequestPause();
-			myLogger.Add("after asking RW Pause");
+			//myLogger.Add("after asking RW Pause");
 		}
 		public void RequestResume()
 		{

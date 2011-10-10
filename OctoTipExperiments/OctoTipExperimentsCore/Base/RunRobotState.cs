@@ -19,7 +19,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	public abstract class RunRobotState:State
 	{
 		RobotJob RunRobotJob=null;
-				
+		
 		public RunRobotState():base()
 		{
 		}
@@ -44,61 +44,74 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			{
 				throw new NullReferenceException("AppSettings key for StateSamplelingRate is null");
 			}
-						
-			// Inserting the Job in the queue
-			RunRobotJob.TestJobParameters();			
-			RobotJobsQueueServiceClient RJQClient = new RobotJobsQueueServiceClient();	
-			Guid JobID = RJQClient.AddRobotJob(RunRobotJob);
 			
-			// keep monitoring the queue till the job status is changed to
-			JobStatus = RJQClient.GetJobStatus(JobID);
-			while ((JobStatus == RobotJob.Status.Queued   || 
-			        JobStatus == RobotJob.Status.Enqueued || 
-			        JobStatus == RobotJob.Status.Running) &&
-			        !this.RunningInProtocol.ShouldStop        )
+			// Inserting the Job in the queue
+			RunRobotJob.TestJobParameters();
+			RobotJobsQueueServiceClient RJQClient = new RobotJobsQueueServiceClient();
+			
+			try
 			{
-				//TODO: Handling paused state
-				if (this.RunningInProtocol.ShouldPause)
+				Guid JobID = RJQClient.AddRobotJob(RunRobotJob);
+				
+				
+				// keep monitoring the queue till the job status is changed to
+				JobStatus = RJQClient.GetJobStatus(JobID);
+				while ((JobStatus == RobotJob.Status.Queued   ||
+				        JobStatus == RobotJob.Status.Enqueued ||
+				        JobStatus == RobotJob.Status.Running) &&
+				       !this.RunningInProtocol.ShouldStop        )
 				{
-					this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Paused,String.Empty));
-					while(this.RunningInProtocol.ShouldPause && !this.RunningInProtocol.ShouldStop)
+					//TODO: Handling paused state
+					if (this.RunningInProtocol.ShouldPause)
 					{
-						System.Threading.Thread.Sleep(StateSamplelingRate);			
+						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Paused,String.Empty));
+						while(this.RunningInProtocol.ShouldPause && !this.RunningInProtocol.ShouldStop)
+						{
+							System.Threading.Thread.Sleep(StateSamplelingRate);
+						}
+						if (this.RunningInProtocol.ShouldStop)
+						{
+							this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Stopped,String.Empty));
+						}
+						else
+						{
+							this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,String.Empty));
+						}
 					}
+					
+					//TODO: Handling stoped state
 					if (this.RunningInProtocol.ShouldStop)
 					{
 						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Stopped,String.Empty));
 					}
-					else
+					
+					// Handling RuntimeError
+					// TODO: paused while runtime error
+					// TODO: create error status in protocol
+					if (JobStatus == RobotJob.Status.RuntimeError)
 					{
-						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,String.Empty));
+						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,"Runtime Error"));
+						while (JobStatus == RobotJob.Status.RuntimeError
+						       && !this.RunningInProtocol.ShouldStop)
+						{
+							System.Threading.Thread.Sleep(StateSamplelingRate);
+							JobStatus = RJQClient.GetJobStatus(JobID);
+						}
 					}
-				}
-				
-				//TODO: Handling stoped state
-				if (this.RunningInProtocol.ShouldStop)
-				{
-					this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Stopped,String.Empty));
-				}
-				
-				// Handling RuntimeError
-				// TODO: paused while runtime error
-				// TODO: create error status in protocol
-				if (JobStatus == RobotJob.Status.RuntimeError)
-				{
-					this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,"Runtime Error"));
-					while (JobStatus == RobotJob.Status.RuntimeError 
-					       && !this.RunningInProtocol.ShouldStop)
-					{
-						System.Threading.Thread.Sleep(StateSamplelingRate);
-						JobStatus = RJQClient.GetJobStatus(JobID);
-					}
-				}			
+					
+					
 
-				System.Threading.Thread.Sleep(StateSamplelingRate);
-				JobStatus = RJQClient.GetJobStatus(JobID);
+					System.Threading.Thread.Sleep(StateSamplelingRate);
+					JobStatus = RJQClient.GetJobStatus(JobID);
+					
+				}
 			}
-				
+			catch (System.ServiceModel.EndpointNotFoundException e)
+			{
+				//TODO:HAve a nice output 
+				throw e;
+			}
+			
 		}
 	}
 }

@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipLib;
 
@@ -16,6 +17,7 @@ namespace OctoTip.OctoTipExperiments
 	/// <summary>
 	/// Description of Roborun.
 	/// </summary>
+		[State("RunRobot","Runing!")]
 	public class RoboRunState1:RunRobotState
 	{
 		MPNProtocol RunningInMPNProtocol;
