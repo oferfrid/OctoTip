@@ -78,25 +78,33 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 							this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,String.Empty));
 						}
 					}
-					
-					//TODO: Handling stoped state
-					if (this.RunningInProtocol.ShouldStop)
-					{
-						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Stopped,String.Empty));
-					}
+				
 					
 					// Handling RuntimeError
 					// TODO: paused while runtime error
 					// TODO: create error status in protocol
 					if (JobStatus == RobotJob.Status.RuntimeError)
 					{
-						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,"Runtime Error"));
+						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(
+							Protocol.ProtocolStatus.Error ,"Runtime Error"));
+						this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(
+							this ,State.Status.RuntimeError, "Runtime Error"));
 						while (JobStatus == RobotJob.Status.RuntimeError
 						       && !this.RunningInProtocol.ShouldStop)
 						{
 							System.Threading.Thread.Sleep(StateSamplelingRate);
 							JobStatus = RJQClient.GetJobStatus(JobID);
 						}
+						
+						// Exiting runtime error could be for many reasons. 
+						// Only if resumed running and stop request wasn't given, should we change the status back to running
+						if (!this.RunningInProtocol.ShouldStop ||
+						   JobStatus == RobotJob.Status.Running)
+						{
+							this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(
+								this ,State.Status.Active, "Running"));
+						}
+							
 					}
 					
 					
@@ -105,6 +113,31 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 					JobStatus = RJQClient.GetJobStatus(JobID);
 					
 				}
+				//TODO: Handling stoped state
+				if (this.RunningInProtocol.ShouldStop)
+				{
+					this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Stopped,String.Empty));
+				}
+				else
+				{
+					// Handling termination statuses
+					switch (JobStatus)
+					{
+						case RobotJob.Status.Failed:
+							this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(
+								this , State.Status.Failed, "Failed"));
+							break;
+						case RobotJob.Status.TerminatedByUser:
+							this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(
+								this , State.Status.Failed, "Terminated by user"));
+							break;
+						case RobotJob.Status.Finished:
+							this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(
+								this , State.Status.Inactive, "Terminated successfully"));
+							break;
+					}
+				}
+
 			}
 			catch (System.ServiceModel.EndpointNotFoundException e)
 			{

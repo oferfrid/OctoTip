@@ -154,7 +154,7 @@ namespace OctoTip.OctoTipExperimentControl
 						checkBoxStartPause.Checked = false;
 					};
 					checkBoxStartPause.BeginInvoke(checkBoxStartPauseStopaction);
-					DrowProtocolStates();
+					DrawProtocolStates();
 					break;
 				case Protocol.ProtocolStatus.Stoping:
 					buttonStopEnabled = false;
@@ -223,14 +223,28 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		private void HandleStateStatusChange(object sender, ProtocolStateStatusChangeEventArgs e)
 		{
+			//TODO: Ofer - handle the colours of the nodes of the graph according to the status
+			//TODO: also register to the protocol status and change visual according to it 
 			Node N;
-			if(e.PreviuseState!=null)
-			{
-				N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.PreviuseState));
-				N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Transparent;
-			}
+			DrawProtocolStates();
+//			if(e.PreviousState!=null)
+//			{
+//				N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.PreviousState));
+//				N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Transparent;
+//			}
 			
-			N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurentState));
+			//if (e.StateStatus = State.Status.Active
+			switch (e.StateStatus)
+			{
+				case State.Status.Active:
+					break;
+				case State.Status.Failed:
+					break;
+				case State.Status.RuntimeError:
+					break;
+			}
+		    
+			N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurrentState));
 			N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MediumSeaGreen;
 			
 			MethodInvoker action = delegate
@@ -243,12 +257,12 @@ namespace OctoTip.OctoTipExperimentControl
 
 		void ProtocolUserControlLoad(object sender, EventArgs e)
 		{
-			DrowProtocolStates();
+			DrawProtocolStates();
 		}
 		
 		#region Private mathods
 		
-		private void DrowProtocolStates()
+		private void DrawProtocolStates()
 		{
 			graph = new Graph("graph");
 			foreach (Type t in ProtocolProvider.GetProtocolStates(UserControlProtocolType))

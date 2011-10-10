@@ -28,7 +28,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		#endregion
 		
 		
-		public State CurentState;
+		public State CurrentState;
 		
 		
 		public ProtocolStatus _Status = ProtocolStatus.Stopped;
@@ -80,8 +80,8 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		
 		public void ChangeState(State NewState)
 		{
-			this.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(NewState,CurentState,State.Status.StateChanged,string.Empty));
-			CurentState = NewState;
+			this.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(NewState, State.Status.Active,"Started"));
+			CurrentState = NewState;
 			
 			
 		}
@@ -151,7 +151,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		}
 		
 		public enum ProtocolStatus
-		{Stopped,Stoping,Started,Starting,Paused,Pausing}
+		{Stopped,Stoping,Started,Starting,Paused,Pausing,Error}
 		
 		
 		
@@ -217,14 +217,14 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	{
 		
 		private string _Messege;
-		private State _CurentState;
-		private State _PreviuseState;
+		private State _CurrentState;
+		private State _PreviousState;
 		private State.Status _StateStatus;
 		
-		public ProtocolStateStatusChangeEventArgs(State CurentState,State PreviuseState,State.Status StateStatus,string Message)
+		public ProtocolStateStatusChangeEventArgs(State CurrentState,State.Status StateStatus,string Message)
 		{
-			this._CurentState  = CurentState;
-			this._PreviuseState  = PreviuseState;
+			this._CurrentState  = CurrentState;
+			this._PreviousState  = PreviousState;
 			this._Messege = Messege;
 			this._StateStatus = StateStatus;
 		}
@@ -233,13 +233,13 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			get { return _Messege; }
 		}
 		
-		public State PreviuseState
+		public State PreviousState
 		{
-			get { return _PreviuseState; }
+			get { return _PreviousState; }
 		}
-		public State CurentState
+		public State CurrentState
 		{
-			get { return _CurentState; }
+			get { return _CurrentState; }
 		}
 		
 		public State.Status StateStatus

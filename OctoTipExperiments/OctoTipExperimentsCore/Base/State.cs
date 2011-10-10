@@ -38,7 +38,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		public abstract void DoWork();
 	
 
-public enum Status {StateChanged,StateStatusChanged }
+public enum Status {Inactive, Active, RuntimeError, Failed }
 		
 	}
 }

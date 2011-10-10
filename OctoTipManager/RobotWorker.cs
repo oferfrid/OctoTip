@@ -203,22 +203,22 @@ namespace OctoTip.OctoTipManager
 	{
 		
 		private RobotWorker.RobotWorkerStatus _RobotWorkerStatus;
-		private RobotJob _CurentJob;
+		private RobotJob _CurrentJob;
 		private string _Message;
 		
-		public RobotWorkerStatusChangeEventArgs(RobotWorker.RobotWorkerStatus RobotWorkerStatus,RobotJob CurentJob,string Message)
+		public RobotWorkerStatusChangeEventArgs(RobotWorker.RobotWorkerStatus RobotWorkerStatus,RobotJob CurrentJob,string Message)
 		{
 			_RobotWorkerStatus = RobotWorkerStatus;
-			_CurentJob=CurentJob;
+			_CurrentJob=CurrentJob;
 			_Message = Message;
 		}
 		public RobotWorker.RobotWorkerStatus RobotWorkerStatus
 		{
 			get { return _RobotWorkerStatus; }
 		}
-		public RobotJob CurentJob
+		public RobotJob CurrentJob
 		{
-			get { return _CurentJob; }
+			get { return _CurrentJob; }
 		}
 		public string Messege
 		{

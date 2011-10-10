@@ -36,22 +36,10 @@ namespace OctoTip.OctoTipExperimentControl
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.ParametersPanel = new System.Windows.Forms.Panel();
 			this.Updatebutton = new System.Windows.Forms.Button();
 			this.Cancelbutton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
-			// 
-			// textBox1
-			// 
-			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.Location = new System.Drawing.Point(12, 210);
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(199, 51);
-			this.textBox1.TabIndex = 0;
 			// 
 			// ParametersPanel
 			// 
@@ -88,16 +76,13 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Controls.Add(this.Cancelbutton);
 			this.Controls.Add(this.Updatebutton);
 			this.Controls.Add(this.ParametersPanel);
-			this.Controls.Add(this.textBox1);
 			this.Name = "ProtocolParametersForm";
 			this.Text = "ProtocolParametersForm";
 			this.Load += new System.EventHandler(this.ProtocolParametersFormLoad);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 		}
 		private System.Windows.Forms.Button Cancelbutton;
 		private System.Windows.Forms.Button Updatebutton;
 		private System.Windows.Forms.Panel ParametersPanel;
-		private System.Windows.Forms.TextBox textBox1;
 	}
 }
