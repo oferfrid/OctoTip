@@ -1,5 +1,5 @@
-C1582002
-20111011_114130 Tecan           
+128DDEAC
+20111011_114711 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -127,7 +127,9 @@ V;200
 998;22;
 996;0;0;
 --{ RPG }--
-ImportVariable(Washes,"C:\Documents and Settings\Tecan\Desktop\XFile.csv",0,"0",0,1,0,1,1);
+ImportVariable(Washes,"D:\OctoTip\SampleData\TestScripts\Test\TestParameters.csv",0,"0",0,1,0,1,1);
 BeginLoop("Washes","Wash");
 Wash(255,1,1,1,0,"3.0",500,"4.0",500,10,70,30,0,0,1000,0);
+StartTimer("1");
+WaitTimer("1","4");
 EndLoop();

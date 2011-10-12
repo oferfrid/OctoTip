@@ -32,10 +32,9 @@ namespace OctoTip.OctoTipExperiments
 		public override RobotJob GetRobotJob()
 		{
 			List<RobotJobParameter> RP= new List<RobotJobParameter>();
-			RP.Add(new RobotJobParameter("v1",RobotJobParameter.ParameterType.Number,RunningInMPNProtocol.MPNProtocolParameters.Whash));
-			RP.Add(new RobotJobParameter("v2",RobotJobParameter.ParameterType.String,"dfasd"));
+			RP.Add(new RobotJobParameter("Washes",RobotJobParameter.ParameterType.Number,RunningInMPNProtocol.MPNProtocolParameters.Whashs));
 			
-			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\" + "Temp.esc",RP);
+			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\TestScripts\Test\" + "TempDo.esc",RP);
 			//RJ.CreateScript();
 			
 			
@@ -47,7 +46,7 @@ namespace OctoTip.OctoTipExperiments
 		
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(WaitState1)};
+			return new List<Type>{typeof(WaitState2)};
 		}
 	}
 }

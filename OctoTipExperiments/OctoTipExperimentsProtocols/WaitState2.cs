@@ -42,7 +42,7 @@ namespace OctoTip.OctoTipExperiments
 		
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(WaitState1)};
+			return new List<Type>{typeof(RoboRunState1)};
 		}
 	}
 }

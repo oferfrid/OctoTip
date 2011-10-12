@@ -18,9 +18,11 @@ namespace OctoTip.OctoTipExperiments
 	
 	public class MPNProtocolParameters :ProtocolParameters
 	{
-		[ProtocolParameterAtribute("# of cycle")]
+		[ProtocolParameterAtribute("# of cycles")]
 		public int NumberOfSycles;
 		[ProtocolParameterAtribute("Times To whash")]
-		public int Whash;
+		public int Whashs;
+		[ProtocolParameterAtribute("Wait B4 start")]
+		public int WaitB4start;
 	}
 }

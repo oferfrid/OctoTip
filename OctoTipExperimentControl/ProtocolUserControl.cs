@@ -79,7 +79,7 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			((MainForm)this.ParentForm).AddProtocol(this.UserControlProtocol);
 			
-			ActivateUserControlProtocol();		
+			ActivateUserControlProtocol();
 		}
 		
 		#region Handeling events
@@ -224,31 +224,33 @@ namespace OctoTip.OctoTipExperimentControl
 		private void HandleStateStatusChange(object sender, ProtocolStateStatusChangeEventArgs e)
 		{
 			//TODO: Ofer - handle the colours of the nodes of the graph according to the status
-			//TODO: also register to the protocol status and change visual according to it 
+			//TODO: also register to the protocol status and change visual according to it
 			Node N;
-			DrawProtocolStates();
-//			if(e.PreviousState!=null)
-//			{
-//				N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.PreviousState));
-//				N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Transparent;
-//			}
 			
 			//if (e.StateStatus = State.Status.Active
-			switch (e.StateStatus)
-			{
-				case State.Status.Active:
-					break;
-				case State.Status.Failed:
-					break;
-				case State.Status.RuntimeError:
-					break;
-			}
-		    
-			N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurrentState));
-			N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MediumSeaGreen;
 			
 			MethodInvoker action = delegate
-			{ ProtocolStatesViewer.Refresh(); };
+			{
+				DrawProtocolStates();
+				switch (e.StateStatus)
+				{
+						
+
+					case State.Status.Active:
+						N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurrentState));
+						N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MediumSeaGreen;
+						break;
+					case State.Status.Failed:
+						N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurrentState));
+						N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Red;
+						break;
+					case State.Status.RuntimeError:
+						N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurrentState));
+						N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.Yellow;
+						break;
+				}
+				
+				ProtocolStatesViewer.Refresh(); };
 			ProtocolStatesViewer.BeginInvoke(action);
 		}
 		

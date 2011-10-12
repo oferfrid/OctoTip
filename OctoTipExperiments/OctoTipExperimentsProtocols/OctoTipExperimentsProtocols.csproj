@@ -55,7 +55,6 @@
     <Compile Include="MPNProtocolParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoboRunState1.cs" />
-    <Compile Include="WaitStateTemp.cs" />
     <Compile Include="WaitState1.cs" />
     <Compile Include="WaitState2.cs" />
   </ItemGroup>

@@ -218,13 +218,11 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		
 		private string _Messege;
 		private State _CurrentState;
-		private State _PreviousState;
 		private State.Status _StateStatus;
 		
 		public ProtocolStateStatusChangeEventArgs(State CurrentState,State.Status StateStatus,string Message)
 		{
 			this._CurrentState  = CurrentState;
-			this._PreviousState  = PreviousState;
 			this._Messege = Messege;
 			this._StateStatus = StateStatus;
 		}
@@ -233,10 +231,6 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			get { return _Messege; }
 		}
 		
-		public State PreviousState
-		{
-			get { return _PreviousState; }
-		}
 		public State CurrentState
 		{
 			get { return _CurrentState; }

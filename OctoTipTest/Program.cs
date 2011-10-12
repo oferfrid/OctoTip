@@ -47,7 +47,7 @@ namespace OctoTip.OctoTipTest
 			RP.Add(new RobotJobParameter("v1",RobotJobParameter.ParameterType.Number,Convert.ToInt32(args[0])));
 			RP.Add(new RobotJobParameter("v2",RobotJobParameter.ParameterType.String,"dfasd"));
 			
-			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\" + "Temp.esc",RP);
+			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\" + "TempDo.esc",RP);
 			//RJ.CreateScript();
 			
 			

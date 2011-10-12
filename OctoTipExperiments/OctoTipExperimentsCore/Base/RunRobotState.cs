@@ -58,7 +58,8 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 				JobStatus = RJQClient.GetJobStatus(JobID);
 				while ((JobStatus == RobotJob.Status.Queued   ||
 				        JobStatus == RobotJob.Status.Enqueued ||
-				        JobStatus == RobotJob.Status.Running) &&
+				        JobStatus == RobotJob.Status.Running ||
+				        JobStatus == RobotJob.Status.RuntimeError) &&
 				       !this.RunningInProtocol.ShouldStop        )
 				{
 					//TODO: Handling paused state

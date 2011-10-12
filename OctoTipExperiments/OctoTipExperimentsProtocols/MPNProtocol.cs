@@ -25,11 +25,11 @@ namespace OctoTip.OctoTipExperiments
 		#region static
 		public static new List<Type> ProtocolStates()
 		{
-			return new List<Type>{ typeof(WaitState1),typeof(RoboRunState1)};
+			return new List<Type>{ typeof(WaitState1),typeof(RoboRunState1),typeof(WaitState2)};
 		}
 		#endregion
 		
-
+		MPNProtocolParameters Parameters;
 		
 		public MPNProtocol():base()
 		{
@@ -38,7 +38,7 @@ namespace OctoTip.OctoTipExperiments
 		
 		public MPNProtocol(MPNProtocolParameters Parameters):base((ProtocolParameters)Parameters)
 		{
-			
+			this.Parameters = Parameters;
 		}
 		
 		public override void OnStatusChanged(ProtocolStatusChangeEventArgs e)
@@ -53,13 +53,18 @@ namespace OctoTip.OctoTipExperiments
 		{
 			//throw new NotImplementedException();
 			
-			for( int i=0 ;i<MPNProtocolParameters.NumberOfSycles;i++)
-			{
-				this.ChangeState(new WaitState1(this,DateTime.Now.AddMinutes(1)));
+			this.ChangeState(new WaitState1(this,DateTime.Now.AddMinutes(Parameters.WaitB4start)));
 				CurrentState.DoWork();
 				
+			for( int i=0 ;i<MPNProtocolParameters.NumberOfSycles;i++)
+			{
 				this.ChangeState( new RoboRunState1(this));
 				CurrentState.DoWork();
+				
+				this.ChangeState(new WaitState2(this,new TimeSpan(0,0,30)));
+				CurrentState.DoWork();
+				
+			
 				
 			}
 			
