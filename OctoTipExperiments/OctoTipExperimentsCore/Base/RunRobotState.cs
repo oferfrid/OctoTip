@@ -127,10 +127,12 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 						case RobotJob.Status.Failed:
 							this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(
 								this , State.Status.Failed, "Failed"));
+							RunningInProtocol.RequestStop();
 							break;
 						case RobotJob.Status.TerminatedByUser:
 							this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(
 								this , State.Status.Failed, "Terminated by user"));
+							RunningInProtocol.RequestStop();
 							break;
 						case RobotJob.Status.Finished:
 							this.RunningInProtocol.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(

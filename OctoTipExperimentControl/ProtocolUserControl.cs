@@ -140,7 +140,7 @@ namespace OctoTip.OctoTipExperimentControl
 			bool buttonStopEnabled = false;
 			bool checkBoxStartPauseEnabled = true;
 			string checkBoxStartPauseText = "start";
-			
+			System.Drawing.Color BackColor = System.Drawing.Color.Silver;
 			
 			
 			switch (e.NewStatus)
@@ -155,6 +155,7 @@ namespace OctoTip.OctoTipExperimentControl
 					};
 					checkBoxStartPause.BeginInvoke(checkBoxStartPauseStopaction);
 					DrawProtocolStates();
+					BackColor =System.Drawing.Color.Red;
 					break;
 				case Protocol.ProtocolStatus.Stoping:
 					buttonStopEnabled = false;
@@ -166,7 +167,7 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Pause";
-					
+					BackColor =System.Drawing.Color.LightGreen;
 					break;
 				case Protocol.ProtocolStatus.Starting:
 					buttonStopEnabled = false;
@@ -178,7 +179,7 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonStopEnabled = true;
 					checkBoxStartPauseEnabled = true;
 					checkBoxStartPauseText = "Resturt";
-					
+					BackColor =System.Drawing.Color.Yellow;
 					break;
 				case Protocol.ProtocolStatus.Pausing:
 					buttonStopEnabled = false;
@@ -213,6 +214,13 @@ namespace OctoTip.OctoTipExperimentControl
 				//checkBoxStartPause.Image = checkBoxStartPauseImage;
 			};
 			checkBoxStartPause.BeginInvoke(checkBoxStartPauseaction);
+			
+			
+			MethodInvoker UserControStartPauseaction = delegate
+			{
+				this.BackColor = BackColor;
+			};
+			this.BeginInvoke(UserControStartPauseaction);
 		}
 		
 		private void HandleDisplayedDataChange(object sender, ProtocolDisplayedDataChangeEventArgs e)
@@ -234,9 +242,7 @@ namespace OctoTip.OctoTipExperimentControl
 				DrawProtocolStates();
 				switch (e.StateStatus)
 				{
-						
-
-					case State.Status.Active:
+						case State.Status.Active:
 						N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurrentState));
 						N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MediumSeaGreen;
 						break;
@@ -279,10 +285,10 @@ namespace OctoTip.OctoTipExperimentControl
 			graph.Attr.LayerDirection =LayerDirection.LR;
 			
 			graph.Attr.AspectRatio =  (double)ProtocolStatesViewer.Size.Width/(double)ProtocolStatesViewer.Size.Height;
-			graph.Attr.BackgroundColor = Microsoft.Msagl.Drawing.Color.White;    
+			graph.Attr.BackgroundColor = Microsoft.Msagl.Drawing.Color.White;
 			
 			ProtocolStatesViewer.Graph = graph;
-		
+			
 			
 			
 			

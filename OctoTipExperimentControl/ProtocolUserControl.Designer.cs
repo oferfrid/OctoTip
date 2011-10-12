@@ -140,7 +140,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-			this.BackColor = System.Drawing.SystemColors.Control;
+			this.BackColor = System.Drawing.Color.Silver;
 			this.Controls.Add(this.textBoxStatus);
 			this.Controls.Add(this.ProtocolStatesViewer);
 			this.Controls.Add(this.EditParametersbutton);
