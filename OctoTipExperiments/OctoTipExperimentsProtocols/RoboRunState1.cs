@@ -34,7 +34,7 @@ namespace OctoTip.OctoTipExperiments
 			List<RobotJobParameter> RP= new List<RobotJobParameter>();
 			RP.Add(new RobotJobParameter("Washes",RobotJobParameter.ParameterType.Number,RunningInMPNProtocol.MPNProtocolParameters.Whashs));
 			
-			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\TestScripts\Test\" + "TempDo.esc",RP);
+			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"..\..\..\SampleData\TestScripts\Test\" + "TempDo.esc",RP);
 			//RJ.CreateScript();
 			
 			

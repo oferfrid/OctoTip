@@ -32,9 +32,7 @@ namespace OctoTip.OctoTipLib
 			}
 		}
 		
-		
-		
-		
+				
 		public RobotJobsQueue():base()
 		{
 			

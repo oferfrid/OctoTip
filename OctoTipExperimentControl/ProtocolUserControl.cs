@@ -275,10 +275,14 @@ namespace OctoTip.OctoTipExperimentControl
 					UpdateEdgeNodesAttr(graph.AddEdge(NodeFrom,ProtocolProvider.GetStateDesplayName(ts)));
 				}
 			}
-
+			
 			graph.Attr.LayerDirection =LayerDirection.LR;
 			
+			graph.Attr.AspectRatio =  (double)ProtocolStatesViewer.Size.Width/(double)ProtocolStatesViewer.Size.Height;
+			graph.Attr.BackgroundColor = Microsoft.Msagl.Drawing.Color.White;    
+			
 			ProtocolStatesViewer.Graph = graph;
+		
 			
 			
 			

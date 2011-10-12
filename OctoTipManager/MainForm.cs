@@ -193,7 +193,11 @@ namespace OctoTip.OctoTipManager
 			
 			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
 			{
-				FormRobotJobsQueue.Remove((RobotJob)Row.DataBoundItem);
+				RobotJob RJ = (RobotJob)Row.DataBoundItem;
+				RJ.JobStatus = RobotJob.Status.TerminatedByUser;
+				FormRobotJobsQueueHestoryDictionary[RJ.UniqueID] = RJ.JobStatus;		
+				FormRobotJobsQueue.Remove((RobotJob)RJ);
+				UpdateRobotJobsQueue();
 			}
 			
 			
@@ -381,6 +385,9 @@ namespace OctoTip.OctoTipManager
 		{
 			RobotWorkerThread.Abort();
 		}
+		
+		
+
 	}
 	
 	

@@ -50,10 +50,10 @@ namespace OctoTip.OctoTipExperimentControl
 			this.textBoxData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxData.Location = new System.Drawing.Point(390, 47);
+			this.textBoxData.Location = new System.Drawing.Point(358, 109);
 			this.textBoxData.Multiline = true;
 			this.textBoxData.Name = "textBoxData";
-			this.textBoxData.Size = new System.Drawing.Size(71, 45);
+			this.textBoxData.Size = new System.Drawing.Size(103, 54);
 			this.textBoxData.TabIndex = 1;
 			// 
 			// buttonStop
@@ -62,7 +62,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-			this.buttonStop.Location = new System.Drawing.Point(468, 28);
+			this.buttonStop.Location = new System.Drawing.Point(468, 64);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(55, 28);
 			this.buttonStop.TabIndex = 2;
@@ -77,7 +77,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.checkBoxStartPause.Enabled = false;
 			this.checkBoxStartPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.checkBoxStartPause.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPause.Image")));
-			this.checkBoxStartPause.Location = new System.Drawing.Point(468, 60);
+			this.checkBoxStartPause.Location = new System.Drawing.Point(468, 131);
 			this.checkBoxStartPause.Name = "checkBoxStartPause";
 			this.checkBoxStartPause.Size = new System.Drawing.Size(55, 30);
 			this.checkBoxStartPause.TabIndex = 3;
@@ -102,6 +102,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.ProtocolStatesViewer.AsyncLayout = false;
 			this.ProtocolStatesViewer.AutoScroll = true;
+			this.ProtocolStatesViewer.BackColor = System.Drawing.SystemColors.Control;
 			this.ProtocolStatesViewer.BackwardEnabled = false;
 			this.ProtocolStatesViewer.BuildHitTree = true;
 			this.ProtocolStatesViewer.CurrentLayoutMethod = Microsoft.Msagl.GraphViewerGdi.LayoutMethod.SugiyamaScheme;
@@ -120,7 +121,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ProtocolStatesViewer.SaveButtonVisible = true;
 			this.ProtocolStatesViewer.SaveGraphButtonVisible = true;
 			this.ProtocolStatesViewer.SaveInVectorFormatEnabled = true;
-			this.ProtocolStatesViewer.Size = new System.Drawing.Size(381, 89);
+			this.ProtocolStatesViewer.Size = new System.Drawing.Size(349, 158);
 			this.ProtocolStatesViewer.TabIndex = 5;
 			this.ProtocolStatesViewer.ToolBarIsVisible = false;
 			this.ProtocolStatesViewer.ZoomF = 1D;
@@ -130,10 +131,10 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// textBoxStatus
 			// 
-			this.textBoxStatus.Location = new System.Drawing.Point(390, 3);
+			this.textBoxStatus.Location = new System.Drawing.Point(358, 3);
 			this.textBoxStatus.Multiline = true;
 			this.textBoxStatus.Name = "textBoxStatus";
-			this.textBoxStatus.Size = new System.Drawing.Size(71, 38);
+			this.textBoxStatus.Size = new System.Drawing.Size(103, 100);
 			this.textBoxStatus.TabIndex = 6;
 			// 
 			// ProtocolUserControl
@@ -147,7 +148,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Controls.Add(this.buttonStop);
 			this.Controls.Add(this.textBoxData);
 			this.Name = "ProtocolUserControl";
-			this.Size = new System.Drawing.Size(530, 95);
+			this.Size = new System.Drawing.Size(530, 166);
 			this.Load += new System.EventHandler(this.ProtocolUserControlLoad);
 			this.ResumeLayout(false);
 			this.PerformLayout();

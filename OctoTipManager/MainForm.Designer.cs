@@ -183,6 +183,7 @@ namespace OctoTip.OctoTipManager
 			// dataGridViewRobotJobsQueue
 			// 
 			this.dataGridViewRobotJobsQueue.AllowUserToAddRows = false;
+			this.dataGridViewRobotJobsQueue.AllowUserToDeleteRows = false;
 			this.dataGridViewRobotJobsQueue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridViewRobotJobsQueue.Location = new System.Drawing.Point(12, 28);
 			this.dataGridViewRobotJobsQueue.Name = "dataGridViewRobotJobsQueue";
