@@ -8,13 +8,17 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Reflection;
 using System.Threading;
 using System.Xml.Serialization;
+using System.Xml;
+using System.IO;
+using System.Xml.XPath;
 using OctoTip.OctoTipExperiments;
 using OctoTip.OctoTipLib;
 using OctoTip.OctoTipExperiments.Core.Base;
-
 
 namespace OctoTip.OctoTipTest
 {
@@ -34,115 +38,21 @@ namespace OctoTip.OctoTipTest
 			
 			
 			
-			Console.WriteLine("start init RobotJobsQueueServiceClient!");
-
-
+			//FileInfo[] files = DI.GetFiles("*.xml", SearchOption.TopDirectoryOnly);
 			
-
-
-			
-
-
-			List<RobotJobParameter> RP= new List<RobotJobParameter>();
-			RP.Add(new RobotJobParameter("v1",RobotJobParameter.ParameterType.Number,Convert.ToInt32(args[0])));
-			RP.Add(new RobotJobParameter("v2",RobotJobParameter.ParameterType.String,"dfasd"));
-			
-			OctoTip.OctoTipLib.RobotJob RJ = new OctoTip.OctoTipLib.RobotJob(@"D:\OctoTip\SampleData\" + "TempDo.esc",RP);
-			//RJ.CreateScript();
-			
-			
-			Random r = new Random();
-			RJ.Priority = (double)r.Next()/int.MaxValue;
-			
-			
-			
-			RobotJobsQueueServiceClient RC = new RobotJobsQueueServiceClient();
-			//Console.WriteLine("Robot Status: {0}",RC.GetRobotStatus());
-			RC.TestConnection("tt");
-			Guid G = RC.AddRobotJob(RJ);
-			Console.WriteLine(G);
-			 ConsoleKeyInfo cki;
-
-			do
-			{
-				cki = Console.ReadKey();
-				
-				Console.WriteLine("GetStatus? (Esc for exit)");
-				Console.WriteLine(RC.GetJobStatus(G));
-				
-			}
-			while (cki.Key != ConsoleKey.Escape);
-			
+						
+			Console.ReadKey();
 		}
-
 		
 		
-//
-//
-//
-//			Console.WriteLine("exit?");
-//			Console.ReadKey();
+		static private int CalcIndFromPlatePos(string Pos)
+		{
+			int Row = char.Parse(Pos.Substring(0,1))-'A';
+			int Col =  Convert.ToInt32(Pos.Substring(1,Pos.Length-1))-1;
+			return Row + Col*2+1;
+		}
 		
-		
-//			List<Type> ProtocolList = availableTypes.FindAll(delegate(Type t)
-//			                                                 {
-//			                                                 	List<Type> interfaceTypes = new List<Type>(t.GetInterfaces());
-//			                                                 	object[] arr = t.GetCustomAttributes(typeof(ProtocolAttribute), true);
-//			                                                 	return !(arr == null || arr.Length == 0) && interfaceTypes.Contains(typeof(IProtocol));
-//			                                                 });
-//
-		
-//			foreach (Type ProtocolData in ProtocolProvider.ProtocolsData)
-		//            {
-//			foreach (Type ProtocolData in ProtocolHostProvider.ProtocolsData)
-		//            {
-//				Console.WriteLine(ProtocolData.Name);
-		//            }
-		
-		
-//
-//			RobotWrapper RW = new RobotWrapper();
-//			//pub.RaiseCustomEvent += HandleCustomEvent;
-//			RW.StatusChangeEvent += HandleChangeStatusEvent; //HandleChangeStatusEvent;
-//
-//			try
-//			{
-//				Thread T = new Thread(RW.RunScript);
-//				T.Start("temp");
-//				System.Threading.Thread.Sleep(20000);
-//				Console.WriteLine("requesting pause");
-//				RW.RequestPause();
-//
-//				System.Threading.Thread.Sleep(20000);
-//				Console.WriteLine("requesting resume");
-//				RW.RequestResume();
-//
-		////				RW.CheckScriptStatus();
-//
-		////				if (STS != ScriptTerminationStatusType.Success)
-		////				{
-		////					Console.WriteLine("script failed");
-		////				}
-//			}
-//			catch (Exception e)
-//			{
-//				Console.WriteLine(e.ToString());
-//				Console.Write("Press any key to continue . . . ");
-//				Console.ReadKey(true);
-//			}
-		////			RobotWrapper RW = new RobotWrapper();
-		////			RW.RunScript("Temp");
-		////				Console.WriteLine(ProtocolData.Name);
-//			//            }
-//
-//
-//			Console.Write("Press any key to continue . . . ");
-//			Console.ReadKey(true);
-//
-		////			Console.Write("Press any key to continue . . . ");
-		////			Console.ReadKey(true);
 	}
-	
 }
 
 

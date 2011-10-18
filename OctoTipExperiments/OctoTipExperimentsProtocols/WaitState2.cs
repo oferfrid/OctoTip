@@ -40,9 +40,11 @@ namespace OctoTip.OctoTipExperiments
 			this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs("ended2"));
 		}
 		
+		#region  static
 		public static new List<Type> NextStates()
 		{
 			return new List<Type>{typeof(RoboRunState1)};
 		}
+		#endregion
 	}
 }

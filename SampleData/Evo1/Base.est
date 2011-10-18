@@ -1,5 +1,5 @@
-81E12AD1
-20111016_100935 Tecan           
+D44B1CFC
+20111016_144318 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -9,7 +9,7 @@ V;200
 14;-1;104;-1;-1;253;-1;-1;-1;-1;-1;-1;96;-1;-1;-1;-1;-1;96;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;
 998;0;
 998;8;Washstation 2Grid Cleaner short;Washstation 2Grid Waste;Washstation 2Grid Cleaner long;Trough 100ml;Trough 100ml;Trough 100ml;Washstation 2Grid DiTi Waste;;
-998;;;;Labware1;Labware2;Labware3;;;
+998;;;;LB+cam;T2;T3;;;
 998;0;
 998;0;
 998;1;;
@@ -20,8 +20,8 @@ V;200
 998;0;
 998;0;
 998;0;
-998;3;;Box DiTi 200 ul;Box DiTi 200 ul;
-998;;Labware5;Labware4;
+998;3;BoxDiTi 1000ul;;Box DiTi 200 ul;
+998;Box DiTi 1000 ul;;Box DiTi 200 ul;
 998;0;
 998;0;
 998;0;
@@ -119,18 +119,13 @@ V;200
 998;0;1;Storex;
 998;0;2;Hotel 3Pos DiTi;
 998;0;3;Hotel 3Pos DiTi;
-998;0;
+998;2;
+998;126;6 Well CaCo2 Plate;
+998;251;6 Well CaCo2 Plate;
 998;1;
-998;27;
+998;26;
 998;27;
 998;17;
 998;22;
 996;0;0;
 --{ RPG }--
-ImportVariable(Washes,"D:\OctoTip\SampleData\TestScripts\Test\TestParameters.csv",0,"0",0,1,0,1,1);
-BeginLoop("Washes","Wash");
-Wash(255,1,1,1,0,"3.0",500,"4.0",500,10,70,30,0,0,1000,0);
-StartTimer("1");
-WaitTimer("1","4");
-UserPrompt("?",0,-1);
-EndLoop();

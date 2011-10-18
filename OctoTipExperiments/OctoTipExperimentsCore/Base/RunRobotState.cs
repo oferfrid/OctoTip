@@ -29,12 +29,13 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			
 		}
 		
-		public abstract RobotJob GetRobotJob();
+		protected abstract RobotJob BeforeRobotRun();
+		protected abstract void AfterRobotRun();
 		
 		public override void DoWork()
 		{
 			OctoTip.OctoTipLib.RobotJob.Status JobStatus;
-			RunRobotJob = GetRobotJob();
+			RunRobotJob = BeforeRobotRun();
 			if (RunRobotJob == null)
 			{
 				throw new NullReferenceException("GetRobotJob returned a null RobotJob");

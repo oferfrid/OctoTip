@@ -51,6 +51,7 @@
     <Compile Include="RobotJob.cs" />
     <Compile Include="RobotJobsQueue.cs" />
     <Compile Include="RobotJobsQueueService.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading;
+//using Microsoft.Msagl;
 using Microsoft.Msagl.Drawing;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
@@ -242,7 +243,7 @@ namespace OctoTip.OctoTipExperimentControl
 				DrawProtocolStates();
 				switch (e.StateStatus)
 				{
-						case State.Status.Active:
+					case State.Status.Active:
 						N = graph.FindNode(ProtocolProvider.GetStateDesplayName(e.CurrentState));
 						N.Attr.FillColor = Microsoft.Msagl.Drawing.Color.MediumSeaGreen;
 						break;
@@ -282,16 +283,48 @@ namespace OctoTip.OctoTipExperimentControl
 				}
 			}
 			
-			graph.Attr.LayerDirection =LayerDirection.LR;
 			
-			graph.Attr.AspectRatio =  (double)ProtocolStatesViewer.Size.Width/(double)ProtocolStatesViewer.Size.Height;
+			//Node N = graph.FindNode("Grow 1");
+			//N.Label.FontSize = 50;
+			
+			foreach (Node  N in  graph.NodeMap.Values )
+			{
+				//	N.Label.FontSize = 50;
+			}
+			
+			graph.Attr.LayerDirection =LayerDirection.None;
+			double AspectRatio = Convert.ToDouble(panel1.Width)/Convert.ToDouble(panel1.Height);
+			graph.Attr.AspectRatio = AspectRatio;
+			//graph.Attr.MinNodeHeight = 50;
+			//graph.Attr.MinNodeWidth = 100;
+			
+			// aspect ratio is set
+
 			graph.Attr.BackgroundColor = Microsoft.Msagl.Drawing.Color.White;
 			
+			//Microsoft.Msagl.GeometryGraph geomGraph = new Microsoft.Msagl.GeometryGraph();
+			
+		//	geomGraph.SimpleStretch=false;
+
+		//	geomGraph.AspectRatio = 1;
+			
+
+		//	geomGraph.CalculateLayout();
+			
+			
+			//ProtocolStatesViewer.Graph = graph;
+			
+		//	graph.GeometryGraph = geomGraph;
+
+//ProtocolStatesViewer.Graph = graph;
+
+		//	ProtocolStatesViewer.NeedToCalculateLayout = false;
 			ProtocolStatesViewer.Graph = graph;
 			
 			
 			
-			
+
+
 		}
 		
 		private void UpdateEdgeNodesAttr(Edge E)

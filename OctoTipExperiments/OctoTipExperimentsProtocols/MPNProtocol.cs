@@ -23,7 +23,7 @@ namespace OctoTip.OctoTipExperiments
 	{
 		
 		#region static
-		public static new List<Type> ProtocolStates()
+		static List<Type> ProtocolStates()
 		{
 			return new List<Type>{ typeof(WaitState1),typeof(RoboRunState1),typeof(WaitState2)};
 		}

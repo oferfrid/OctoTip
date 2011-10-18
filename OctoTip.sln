@@ -6,9 +6,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OctoTipExperiments", "OctoT
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipExperimentsProtocols", "OctoTipExperiments\OctoTipExperimentsProtocols\OctoTipExperimentsProtocols.csproj", "{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipExperimentsCore", "OctoTipExperiments\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj", "{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipExperimentsProtocols", "OctoTipExperiments\OctoTipExperimentsProtocols\OctoTipExperimentsProtocols.csproj", "{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evo1", "OctoTipExperiments\Evo1\Evo1.csproj", "{B090BD9E-A62A-4AF8-B869-C3BAA745705B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipTest", "OctoTipTest\OctoTipTest.csproj", "{33768EC6-0FA1-474D-BE80-FE0183ED7781}"
 EndProject
@@ -80,9 +82,22 @@ Global
 		{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631}.Release|BPC.ActiveCfg = Release|x86
 		{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631}.Release|Any CPU.Build.0 = Release|x86
 		{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631}.Release|Any CPU.ActiveCfg = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|x86.Build.0 = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|x86.ActiveCfg = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|BPC.Build.0 = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|BPC.ActiveCfg = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|Any CPU.Build.0 = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|x86.Build.0 = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|x86.ActiveCfg = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|BPC.Build.0 = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|BPC.ActiveCfg = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|Any CPU.Build.0 = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|Any CPU.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631} = {06DDA88F-A759-4032-9555-24A441800A25}
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B} = {06DDA88F-A759-4032-9555-24A441800A25}
 		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766} = {06DDA88F-A759-4032-9555-24A441800A25}
+		{AABD1941-E9B8-4EEF-8C47-0E0E95EA3631} = {06DDA88F-A759-4032-9555-24A441800A25}
 	EndGlobalSection
 EndGlobal

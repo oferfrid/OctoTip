@@ -29,7 +29,7 @@ namespace OctoTip.OctoTipExperiments
 			this.RunningInMPNProtocol = RunningInProtocol;
 		}
 		
-		public override RobotJob GetRobotJob()
+		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RP= new List<RobotJobParameter>();
 			RP.Add(new RobotJobParameter("Washes",RobotJobParameter.ParameterType.Number,RunningInMPNProtocol.MPNProtocolParameters.Whashs));
@@ -44,9 +44,17 @@ namespace OctoTip.OctoTipExperiments
 			return RJ;
 		}
 		
+		#region static
 		public static new List<Type> NextStates()
 		{
 			return new List<Type>{typeof(WaitState2)};
+		}
+		
+		#endregion	
+		
+		protected override void AfterRobotRun()
+		{
+			//throw new NotImplementedException();
 		}
 	}
 }

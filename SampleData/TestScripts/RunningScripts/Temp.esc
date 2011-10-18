@@ -1,5 +1,5 @@
-81E12AD1
-20111016_100935 Tecan           
+E4ED69B6
+20111011_150815 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -128,9 +128,12 @@ V;200
 996;0;0;
 --{ RPG }--
 ImportVariable(Washes,"D:\OctoTip\SampleData\TestScripts\Test\TestParameters.csv",0,"0",0,1,0,1,1);
+Variable(do,"0",1,"continue",0,1.000000,10.000000,0,2,1,0);
+IfThen("do",0,"1");
 BeginLoop("Washes","Wash");
 Wash(255,1,1,1,0,"3.0",500,"4.0",500,10,70,30,0,0,1000,0);
 StartTimer("1");
 WaitTimer("1","4");
-UserPrompt("?",0,-1);
 EndLoop();
+Else();
+EndIf();

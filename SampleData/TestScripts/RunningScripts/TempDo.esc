@@ -1,5 +1,5 @@
-81E12AD1
-20111016_100935 Tecan           
+7F6F61DA
+20111011_161521 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -132,5 +132,5 @@ BeginLoop("Washes","Wash");
 Wash(255,1,1,1,0,"3.0",500,"4.0",500,10,70,30,0,0,1000,0);
 StartTimer("1");
 WaitTimer("1","4");
-UserPrompt("?",0,-1);
 EndLoop();
+UserPrompt("?",0,-1);

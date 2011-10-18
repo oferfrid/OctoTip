@@ -55,11 +55,12 @@ namespace OctoTip.OctoTipExperiments
 			PauseStarted =DateTime.MaxValue;
 		}
 		
+		#region static
 		public static new List<Type> NextStates()
 		{
 			return new List<Type>{typeof(WaitState)};
 		}
-		
+		#endregion
 		public override void DoWork()
 		{
 			WaitStarted	= DateTime.Now;
