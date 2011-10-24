@@ -26,7 +26,9 @@ namespace OctoTip.OctoTipLib
 		
 		public static LicPos Ind2LicPos(int ind)
 		{
-			LicPos LP = new LicPos(((ind-1)%17)+1,Convert.ToInt32(Math.Floor(Convert.ToDouble(ind)/17.0)));
+			
+			
+			LicPos LP = new LicPos(((ind-1)%17)+1,Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ind)/17.0)));
 			
 			return LP;
 		}

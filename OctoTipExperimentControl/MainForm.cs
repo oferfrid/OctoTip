@@ -12,9 +12,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
+using OctoTip.OctoTipLib;
 
 //using System.Xml.Serialization;
 
@@ -25,6 +27,9 @@ namespace OctoTip.OctoTipExperimentControl
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		
+		public const string LOG_NAME = "OctoTipExperimentManager";
+		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
 		private List<Protocol>  Protocols = new List<Protocol>();
 		
@@ -39,11 +44,15 @@ namespace OctoTip.OctoTipExperimentControl
 			toolStripStatusLabelProtocolCount.Text = "Protocols:" + Protocols.Count;
 		}
 		
-		
-		
 		public MainForm()
 		{
 			InitializeComponent();
+			
+			textBoxLog.ScrollBars = ScrollBars.Both; // use scroll bars; no text wrapping
+			textBoxLog.MaxLength = myLogger.MaxChars + 100;
+			// Add update callback delegate
+			myLogger.OnLogUpdate += new LogString.LogUpdateDelegate(this.LogUpdate);
+			
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -54,6 +63,23 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		
 		#region Private function
+		
+		
+			// Updates that come from a different thread can not directly change the
+		// TextBox component. This must be done through Invoke().
+		private delegate void UpdateDelegate();
+		private void LogUpdate()
+		{
+			Invoke(new UpdateDelegate(
+				delegate
+				{
+					textBoxLog.Text = myLogger.Log;
+					//TODO: Quick-and-dirty solution for updating the Q
+					//UpdateRobotJobsQueue();
+				})
+			      );
+		}
+		
 		private void AddAvailableProtocols()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
@@ -67,7 +93,7 @@ namespace OctoTip.OctoTipExperimentControl
 			foreach(Type ProtocolData in ProtocolsData)
 			{
 				ToolStripButton BTN = new ToolStripButton(
-					ProtocolData.Name, ((System.Drawing.Image)(resources.GetObject("Protocol1.Image"))));
+					((ProtocolAttribute)ProtocolData.GetCustomAttributes(typeof(ProtocolAttribute), true)[0]).ShortName, ((System.Drawing.Image)(resources.GetObject("Protocol1.Image"))));
 				BTN.ImageTransparentColor = System.Drawing.Color.Magenta;
 				BTN.Size = new System.Drawing.Size(88, 20);
 				BTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -185,5 +211,12 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		
 		
+		
+		void ButtonClearLogClick(object sender, EventArgs e)
+		{
+
+			myLogger.Clear();
+	
+		}
 	}
 }

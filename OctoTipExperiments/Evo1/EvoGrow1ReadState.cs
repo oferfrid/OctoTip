@@ -8,8 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
+using OctoTip.OctoTipLib;
 
 namespace Evo1
 {
@@ -26,20 +28,34 @@ namespace Evo1
 		}
 		#endregion
 		EvoProtocol RunningInEvoProtocol;
-		public EvoGrow1ReadState(EvoProtocol RunningInEvoProtocol):base((Protocol)RunningInEvoProtocol)
+		int PlateInd;
+		int WellInd;
+		public EvoGrow1ReadState(EvoProtocol RunningInEvoProtocol,int PlateInd,int WellInd):base((Protocol)RunningInEvoProtocol)
 		{
 			this.RunningInEvoProtocol = RunningInEvoProtocol;
+			this.PlateInd = PlateInd;
+			this.WellInd =  WellInd;
 		}
 		
 		
-		protected override OctoTip.OctoTipLib.RobotJob BeforeRobotRun()
+		protected override RobotJob BeforeRobotRun()
 		{
-			throw new NotImplementedException();
+			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
+			
+			LicPos LP = Utils.Ind2LicPos(PlateInd);
+			
+			RJP.Add(new RobotJobParameter("Lic6Cart",RobotJobParameter.ParameterType.Number,LP.Cart));
+			RJP.Add(new RobotJobParameter("Lic6Pos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			        
+			RobotJob RJ = new RobotJob(@"D:\OctoTip\SampleData\Evo1\EvoRead2OD.esc",RJP);
+			
+			return RJ;
 		}
 		
 		protected override void AfterRobotRun(System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<double>> MeasurementsResults)
 		{
-			throw new NotImplementedException();
+			double MeanOD = MeasurementsResults[WellInd].Average();
+			RunningInEvoProtocol.CurentOD = MeanOD;
 		}
 	}
 }

@@ -39,11 +39,12 @@ namespace OctoTip.OctoTipExperimentControl
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProtocolUserControl));
 			this.textBoxData = new System.Windows.Forms.TextBox();
 			this.buttonStop = new System.Windows.Forms.Button();
-			this.checkBoxStartPause = new System.Windows.Forms.CheckBox();
 			this.EditParametersbutton = new System.Windows.Forms.Button();
 			this.ProtocolStatesViewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
 			this.textBoxStatus = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.buttonStart = new System.Windows.Forms.Button();
+			this.buttonPause = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -64,29 +65,13 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-			this.buttonStop.Location = new System.Drawing.Point(533, 109);
+			this.buttonStop.Location = new System.Drawing.Point(532, 141);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(55, 28);
 			this.buttonStop.TabIndex = 2;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
 			this.buttonStop.Click += new System.EventHandler(this.ButtonStopClick);
-			// 
-			// checkBoxStartPause
-			// 
-			this.checkBoxStartPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.checkBoxStartPause.Appearance = System.Windows.Forms.Appearance.Button;
-			this.checkBoxStartPause.Enabled = false;
-			this.checkBoxStartPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-			this.checkBoxStartPause.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPause.Image")));
-			this.checkBoxStartPause.Location = new System.Drawing.Point(533, 221);
-			this.checkBoxStartPause.Name = "checkBoxStartPause";
-			this.checkBoxStartPause.Size = new System.Drawing.Size(55, 30);
-			this.checkBoxStartPause.TabIndex = 3;
-			this.checkBoxStartPause.Text = "Start";
-			this.checkBoxStartPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.checkBoxStartPause.UseVisualStyleBackColor = true;
-			this.checkBoxStartPause.CheckedChanged += new System.EventHandler(this.CheckBoxStartPauseCheckedChanged);
 			// 
 			// EditParametersbutton
 			// 
@@ -127,7 +112,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ProtocolStatesViewer.SaveInVectorFormatEnabled = true;
 			this.ProtocolStatesViewer.Size = new System.Drawing.Size(393, 247);
 			this.ProtocolStatesViewer.TabIndex = 5;
-			this.ProtocolStatesViewer.ToolBarIsVisible = false;
+			this.ProtocolStatesViewer.ToolBarIsVisible = true;
 			this.ProtocolStatesViewer.ZoomF = 1D;
 			this.ProtocolStatesViewer.ZoomFraction = 0.5D;
 			this.ProtocolStatesViewer.ZoomWindowThreshold = 0.05D;
@@ -152,14 +137,39 @@ namespace OctoTip.OctoTipExperimentControl
 			this.panel1.Size = new System.Drawing.Size(393, 247);
 			this.panel1.TabIndex = 7;
 			// 
+			// buttonStart
+			// 
+			this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.buttonStart.Image = ((System.Drawing.Image)(resources.GetObject("buttonStart.Image")));
+			this.buttonStart.Location = new System.Drawing.Point(532, 175);
+			this.buttonStart.Name = "buttonStart";
+			this.buttonStart.Size = new System.Drawing.Size(55, 28);
+			this.buttonStart.TabIndex = 8;
+			this.buttonStart.Text = "Start";
+			this.buttonStart.UseVisualStyleBackColor = true;
+			this.buttonStart.Click += new System.EventHandler(this.ButtonStartClick);
+			// 
+			// buttonPause
+			// 
+			this.buttonPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.buttonPause.Image = ((System.Drawing.Image)(resources.GetObject("buttonPause.Image")));
+			this.buttonPause.Location = new System.Drawing.Point(532, 209);
+			this.buttonPause.Name = "buttonPause";
+			this.buttonPause.Size = new System.Drawing.Size(55, 28);
+			this.buttonPause.TabIndex = 8;
+			this.buttonPause.Text = "Pause";
+			this.buttonPause.UseVisualStyleBackColor = true;
+			this.buttonPause.Click += new System.EventHandler(this.ButtonPauseClick);
+			// 
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Silver;
+			this.Controls.Add(this.buttonPause);
+			this.Controls.Add(this.buttonStart);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.textBoxStatus);
 			this.Controls.Add(this.EditParametersbutton);
-			this.Controls.Add(this.checkBoxStartPause);
 			this.Controls.Add(this.buttonStop);
 			this.Controls.Add(this.textBoxData);
 			this.Name = "ProtocolUserControl";
@@ -170,11 +180,12 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button buttonPause;
+		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.TextBox textBoxStatus;
 		private Microsoft.Msagl.GraphViewerGdi.GViewer ProtocolStatesViewer;
 		private System.Windows.Forms.Button EditParametersbutton;
-		private System.Windows.Forms.CheckBox checkBoxStartPause;
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.TextBox textBoxData;
 	}

@@ -27,8 +27,6 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			
 		public WaitState():base()
 		{}
-		public WaitState(Protocol RunningInProtocol):base(RunningInProtocol)
-		{}
 		
 		
 		public WaitState(Protocol RunningInProtocol ,TimeSpan WaitTime):base(RunningInProtocol)

@@ -1,8 +1,8 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: oferfrid
- * Date: 03/10/2011
- * Time: 11:05
+ * User: Tecan
+ * Date: 23/10/2011
+ * Time: 16:50
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -14,20 +14,19 @@ using System.Windows.Forms;
 namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 {
 	/// <summary>
-	/// Description of StringFieldUserControl.
+	/// Description of DoubleFieldUserControl.
 	/// </summary>
-	public partial class StringFieldUserControl : BaseFieldUserControl
+	public partial class DoubleFieldUserControl : BaseFieldUserControl
 	{
-		public StringFieldUserControl()
+		public DoubleFieldUserControl():base()
 		{
 			InitializeComponent();
 		}
-		
-		public StringFieldUserControl(string Title,string Value,string DefaultValue):this()
+		public DoubleFieldUserControl(string Title,double Value,string DefaultValue):this()
 		{
-			if (Value!=string.Empty)
+			if (Value!=0)
 			{
-			this.ValueTextBox.Text = Value;
+			this.ValueTextBox.Text = Value.ToString();
 			}
 			else
 			{
@@ -36,19 +35,19 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 			this.ParamNameLabel.Text = Title;
 		}
 		
-		public string GetValue()
+		public double GetValue()
 		{
-			return this.ParamNameLabel.Text;
+			return Convert.ToDouble(this.ValueTextBox.Text);
 		}
 		
 		public override object GetObjectValue()
 		{
-			return (object)this.ValueTextBox.Text;
+			return (object)Convert.ToDouble(this.ValueTextBox.Text);
 		}
 		
 		public override void SetError(string Error)
 		{
-			errorProvider.SetError(this.ValueTextBox, "Value Not In the write fromat (string)");
+			errorProvider.SetError(this.ValueTextBox, "Value Not In the write fromat (double)\n" + Error);
 		}
 		
 	}

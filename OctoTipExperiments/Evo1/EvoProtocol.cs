@@ -17,11 +17,13 @@ namespace Evo1
 	/// <summary>
 	/// Description of Evo1.
 	/// </summary>
-	[Protocol("Cycling Evolution")]
+	[Protocol("Cyclic Evolution" ,"Ofer Fridman","Cyclic Evolution In 6 Wells Plate")]
 	public class EvoProtocol:Protocol
 	{
 		
-		public EvoProtocolParameters Parameters;
+		public double CurentOD = 0;
+		
+		public EvoProtocolParameters EvoProtocolParameters;
 		
 		public EvoProtocol():base()
 		{
@@ -30,14 +32,95 @@ namespace Evo1
 		
 		public EvoProtocol(EvoProtocolParameters Parameters):base((ProtocolParameters)Parameters)
 		{
-			this.Parameters = Parameters;
+			this.EvoProtocolParameters = Parameters;
 		}
 		
 		
 		
 		protected override void OnProtocolStart()
 		{
-			throw new NotImplementedException();
+			int PlateInd = EvoProtocolParameters.FirstPlateInd;
+			int WellInd = 1;
+			
+			int NumberOfCycles = EvoProtocolParameters.FreezAmpEppendorfInds.Length;
+			
+			this.ChangeState(new EvoStarterState(this,PlateInd));
+			CurrentState.DoWork();
+			
+			for(int c = 0 ;c<NumberOfCycles;c++)
+			{
+				DateTime StartKillTime = DateTime.Now;
+				
+				//Read Plate at the begining of the kill
+				this.ChangeState(new EvoKillReadState(this,PlateInd));
+				CurrentState.DoWork();
+				
+				while((StartKillTime.AddMinutes(EvoProtocolParameters.KillingTime)-DateTime.Now)>TimeSpan.Zero)
+				{
+					TimeSpan RemainingTime = StartKillTime.AddMinutes(EvoProtocolParameters.KillingTime)-DateTime.Now;
+					if (RemainingTime.TotalMinutes > EvoProtocolParameters.TimeBetweenReads)
+					{
+						this.ChangeState(new EvoKillState(this,DateTime.Now.AddMinutes(EvoProtocolParameters.TimeBetweenReads)));
+						CurrentState.DoWork();
+					}
+					else
+					{
+						this.ChangeState(new EvoKillState(this,DateTime.Now.Add(RemainingTime)));
+						CurrentState.DoWork();
+					}
+				}
+				
+				//read B4 adding b-Lac
+				this.ChangeState(new EvoKillReadState(this,PlateInd));
+				CurrentState.DoWork();
+				//Add b-Lac
+				this.ChangeState(new EvoAddbLacState(this,PlateInd,WellInd));
+				CurrentState.DoWork();
+				
+				//Read for Reference OD
+				this.ChangeState(new EvoGrow1ReadState(this,PlateInd,WellInd));
+				CurrentState.DoWork();
+				double Tara = CurentOD ;
+				
+				//Wait for OD
+				while((CurentOD - Tara )< EvoProtocolParameters.NetODFirstDilution)
+				{
+					this.ChangeState(new EvoGrow1State(this));
+					CurrentState.DoWork();
+					this.ChangeState(new EvoGrow1ReadState(this,PlateInd,WellInd));
+					CurrentState.DoWork();
+				}
+				
+				//dilute to new well
+				this.ChangeState(new EvoDilutState(this,PlateInd,WellInd,++WellInd));
+				CurrentState.DoWork();
+				
+				//Read for Reference OD
+				this.ChangeState(new EvoGrow2ReadState(this,PlateInd,WellInd));
+				CurrentState.DoWork();
+				Tara = CurentOD ;
+				while((CurentOD - Tara )< EvoProtocolParameters.NetODFirstDilution)
+				{
+					this.ChangeState(new EvoGrow2State(this));
+					CurrentState.DoWork();
+					this.ChangeState(new EvoGrow2ReadState(this,PlateInd,WellInd));
+					CurrentState.DoWork();
+				}
+				if( WellInd==6)
+				{
+					this.ChangeState(new EvoDilut2AmpState(this,PlateInd,++PlateInd,WellInd,1,EvoProtocolParameters.FreezAmpEppendorfInds[c],EvoProtocolParameters.AMPEppendorfInd));
+					CurrentState.DoWork();
+				}
+				else
+				{
+					this.ChangeState(new EvoDilut2AmpState(this,PlateInd,WellInd,++WellInd,EvoProtocolParameters.FreezAmpEppendorfInds[c],EvoProtocolParameters.AMPEppendorfInd));
+					CurrentState.DoWork();
+				}			
+			}
+			
+			
+			
+			
 		}
 		
 		

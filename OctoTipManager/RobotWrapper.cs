@@ -30,17 +30,26 @@ namespace OctoTip.OctoTipManager
 		private volatile bool _ShouldStop = false;
 		private volatile bool _ShouldPause = false;
 		
-			
+		int RobotSamplingRate;
+		
+		
 		public RobotWrapper()
 		{
 			Evo = new EVOAPILib.SystemClass();
+			
+			RobotSamplingRate = Convert.ToInt32(ConfigurationManager.AppSettings["RobotSamplelingRate"]);
+			if (RobotSamplingRate == 0)
+			{
+				throw new NullReferenceException("AppSettings RobotSamplelingRate is null");
+			}
+			
 		}
 		
-		public event EventHandler<RobotWrapperEventArgs> StatusChangeEvent;
+		public event EventHandler<RobotJobStatusChangedEventArgs> RobotJobStatusChanged;
 		
-		protected virtual void OnStatusChangeEvent(RobotWrapperEventArgs e)
+		protected virtual void OnRobotJobStatusChanged(RobotJobStatusChangedEventArgs e)
 		{
-			EventHandler<RobotWrapperEventArgs> handler = StatusChangeEvent;
+			EventHandler<RobotJobStatusChangedEventArgs> handler = RobotJobStatusChanged;
 
 			// Event will be null if there are no subscribers
 			if (handler != null)
@@ -56,15 +65,23 @@ namespace OctoTip.OctoTipManager
 		/// Logon Freedom Evo
 		/// </summary>
 		private void Logon()
-		{			
+		{
 			SC_Status RobotStatus;
 			string UserName = ConfigurationManager.AppSettings["UserName"];
 			string Password = ConfigurationManager.AppSettings["Password"];
-
-	
+			
 			try
 			{
 				Evo.Logon(UserName,Password,0,0);
+			}
+			catch(Exception e)
+			{
+				throw e;
+			}
+			
+			
+			try
+			{
 				RobotStatus = Evo.GetStatus();
 				// initialazing
 				if (RobotStatus == SC_Status.STATUS_NOTINITIALIZED)
@@ -74,10 +91,10 @@ namespace OctoTip.OctoTipManager
 			}
 			catch(Exception e)
 			{
-				myLogger.Add("Logon Error");
-				myLogger.Add(e.ToString());
+				Evo.Logoff();
 				throw e;
-			}			
+			}
+			
 		}
 		
 		/// <summary>
@@ -91,133 +108,130 @@ namespace OctoTip.OctoTipManager
 			}
 			catch(Exception e)
 			{
-				myLogger.Add("Logoff Error");
-				myLogger.Add(e.ToString());
 				throw e;
 			}
 		}
 		
-		/// <summary>
-		/// Runs in a loop to check script execution status.
-		/// Also checks if a pause or stop request arrived.
-		/// </summary>
-		private RobotJob.Status CheckScriptStatus(RobotJob Job,int ScriptID)
+		
+		public void RunScript(RobotJob Job)
 		{
-			SC_ScriptStatus   ScriptStatusEx = SC_ScriptStatus.SS_UNKNOWN;
-			SC_ScriptStatus   ScriptStatus   = SC_ScriptStatus.SS_UNKNOWN;
-			RobotJob.Status  STS = RobotJob.Status.RuntimeError;
-			DateTime               StartTime = DateTime.Now;
-			TimeSpan                      TS = DateTime.Now - StartTime;
-
-			try
-			{				
-				ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
-				ScriptStatus   = Evo.GetScriptStatus(ScriptID);
-				while(ScriptStatus == SC_ScriptStatus.SS_BUSY && !_ShouldStop)
-				{		
-					System.Threading.Thread.Sleep(100);
-					// Handeling pause request
-					if (_ShouldPause)
-					{
-						//myLogger.Add("Robot B4 Pauseed");
-						Evo.Pause();
-						//myLogger.Add("Robot Pauseed");
-						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.Paused));
-						while (_ShouldPause)
-						{
-							System.Threading.Thread.Sleep(100);
-						}
-						if (!_ShouldStop)
-						{
-						//myLogger.Add("Robot B4 Resume");
-						Evo.Resume();
-						//myLogger.Add("Robot Resume");
-						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.Running));
-						}
-					}
-					ScriptStatus = Evo.GetScriptStatus(ScriptID);
-					if(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR)
-					{
-						OnStatusChangeEvent(new RobotWrapperEventArgs(Job,RobotJob.Status.RuntimeError));
-						while(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR)
-						{
-							System.Threading.Thread.Sleep(100);
-						}
-					}
-						
-				}				
-				
-				ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
-				
-				// determain script termination status
-				switch (ScriptStatusEx)
-				{				
-					case SC_ScriptStatus.SS_IDLE:
-						STS = RobotJob.Status.Finished;
-					break;
-					case SC_ScriptStatus.SS_BUSY:
-						STS = RobotJob.Status.Running;
-					break;	
-					case SC_ScriptStatus.SS_STOPPED:
-						STS = RobotJob.Status.TerminatedByUser;
-					break;
-					case SC_ScriptStatus.SS_ABORTED:
-						STS = RobotJob.Status.TerminatedByUser;
-					break;
-					case SC_ScriptStatus.SS_STATUS_ERROR:
-						STS = RobotJob.Status.Failed;
-					break;
-					default:
-						STS = RobotJob.Status.RuntimeError;
-					break;
-				}
-				
-				// Handling Stop request
-				if (_ShouldStop)
-				{
-					Evo.Stop();
-					STS = RobotJob.Status.TerminatedByUser;
-				}
-				
-			}
-			catch (Exception e)
-			{
-				myLogger.Add("Run Script Error");
-				myLogger.Add(e.ToString());
-				STS = RobotJob.Status.Failed;
-				
-				throw e;
-			}
-			finally
-			{
-				OnStatusChangeEvent(new RobotWrapperEventArgs(Job,STS));
-				
-			}
-			return STS;
-		}
-		
-		/// <summary>
-		/// Runs a script on the Robot.
-		/// </summary>
-		/// <param name="ScriptName">Name of script</param>
-		public RobotJob.Status RunScript(object _Job)
-		{		
-			RobotJob Job =(RobotJob)_Job;
-			RobotJob.Status STS = RobotJob.Status.Finished;
+			int ScriptID;
+			
+			Logon();
+			
+			Job.CreateScript();
 			
 			try
 			{
-				Logon();
-				int ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
+				 ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
 				Evo.StartScript(ScriptID, 0, 0);
-				CheckScriptStatus(Job,ScriptID);
+
+				Job.JobStatus = RobotJob.Status.Running;
+				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
 			}
 			catch(Exception e)
 			{
-				myLogger.Add("Run Script Error");
-				myLogger.Add(e.ToString());
-				STS = RobotJob.Status.Failed;
-				OnStatusChangeEvent(new RobotWrapperEventArgs(Job,STS));
+				Job.JobStatus = RobotJob.Status.Failed;
+				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
+				Logoff();
+				throw e;
+			}
+			
+			//Loop while the robot is preforming the job
+			
+			try
+			{
+				SC_ScriptStatus ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
+				SC_ScriptStatus ScriptStatus   = Evo.GetScriptStatus(ScriptID);
+				
+				while(ScriptStatus == SC_ScriptStatus.SS_BUSY && !_ShouldStop)
+				{
+					System.Threading.Thread.Sleep(RobotSamplingRate);
+					
+					// Handeling pause request
+					if (_ShouldPause)
+					{
+						Evo.Pause();
+						Job.JobStatus=RobotJob.Status.Paused;
+						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+						
+						while (_ShouldPause)
+						{
+							System.Threading.Thread.Sleep(RobotSamplingRate);
+						}
+						
+						if (!_ShouldStop)
+						{
+							Evo.Resume();
+							Job.JobStatus = RobotJob.Status.Running;
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+						}
+					}
+					
+					//Chack for runtime error and wait
+					if(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR)
+					{
+						
+						Job.JobStatus = RobotJob.Status.RuntimeError;
+						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+						
+						while(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR &&
+						      !_ShouldStop)
+						{
+							System.Threading.Thread.Sleep(RobotSamplingRate);
+						}
+						
+						if (!_ShouldStop)
+						{
+							Job.JobStatus = RobotJob.Status.Running;
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+						}
+						
+						
+					}
+					
+					
+					
+					ScriptStatus = Evo.GetScriptStatus(ScriptID);
+				}
+				//or ended of _souldStop or
+				
+				if (_ShouldStop)
+				{
+					Evo.Stop();
+					Job.JobStatus = RobotJob.Status.TerminatedByUser;
+					OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+				}
+				else
+				{
+					ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
+					
+					// determain script termination status
+					switch (ScriptStatusEx)
+					{
+						case SC_ScriptStatus.SS_IDLE:
+							Job.JobStatus = RobotJob.Status.Finished;
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							break;
+						case SC_ScriptStatus.SS_STOPPED:
+							Job.JobStatus = RobotJob.Status.TerminatedByUser;
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							break;
+						case SC_ScriptStatus.SS_ABORTED:
+							Job.JobStatus = RobotJob.Status.TerminatedByUser;
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							break;
+						case SC_ScriptStatus.SS_STATUS_ERROR:
+							Job.JobStatus = RobotJob.Status.Failed;
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							break;
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				Job.JobStatus = RobotJob.Status.Failed;
+				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
 				throw e;
 			}
 			finally
@@ -225,9 +239,10 @@ namespace OctoTip.OctoTipManager
 				Logoff();
 			}
 			
-			return STS;
 		}
-
+		
+		
+		
 		public bool ShouldStop
 		{
 			get { return _ShouldStop;}
@@ -238,6 +253,10 @@ namespace OctoTip.OctoTipManager
 			get { return _ShouldPause;}
 		}
 		
+		
+		
+		
+		
 		public void RequestPause()
 		{
 			_ShouldPause  = true;
@@ -245,39 +264,37 @@ namespace OctoTip.OctoTipManager
 		
 		public void RequestResume()
 		{
-			_ShouldPause  = false;		
-		}		
+			_ShouldPause  = false;
+		}
 		
 		public void RequestStop()
 		{
 			_ShouldStop  = true;
-			_ShouldPause=false;
-						
-		}				
+			_ShouldPause = false;
+			
+		}
 	}
-	
-	
-	
-	public class RobotWrapperEventArgs : EventArgs
+
+
+
+	public class RobotJobStatusChangedEventArgs : EventArgs
 	{
-		private OctoTip.OctoTipLib.RobotJob.Status _ScriptStatus;
-		private OctoTip.OctoTipLib.RobotJob _Job;
+		private RobotJob _Job;
 		
-		public RobotWrapperEventArgs(RobotJob Job,OctoTip.OctoTipLib.RobotJob.Status ScriptStatus)
+		public RobotJobStatusChangedEventArgs(RobotJob Job)
 		{
-			this._ScriptStatus = ScriptStatus;
 			this._Job = Job;
 		}
 		
-		public OctoTip.OctoTipLib.RobotJob.Status ScriptStatus
+		public RobotJob.Status ScriptStatus
 		{
-			get { return _ScriptStatus; }
+			get { return _Job.JobStatus; }
 			//set { _ScriptStatus = value;}
 		}
-		public OctoTip.OctoTipLib.RobotJob Job
+		public RobotJob Job
 		{
 			get { return _Job; }
-		//	set { _ScriptStatus = value;}
+			//	set { _ScriptStatus = value;}
 		}
 	}
 }

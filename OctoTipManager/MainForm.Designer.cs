@@ -49,7 +49,9 @@ namespace OctoTip.OctoTipManager
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
 			this.dataGridViewRobotJobsQueue = new OctoTip.OctoTipManager.ControlWrapper();
-			this.checkBoxStartPause = new System.Windows.Forms.CheckBox();
+			this.textBoxRuningJobStatus = new System.Windows.Forms.TextBox();
+			this.buttonStart = new System.Windows.Forms.Button();
+			this.buttonPause = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.checkBoxServerState = new System.Windows.Forms.CheckBox();
 			this.ClearLogButton = new System.Windows.Forms.Button();
@@ -158,7 +160,7 @@ namespace OctoTip.OctoTipManager
 			this.splitHorizontal.Panel2.Controls.Add(this.ClearLogButton);
 			this.splitHorizontal.Panel2.Controls.Add(this.txtLog);
 			this.splitHorizontal.Size = new System.Drawing.Size(713, 484);
-			this.splitHorizontal.SplitterDistance = 386;
+			this.splitHorizontal.SplitterDistance = 299;
 			this.splitHorizontal.TabIndex = 2;
 			// 
 			// splitVertical
@@ -173,11 +175,13 @@ namespace OctoTip.OctoTipManager
 			// 
 			// splitVertical.Panel2
 			// 
-			this.splitVertical.Panel2.Controls.Add(this.checkBoxStartPause);
+			this.splitVertical.Panel2.Controls.Add(this.textBoxRuningJobStatus);
+			this.splitVertical.Panel2.Controls.Add(this.buttonStart);
+			this.splitVertical.Panel2.Controls.Add(this.buttonPause);
 			this.splitVertical.Panel2.Controls.Add(this.buttonStop);
 			this.splitVertical.Panel2.Controls.Add(this.checkBoxServerState);
-			this.splitVertical.Size = new System.Drawing.Size(713, 386);
-			this.splitVertical.SplitterDistance = 477;
+			this.splitVertical.Size = new System.Drawing.Size(713, 299);
+			this.splitVertical.SplitterDistance = 529;
 			this.splitVertical.TabIndex = 0;
 			// 
 			// dataGridViewRobotJobsQueue
@@ -189,30 +193,49 @@ namespace OctoTip.OctoTipManager
 			this.dataGridViewRobotJobsQueue.Name = "dataGridViewRobotJobsQueue";
 			this.dataGridViewRobotJobsQueue.ReadOnly = true;
 			this.dataGridViewRobotJobsQueue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(462, 346);
+			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(514, 268);
 			this.dataGridViewRobotJobsQueue.TabIndex = 0;
 			this.dataGridViewRobotJobsQueue.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGridViewRobotJobsQueueDataError);
 			// 
-			// checkBoxStartPause
+			// textBoxRuningJobStatus
 			// 
-			this.checkBoxStartPause.Appearance = System.Windows.Forms.Appearance.Button;
-			this.checkBoxStartPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-			this.checkBoxStartPause.Image = ((System.Drawing.Image)(resources.GetObject("checkBoxStartPause.Image")));
-			this.checkBoxStartPause.Location = new System.Drawing.Point(86, 353);
-			this.checkBoxStartPause.Name = "checkBoxStartPause";
-			this.checkBoxStartPause.Size = new System.Drawing.Size(50, 30);
-			this.checkBoxStartPause.TabIndex = 3;
-			this.checkBoxStartPause.Text = "Start";
-			this.checkBoxStartPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.checkBoxStartPause.UseVisualStyleBackColor = true;
-			this.checkBoxStartPause.CheckedChanged += new System.EventHandler(this.CheckBoxStartPauseCheckedChanged);
+			this.textBoxRuningJobStatus.Location = new System.Drawing.Point(3, 218);
+			this.textBoxRuningJobStatus.Multiline = true;
+			this.textBoxRuningJobStatus.Name = "textBoxRuningJobStatus";
+			this.textBoxRuningJobStatus.Size = new System.Drawing.Size(171, 78);
+			this.textBoxRuningJobStatus.TabIndex = 5;
+			// 
+			// buttonStart
+			// 
+			this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.buttonStart.Image = ((System.Drawing.Image)(resources.GetObject("buttonStart.Image")));
+			this.buttonStart.Location = new System.Drawing.Point(3, 182);
+			this.buttonStart.Name = "buttonStart";
+			this.buttonStart.Size = new System.Drawing.Size(53, 30);
+			this.buttonStart.TabIndex = 4;
+			this.buttonStart.Text = "Start";
+			this.buttonStart.UseVisualStyleBackColor = true;
+			this.buttonStart.Click += new System.EventHandler(this.ButtonStartClick);
+			// 
+			// buttonPause
+			// 
+			this.buttonPause.Enabled = false;
+			this.buttonPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.buttonPause.Image = ((System.Drawing.Image)(resources.GetObject("buttonPause.Image")));
+			this.buttonPause.Location = new System.Drawing.Point(62, 182);
+			this.buttonPause.Name = "buttonPause";
+			this.buttonPause.Size = new System.Drawing.Size(53, 30);
+			this.buttonPause.TabIndex = 3;
+			this.buttonPause.Text = "Pause";
+			this.buttonPause.UseVisualStyleBackColor = true;
+			this.buttonPause.Click += new System.EventHandler(this.ButtonPauseClick);
 			// 
 			// buttonStop
 			// 
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-			this.buttonStop.Location = new System.Drawing.Point(142, 353);
+			this.buttonStop.Location = new System.Drawing.Point(121, 182);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(53, 30);
 			this.buttonStop.TabIndex = 2;
@@ -223,11 +246,13 @@ namespace OctoTip.OctoTipManager
 			// checkBoxServerState
 			// 
 			this.checkBoxServerState.Appearance = System.Windows.Forms.Appearance.Button;
-			this.checkBoxServerState.Location = new System.Drawing.Point(4, 359);
+			this.checkBoxServerState.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.checkBoxServerState.Location = new System.Drawing.Point(6, 28);
 			this.checkBoxServerState.Name = "checkBoxServerState";
-			this.checkBoxServerState.Size = new System.Drawing.Size(76, 24);
+			this.checkBoxServerState.Size = new System.Drawing.Size(171, 34);
 			this.checkBoxServerState.TabIndex = 0;
-			this.checkBoxServerState.Text = "Start Server";
+			this.checkBoxServerState.Text = "Start Lisiner";
+			this.checkBoxServerState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.checkBoxServerState.UseVisualStyleBackColor = true;
 			this.checkBoxServerState.CheckedChanged += new System.EventHandler(this.CheckBoxServerStateCheckedChanged);
 			// 
@@ -246,7 +271,7 @@ namespace OctoTip.OctoTipManager
 			this.txtLog.Location = new System.Drawing.Point(3, 3);
 			this.txtLog.Multiline = true;
 			this.txtLog.Name = "txtLog";
-			this.txtLog.Size = new System.Drawing.Size(604, 88);
+			this.txtLog.Size = new System.Drawing.Size(604, 224);
 			this.txtLog.TabIndex = 0;
 			// 
 			// toolStrip1
@@ -291,7 +316,6 @@ namespace OctoTip.OctoTipManager
 			this.Controls.Add(this.menuStrip1);
 			this.Name = "MainForm";
 			this.Text = "OctoTip Manager";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormFormClosed);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
@@ -302,6 +326,7 @@ namespace OctoTip.OctoTipManager
 			this.splitHorizontal.ResumeLayout(false);
 			this.splitVertical.Panel1.ResumeLayout(false);
 			this.splitVertical.Panel2.ResumeLayout(false);
+			this.splitVertical.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitVertical)).EndInit();
 			this.splitVertical.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotJobsQueue)).EndInit();
@@ -310,9 +335,11 @@ namespace OctoTip.OctoTipManager
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox textBoxRuningJobStatus;
+		private System.Windows.Forms.Button buttonPause;
+		private System.Windows.Forms.Button buttonStart;
 		private OctoTip.OctoTipManager.ControlWrapper dataGridViewRobotJobsQueue;
 		private System.Windows.Forms.Button buttonStop;
-		private System.Windows.Forms.CheckBox checkBoxStartPause;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;

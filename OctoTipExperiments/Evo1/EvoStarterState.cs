@@ -38,13 +38,13 @@ namespace Evo1
 		
 		protected override RobotJob BeforeRobotRun()
 		{
-			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
+			List<RobotJobParameter> RJP = new List<RobotJobParameter>(3);
 			
 			LicPos LP = Utils.Ind2LicPos(PlateInd);
 			
 			RJP.Add(new RobotJobParameter("Lic6Cart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic6Pos",RobotJobParameter.ParameterType.Number,LP.Pos));
-			RJP.Add(new RobotJobParameter("AMPWellInd",RobotJobParameter.ParameterType.Number,RunningInEvoProtocol.Parameters.AmpEppendorfInd));
+			RJP.Add(new RobotJobParameter("AMPWellInd",RobotJobParameter.ParameterType.Number,RunningInEvoProtocol.EvoProtocolParameters.AMPEppendorfInd));
 			        
 			RobotJob RJ = new RobotJob(@"D:\OctoTip\SampleData\Evo1\EvoStarter.esc",RJP);
 			

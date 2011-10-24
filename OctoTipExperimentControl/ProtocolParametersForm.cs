@@ -50,25 +50,40 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			foreach(FieldInfo ProtocolParametersField in ProtocolParametersFields)
 			{
-				string title = (ProtocolParametersField.GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Title 	+ Environment.NewLine;
+				string title = (ProtocolParametersField.GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Title ;
+				string DefaultValue = (ProtocolParametersField.GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).DefaultValue ;
 				
 				if (ProtocolParametersField.FieldType==typeof(int))
 				{
-					
 					int Value = (int)(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
 					ProtocolParametersFieldUserControls.IntFieldUserControl IUC =
-						new ProtocolParametersFieldUserControls.IntFieldUserControl(title,Value);
+						new ProtocolParametersFieldUserControls.IntFieldUserControl(title,Value,DefaultValue);
 					AddProtocolParametersFieldUserControl(IUC);
+				}
+				
+			else if(ProtocolParametersField.FieldType==typeof(double))
+			{
+					double Value = (double)(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
+					ProtocolParametersFieldUserControls.DoubleFieldUserControl IUC =
+						new ProtocolParametersFieldUserControls.DoubleFieldUserControl(title,Value,DefaultValue);
+					AddProtocolParametersFieldUserControl(IUC);
+			}
+				else if(ProtocolParametersField.FieldType==typeof(int[]))
+				{
+					int[] Value = (int[])(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
+					IntArrayFieldUserControl IUC =
+						new  IntArrayFieldUserControl(title,Value,DefaultValue);
+					AddProtocolParametersFieldUserControl(IUC);
 				}
 				else if(ProtocolParametersField.FieldType==typeof(string))
 				{
 					string Value = (string)(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
 					StringFieldUserControl IUC =
-						new StringFieldUserControl(title,Value);
+						new StringFieldUserControl(title,Value,DefaultValue);
 					AddProtocolParametersFieldUserControl(IUC);
 				}
 				else if(ProtocolParametersField.FieldType==typeof(double[]))
@@ -76,7 +91,7 @@ namespace OctoTip.OctoTipExperimentControl
 					double[] Value = (double[])(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
 					DoubleArrayFieldUserControl IUC =
-						new  DoubleArrayFieldUserControl(title,Value);
+						new  DoubleArrayFieldUserControl(title,Value,DefaultValue);
 					AddProtocolParametersFieldUserControl(IUC);
 				}				
 				else

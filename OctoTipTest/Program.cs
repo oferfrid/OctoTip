@@ -33,24 +33,25 @@ namespace OctoTip.OctoTipTest
 		public static void Main(string[] args)
 		{
 			
-			//XmlSerializer writer =	new XmlSerializer(typeof(WaitState));
+			List<RobotJobParameter> RJP = new List<RobotJobParameter>(3);
 			
+			LicPos LP = Utils.Ind2LicPos(1);
 			
+			RJP.Add(new RobotJobParameter("Lic6Cart",RobotJobParameter.ParameterType.Number,LP.Cart));
+			RJP.Add(new RobotJobParameter("Lic6Pos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("AMPWellInd",RobotJobParameter.ParameterType.Number,24));
+			        
+			RobotJob RJ = new RobotJob(@"D:\OctoTip\SampleData\Evo1\EvoStarter.esc",RJP);
 			
-			
-			//FileInfo[] files = DI.GetFiles("*.xml", SearchOption.TopDirectoryOnly);
+			OctoTip.OctoTipLib.RobotJobsQueueServiceClient SC = new RobotJobsQueueServiceClient();
+			SC.AddRobotJob(RJ);
 			
 						
 			Console.ReadKey();
 		}
 		
 		
-		static private int CalcIndFromPlatePos(string Pos)
-		{
-			int Row = char.Parse(Pos.Substring(0,1))-'A';
-			int Col =  Convert.ToInt32(Pos.Substring(1,Pos.Length-1))-1;
-			return Row + Col*2+1;
-		}
+		
 		
 	}
 }

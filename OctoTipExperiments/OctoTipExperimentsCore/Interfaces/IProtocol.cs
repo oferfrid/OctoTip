@@ -21,7 +21,7 @@ namespace OctoTip.OctoTipExperiments.Core.Interfaces
 				
 		void RequestStop();
 		void RequestPause();
-		void RequestResume();
+		void RequestStart();
 		void ChangeState(State NewState);
 		
 		//TODO: Save State!

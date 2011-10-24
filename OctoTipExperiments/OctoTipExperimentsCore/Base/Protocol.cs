@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-
+using System.Threading;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
 
 namespace OctoTip.OctoTipExperiments.Core.Base
@@ -30,6 +30,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		
 		public State CurrentState;
 		
+		private Thread RunningThread;
 		
 		public ProtocolStatus _Status = ProtocolStatus.Stopped;
 		
@@ -46,6 +47,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		public  Protocol(ProtocolParameters ProtocolParameters)
 		{
 			this.ProtocolParameters = ProtocolParameters;
+			RunningThread = new Thread(DoWork);
 		}
 		public  Protocol()
 		{
@@ -137,21 +139,53 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stoping,"Trying to Stopped"));
 			_ShouldStop = true;
+			_ShouldPause  = false;
+			Thread.Sleep(5000);
+			if(RunningThread.ThreadState == ThreadState.Running)
+			{
+				RunningThread.Abort();
+				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stopped by Aborting"));
+			}
+			else
+			{
+				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stopped"));
+			}
+			
 		}
 		public void RequestPause()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Pausing,"Trying to Pause"));
 			_ShouldPause  = true;
 		}
-		public void RequestResume()
+		public void RequestStart()
 		{
-			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Starting,"Resuming"));
-			_ShouldPause  = false;
+			switch(this.Status)
+			{
+				case(ProtocolStatus.Paused):
+					OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Starting,"Resuming"));
+					_ShouldPause  = false;
+					break;
+				case(ProtocolStatus.Stopped):
+					OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Starting,"Startting"));
+					RunningThread.Start();
+					break;
+			}
+			
+			
 			
 		}
 		
 		public enum ProtocolStatus
-		{Stopped,Stoping,Started,Starting,Paused,Pausing,Error}
+		{
+			Stopped,
+			Stoping,
+			Started,
+			Starting,
+			Paused,
+			Pausing,
+			Error,
+			RuntimeError
+		}
 		
 		
 		
@@ -159,12 +193,8 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		public void DoWork()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Started,"Started"));
-			
 			OnProtocolStart();
-			
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stoped"));
-			
-			
 		}
 		
 		

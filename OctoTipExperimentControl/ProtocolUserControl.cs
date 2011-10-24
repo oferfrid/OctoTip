@@ -12,12 +12,19 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading;
-//using Microsoft.Msagl;
 using Microsoft.Msagl.Drawing;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.OctoTipLib;
+
+//using Microsoft.Msagl;
+
+
+
+
+
 
 namespace OctoTip.OctoTipExperimentControl
 {
@@ -31,8 +38,10 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		ProtocolParameters UserControlProtocolParameters;
 		
-		Graph graph ;
-		Thread ProtocolworkerThread;
+		Graph graph ;		
+		
+		public const string LOG_NAME = "OctoTipExperimentManager";
+		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
 		
 		public ProtocolUserControl()
@@ -58,13 +67,14 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			this.EditParametersbutton.BackColor = System.Drawing.SystemColors.Control;
 			this.buttonStop.Enabled = false;
-			this.checkBoxStartPause.Enabled = true;
+			this.buttonStart.Enabled = true;
+			this.buttonPause.Enabled = false;
 		}
 		
 		
 		private void InitUserControlProtocol()
 		{
-			
+			ProtocolStatesViewer.LayoutAlgorithmSettingsButtonVisible = true;
 			if (UserControlProtocol!=null)
 			{
 				//remove the courent Protocol from the List;
@@ -85,110 +95,94 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		#region Handeling events
 		
-		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
-		{
-			if (this.checkBoxStartPause.Checked)
-			{
-				if(UserControlProtocol.Status ==  Protocol.ProtocolStatus.Paused)
-				{
-					UserControlProtocol.RequestResume();
-				}
-				else
-				{
-					if(ProtocolworkerThread==null)
-					{
-						InitUserControlProtocol();
-						ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);
-					}
-					else
-					{
-						
-						ProtocolworkerThread.Abort();
-						InitUserControlProtocol();
-						ProtocolworkerThread = new Thread(UserControlProtocol.DoWork);
-					}
-					ProtocolworkerThread.Start();
-				}
-				
-			}
-			else
-			{
-				//PauseProtocol.
-				if(UserControlProtocol.Status ==  Protocol.ProtocolStatus.Stoping || UserControlProtocol.Status ==  Protocol.ProtocolStatus.Stopped  )
-				{
-				}
-				else
-				{
-					UserControlProtocol.RequestPause();
-				}
-				
-			}
-		}
 		
 		
 		void ButtonStopClick(object sender, EventArgs e)
 		{
 
 			UserControlProtocol.RequestStop();
-			//checkBoxStartPause.Checked = false;
 		}
+		
+		void ButtonStartClick(object sender, EventArgs e)
+		{
+			UserControlProtocol.RequestStart();
+		}
+		
+		void ButtonPauseClick(object sender, EventArgs e)
+		{
+			UserControlProtocol.RequestPause();
+		}
+		
+		
+		
 		
 		
 		private void HandleProtocolStatusChanged(object sender, ProtocolStatusChangeEventArgs e)
 		{
 			
-			
-			bool buttonStopEnabled = false;
-			bool checkBoxStartPauseEnabled = true;
-			string checkBoxStartPauseText = "start";
-			System.Drawing.Color BackColor = System.Drawing.Color.Silver;
-			
+			myLogger.Add(e.NewStatus + ">" + e.Messege);
+				
+			bool buttonStopEnabled ;
+			bool buttonStartEnabled ;
+			bool buttonPauseEnabled ;
+			System.Drawing.Color ProtocolBackColor;
 			
 			switch (e.NewStatus)
 			{
-				case Protocol.ProtocolStatus.Stopped:
-					buttonStopEnabled = false;
-					checkBoxStartPauseEnabled = true;
-					checkBoxStartPauseText = "Start";
-					MethodInvoker checkBoxStartPauseStopaction = delegate
-					{
-						checkBoxStartPause.Checked = false;
-					};
-					checkBoxStartPause.BeginInvoke(checkBoxStartPauseStopaction);
-					DrawProtocolStates();
-					BackColor =System.Drawing.Color.Red;
+				case (Protocol.ProtocolStatus.Stoping):
+					buttonStopEnabled  = false;
+					buttonStartEnabled =false;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.White;
 					break;
-				case Protocol.ProtocolStatus.Stoping:
-					buttonStopEnabled = false;
-					checkBoxStartPauseEnabled = false;
-					checkBoxStartPauseText = "Start";
-
+				case (Protocol.ProtocolStatus.Pausing):
+					buttonStopEnabled  = true;
+					buttonStartEnabled =false;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.White;
 					break;
-				case Protocol.ProtocolStatus.Started:
-					buttonStopEnabled = true;
-					checkBoxStartPauseEnabled = true;
-					checkBoxStartPauseText = "Pause";
-					BackColor =System.Drawing.Color.LightGreen;
+				case (Protocol.ProtocolStatus.Starting):
+					buttonStopEnabled  = true;
+					buttonStartEnabled =false;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.White;
 					break;
-				case Protocol.ProtocolStatus.Starting:
-					buttonStopEnabled = false;
-					checkBoxStartPauseEnabled = false;
-					checkBoxStartPauseText = "Pause";
-					
+				case (Protocol.ProtocolStatus.Stopped):
+					buttonStopEnabled  = false;
+					buttonStartEnabled =true;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.Red;
 					break;
-				case Protocol.ProtocolStatus.Paused:
-					buttonStopEnabled = true;
-					checkBoxStartPauseEnabled = true;
-					checkBoxStartPauseText = "Resturt";
-					BackColor =System.Drawing.Color.Yellow;
+				case (Protocol.ProtocolStatus.Started):
+					buttonStopEnabled  = true;
+					buttonStartEnabled =false;
+					buttonPauseEnabled=true ;
+					ProtocolBackColor = System.Drawing.Color.LightGreen;
 					break;
-				case Protocol.ProtocolStatus.Pausing:
-					buttonStopEnabled = false;
-					checkBoxStartPauseEnabled = false;
-					checkBoxStartPauseText = "Resturt";
-					
+				case (Protocol.ProtocolStatus.Paused):
+					buttonStopEnabled  = true;
+					buttonStartEnabled =true;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.Yellow;
 					break;
-					
+				case (Protocol.ProtocolStatus.Error):
+					buttonStopEnabled  = false;
+					buttonStartEnabled =true;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.DarkRed;
+					break;
+				case (Protocol.ProtocolStatus.RuntimeError):
+					buttonStopEnabled  = true;
+					buttonStartEnabled =false;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.Yellow;
+					break;
+				default:
+					buttonStopEnabled  = true;
+					buttonStartEnabled =true;
+					buttonPauseEnabled=true ;
+					ProtocolBackColor = System.Drawing.Color.White;
+					break;
 			}
 			
 			
@@ -201,27 +195,29 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			MethodInvoker buttonStopaction = delegate
 			{
-				buttonStop.Enabled = buttonStopEnabled ;
-				//buttonStop.Image = buttonStopImage;
+				buttonStop.Enabled=buttonStopEnabled;
 			};
 			buttonStop.BeginInvoke(buttonStopaction);
 			
-			
-			MethodInvoker checkBoxStartPauseaction = delegate
+			MethodInvoker buttonStartaction = delegate
 			{
-				checkBoxStartPause.Enabled = checkBoxStartPauseEnabled ;
-				checkBoxStartPause.Text = checkBoxStartPauseText ;
-				//checkBoxStartPause.Checked = checkBoxStartPauseChecked;
-				//checkBoxStartPause.Image = checkBoxStartPauseImage;
+				buttonStart.Enabled=buttonStartEnabled;
 			};
-			checkBoxStartPause.BeginInvoke(checkBoxStartPauseaction);
+			buttonStart.BeginInvoke(buttonStartaction);
 			
-			
-			MethodInvoker UserControStartPauseaction = delegate
+			MethodInvoker buttonPauseaction = delegate
 			{
-				this.BackColor = BackColor;
+				buttonPause.Enabled=buttonPauseEnabled;
 			};
-			this.BeginInvoke(UserControStartPauseaction);
+			buttonPause.BeginInvoke(buttonPauseaction);
+			
+			
+			MethodInvoker UserControlaction = delegate
+			{
+				this.BackColor=ProtocolBackColor;
+			};
+			this.BeginInvoke(UserControlaction);
+			
 		}
 		
 		private void HandleDisplayedDataChange(object sender, ProtocolDisplayedDataChangeEventArgs e)
@@ -304,21 +300,21 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			//Microsoft.Msagl.GeometryGraph geomGraph = new Microsoft.Msagl.GeometryGraph();
 			
-		//	geomGraph.SimpleStretch=false;
+			//	geomGraph.SimpleStretch=false;
 
-		//	geomGraph.AspectRatio = 1;
+			//	geomGraph.AspectRatio = 1;
 			
 
-		//	geomGraph.CalculateLayout();
+			//	geomGraph.CalculateLayout();
 			
 			
 			//ProtocolStatesViewer.Graph = graph;
 			
-		//	graph.GeometryGraph = geomGraph;
+			//	graph.GeometryGraph = geomGraph;
 
-//ProtocolStatesViewer.Graph = graph;
+			//ProtocolStatesViewer.Graph = graph;
 
-		//	ProtocolStatesViewer.NeedToCalculateLayout = false;
+			//	ProtocolStatesViewer.NeedToCalculateLayout = false;
 			ProtocolStatesViewer.Graph = graph;
 			
 			
@@ -382,6 +378,8 @@ namespace OctoTip.OctoTipExperimentControl
 
 			
 		}
+		
+		
 	}
 }
 

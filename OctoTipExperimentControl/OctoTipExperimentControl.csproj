@@ -73,6 +73,10 @@
     <Compile Include="ProtocolParametersFieldUserControls\DoubleArrayFieldUserControl.Designer.cs">
       <DependentUpon>DoubleArrayFieldUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProtocolParametersFieldUserControls\DoubleFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\DoubleFieldUserControl.Designer.cs">
+      <DependentUpon>DoubleFieldUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProtocolParametersFieldUserControls\IFieldUserControl.cs" />
     <Compile Include="ProtocolParametersFieldUserControls\IntArrayFieldUserControl.cs" />
     <Compile Include="ProtocolParametersFieldUserControls\IntArrayFieldUserControl.Designer.cs">
@@ -113,6 +117,10 @@
     <ProjectReference Include="..\OctoTipExperiments\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj">
       <Project>{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}</Project>
       <Name>OctoTipExperimentsCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OctoTipLib\OctoTipLib.csproj">
+      <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
+      <Name>OctoTipLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

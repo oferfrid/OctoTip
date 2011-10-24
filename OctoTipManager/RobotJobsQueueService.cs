@@ -48,7 +48,6 @@ namespace OctoTip.OctoTipManager
 			return string.Format(response);
 		}
 		
-		
 		public Guid AddRobotJob(RobotJob RJ)
 		{
 			Guid UniqueID = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueue.InsertRobotJob(RJ);

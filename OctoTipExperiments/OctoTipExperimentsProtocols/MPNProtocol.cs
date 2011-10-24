@@ -18,12 +18,12 @@ namespace OctoTip.OctoTipExperiments
 	/// <summary>
 	/// Description of MPNProtocol.
 	/// </summary>
-	[Protocol("Preform an MPN Evaluarion Of coulture")]
+	[Protocol("MPN","OFer" ,"Preform an MPN Evaluarion Of coulture")]
 	public class MPNProtocol:Protocol
 	{
 		
 		#region static
-		static List<Type> ProtocolStates()
+		static new List<Type> ProtocolStates()
 		{
 			return new List<Type>{ typeof(WaitState1),typeof(RoboRunState1),typeof(WaitState2)};
 		}

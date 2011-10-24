@@ -17,9 +17,15 @@ namespace OctoTip.OctoTipExperiments.Core.Attributes
 	public class ProtocolParameterAtribute: Attribute
 	{
 	//TODO:Add defoult values
+		public ProtocolParameterAtribute(string Title,string DefaultValue)
+		{
+			m_Title  = Title;
+			m_DefaultValue  = DefaultValue;
+		}
 		public ProtocolParameterAtribute(string Title)
 		{
 			m_Title  = Title;
+			m_DefaultValue  = string.Empty;
 		}
 
 		private string m_Title;
@@ -28,6 +34,14 @@ namespace OctoTip.OctoTipExperiments.Core.Attributes
 		{
 			get { return m_Title; }
 			set { m_Title = value; }
+		}
+		
+		private string m_DefaultValue;
+
+		public string DefaultValue
+		{
+			get { return m_DefaultValue; }
+			set { m_DefaultValue = value; }
 		}
 	}
 }

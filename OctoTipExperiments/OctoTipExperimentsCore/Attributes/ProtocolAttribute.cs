@@ -16,18 +16,40 @@ namespace OctoTip.OctoTipExperiments.Core.Attributes
 	[AttributeUsage(AttributeTargets.Class)]
 	public class ProtocolAttribute: Attribute
 	{
-		public ProtocolAttribute(string description)
+		public ProtocolAttribute(string ShortName ,string Author, string Description)
         {
-            m_description = description;
+          
+		 m_ShortName =ShortName;
+		 m_Author= Author;
+		 m_Description = Description;  
+			
         }
 
-        private string m_description;
-
-        public string Description
+		
+		string m_ShortName ;
+		public string ShortName
         {
-            get { return m_description; }
-            set { m_description = value; }
+            get { return m_ShortName; }
+            set { m_ShortName = value; }
         }
+		
+		string m_Author;
+		public string Author
+        {
+            get { return m_Author; }
+            set { m_Author = value; }
+        }
+		
+		string m_Description;
+		public string Description
+        {
+            get { return m_Description; }
+            set { m_Description = value; }
+        }
+		
+  
+
+        
         
         //TODO:Add Vertion And creator...
 	}

@@ -26,7 +26,7 @@ namespace Evo1
 		}
 		#endregion
 		EvoProtocol RunningInEvoProtocol;
-		public EvoGrow1State(EvoProtocol RunningInEvoProtocol):base((Protocol)RunningInEvoProtocol)
+		public EvoGrow1State(EvoProtocol RunningInEvoProtocol):base((Protocol)RunningInEvoProtocol,DateTime.Now.AddMinutes( RunningInEvoProtocol.EvoProtocolParameters.TimeBetweenReads))
 		{
 			this.RunningInEvoProtocol = RunningInEvoProtocol;
 		}
@@ -34,12 +34,12 @@ namespace Evo1
 		
 		protected override void OnWaitStart()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 		
 		protected override void OnWaitEnd()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 	}
 }

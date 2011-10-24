@@ -22,9 +22,16 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 		{
 			InitializeComponent();
 		}
-		public IntFieldUserControl(string Title,int Value):this()
+		public IntFieldUserControl(string Title,int Value,string DefaultValue):this()
 		{
+			if (Value!=0)
+			{
 			this.ValueTextBox.Text = Value.ToString();
+			}
+			else
+			{
+			this.ValueTextBox.Text = 	DefaultValue;
+			}
 			this.ParamNameLabel.Text = Title;
 		}
 		

@@ -26,19 +26,19 @@ namespace Evo1
 		}
 		#endregion
 		EvoProtocol RunningInEvoProtocol;
-		public EvoKillState(EvoProtocol RunningInEvoProtocol):base((Protocol)RunningInEvoProtocol)
+		public EvoKillState(EvoProtocol RunningInEvoProtocol,DateTime WaitUntil):base((Protocol)RunningInEvoProtocol , WaitUntil)
 		{
 			this.RunningInEvoProtocol = RunningInEvoProtocol;
 		}
 		
 		protected override void OnWaitStart()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 		
 		protected override void OnWaitEnd()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 	}
 }

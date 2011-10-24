@@ -22,11 +22,15 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 		{
 			InitializeComponent();
 		}
-		public DoubleArrayFieldUserControl(string Title,double[] Value):this()
+		public DoubleArrayFieldUserControl(string Title,double[] Value,string DefaultValue):this()
 		{
 			if (Value!=null)
 			{
 			this.ValueTextBox.Text = string.Join(",",Value);
+			}
+			else
+			{
+			this.ValueTextBox.Text = 	DefaultValue;
 			}
 			this.ParamNameLabel.Text = Title;
 		}
