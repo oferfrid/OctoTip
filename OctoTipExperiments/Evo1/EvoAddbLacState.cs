@@ -56,7 +56,7 @@ namespace Evo1
 		
 		protected override void AfterRobotRun()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 	}
 }

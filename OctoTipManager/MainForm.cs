@@ -298,46 +298,7 @@ namespace OctoTip.OctoTipManager
 		
 
 
-//		void CheckBoxStartPauseCheckedChanged(object sender, EventArgs e)
-//		{
-//			if (this.checkBoxStartPause.Checked)
-//			{
-//				if (!RobotWorkerThread.IsAlive)
-//				{//init RobotWorkerThread
-//					RobotWorkerThread.Abort();
-//					RobotWorkerThread = null;
-//					RobotWorkerThread = new Thread(FormRobotWorker.StartReadingQueue);
-//				}
-//				if (FormRobotWorker.ShouldPause)
-//				{// reqest resume
-//					//myLogger.Add("in Requesting resume");
-//					FormRobotWorker.RequestResume();
-//					buttonStop.Enabled = true;
-//					checkBoxStartPause.Text = "Pause";
-//				}
-//				//TODO:Move2 ShouldPause and not statuses
-//				else if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.Stopped)
-//				{// Start Thred
-//					RobotWorkerThread.Start();
-//					buttonStop.Enabled = true;
-//					checkBoxStartPause.Text = "Pause";
-//				}
-//			}
-//			else
-//			{
-//				if(FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.WaitingForQueuedItems||
-//				   FormRobotWorker.Status==RobotWorker.RobotWorkerStatus.RunningJob)
-//				{// reqest Pause
-//					myLogger.Add("in Requesting Pause");
-//					FormRobotWorker.RequestPause();
-//					buttonStop.Enabled = true;
-//					checkBoxStartPause.Text = "Start";
-//				}
-//			}
-//
-//		}
-//
-		
+
 		
 		
 		void ButtonPauseClick(object sender, EventArgs e)
@@ -379,7 +340,15 @@ namespace OctoTip.OctoTipManager
 			if(e.CurrentJob!=null)
 			{
 				textBoxRuningJobStatusText = GetJobStatus(e.CurrentJob);
+				
+				
+				MainForm.FormRobotJobsQueueHestoryDictionary[e.CurrentJob.UniqueID] = e.CurrentJob.JobStatus;
+				
 			}
+			
+			
+			
+			
 			
 			switch(e.RobotWorkerStatus)
 			{
