@@ -228,8 +228,6 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		private void HandleStateStatusChange(object sender, ProtocolStateStatusChangeEventArgs e)
 		{
-			//TODO: Ofer - handle the colours of the nodes of the graph according to the status
-			//TODO: also register to the protocol status and change visual according to it
 			Node N;
 			
 			//if (e.StateStatus = State.Status.Active

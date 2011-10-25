@@ -24,11 +24,6 @@ namespace OctoTip.OctoTipExperiments.Core
 	/// </summary>
 	public static class ProtocolProvider
 	{
-		//TODO:remove unused enteries
-
-
-		
-		
 		private static List<Assembly> LoadPlugInAssemblies()
 		{
 			DirectoryInfo dInfo = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "PluginProtocol"));
@@ -57,32 +52,13 @@ namespace OctoTip.OctoTipExperiments.Core
 			return plugInAssemblyList;
 		}
 
-		static List<IProtocol> GetPlugIns(List<Assembly> assemblies)
-		{
-			List<Type> availableTypes = new List<Type>();
-
-			foreach (Assembly currentAssembly in assemblies)
-			{
-				availableTypes.AddRange(currentAssembly.GetTypes());
-			}
-
-			// get a list of objects that implement the IProtocol interface AND
-			// have the CalculationPlugInAttribute
-			List<Type> ProtocolList = availableTypes.FindAll(delegate(Type t)
-			                                                 {
-			                                                 	List<Type> interfaceTypes = new List<Type>(t.GetInterfaces());
-			                                                 	object[] arr = t.GetCustomAttributes(typeof(ProtocolAttribute), true);
-			                                                 	return !(arr == null || arr.Length == 0) && interfaceTypes.Contains(typeof(IProtocol));
-			                                                 });
-
-			// conver the list of Objects to an instantiated list of IProtocols
-			return ProtocolList.ConvertAll<IProtocol>(delegate(Type t) { return Activator.CreateInstance(t) as IProtocol; });
-		}
 		
 		public static Protocol GetProtocol(Type ProtocolType,ProtocolParameters ProtocolParameters)
 		{
 			return Activator.CreateInstance(ProtocolType,ProtocolParameters) as Protocol;
 		}
+		
+		
 		
 		
 		public static List<Type> GetProtocolStates(Type ProtocolType)

@@ -46,11 +46,5 @@ namespace OctoTip.OctoTipExperiments.Core.Attributes
             get { return m_Description; }
             set { m_Description = value; }
         }
-		
-  
-
-        
-        
-        //TODO:Add Vertion And creator...
 	}
 }
