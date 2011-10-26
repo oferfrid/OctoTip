@@ -186,11 +186,11 @@ namespace OctoTip.OctoTipExperimentControl
 			}
 			
 			
-			MethodInvoker textBoxStatusaction = delegate
+			MethodInvoker textBoxProtocolStatusInvoker = delegate
 			{
-				textBoxStatus.Text =e.NewStatus + ">" +e.Messege;
+				textBoxProtocolStatus.Text =e.NewStatus + ">" +e.Messege;
 			};
-			textBoxData.BeginInvoke(textBoxStatusaction);
+			textBoxProtocolStatus.BeginInvoke(textBoxProtocolStatusInvoker);
 			
 			
 			MethodInvoker buttonStopaction = delegate
@@ -223,13 +223,11 @@ namespace OctoTip.OctoTipExperimentControl
 		private void HandleDisplayedDataChange(object sender, ProtocolDisplayedDataChangeEventArgs e)
 		{
 			MethodInvoker action = delegate
-			{ textBoxData.Text =e.Messege; };
-			textBoxData.BeginInvoke(action);
+			{ textBoxProtocolData.Text =e.Messege; };
+			textBoxProtocolData.BeginInvoke(action);
 		}
 		private void HandleStateStatusChange(object sender, ProtocolStateStatusChangeEventArgs e)
 		{
-			//TODO: Ofer - handle the colours of the nodes of the graph according to the status
-			//TODO: also register to the protocol status and change visual according to it
 			Node N;
 			
 			//if (e.StateStatus = State.Status.Active
@@ -255,6 +253,16 @@ namespace OctoTip.OctoTipExperimentControl
 				
 				ProtocolStatesViewer.Refresh(); };
 			ProtocolStatesViewer.BeginInvoke(action);
+			
+			MethodInvoker textBoxStateDataInvoker = delegate
+			{
+				textBoxStateData.Text = string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Messege);
+			};
+			textBoxStateData.BeginInvoke(textBoxStateDataInvoker);
+			
+			
+			
+			
 		}
 		
 		
@@ -318,9 +326,6 @@ namespace OctoTip.OctoTipExperimentControl
 			ProtocolStatesViewer.Graph = graph;
 			
 			
-			
-
-
 		}
 		
 		private void UpdateEdgeNodesAttr(Edge E)

@@ -37,37 +37,27 @@ namespace OctoTip.OctoTipExperimentControl
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProtocolUserControl));
-			this.textBoxData = new System.Windows.Forms.TextBox();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.EditParametersbutton = new System.Windows.Forms.Button();
 			this.ProtocolStatesViewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
-			this.textBoxStatus = new System.Windows.Forms.TextBox();
+			this.textBoxProtocolStatus = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonPause = new System.Windows.Forms.Button();
+			this.textBoxProtocolData = new System.Windows.Forms.TextBox();
+			this.textBoxStateData = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// textBoxData
-			// 
-			this.textBoxData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxData.Location = new System.Drawing.Point(402, 109);
-			this.textBoxData.Multiline = true;
-			this.textBoxData.Name = "textBoxData";
-			this.textBoxData.Size = new System.Drawing.Size(124, 144);
-			this.textBoxData.TabIndex = 1;
-			// 
 			// buttonStop
 			// 
-			this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-			this.buttonStop.Location = new System.Drawing.Point(532, 141);
+			this.buttonStop.Location = new System.Drawing.Point(498, 248);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(55, 28);
+			this.buttonStop.Size = new System.Drawing.Size(53, 28);
 			this.buttonStop.TabIndex = 2;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
@@ -75,11 +65,11 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// EditParametersbutton
 			// 
-			this.EditParametersbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.EditParametersbutton.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.EditParametersbutton.BackColor = System.Drawing.Color.Red;
-			this.EditParametersbutton.Location = new System.Drawing.Point(533, 3);
+			this.EditParametersbutton.Location = new System.Drawing.Point(437, 248);
 			this.EditParametersbutton.Name = "EditParametersbutton";
-			this.EditParametersbutton.Size = new System.Drawing.Size(55, 20);
+			this.EditParametersbutton.Size = new System.Drawing.Size(55, 28);
 			this.EditParametersbutton.TabIndex = 4;
 			this.EditParametersbutton.Text = "Edit Parameters";
 			this.EditParametersbutton.UseVisualStyleBackColor = false;
@@ -110,7 +100,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ProtocolStatesViewer.SaveButtonVisible = true;
 			this.ProtocolStatesViewer.SaveGraphButtonVisible = true;
 			this.ProtocolStatesViewer.SaveInVectorFormatEnabled = true;
-			this.ProtocolStatesViewer.Size = new System.Drawing.Size(393, 247);
+			this.ProtocolStatesViewer.Size = new System.Drawing.Size(428, 307);
 			this.ProtocolStatesViewer.TabIndex = 5;
 			this.ProtocolStatesViewer.ToolBarIsVisible = true;
 			this.ProtocolStatesViewer.ZoomF = 1D;
@@ -118,30 +108,30 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ProtocolStatesViewer.ZoomWindowThreshold = 0.05D;
 			this.ProtocolStatesViewer.SelectionChanged += new System.EventHandler(this.ProtocolStatesViewerSelectionChanged);
 			// 
-			// textBoxStatus
+			// textBoxProtocolStatus
 			// 
-			this.textBoxStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxStatus.Location = new System.Drawing.Point(402, 4);
-			this.textBoxStatus.Multiline = true;
-			this.textBoxStatus.Name = "textBoxStatus";
-			this.textBoxStatus.Size = new System.Drawing.Size(125, 100);
-			this.textBoxStatus.TabIndex = 6;
+			this.textBoxProtocolStatus.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.textBoxProtocolStatus.Location = new System.Drawing.Point(437, 2);
+			this.textBoxProtocolStatus.Multiline = true;
+			this.textBoxProtocolStatus.Name = "textBoxProtocolStatus";
+			this.textBoxProtocolStatus.Size = new System.Drawing.Size(114, 76);
+			this.textBoxProtocolStatus.TabIndex = 6;
 			// 
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.ProtocolStatesViewer);
-			this.panel1.Location = new System.Drawing.Point(3, 4);
+			this.panel1.Location = new System.Drawing.Point(3, 3);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(393, 247);
+			this.panel1.Size = new System.Drawing.Size(428, 307);
 			this.panel1.TabIndex = 7;
 			// 
 			// buttonStart
 			// 
+			this.buttonStart.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.buttonStart.Enabled = false;
 			this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStart.Image = ((System.Drawing.Image)(resources.GetObject("buttonStart.Image")));
-			this.buttonStart.Location = new System.Drawing.Point(532, 175);
+			this.buttonStart.Location = new System.Drawing.Point(437, 282);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(55, 28);
 			this.buttonStart.TabIndex = 8;
@@ -151,15 +141,35 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// buttonPause
 			// 
+			this.buttonPause.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.buttonPause.Enabled = false;
 			this.buttonPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonPause.Image = ((System.Drawing.Image)(resources.GetObject("buttonPause.Image")));
-			this.buttonPause.Location = new System.Drawing.Point(532, 209);
+			this.buttonPause.Location = new System.Drawing.Point(498, 282);
 			this.buttonPause.Name = "buttonPause";
-			this.buttonPause.Size = new System.Drawing.Size(55, 28);
+			this.buttonPause.Size = new System.Drawing.Size(53, 28);
 			this.buttonPause.TabIndex = 8;
 			this.buttonPause.Text = "Pause";
 			this.buttonPause.UseVisualStyleBackColor = true;
 			this.buttonPause.Click += new System.EventHandler(this.ButtonPauseClick);
+			// 
+			// textBoxProtocolData
+			// 
+			this.textBoxProtocolData.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.textBoxProtocolData.Location = new System.Drawing.Point(437, 84);
+			this.textBoxProtocolData.Multiline = true;
+			this.textBoxProtocolData.Name = "textBoxProtocolData";
+			this.textBoxProtocolData.Size = new System.Drawing.Size(114, 76);
+			this.textBoxProtocolData.TabIndex = 1;
+			// 
+			// textBoxStateData
+			// 
+			this.textBoxStateData.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.textBoxStateData.Location = new System.Drawing.Point(437, 166);
+			this.textBoxStateData.Multiline = true;
+			this.textBoxStateData.Name = "textBoxStateData";
+			this.textBoxStateData.Size = new System.Drawing.Size(114, 76);
+			this.textBoxStateData.TabIndex = 1;
 			// 
 			// ProtocolUserControl
 			// 
@@ -168,25 +178,27 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Controls.Add(this.buttonPause);
 			this.Controls.Add(this.buttonStart);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.textBoxStatus);
+			this.Controls.Add(this.textBoxProtocolStatus);
 			this.Controls.Add(this.EditParametersbutton);
 			this.Controls.Add(this.buttonStop);
-			this.Controls.Add(this.textBoxData);
+			this.Controls.Add(this.textBoxStateData);
+			this.Controls.Add(this.textBoxProtocolData);
 			this.Name = "ProtocolUserControl";
-			this.Size = new System.Drawing.Size(595, 256);
+			this.Size = new System.Drawing.Size(554, 314);
 			this.Load += new System.EventHandler(this.ProtocolUserControlLoad);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox textBoxProtocolData;
+		private System.Windows.Forms.TextBox textBoxStateData;
+		private System.Windows.Forms.TextBox textBoxProtocolStatus;
 		private System.Windows.Forms.Button buttonPause;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.TextBox textBoxStatus;
 		private Microsoft.Msagl.GraphViewerGdi.GViewer ProtocolStatesViewer;
 		private System.Windows.Forms.Button EditParametersbutton;
 		private System.Windows.Forms.Button buttonStop;
-		private System.Windows.Forms.TextBox textBoxData;
 	}
 }
