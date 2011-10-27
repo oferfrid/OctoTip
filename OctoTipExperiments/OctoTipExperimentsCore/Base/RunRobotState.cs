@@ -55,9 +55,17 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			RunRobotJob.TestJobParameters();
 			RJQClient = new RobotJobsQueueServiceClient();
 			
+			Guid JobID ;
 			
-			
-			Guid JobID = RJQClient.AddRobotJob(RunRobotJob);
+			try 
+			{
+				 JobID = RJQClient.AddRobotJob(RunRobotJob);
+				
+			} 
+			catch (System.ServiceModel.EndpointNotFoundException e)
+			{
+				throw new Exception("No Listener on " + RJQClient.Endpoint.ListenUri ,e);
+			}
 			RunRobotJob.UniqueID = JobID;
 			
 			

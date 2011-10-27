@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.OctoTipLib;
 
 namespace OctoTip.OctoTipExperiments.Core.Base
 {
@@ -39,7 +40,8 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		private volatile bool _ShouldStop = false;
 		private volatile bool _ShouldPause = false;
 		
-		
+		public const string LOG_NAME = "OctoTipExperimentManager";
+		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
 		
 		public  ProtocolParameters ProtocolParameters;
@@ -145,6 +147,8 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			{
 				RunningThread.Abort();
 				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stopped by Aborting"));
+				RunningThread=null;
+				RunningThread = new Thread(DoWork);
 			}
 			else
 			{
@@ -193,8 +197,22 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		public void DoWork()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Started,"Started"));
-			OnProtocolStart();
-			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stoped"));
+			
+			try {
+				OnProtocolStart();
+				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stoped"));	
+			} 
+			catch (Exception e) 
+			{
+				myLogger.Add(e.ToString());
+				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Error:" + e.Message ));
+				RunningThread.Abort();
+				
+			}
+				
+				
+				
+			
 		}
 		
 		
