@@ -124,9 +124,6 @@ namespace Evo1
 		}
 		
 		
-		
-		
-		
 		#region static
 		
 		
