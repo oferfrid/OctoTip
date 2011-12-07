@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OctoTip.OctoTipExperiments.Core.Attributes;
 using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipLib;
@@ -28,10 +29,12 @@ namespace Evo1
 		#endregion
 		EvoProtocol RunningInEvoProtocol;
 		int PlateInd;
-		public EvoKillReadState(EvoProtocol RunningInEvoProtocol,int PlateInd):base((Protocol)RunningInEvoProtocol)
+		int WellInd;
+		public EvoKillReadState(EvoProtocol RunningInEvoProtocol,int PlateInd,int WellInd):base((Protocol)RunningInEvoProtocol)
 		{
 			this.RunningInEvoProtocol = RunningInEvoProtocol;
 			this.PlateInd = PlateInd;
+			this.WellInd = WellInd;
 		}
 		
 		
@@ -53,7 +56,8 @@ namespace Evo1
 		
 		protected override void AfterRobotRun(System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<double>> MeasurementsResults)
 		{
-			//throw new NotImplementedException();
+			double MeanOD = MeasurementsResults[WellInd].Average();
+			RunningInEvoProtocol.CurentOD = MeanOD;
 		}
 	}
 }

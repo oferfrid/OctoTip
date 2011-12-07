@@ -40,6 +40,8 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		Graph graph ;		
 		
+		ProtocolLogForm PLog;
+		
 		public const string LOG_NAME = "OctoTipExperimentManager";
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
@@ -87,7 +89,7 @@ namespace OctoTip.OctoTipExperimentControl
 			UserControlProtocol.StatusChanged += HandleProtocolStatusChanged;
 			UserControlProtocol.DisplayedDataChange += HandleDisplayedDataChange;
 			UserControlProtocol.StateStatusChange += HandleStateStatusChange;
-			
+			UserControlProtocol.StateDisplayedDataChange += HandleStateDisplayedDataChange;
 			((MainForm)this.ParentForm).AddProtocol(this.UserControlProtocol);
 			
 			ActivateUserControlProtocol();
@@ -186,11 +188,10 @@ namespace OctoTip.OctoTipExperimentControl
 			}
 			
 			
-			MethodInvoker textBoxProtocolStatusInvoker = delegate
-			{
-				textBoxProtocolStatus.Text =e.NewStatus + ">" +e.Messege;
-			};
-			textBoxProtocolStatus.BeginInvoke(textBoxProtocolStatusInvoker);
+			
+				myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Messege));
+			
+			
 			
 			
 			MethodInvoker buttonStopaction = delegate
@@ -226,6 +227,14 @@ namespace OctoTip.OctoTipExperimentControl
 			{ textBoxProtocolData.Text =e.Messege; };
 			textBoxProtocolData.BeginInvoke(action);
 		}
+		
+		private void HandleStateDisplayedDataChange(object sender, ProtocolStateDisplayedDataChangeEventArgs e)
+		{
+			MethodInvoker action = delegate
+			{ textBoxStateData.Text = e.Messege ;};
+			textBoxStateData.BeginInvoke(action);
+		}
+		
 		private void HandleStateStatusChange(object sender, ProtocolStateStatusChangeEventArgs e)
 		{
 			Node N;
@@ -254,11 +263,9 @@ namespace OctoTip.OctoTipExperimentControl
 				ProtocolStatesViewer.Refresh(); };
 			ProtocolStatesViewer.BeginInvoke(action);
 			
-			MethodInvoker textBoxStateDataInvoker = delegate
-			{
-				textBoxStateData.Text = string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Messege);
-			};
-			textBoxStateData.BeginInvoke(textBoxStateDataInvoker);
+			
+			myLogger.Add( string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Messege));
+			
 			
 			
 			
@@ -355,6 +362,13 @@ namespace OctoTip.OctoTipExperimentControl
 			this.UserControlProtocolParameters = ProtocolParameters;
 			InitUserControlProtocol();
 		}
+		public void UpdateUserControlProtocolName()
+		{
+			this.labelProtocolName.Text = UserControlProtocolParameters.Name;
+			PLog = new ProtocolLogForm(UserControlProtocol.ProtocolParameters.Name);
+		}
+		
+		
 		
 		void ProtocolStatesViewerSelectionChanged(object sender, EventArgs e)
 		{
@@ -379,12 +393,17 @@ namespace OctoTip.OctoTipExperimentControl
 			//here you can use e.Attr.Id to get back to your data
 			//this.gViewer.SetToolTip(toolTip1, String.Format("node {0}", (selectedObject as Node).Attr.Id));
 			ProtocolStatesViewer.Invalidate();
-			
-
-			
 		}
 		
-		
+		void TextBoxProtocolDataDoubleClick(object sender, EventArgs e)
+		{
+			
+			if (UserControlProtocolParameters!=null)
+			{
+				PLog.ShowDialog();
+			}
+			
+		}
 	}
 }
 

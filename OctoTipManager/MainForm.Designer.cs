@@ -271,7 +271,8 @@ namespace OctoTip.OctoTipManager
 			this.txtLog.Location = new System.Drawing.Point(3, 3);
 			this.txtLog.Multiline = true;
 			this.txtLog.Name = "txtLog";
-			this.txtLog.Size = new System.Drawing.Size(604, 224);
+			this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.txtLog.Size = new System.Drawing.Size(604, 175);
 			this.txtLog.TabIndex = 0;
 			// 
 			// toolStrip1
@@ -316,6 +317,7 @@ namespace OctoTip.OctoTipManager
 			this.Controls.Add(this.menuStrip1);
 			this.Name = "MainForm";
 			this.Text = "OctoTip Manager";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormFormClosed);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();

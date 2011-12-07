@@ -78,7 +78,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 						}
 					}
 					
-					this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
+					this.RunningInProtocol.OnStateDisplayedDataChange(new ProtocolStateDisplayedDataChangeEventArgs(this,RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
 					Thread.Sleep(StateSamplelingRate);	
 				}
 				
@@ -94,7 +94,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 						this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Paused,String.Empty));
 						while(this.RunningInProtocol.ShouldPause && !this.RunningInProtocol.ShouldStop)
 						{
-							this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
+							this.RunningInProtocol.OnStateDisplayedDataChange(new ProtocolStateDisplayedDataChangeEventArgs(this,RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
 							Thread.Sleep(StateSamplelingRate);			
 						}
 						
@@ -107,7 +107,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 							this.RunningInProtocol.OnStatusChanged(new ProtocolStatusChangeEventArgs(Protocol.ProtocolStatus.Started,String.Empty));
 						}
 					}
-					this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
+					this.RunningInProtocol.OnStateDisplayedDataChange(new ProtocolStateDisplayedDataChangeEventArgs(this,RemainingTime().TotalMinutes.ToString("0.00") + "(minuts)"));
 					Thread.Sleep(StateSamplelingRate);
 					
 				}

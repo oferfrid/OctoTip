@@ -147,8 +147,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		{
 			RobotJob.Status JobStatus = RJQClient.GetJobStatus(RunRobotJob.UniqueID);
 			string messege = string.Format("{0}({1})>{2}",RunRobotJob.ScriptName,RunRobotJob.UniqueID,JobStatus.ToString());
-			this.RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(messege));
-			
+			this.RunningInProtocol.OnStateDisplayedDataChange(new ProtocolStateDisplayedDataChangeEventArgs(this,messege));
 			return JobStatus;
 		}
 	}

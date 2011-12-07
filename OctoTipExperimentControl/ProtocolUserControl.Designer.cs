@@ -40,12 +40,12 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.EditParametersbutton = new System.Windows.Forms.Button();
 			this.ProtocolStatesViewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
-			this.textBoxProtocolStatus = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonPause = new System.Windows.Forms.Button();
 			this.textBoxProtocolData = new System.Windows.Forms.TextBox();
 			this.textBoxStateData = new System.Windows.Forms.TextBox();
+			this.labelProtocolName = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -108,15 +108,6 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ProtocolStatesViewer.ZoomWindowThreshold = 0.05D;
 			this.ProtocolStatesViewer.SelectionChanged += new System.EventHandler(this.ProtocolStatesViewerSelectionChanged);
 			// 
-			// textBoxProtocolStatus
-			// 
-			this.textBoxProtocolStatus.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.textBoxProtocolStatus.Location = new System.Drawing.Point(437, 2);
-			this.textBoxProtocolStatus.Multiline = true;
-			this.textBoxProtocolStatus.Name = "textBoxProtocolStatus";
-			this.textBoxProtocolStatus.Size = new System.Drawing.Size(114, 76);
-			this.textBoxProtocolStatus.TabIndex = 6;
-			// 
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.ProtocolStatesViewer);
@@ -156,29 +147,39 @@ namespace OctoTip.OctoTipExperimentControl
 			// textBoxProtocolData
 			// 
 			this.textBoxProtocolData.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.textBoxProtocolData.Location = new System.Drawing.Point(437, 84);
+			this.textBoxProtocolData.Location = new System.Drawing.Point(437, 30);
 			this.textBoxProtocolData.Multiline = true;
 			this.textBoxProtocolData.Name = "textBoxProtocolData";
-			this.textBoxProtocolData.Size = new System.Drawing.Size(114, 76);
+			this.textBoxProtocolData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxProtocolData.Size = new System.Drawing.Size(114, 149);
 			this.textBoxProtocolData.TabIndex = 1;
+			this.textBoxProtocolData.DoubleClick += new System.EventHandler(this.TextBoxProtocolDataDoubleClick);
 			// 
 			// textBoxStateData
 			// 
 			this.textBoxStateData.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.textBoxStateData.Location = new System.Drawing.Point(437, 166);
+			this.textBoxStateData.Location = new System.Drawing.Point(437, 185);
 			this.textBoxStateData.Multiline = true;
 			this.textBoxStateData.Name = "textBoxStateData";
-			this.textBoxStateData.Size = new System.Drawing.Size(114, 76);
+			this.textBoxStateData.Size = new System.Drawing.Size(114, 57);
 			this.textBoxStateData.TabIndex = 1;
+			// 
+			// labelProtocolName
+			// 
+			this.labelProtocolName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.labelProtocolName.Location = new System.Drawing.Point(437, 4);
+			this.labelProtocolName.Name = "labelProtocolName";
+			this.labelProtocolName.Size = new System.Drawing.Size(114, 23);
+			this.labelProtocolName.TabIndex = 9;
 			// 
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Silver;
+			this.Controls.Add(this.labelProtocolName);
 			this.Controls.Add(this.buttonPause);
 			this.Controls.Add(this.buttonStart);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.textBoxProtocolStatus);
 			this.Controls.Add(this.EditParametersbutton);
 			this.Controls.Add(this.buttonStop);
 			this.Controls.Add(this.textBoxStateData);
@@ -191,9 +192,9 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label labelProtocolName;
 		private System.Windows.Forms.TextBox textBoxProtocolData;
 		private System.Windows.Forms.TextBox textBoxStateData;
-		private System.Windows.Forms.TextBox textBoxProtocolStatus;
 		private System.Windows.Forms.Button buttonPause;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.Panel panel1;

@@ -261,6 +261,7 @@ namespace OctoTip.OctoTipManager
 		
 		void EToolStripMenuItemExitClick(object sender, EventArgs e)
 		{
+			
 			Application.Exit();
 		}
 		
@@ -328,8 +329,14 @@ namespace OctoTip.OctoTipManager
 
 		void FormRobotWorker_StatusChanged(object sender, RobotWorkerStatusChangeEventArgs e)
 		{
-			
+			if(e.RobotWorkerStatus==RobotWorker.RobotWorkerStatus.RunningJob)
+			{
+			myLogger.Add(string.Format("{0}-{1} (parameters:{2}) ,{3}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
+			}
+			else
+			{
 			myLogger.Add(string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Messege));
+			}
 			
 			bool buttonPauseEnabled ;
 			bool buttonStartEnabled ;
@@ -448,12 +455,21 @@ namespace OctoTip.OctoTipManager
 		
 		
 		
-		
-
-		
-		
-		
-		
+		void MainFormFormClosed(object sender, FormClosedEventArgs e)
+		{
+			if(host.State != CommunicationState.Closed)
+			{
+				host.Close();
+				myLogger.Add("Lisener Closed");
+			}
+			if(FormRobotWorker.Status != RobotWorker.RobotWorkerStatus.Stopped)
+			{
+				FormRobotWorker.RequestStop();
+			}
+				
+			
+			
+		}
 	}
 	
 	
