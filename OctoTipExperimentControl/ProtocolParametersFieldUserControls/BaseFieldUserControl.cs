@@ -26,8 +26,10 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 		public abstract object GetObjectValue();
 		
 		
-		public abstract void SetError(string Error);
+		public abstract void SetFormatError(string Error);
+		public abstract void SetNullError(string Error);
 		
+		public abstract bool IsNull();
 		
 		public  void ClearError()
 		{

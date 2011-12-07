@@ -48,8 +48,10 @@ namespace Evo1
 			
 			RJP.Add(new RobotJobParameter("Lic6Cart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic6Pos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("WellInd",RobotJobParameter.ParameterType.Number,WellInd));
+			RJP.Add(new RobotJobParameter("BLacWellInd",RobotJobParameter.ParameterType.Number,RunningInEvoProtocol.EvoProtocolParameters.bLacEppendorfInd));
 			        
-			RobotJob RJ = new RobotJob(@"D:\OctoTip\SampleData\Evo1\EvoRead2OD.esc",RJP);
+			RobotJob RJ = new RobotJob(@"D:\OctoTip\SampleData\Evo1\EvoAddbLac.esc",RJP);
 			
 			return RJ;
 		}

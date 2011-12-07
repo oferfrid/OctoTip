@@ -43,6 +43,8 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		public const string LOG_NAME = "OctoTipExperimentManager";
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
+		private LogString myProtocolLogger;
+		
 		
 		public  ProtocolParameters ProtocolParameters;
 		
@@ -50,12 +52,18 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		{
 			this.ProtocolParameters = ProtocolParameters;
 			RunningThread = new Thread(DoWork);
+			myProtocolLogger = LogString.GetLogString(ProtocolParameters.Name);
+			
 		}
 		public  Protocol()
 		{
 			
 		}
+		 ~Protocol()
+		{
 		
+		OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stopped"));
+		}
 		
 		
 		public void SetNewProtocolParameters(ProtocolParameters ProtocolParameters)
@@ -84,8 +92,15 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		
 		public void ChangeState(State NewState)
 		{
+			if(!this._ShouldStop)
+			{
+			
 			this.OnProtocolStateStatusChange(new ProtocolStateStatusChangeEventArgs(NewState, State.Status.Active,"Started"));
 			CurrentState = NewState;
+			Log(CurrentState.GetType().ToString() + " Started");
+			CurrentState.DoWork();
+			Log(CurrentState.GetType().ToString() + " Ended");
+			}
 			
 			
 		}
@@ -122,6 +137,20 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			}
 		}
 		
+		public event EventHandler<ProtocolStateDisplayedDataChangeEventArgs> StateDisplayedDataChange;
+		//The event-invoking method that derived classes can override.
+		public virtual void OnStateDisplayedDataChange(ProtocolStateDisplayedDataChangeEventArgs e)
+		{
+			// Make a temporary copy of the event to avoid possibility of
+			// a race condition if the last subscriber unsubscribes
+			// immediately after the null check and before the event is raised.
+			EventHandler<ProtocolStateDisplayedDataChangeEventArgs> handler = StateDisplayedDataChange;
+			if (handler != null)
+			{
+				handler(this, e);
+			}
+		}
+		
 		public event EventHandler<ProtocolStateStatusChangeEventArgs> StateStatusChange;
 		//The event-invoking method that derived classes can override.
 		public virtual void OnProtocolStateStatusChange(ProtocolStateStatusChangeEventArgs e)
@@ -137,29 +166,19 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		}
 		
 		
+		
 		public void   RequestStop()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stoping,"Trying to Stopped"));
 			_ShouldStop = true;
 			_ShouldPause  = false;
-			Thread.Sleep(5000);
-			if(RunningThread.ThreadState == ThreadState.Running)
-			{
-				RunningThread.Abort();
-				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stopped by Aborting"));
-				RunningThread=null;
-				RunningThread = new Thread(DoWork);
-			}
-			else
-			{
-				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stopped"));
-			}
-			
+			Log("Request Stop");			
 		}
 		public void RequestPause()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Pausing,"Trying to Pause"));
 			_ShouldPause  = true;
+			Log("Request Pause");
 		}
 		public void RequestStart()
 		{
@@ -168,6 +187,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 				case(ProtocolStatus.Paused):
 					OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Starting,"Resuming"));
 					_ShouldPause  = false;
+					Log("Resumed");
 					break;
 				case(ProtocolStatus.Stopped):
 					OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Starting,"Startting"));
@@ -197,7 +217,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		public void DoWork()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Started,"Started"));
-			
+			Log("Started");
 			try {
 				OnProtocolStart();
 				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stoped"));	
@@ -206,6 +226,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 			{
 				myLogger.Add(e.ToString());
 				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Error:" + e.Message ));
+				Log("Error:" + e.Message);
 				RunningThread.Abort();
 				
 			}
@@ -213,6 +234,12 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 				
 				
 			
+		}
+		
+		public void Log(string Messege)
+		{
+			myProtocolLogger.Add(Messege);
+			myProtocolLogger.Persist();
 		}
 		
 		
@@ -246,6 +273,28 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		}
 	}
 	
+	public class ProtocolStateDisplayedDataChangeEventArgs:EventArgs
+	{
+		
+		private string _Messege;
+		private State _State;
+
+		public ProtocolStateDisplayedDataChangeEventArgs(State CurentState,string Messege)
+		{
+			this._State = CurentState;
+			this._Messege = Messege;
+		}
+		public string Messege
+		{
+			get { return _Messege; }
+		}
+		public State State
+		{
+			get { return _State; }
+		}
+	}
+		
+		
 	public class ProtocolDisplayedDataChangeEventArgs : EventArgs
 	{
 		

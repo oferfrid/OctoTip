@@ -35,6 +35,11 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 			this.ParamNameLabel.Text = Title;
 		}
 		
+		public override bool IsNull()
+		{
+			return GetValue()==0;
+		}
+		
 		public int GetValue()
 		{
 			return Convert.ToInt32(this.ValueTextBox.Text);
@@ -45,10 +50,13 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 			return (object)Convert.ToInt32(this.ValueTextBox.Text);
 		}
 		
-		public override void SetError(string Error)
+		public override void SetFormatError(string Error)
 		{
 			errorProvider.SetError(this.ValueTextBox, "Value Not In the write fromat (int)\n" + Error);
 		}
-		
+		public override void SetNullError(string Error)
+		{
+			errorProvider.SetError(this.ValueTextBox, "Value can't be null\n" + Error);
+		}
 	}
 }

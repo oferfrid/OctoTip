@@ -55,7 +55,7 @@ namespace Evo1
 		protected override void AfterRobotRun(System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<double>> MeasurementsResults)
 		{
 			double MeanOD = MeasurementsResults[WellInd].Average();
-			RunningInProtocol.OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(string.Format("Mean OD:{0}",MeanOD)));
+			RunningInProtocol.OnStateDisplayedDataChange(new ProtocolStateDisplayedDataChangeEventArgs(this,string.Format("Mean OD:{0}",MeanOD)));
 			RunningInEvoProtocol.CurentOD = MeanOD;
 		}
 	}

@@ -16,7 +16,10 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 	public interface IFieldUserControl
 	{
 		object GetObjectValue();
-		void SetError(string Error);
+		void SetFormatError(string Error);
 		void ClearError();
+		bool IsNull();
+		void SetNullError(string Error);
+		
 	}
 }

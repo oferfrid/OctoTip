@@ -18,7 +18,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	/// </summary>
 	public abstract class ProtocolParameters:IProtocolParameters
 	{
-		[ProtocolParameterAtribute("Name")]
+		[ProtocolParameterAtribute("Name Of The Protocol","",true)]
 		public string Name;
 	}
 }

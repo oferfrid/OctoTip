@@ -82,8 +82,7 @@ namespace OctoTip.OctoTipExperimentControl
 				{
 					string Value = (string)(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
-					StringFieldUserControl IUC =
-						new StringFieldUserControl(title,Value,DefaultValue);
+					StringFieldUserControl IUC =new StringFieldUserControl(title,Value,DefaultValue);
 					AddProtocolParametersFieldUserControl(IUC);
 				}
 				else if(ProtocolParametersField.FieldType==typeof(double[]))
@@ -129,12 +128,22 @@ namespace OctoTip.OctoTipExperimentControl
 				try
 				{
 					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).ClearError();
+					if ((ProtocolParametersFields[i].GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Mandatory 
+					                                  && ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).IsNull())
+					{
+					//field is mandatory & empty
+					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetNullError(string.Empty);
+					ErrorFlag = true;			
+					}
+					else
+					{
 					Value = ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).GetObjectValue();
 					ProtocolParametersFields[i].SetValue(FormProtocolParameters,Value);
+					}
 				}
 				catch (System.FormatException )
 				{
-					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetError(string.Empty);
+					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetFormatError(string.Empty);
 						ErrorFlag = true;
 					//throw ex;
 				}
@@ -143,6 +152,7 @@ namespace OctoTip.OctoTipExperimentControl
 			if(!ErrorFlag)
 			{
 			ParentProtocolUserControl.SetNewUserControlProtocolParameters(FormProtocolParameters);
+			ParentProtocolUserControl.UpdateUserControlProtocolName();
 			this.Close();
 			}
 			

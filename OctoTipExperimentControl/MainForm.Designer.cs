@@ -40,6 +40,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.Protocolpanel = new System.Windows.Forms.Panel();
+			this.buttonClearLog = new System.Windows.Forms.Button();
 			this.textBoxLog = new System.Windows.Forms.TextBox();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelProtocolCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -53,7 +54,6 @@ namespace OctoTip.OctoTipExperimentControl
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshProtocols = new System.Windows.Forms.ToolStripButton();
-			this.buttonClearLog = new System.Windows.Forms.Button();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -76,7 +76,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.statusStrip1);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(834, 538);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(834, 564);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			// 
 			// toolStripContainer1.LeftToolStripPanel
@@ -85,7 +85,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(924, 587);
+			this.toolStripContainer1.Size = new System.Drawing.Size(924, 613);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -108,7 +108,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.buttonClearLog);
 			this.splitContainer1.Panel2.Controls.Add(this.textBoxLog);
-			this.splitContainer1.Size = new System.Drawing.Size(834, 516);
+			this.splitContainer1.Size = new System.Drawing.Size(834, 542);
 			this.splitContainer1.SplitterDistance = 596;
 			this.splitContainer1.TabIndex = 1;
 			// 
@@ -118,22 +118,34 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Protocolpanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.Protocolpanel.Location = new System.Drawing.Point(0, 0);
 			this.Protocolpanel.Name = "Protocolpanel";
-			this.Protocolpanel.Size = new System.Drawing.Size(596, 516);
+			this.Protocolpanel.Size = new System.Drawing.Size(596, 542);
 			this.Protocolpanel.TabIndex = 0;
+			// 
+			// buttonClearLog
+			// 
+			this.buttonClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonClearLog.Location = new System.Drawing.Point(2, 273);
+			this.buttonClearLog.Name = "buttonClearLog";
+			this.buttonClearLog.Size = new System.Drawing.Size(75, 23);
+			this.buttonClearLog.TabIndex = 2;
+			this.buttonClearLog.Text = "Clear Log";
+			this.buttonClearLog.UseVisualStyleBackColor = true;
+			this.buttonClearLog.Click += new System.EventHandler(this.ButtonClearLogClick);
 			// 
 			// textBoxLog
 			// 
-			this.textBoxLog.Location = new System.Drawing.Point(3, 293);
+			this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxLog.Location = new System.Drawing.Point(3, 302);
 			this.textBoxLog.Multiline = true;
 			this.textBoxLog.Name = "textBoxLog";
-			this.textBoxLog.Size = new System.Drawing.Size(228, 220);
+			this.textBoxLog.Size = new System.Drawing.Size(228, 237);
 			this.textBoxLog.TabIndex = 1;
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStripStatusLabelProtocolCount});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 516);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 542);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(834, 22);
 			this.statusStrip1.TabIndex = 0;
@@ -234,21 +246,11 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripButtonRefreshProtocols.Text = "Refresh Protocols";
 			this.toolStripButtonRefreshProtocols.Click += new System.EventHandler(this.ToolStripButtonRefreshProtocolsClick);
 			// 
-			// buttonClearLog
-			// 
-			this.buttonClearLog.Location = new System.Drawing.Point(3, 264);
-			this.buttonClearLog.Name = "buttonClearLog";
-			this.buttonClearLog.Size = new System.Drawing.Size(75, 23);
-			this.buttonClearLog.TabIndex = 2;
-			this.buttonClearLog.Text = "Clear Log";
-			this.buttonClearLog.UseVisualStyleBackColor = true;
-			this.buttonClearLog.Click += new System.EventHandler(this.ButtonClearLogClick);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(924, 587);
+			this.ClientSize = new System.Drawing.Size(924, 613);
 			this.Controls.Add(this.toolStripContainer1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
