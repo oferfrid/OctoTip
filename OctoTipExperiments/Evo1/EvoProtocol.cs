@@ -152,13 +152,13 @@ namespace Evo1
 					this.ChangeState(new EvoGrow2State(this));
 					
 					this.ChangeState(new EvoGrow2ReadState(this,PlateInd,WellInd));
-					Log("EvoGrow2ReadState OD:" + CurentOD.ToString("0.000"));	
+					Log("EvoGrow2ReadState OD:" + CurentOD.ToString("0.000"));
 					DesplayProtocolData(c,ODs,TimeSpan.Zero);
 					
 				}
 				if( WellInd==6)
 				{
-					Log("EvoDilut2AmpState replace plate");	
+					Log("EvoDilut2AmpState replace plate");
 					this.ChangeState(new EvoDilut2AmpState(this,PlateInd,++PlateInd,WellInd,1,EvoProtocolParameters.FreezAmpEppendorfInds[c],EvoProtocolParameters.AMPEppendorfInd));
 				}
 				else
@@ -186,7 +186,7 @@ namespace Evo1
 					,typeof(EvoKillState)
 					,typeof(EvoStarterState)};
 		}
-		}
-		#endregion
 	}
+	#endregion
 }
+
