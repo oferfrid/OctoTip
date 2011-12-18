@@ -1,5 +1,5 @@
-4AB831E2
-20111018_115224 Tecan           
+A88BCA93
+20111101_202941 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -137,10 +137,10 @@ Transfer_Rack("27","17",1,1,0,0,1,"17","6 Well CaCo2 Plate","Narrow","","","Stor
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
 Variable(WELL_OFFSET,"BLacWellInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Mix(1,"Water free dispense LD & Trace","150",0,0,0,0,0,0,0,0,0,0,0,4,0,1,"06041000",3,0,0);
-Aspirate(1,"Water free dispense LD & Trace","30",0,0,0,0,0,0,0,0,0,0,0,4,0,1,"06041000",0,0);
+Aspirate(1,"Water free dispense LD & Trace","50",0,0,0,0,0,0,0,0,0,0,0,4,0,1,"06041000",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 Variable(WELL_OFFSET,"WellInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Dispense(1,"Water free dispense LD & Trace","30",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
+Dispense(1,"Water free dispense LD & Trace","50",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
 Mix(1,"Water free dispense LD & Trace","150",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",3,0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 DropDITI(1,1,6,10,70,0);

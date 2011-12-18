@@ -1,5 +1,5 @@
-60C3F739
-20111018_141121 Tecan           
+EBFFE265
+20111110_113202 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -130,25 +130,26 @@ V;200
 996;0;0;
 --{ RPG }--
 Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,1000,0);
+FACTS("StoreX","StoreX_ReturnPlate","2,17","0","");
 ImportVariable(Lic6Cart#Lic6Pos#FromWell#ToWell#FreezWellInd#AMPWellInd,"D:\OctoTip\SampleData\Evo1\EvoDilutToAmpParam.csv",0#0#0#0#0#0,"1#1#1#2#1#24",0,1,0,1,1);
 FACTS("StoreX","StoreX_PresentPlate","~Lic6Cart~,~Lic6Pos~","1","6_Well_CaCo2_Plate");
 FACTS("StoreX","StoreX_EndAccess","","0","");
 Transfer_Rack("27","17",1,1,0,0,1,"17","6 Well CaCo2 Plate","Narrow","","","Storex","MP 3Pos Flat","MP 3Pos Flat","1","1","2");
 GetDITI2(1,"BoxDiTi 1000ul",1,0,10,70);
-BeginLoop("4","Fill6");
-Aspirate(1,"Water free dispense LD","742.5",0,0,0,0,0,0,0,0,0,0,0,1,3,1,"010810",0,0);
+BeginLoop("6","Fill6");
+Aspirate(1,"Water free dispense LD","825",0,0,0,0,0,0,0,0,0,0,0,1,3,1,"010810",0,0);
 Variable(WELL_OFFSET,"ToWell-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Dispense(1,"Water free dispense no LD","742.5",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
+Dispense(1,"Water free dispense no LD","825",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 EndLoop();
 DropDITI(1,1,6,10,70,0);
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
 Variable(WELL_OFFSET,"AMPWellInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Mix(1,"Water free dispense LD & Trace","150",0,0,0,0,0,0,0,0,0,0,0,4,0,1,"06041000",3,0,0);
-Aspirate(1,"Water free dispense LD & Trace","30",0,0,0,0,0,0,0,0,0,0,0,4,0,1,"06041000",0,0);
+Aspirate(1,"Water free dispense LD & Trace","50",0,0,0,0,0,0,0,0,0,0,0,4,0,1,"06041000",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 Variable(WELL_OFFSET,"ToWell-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Dispense(1,"Water free dispense LD & Trace","30",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
+Dispense(1,"Water free dispense LD & Trace","50",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 DropDITI(1,1,6,10,70,0);
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
@@ -159,10 +160,10 @@ Variable(WELL_OFFSET,"FreezWellInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense LD & Trace","150",0,0,0,0,0,0,0,0,0,0,0,4,0,1,"06041000",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 Variable(WELL_OFFSET,"FromWell-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Aspirate(1,"Water free dispense LD & Trace","30",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
+Aspirate(1,"Water free dispense LD & Trace","50",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 Variable(WELL_OFFSET,"ToWell-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Dispense(1,"Water free dispense LD & Trace","30",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
+Dispense(1,"Water free dispense LD & Trace","50",0,0,0,0,0,0,0,0,0,0,0,17,1,1,"03021",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 DropDITI(1,1,6,10,70,0);
 Transfer_Rack("17","27",1,1,0,0,0,"17","6 Well CaCo2 Plate","Narrow","","","MP 3Pos Flat","MP 3Pos Flat","Storex","2","1","1");
