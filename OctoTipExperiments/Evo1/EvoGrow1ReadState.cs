@@ -58,6 +58,11 @@ namespace Evo1
 			RunningInProtocol.OnStateDisplayedDataChange(new ProtocolStateDisplayedDataChangeEventArgs(this,string.Format("Mean OD:{0}",MeanOD)));
 			RunningInEvoProtocol.CurentOD = MeanOD;
 		}
+		
+		protected override void AfterRobotRun(System.Xml.XPath.XPathDocument MeasurementsResults)
+		{
+			//throw new NotImplementedException();
+		}
 	}
 }
  

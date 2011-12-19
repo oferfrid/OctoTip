@@ -59,5 +59,10 @@ namespace Evo1
 			double MeanOD = MeasurementsResults[WellInd].Average();
 			RunningInEvoProtocol.CurentOD = MeanOD;
 		}
+		
+		protected override void AfterRobotRun(System.Xml.XPath.XPathDocument MeasurementsResults)
+		{
+			//throw new NotImplementedException();
+		}
 	}
 }

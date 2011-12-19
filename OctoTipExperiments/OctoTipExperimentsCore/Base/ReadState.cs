@@ -75,7 +75,8 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 				}
 
 				
-				
+				AfterRobotRun(MeasurementsResults);
+			AfterRobotRun(document);
 				
 				
 			}
@@ -84,10 +85,13 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 				throw new Exception (string.Format("No Reder file found in {0}",DI));
 			}
 			
-			AfterRobotRun(MeasurementsResults);
+			
+			
 		}
 		
 		protected abstract void AfterRobotRun(Dictionary<int, List<double>> MeasurementsResults);
+		
+		protected abstract void AfterRobotRun(XPathDocument MeasurementsResults);
 		
 		 private int CalcIndFromPlatePos(string Pos)
 		{
