@@ -252,6 +252,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(924, 613);
 			this.Controls.Add(this.toolStripContainer1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "MainForm";

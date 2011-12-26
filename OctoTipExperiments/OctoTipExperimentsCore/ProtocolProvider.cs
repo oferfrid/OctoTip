@@ -104,7 +104,14 @@ namespace OctoTip.OctoTipExperiments.Core
 
 			foreach (Assembly currentAssembly in assemblies)
 			{
+				try
+				{
 				availableTypes.AddRange(currentAssembly.GetTypes());
+				}
+				catch(System.Reflection.ReflectionTypeLoadException e)
+				{
+					throw new Exception("The suplied dll (" + currentAssembly.GetName()  + ") is not compatible with the current version ",e);
+				}
 			}
 
 			// get a list of objects that implement the IProtocol interface AND
@@ -174,8 +181,15 @@ namespace OctoTip.OctoTipExperiments.Core
 					}
 				}
 			}
-			System.Diagnostics.Debug.WriteLine(Activator.CreateInstance(ProtocolParametersType));
+			//System.Diagnostics.Debug.WriteLine(Activator.CreateInstance(ProtocolParametersType));
+			if (ProtocolParametersType == null)
+			{
+				throw new NullReferenceException("No apropriate ProtocolParametersType asochiated to this protocof found in the dll");
+			}
+				
 			ProtocolParameters  NewProtocolParameters = (ProtocolParameters)(Activator.CreateInstance(ProtocolParametersType));
+			
+			
 			return NewProtocolParameters;
 		}
 		

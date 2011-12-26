@@ -49,7 +49,7 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 			// 
 			// ValueTextBox
 			// 
-			this.ValueTextBox.Location = new System.Drawing.Point(123, 0);
+			this.ValueTextBox.Location = new System.Drawing.Point(173, 2);
 			this.ValueTextBox.Name = "ValueTextBox";
 			this.ValueTextBox.Size = new System.Drawing.Size(145, 20);
 			this.ValueTextBox.TabIndex = 0;
@@ -58,7 +58,7 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 			// 
 			this.ParamNameLabel.Location = new System.Drawing.Point(13, 5);
 			this.ParamNameLabel.Name = "ParamNameLabel";
-			this.ParamNameLabel.Size = new System.Drawing.Size(104, 23);
+			this.ParamNameLabel.Size = new System.Drawing.Size(145, 23);
 			this.ParamNameLabel.TabIndex = 1;
 			// 
 			// BaseFieldUserControl

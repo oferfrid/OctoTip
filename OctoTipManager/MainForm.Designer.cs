@@ -315,6 +315,7 @@ namespace OctoTip.OctoTipManager
 			this.Controls.Add(this.splitHorizontal);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainForm";
 			this.Text = "OctoTip Manager";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormFormClosed);

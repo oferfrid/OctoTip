@@ -25,7 +25,7 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 		
 		public StringFieldUserControl(string Title,string Value,string DefaultValue):this()
 		{
-			if (Value!=string.Empty)
+			if (Value!=string.Empty && Value!=null)
 			{
 			this.ValueTextBox.Text = Value;
 			}
