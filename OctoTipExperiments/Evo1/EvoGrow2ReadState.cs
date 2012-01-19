@@ -51,16 +51,13 @@ namespace Evo1
 			return RJ;
 		}
 		
-		protected override void AfterRobotRun(System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<double>> MeasurementsResults)
+		protected override void AfterRobotRun()
 		{
 			
-			double MeanOD = MeasurementsResults[WellInd].Average();
+			double MeanOD = GetMeasurementsResults()[WellInd].Average();
 			RunningInEvoProtocol.CurentOD = MeanOD;
 		}
 		
-		protected override void AfterRobotRun(System.Xml.XPath.XPathDocument MeasurementsResults)
-		{
-			//throw new NotImplementedException();
-		}
+		
 	}
 }
