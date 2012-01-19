@@ -18,7 +18,7 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	/// </summary>
 	public abstract class RunRobotState:State
 	{
-		RobotJob RunRobotJob=null;
+		protected RobotJob RunRobotJob=null;
 		
 		RobotJobsQueueServiceClient RJQClient ;
 		
