@@ -20,5 +20,6 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 	{
 		[ProtocolParameterAtribute("Name Of The Protocol","",true)]
 		public string Name;
+		public bool IsInitialized = false;
 	}
 }
