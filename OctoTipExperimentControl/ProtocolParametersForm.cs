@@ -62,14 +62,24 @@ namespace OctoTip.OctoTipExperimentControl
 					AddProtocolParametersFieldUserControl(IUC);
 				}
 				
-			else if(ProtocolParametersField.FieldType==typeof(double))
-			{
+				else if(ProtocolParametersField.FieldType==typeof(double))
+				{
 					double Value = (double)(ProtocolParametersField.GetValue(FormProtocolParameters));
 					
 					ProtocolParametersFieldUserControls.DoubleFieldUserControl IUC =
 						new ProtocolParametersFieldUserControls.DoubleFieldUserControl(title,Value,DefaultValue);
 					AddProtocolParametersFieldUserControl(IUC);
-			}
+				}
+				
+				else if(ProtocolParametersField.FieldType==typeof(bool))
+				{
+					bool Value = (bool)(ProtocolParametersField.GetValue(FormProtocolParameters));
+					
+					ProtocolParametersFieldUserControls.BooleanFieldUserControl IUC =
+						new ProtocolParametersFieldUserControls.BooleanFieldUserControl(title,Value,DefaultValue);
+					AddProtocolParametersFieldUserControl(IUC);
+				}
+				
 				else if(ProtocolParametersField.FieldType==typeof(int[]))
 				{
 					int[] Value = (int[])(ProtocolParametersField.GetValue(FormProtocolParameters));
@@ -92,7 +102,7 @@ namespace OctoTip.OctoTipExperimentControl
 					DoubleArrayFieldUserControl IUC =
 						new  DoubleArrayFieldUserControl(title,Value,DefaultValue);
 					AddProtocolParametersFieldUserControl(IUC);
-				}				
+				}
 				else
 				{
 					throw new NotImplementedException("Parameter Type (" +  ProtocolParametersField.FieldType.ToString()  + ") Not Implemented yet");
@@ -128,32 +138,32 @@ namespace OctoTip.OctoTipExperimentControl
 				try
 				{
 					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).ClearError();
-					if ((ProtocolParametersFields[i].GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Mandatory 
-					                                  && ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).IsNull())
+					if ((ProtocolParametersFields[i].GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Mandatory
+					    && ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).IsNull())
 					{
-					//field is mandatory & empty
-					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetNullError(string.Empty);
-					ErrorFlag = true;			
+						//field is mandatory & empty
+						((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetNullError(string.Empty);
+						ErrorFlag = true;
 					}
 					else
 					{
-					Value = ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).GetObjectValue();
-					ProtocolParametersFields[i].SetValue(FormProtocolParameters,Value);
+						Value = ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).GetObjectValue();
+						ProtocolParametersFields[i].SetValue(FormProtocolParameters,Value);
 					}
 				}
 				catch (System.FormatException )
 				{
 					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetFormatError(string.Empty);
-						ErrorFlag = true;
+					ErrorFlag = true;
 					//throw ex;
 				}
 				
 			}
 			if(!ErrorFlag)
 			{
-			ParentProtocolUserControl.SetNewUserControlProtocolParameters(FormProtocolParameters);
-			ParentProtocolUserControl.UpdateUserControlProtocolName();
-			this.Close();
+				ParentProtocolUserControl.SetNewUserControlProtocolParameters(FormProtocolParameters);
+				ParentProtocolUserControl.UpdateUserControlProtocolName();
+				this.Close();
 			}
 			
 		}
