@@ -165,7 +165,7 @@ namespace OctoTip.OctoTipExperimentControl
 									this.Protocol1});
 			this.ProtocoltoolStrip.Location = new System.Drawing.Point(0, 3);
 			this.ProtocoltoolStrip.Name = "ProtocoltoolStrip";
-			this.ProtocoltoolStrip.Size = new System.Drawing.Size(90, 50);
+			this.ProtocoltoolStrip.Size = new System.Drawing.Size(90, 48);
 			this.ProtocoltoolStrip.TabIndex = 0;
 			// 
 			// toolStripLabel1
@@ -233,7 +233,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStrip1.Location = new System.Drawing.Point(3, 24);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolStrip1.Size = new System.Drawing.Size(35, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(33, 25);
 			this.toolStrip1.TabIndex = 0;
 			// 
 			// toolStripButtonRefreshProtocols
@@ -255,7 +255,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
-			this.Text = "MainForm";
+			this.Text = "OctoTip-Experiment Manager";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
 			this.toolStripContainer1.ContentPanel.PerformLayout();
