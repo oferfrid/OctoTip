@@ -8,10 +8,10 @@
  */
 using System;
 using System.Drawing;
+using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using System.Reflection;
-
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.OctoTipExperiments.Core.Base;
 using OctoTip.OctoTipExperiments.Core.Attributes;
@@ -33,6 +33,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			InitializeComponent();
 		}
+		
 		public ProtocolParametersForm(ProtocolUserControl ParentProtocolUserControl,Type ProtocolData):this(ParentProtocolUserControl,ProtocolProvider.GetProtocolParameters(ProtocolData))
 		{
 			
@@ -50,68 +51,26 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			foreach(FieldInfo ProtocolParametersField in ProtocolParametersFields)
 			{
-				string title = (ProtocolParametersField.GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Title ;
-				string DefaultValue = (ProtocolParametersField.GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).DefaultValue ;
-				
-				if (ProtocolParametersField.FieldType==typeof(int))
+				if (ProtocolParametersField.Name != "IsInitialized")
 				{
-					int Value = (int)(ProtocolParametersField.GetValue(FormProtocolParameters));
+					string title = (ProtocolParametersField.GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Title ;
+					string DefaultValue = (ProtocolParametersField.GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).DefaultValue ;
 					
-					ProtocolParametersFieldUserControls.IntFieldUserControl IUC =
-						new ProtocolParametersFieldUserControls.IntFieldUserControl(title,Value,DefaultValue);
-					AddProtocolParametersFieldUserControl(IUC);
-				}
-				
-				else if(ProtocolParametersField.FieldType==typeof(double))
-				{
-					double Value = (double)(ProtocolParametersField.GetValue(FormProtocolParameters));
+					ProtocolParametersFieldUserControl PPFUC;
+					if (!FormProtocolParameters.IsInitialized)
+					{
+						PPFUC = new ProtocolParametersFieldUserControl(ProtocolParametersField.FieldType,DefaultValue,title);
+					}
+					else
+					{
+						PPFUC = new ProtocolParametersFieldUserControl(ProtocolParametersField.FieldType,ProtocolParametersField.GetValue(FormProtocolParameters),title);
+					}
 					
-					ProtocolParametersFieldUserControls.DoubleFieldUserControl IUC =
-						new ProtocolParametersFieldUserControls.DoubleFieldUserControl(title,Value,DefaultValue);
-					AddProtocolParametersFieldUserControl(IUC);
+					AddProtocolParametersFieldUserControl(PPFUC);
 				}
-				
-				else if(ProtocolParametersField.FieldType==typeof(bool))
-				{
-					bool Value = (bool)(ProtocolParametersField.GetValue(FormProtocolParameters));
-					
-					ProtocolParametersFieldUserControls.BooleanFieldUserControl IUC =
-						new ProtocolParametersFieldUserControls.BooleanFieldUserControl(title,Value,DefaultValue);
-					AddProtocolParametersFieldUserControl(IUC);
-				}
-				
-				else if(ProtocolParametersField.FieldType==typeof(int[]))
-				{
-					int[] Value = (int[])(ProtocolParametersField.GetValue(FormProtocolParameters));
-					
-					IntArrayFieldUserControl IUC =
-						new  IntArrayFieldUserControl(title,Value,DefaultValue);
-					AddProtocolParametersFieldUserControl(IUC);
-				}
-				else if(ProtocolParametersField.FieldType==typeof(string))
-				{
-					string Value = (string)(ProtocolParametersField.GetValue(FormProtocolParameters));
-					
-					StringFieldUserControl IUC =new StringFieldUserControl(title,Value,DefaultValue);
-					AddProtocolParametersFieldUserControl(IUC);
-				}
-				else if(ProtocolParametersField.FieldType==typeof(double[]))
-				{
-					double[] Value = (double[])(ProtocolParametersField.GetValue(FormProtocolParameters));
-					
-					DoubleArrayFieldUserControl IUC =
-						new  DoubleArrayFieldUserControl(title,Value,DefaultValue);
-					AddProtocolParametersFieldUserControl(IUC);
-				}
-				else
-				{
-					throw new NotImplementedException("Parameter Type (" +  ProtocolParametersField.FieldType.ToString()  + ") Not Implemented yet");
-				}
-				
-				
 			}
 		}
-		private void AddProtocolParametersFieldUserControl(UserControl ProtocolParametersFieldUserControl)
+		private void AddProtocolParametersFieldUserControl(ProtocolParametersFieldUserControl ProtocolParametersFieldUserControl)
 		{
 			if (ParametersPanel.Controls.Count==0)
 			{
@@ -134,39 +93,71 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			for (int i=0;i<ProtocolParametersFieldUserControls.Count;i++)
 			{
-				object Value;
+				
+				ProtocolParametersFieldUserControl FieldUserControl = (ProtocolParametersFieldUserControl)ProtocolParametersFieldUserControls[i];
+				FieldUserControl.ClearError();
 				try
 				{
-					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).ClearError();
-					if ((ProtocolParametersFields[i].GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Mandatory
-					    && ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).IsNull())
-					{
-						//field is mandatory & empty
-						((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetNullError(string.Empty);
+				if ((ProtocolParametersFields[i].GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Mandatory
+				    && FieldUserControl.IsValueNull())
+				{//field is mandatory & empty
+						FieldUserControl.SetNullError();
 						ErrorFlag = true;
-					}
-					else
-					{
-						Value = ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).GetObjectValue();
-						ProtocolParametersFields[i].SetValue(FormProtocolParameters,Value);
-					}
+				}
+				else
+				{
+					object Value = FieldUserControl.GetValue();
+					ProtocolParametersFields[i].SetValue(FormProtocolParameters,Value);
+				}
 				}
 				catch (System.FormatException )
 				{
-					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetFormatError(string.Empty);
+					FieldUserControl.SetFormatError();
 					ErrorFlag = true;
-					//throw ex;
 				}
-				
 			}
 			if(!ErrorFlag)
 			{
+				
+				FormProtocolParameters.IsInitialized = true;
 				ParentProtocolUserControl.SetNewUserControlProtocolParameters(FormProtocolParameters);
 				ParentProtocolUserControl.UpdateUserControlProtocolName();
 				this.Close();
 			}
-			
 		}
+		
+//				try
+//				{
+//					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).ClearError();
+//					if ((ProtocolParametersFields[i].GetCustomAttributes(typeof(ProtocolParameterAtribute),true)[0] as ProtocolParameterAtribute).Mandatory
+//					    && ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).IsNull())
+//					{
+//						//field is mandatory & empty
+//						((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetNullError(string.Empty);
+//						ErrorFlag = true;
+//					}
+//					else
+//					{
+//						Value = ((IFieldUserControl)ProtocolParametersFieldUserControls[i]).GetObjectValue();
+//						ProtocolParametersFields[i].SetValue(FormProtocolParameters,Value);
+//					}
+//				}
+//				catch (System.FormatException )
+//				{
+//					((IFieldUserControl)ProtocolParametersFieldUserControls[i]).SetFormatError(string.Empty);
+//					ErrorFlag = true;
+//					//throw ex;
+//				}
+//
+//			}
+//			if(!ErrorFlag)
+//			{
+//				ParentProtocolUserControl.SetNewUserControlProtocolParameters(FormProtocolParameters);
+//				ParentProtocolUserControl.UpdateUserControlProtocolName();
+//				this.Close();
+//			}
+//
+		
 		
 		void CancelbuttonClick(object sender, EventArgs e)
 		{

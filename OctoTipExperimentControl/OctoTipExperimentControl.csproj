@@ -70,35 +70,16 @@
     <Compile Include="ProtocolLogForm.Designer.cs">
       <DependentUpon>ProtocolLogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProtocolParametersFieldUserControls\BaseFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\BaseFieldUserControl.Designer.cs">
-      <DependentUpon>BaseFieldUserControl.cs</DependentUpon>
+    <Compile Include="ProtocolParametersFieldUserControls\BoolField.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\DoubleField.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\FieldInterface.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\IntArrayField.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\IntField.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\ProtocolParametersFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\ProtocolParametersFieldUserControl.Designer.cs">
+      <DependentUpon>ProtocolParametersFieldUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProtocolParametersFieldUserControls\BooleanFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\BooleanFieldUserControl.Designer.cs">
-      <DependentUpon>BooleanFieldUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProtocolParametersFieldUserControls\DoubleArrayFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\DoubleArrayFieldUserControl.Designer.cs">
-      <DependentUpon>DoubleArrayFieldUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProtocolParametersFieldUserControls\DoubleFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\DoubleFieldUserControl.Designer.cs">
-      <DependentUpon>DoubleFieldUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProtocolParametersFieldUserControls\IFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\IntArrayFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\IntArrayFieldUserControl.Designer.cs">
-      <DependentUpon>IntArrayFieldUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProtocolParametersFieldUserControls\IntFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\IntFieldUserControl.Designer.cs">
-      <DependentUpon>IntFieldUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProtocolParametersFieldUserControls\StringFieldUserControl.cs" />
-    <Compile Include="ProtocolParametersFieldUserControls\StringFieldUserControl.Designer.cs">
-      <DependentUpon>StringFieldUserControl.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ProtocolParametersFieldUserControls\StringField.cs" />
     <Compile Include="ProtocolParametersForm.cs" />
     <Compile Include="ProtocolParametersForm.Designer.cs">
       <DependentUpon>ProtocolParametersForm.cs</DependentUpon>
@@ -115,11 +96,8 @@
     <EmbeddedResource Include="ProtocolLogForm.resx">
       <DependentUpon>ProtocolLogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProtocolParametersFieldUserControls\BaseFieldUserControl.resx">
-      <DependentUpon>BaseFieldUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProtocolParametersFieldUserControls\BooleanFieldUserControl.resx">
-      <DependentUpon>BooleanFieldUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="ProtocolParametersFieldUserControls\ProtocolParametersFieldUserControl.resx">
+      <DependentUpon>ProtocolParametersFieldUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProtocolParametersForm.resx">
       <DependentUpon>ProtocolParametersForm.cs</DependentUpon>

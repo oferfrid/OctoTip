@@ -44,9 +44,10 @@ namespace OctoTip.OctoTipExperimentControl
 			// ParametersPanel
 			// 
 			this.ParametersPanel.AutoScroll = true;
-			this.ParametersPanel.Location = new System.Drawing.Point(-1, 2);
+			this.ParametersPanel.AutoSize = true;
+			this.ParametersPanel.Location = new System.Drawing.Point(4, 2);
 			this.ParametersPanel.Name = "ParametersPanel";
-			this.ParametersPanel.Size = new System.Drawing.Size(364, 349);
+			this.ParametersPanel.Size = new System.Drawing.Size(360, 349);
 			this.ParametersPanel.TabIndex = 1;
 			// 
 			// Updatebutton
@@ -81,6 +82,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Text = "ProtocolParametersForm";
 			this.Load += new System.EventHandler(this.ProtocolParametersFormLoad);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 		}
 		private System.Windows.Forms.Button Cancelbutton;
 		private System.Windows.Forms.Button Updatebutton;
