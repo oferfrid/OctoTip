@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OctoTip.OctoTipExperiments.Core">
-      <HintPath>..\..\..\OctoTip\OctoTipExperiments\OctoTipExperimentsCore\bin\Debug\OctoTip.OctoTipExperiments.Core.dll</HintPath>
+      <HintPath>..\..\..\OctoTipExperimentControl\bin\Debug\OctoTip.OctoTipExperiments.Core.dll</HintPath>
     </Reference>
     <Reference Include="OctoTip.OctoTipLib">
-      <HintPath>..\..\..\OctoTip\OctoTipExperiments\OctoTipExperimentsCore\bin\Debug\OctoTip.OctoTipLib.dll</HintPath>
+      <HintPath>..\..\..\OctoTipExperimentControl\bin\Debug\OctoTip.OctoTipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

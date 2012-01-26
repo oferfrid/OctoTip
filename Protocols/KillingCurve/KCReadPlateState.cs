@@ -43,7 +43,7 @@ namespace KillingCurve
 			RJP.Add(new RobotJobParameter("PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			        
-			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KC_Read.esc",RJP);
+			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_Read.esc",RJP);
 			
 			return RJ;
 		}

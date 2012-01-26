@@ -32,12 +32,12 @@ namespace KillingCurve
 		
 		protected override void OnWaitStart()
 		{
-			throw new NotImplementedException();
+//			throw new NotImplementedException();
 		}
 		
 		protected override void OnWaitEnd()
 		{
-			throw new NotImplementedException();
+//			throw new NotImplementedException();
 		}
 		
 		#region static

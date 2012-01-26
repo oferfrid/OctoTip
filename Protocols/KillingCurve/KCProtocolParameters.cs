@@ -21,13 +21,15 @@ namespace KillingCurve
 		public int CultureLicInd;
 		[ProtocolParameterAtribute("Culture Eppendorf","1")]
 		public int CultureEppendorfInd;
+		[ProtocolParameterAtribute("Perform inoculation","1")]
+		public bool PerformInoc;
 		[ProtocolParameterAtribute("Culture well","1")]
 		public int WellInd;
 		[ProtocolParameterAtribute("First MPN plate index ","2")]
 		public int MPNLicInd;
 		[ProtocolParameterAtribute("Sampling Times (hr)","0, 0.5, 1")]
 		public double[] SamplingTimesArray;
-		[ProtocolParameterAtribute("Dilay in MPN plate reading (hr)","12")]
+		[ProtocolParameterAtribute("Delay in MPN plate reading (hr)","12")]
 		public double ReadAfter;
 
 	}

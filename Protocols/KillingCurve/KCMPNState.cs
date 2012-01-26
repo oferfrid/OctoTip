@@ -25,6 +25,8 @@ namespace KillingCurve
 			get
 			{return (KCProtocol) base.RunningInProtocol;}
 		}
+		
+		int CultureEppendorfInd;
 		int CultureLicInd;
 		int MPNLicInd;
 		double ReadAfter;
@@ -36,6 +38,7 @@ namespace KillingCurve
 			:base((Protocol)RunningInIRProtocol)
 		{
 			MPNLicInd     = MPNLicInd_;
+			CultureEppendorfInd = 0;
 			CultureLicInd = CultureLicInd_;
 			ReadAfter     = ReadAfter_;
 		}
@@ -48,6 +51,7 @@ namespace KillingCurve
 			LicPos LPMPN = Utils.Ind2LicPos(RunningInProtocol.ProtocolParameters.MPNLicInd);
 			
 			RJP.Add(new RobotJobParameter("FirstTimePoint", RobotJobParameter.ParameterType.Number, 0));
+			RJP.Add(new RobotJobParameter("Eppendorf", RobotJobParameter.ParameterType.Number, CultureEppendorfInd));
 			RJP.Add(new RobotJobParameter("CultureCart", RobotJobParameter.ParameterType.Number, LPCulture.Cart));
 			RJP.Add(new RobotJobParameter("CulturePos", RobotJobParameter.ParameterType.Number, LPCulture.Pos));
 			RJP.Add(new RobotJobParameter("MPNCart", RobotJobParameter.ParameterType.Number, LPMPN.Cart));

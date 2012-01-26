@@ -60,7 +60,7 @@ namespace KillingCurve
 			RJP.Add(new RobotJobParameter("MPNPos", RobotJobParameter.ParameterType.Number, LPMPN.Pos));
 			RJP.Add(new RobotJobParameter("CultureWell", RobotJobParameter.ParameterType.Number, RunningInProtocol.ProtocolParameters.WellInd));
 			        
-			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_Inoculate",RJP);
+			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_Inoculate.esc",RJP);
 			
 			return RJ;
 		}
@@ -75,7 +75,7 @@ namespace KillingCurve
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(KCMPNState)};
+			return new List<Type>{typeof(KCIncubateState)};
 		}
 		#endregion
 	}
