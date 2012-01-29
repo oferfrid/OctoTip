@@ -40,8 +40,8 @@ namespace KillingCurve
 			
 			LicPos LP = Utils.Ind2LicPos(MPNLicInd);
 			
-			RJP.Add(new RobotJobParameter("PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
-			RJP.Add(new RobotJobParameter("PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("MPNCart",RobotJobParameter.ParameterType.Number,LP.Cart));
+			RJP.Add(new RobotJobParameter("MPNPos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			        
 			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_Read.esc",RJP);
 			

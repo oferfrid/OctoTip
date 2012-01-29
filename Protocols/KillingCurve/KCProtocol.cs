@@ -63,7 +63,7 @@ namespace KillingCurve
 				                             ProtocolParameters.ReadAfter));
 				//debug
 				myLogger.Add(@"Time: " + ProtocolParameters.SamplingTimesArray[i].ToString() +
-				             @"ind: " + (ProtocolParameters.MPNLicInd+i).ToString());
+				             @" ind: " + (ProtocolParameters.MPNLicInd+i).ToString());
 				// end debug
 			}
 			
@@ -73,6 +73,11 @@ namespace KillingCurve
 			{
 				//debug
 				myLogger.Add(@"TasksList.Count " + TasksList.Count.ToString());
+				myLogger.Add(@"Keys: ");
+				for (int i=0; i<TasksList.Count; i++)
+				{
+					myLogger.Add(TasksList.Keys[i].ToString());
+				}
 				// end debug
 				NextTaskTime = TasksList.Keys[0];
 				

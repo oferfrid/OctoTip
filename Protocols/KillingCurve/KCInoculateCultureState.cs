@@ -49,8 +49,8 @@ namespace KillingCurve
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(5);
 			
-			LicPos LPCulture = Utils.Ind2LicPos(RunningInProtocol.ProtocolParameters.CultureLicInd);
-			LicPos LPMPN = Utils.Ind2LicPos(RunningInProtocol.ProtocolParameters.MPNLicInd);
+			LicPos LPCulture = Utils.Ind2LicPos(CultureLicInd);
+			LicPos LPMPN = Utils.Ind2LicPos(MPNLicInd);
 			
 			RJP.Add(new RobotJobParameter("FirstTimePoint", RobotJobParameter.ParameterType.Number, 1));
 			RJP.Add(new RobotJobParameter("Eppendorf", RobotJobParameter.ParameterType.Number, CultureEppendorfInd));
@@ -60,7 +60,8 @@ namespace KillingCurve
 			RJP.Add(new RobotJobParameter("MPNPos", RobotJobParameter.ParameterType.Number, LPMPN.Pos));
 			RJP.Add(new RobotJobParameter("CultureWell", RobotJobParameter.ParameterType.Number, RunningInProtocol.ProtocolParameters.WellInd));
 			        
-			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_Inoculate.esc",RJP);
+//			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_Inoculate.esc",RJP);
+			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\Temp.esc",RJP);
 			
 			return RJ;
 		}
