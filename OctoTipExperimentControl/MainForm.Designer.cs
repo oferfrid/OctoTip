@@ -256,6 +256,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "OctoTip-Experiment Manager";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormFormClosed);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
 			this.toolStripContainer1.ContentPanel.PerformLayout();

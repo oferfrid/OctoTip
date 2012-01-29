@@ -33,6 +33,7 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		private List<Protocol>  Protocols = new List<Protocol>();
 		
+		
 		public void AddProtocol(Protocol Protocol2Add)
 		{
 			Protocols.Add(Protocol2Add);
@@ -79,6 +80,8 @@ namespace OctoTip.OctoTipExperimentControl
 		private delegate void UpdateDelegate();
 		private void LogUpdate()
 		{
+			
+
 			Invoke(new UpdateDelegate(
 				delegate
 				{
@@ -87,6 +90,7 @@ namespace OctoTip.OctoTipExperimentControl
 					//UpdateRobotJobsQueue();
 				})
 			      );
+			
 		}
 		
 		private void AddAvailableProtocols()
@@ -215,6 +219,11 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 
 			myLogger.Clear();
+			
+		}
+		
+		void MainFormFormClosed(object sender, FormClosedEventArgs e)
+		{
 			
 		}
 	}

@@ -62,7 +62,6 @@ namespace OctoTip.OctoTipExperiments.Core.Base
 		 ~Protocol()
 		{
 		
-		OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stopped"));
 		}
 		
 		

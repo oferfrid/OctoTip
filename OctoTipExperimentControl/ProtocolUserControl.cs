@@ -44,6 +44,7 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		public const string LOG_NAME = "OctoTipExperimentManager";
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
+		private int OldHeight;
 		
 		
 		public ProtocolUserControl()
@@ -54,6 +55,7 @@ namespace OctoTip.OctoTipExperimentControl
 		public ProtocolUserControl(Type ProtocolType):this()
 		{
 			this.UserControlProtocolType  =ProtocolType;
+			this.labelProtocolType.Text = ((ProtocolAttribute)UserControlProtocolType.GetCustomAttributes(typeof(ProtocolAttribute), true)[0]).ShortName;
 		}
 		
 		public ProtocolUserControl(Protocol UserControlProtocol):this()
@@ -444,9 +446,23 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		void MinimizebuttonClick(object sender, EventArgs e)
 		{
-			//TODO:Change hight;
-			//this.Height = 20;
+			if (this.Height <= 25)
+			{
+
+			this.Height = OldHeight;
+			
 			((MainForm)this.ParentForm).RefreshProtocolUserControls();
+			
+				
+			}
+			else
+			{
+			OldHeight = this.Height;
+			this.Height = 25;
+			
+			((MainForm)this.ParentForm).RefreshProtocolUserControls();
+			
+			}
 		}
 	}
 }
