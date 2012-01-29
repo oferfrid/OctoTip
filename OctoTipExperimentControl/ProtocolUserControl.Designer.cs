@@ -46,6 +46,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.textBoxProtocolData = new System.Windows.Forms.TextBox();
 			this.textBoxStateData = new System.Windows.Forms.TextBox();
 			this.labelProtocolName = new System.Windows.Forms.Label();
+			this.Closebutton = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -172,10 +173,22 @@ namespace OctoTip.OctoTipExperimentControl
 			this.labelProtocolName.Size = new System.Drawing.Size(114, 23);
 			this.labelProtocolName.TabIndex = 9;
 			// 
+			// Closebutton
+			// 
+			this.Closebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.Closebutton.Location = new System.Drawing.Point(529, 3);
+			this.Closebutton.Name = "Closebutton";
+			this.Closebutton.Size = new System.Drawing.Size(21, 21);
+			this.Closebutton.TabIndex = 10;
+			this.Closebutton.Text = "X";
+			this.Closebutton.UseVisualStyleBackColor = true;
+			this.Closebutton.Click += new System.EventHandler(this.ClosebuttonClick);
+			// 
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Silver;
+			this.Controls.Add(this.Closebutton);
 			this.Controls.Add(this.labelProtocolName);
 			this.Controls.Add(this.buttonPause);
 			this.Controls.Add(this.buttonStart);
@@ -192,6 +205,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button Closebutton;
 		private System.Windows.Forms.Label labelProtocolName;
 		private System.Windows.Forms.TextBox textBoxProtocolData;
 		private System.Windows.Forms.TextBox textBoxStateData;

@@ -38,7 +38,7 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		ProtocolParameters UserControlProtocolParameters;
 		
-		Graph graph ;		
+		Graph graph ;
 		
 		ProtocolLogForm PLog;
 		
@@ -123,7 +123,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			
 			myLogger.Add(e.NewStatus + ">" + e.Messege);
-				
+			
 			bool buttonStopEnabled ;
 			bool buttonStartEnabled ;
 			bool buttonPauseEnabled ;
@@ -189,7 +189,7 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			
 			
-				myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Messege));
+			myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Messege));
 			
 			
 			
@@ -403,6 +403,22 @@ namespace OctoTip.OctoTipExperimentControl
 				PLog.ShowDialog();
 			}
 			
+		}
+		
+		void ClosebuttonClick(object sender, EventArgs e)
+		{
+			if (this.UserControlProtocol.Status != Protocol.ProtocolStatus.Stopped &&
+			    this.UserControlProtocol.Status != Protocol.ProtocolStatus.Error)
+			{
+				DialogResult result;
+				result = MessageBox.Show("Protocol is in running state, Are you sure you want to close?", "OctoTip-Experiment Manager", MessageBoxButtons.YesNo);
+				if (result == DialogResult.Yes)
+				{
+					//close protocol and remove from list
+					((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
+				}
+				
+			}
 		}
 	}
 }
