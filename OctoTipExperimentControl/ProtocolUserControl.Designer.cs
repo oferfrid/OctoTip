@@ -46,6 +46,9 @@ namespace OctoTip.OctoTipExperimentControl
 			this.textBoxProtocolData = new System.Windows.Forms.TextBox();
 			this.textBoxStateData = new System.Windows.Forms.TextBox();
 			this.labelProtocolName = new System.Windows.Forms.Label();
+			this.Closebutton = new System.Windows.Forms.Button();
+			this.labelProtocolType = new System.Windows.Forms.Label();
+			this.Minimizebutton = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -100,7 +103,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ProtocolStatesViewer.SaveButtonVisible = true;
 			this.ProtocolStatesViewer.SaveGraphButtonVisible = true;
 			this.ProtocolStatesViewer.SaveInVectorFormatEnabled = true;
-			this.ProtocolStatesViewer.Size = new System.Drawing.Size(428, 307);
+			this.ProtocolStatesViewer.Size = new System.Drawing.Size(428, 280);
 			this.ProtocolStatesViewer.TabIndex = 5;
 			this.ProtocolStatesViewer.ToolBarIsVisible = true;
 			this.ProtocolStatesViewer.ZoomF = 1D;
@@ -111,9 +114,9 @@ namespace OctoTip.OctoTipExperimentControl
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.ProtocolStatesViewer);
-			this.panel1.Location = new System.Drawing.Point(3, 3);
+			this.panel1.Location = new System.Drawing.Point(3, 30);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(428, 307);
+			this.panel1.Size = new System.Drawing.Size(428, 280);
 			this.panel1.TabIndex = 7;
 			// 
 			// buttonStart
@@ -167,15 +170,48 @@ namespace OctoTip.OctoTipExperimentControl
 			// labelProtocolName
 			// 
 			this.labelProtocolName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-			this.labelProtocolName.Location = new System.Drawing.Point(437, 4);
+			this.labelProtocolName.Location = new System.Drawing.Point(215, 3);
 			this.labelProtocolName.Name = "labelProtocolName";
-			this.labelProtocolName.Size = new System.Drawing.Size(114, 23);
+			this.labelProtocolName.Size = new System.Drawing.Size(287, 23);
 			this.labelProtocolName.TabIndex = 9;
+			// 
+			// Closebutton
+			// 
+			this.Closebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.Closebutton.Location = new System.Drawing.Point(529, 3);
+			this.Closebutton.Name = "Closebutton";
+			this.Closebutton.Size = new System.Drawing.Size(21, 21);
+			this.Closebutton.TabIndex = 10;
+			this.Closebutton.Text = "X";
+			this.Closebutton.UseVisualStyleBackColor = true;
+			this.Closebutton.Click += new System.EventHandler(this.ClosebuttonClick);
+			// 
+			// labelProtocolType
+			// 
+			this.labelProtocolType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.labelProtocolType.Location = new System.Drawing.Point(3, 3);
+			this.labelProtocolType.Name = "labelProtocolType";
+			this.labelProtocolType.Size = new System.Drawing.Size(206, 23);
+			this.labelProtocolType.TabIndex = 11;
+			// 
+			// Minimizebutton
+			// 
+			this.Minimizebutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.Minimizebutton.Location = new System.Drawing.Point(502, 3);
+			this.Minimizebutton.Name = "Minimizebutton";
+			this.Minimizebutton.Size = new System.Drawing.Size(21, 21);
+			this.Minimizebutton.TabIndex = 10;
+			this.Minimizebutton.Text = "_";
+			this.Minimizebutton.UseVisualStyleBackColor = true;
+			this.Minimizebutton.Click += new System.EventHandler(this.MinimizebuttonClick);
 			// 
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Silver;
+			this.Controls.Add(this.labelProtocolType);
+			this.Controls.Add(this.Minimizebutton);
+			this.Controls.Add(this.Closebutton);
 			this.Controls.Add(this.labelProtocolName);
 			this.Controls.Add(this.buttonPause);
 			this.Controls.Add(this.buttonStart);
@@ -192,6 +228,9 @@ namespace OctoTip.OctoTipExperimentControl
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button Minimizebutton;
+		private System.Windows.Forms.Label labelProtocolType;
+		private System.Windows.Forms.Button Closebutton;
 		private System.Windows.Forms.Label labelProtocolName;
 		private System.Windows.Forms.TextBox textBoxProtocolData;
 		private System.Windows.Forms.TextBox textBoxStateData;

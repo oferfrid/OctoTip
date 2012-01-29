@@ -38,12 +38,13 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		ProtocolParameters UserControlProtocolParameters;
 		
-		Graph graph ;		
+		Graph graph ;
 		
 		ProtocolLogForm PLog;
 		
 		public const string LOG_NAME = "OctoTipExperimentManager";
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
+		private int OldHeight;
 		
 		
 		public ProtocolUserControl()
@@ -54,6 +55,7 @@ namespace OctoTip.OctoTipExperimentControl
 		public ProtocolUserControl(Type ProtocolType):this()
 		{
 			this.UserControlProtocolType  =ProtocolType;
+			this.labelProtocolType.Text = ((ProtocolAttribute)UserControlProtocolType.GetCustomAttributes(typeof(ProtocolAttribute), true)[0]).ShortName;
 		}
 		
 		public ProtocolUserControl(Protocol UserControlProtocol):this()
@@ -123,7 +125,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			
 			myLogger.Add(e.NewStatus + ">" + e.Messege);
-				
+			
 			bool buttonStopEnabled ;
 			bool buttonStartEnabled ;
 			bool buttonPauseEnabled ;
@@ -189,7 +191,7 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			
 			
-				myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Messege));
+			myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Messege));
 			
 			
 			
@@ -365,6 +367,7 @@ namespace OctoTip.OctoTipExperimentControl
 		public void UpdateUserControlProtocolName()
 		{
 			this.labelProtocolName.Text = UserControlProtocolParameters.Name;
+			this.labelProtocolType.Text = ((ProtocolAttribute)UserControlProtocolType.GetCustomAttributes(typeof(ProtocolAttribute), true)[0]).ShortName;
 			PLog = new ProtocolLogForm(UserControlProtocol.ProtocolParameters.Name);
 		}
 		
@@ -403,6 +406,63 @@ namespace OctoTip.OctoTipExperimentControl
 				PLog.ShowDialog();
 			}
 			
+		}
+		
+		void ClosebuttonClick(object sender, EventArgs e)
+		{
+			if (this.UserControlProtocol !=null)
+			{
+				if (this.UserControlProtocol.Status != Protocol.ProtocolStatus.Stopped &&
+				    this.UserControlProtocol.Status != Protocol.ProtocolStatus.Error)
+				{
+					DialogResult result;
+					result = MessageBox.Show("Protocol is in running state, Are you sure you want to close?", "OctoTip-Experiment Manager", MessageBoxButtons.YesNo);
+					if (result == DialogResult.Yes)
+					{
+						//close protocol and remove from list
+						((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
+						this.Height = 0;
+						((MainForm)this.ParentForm).RefreshProtocolUserControls();
+						this.Hide();
+					}
+					
+				}
+				else
+				{
+					((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
+						this.Height = 0;
+						((MainForm)this.ParentForm).RefreshProtocolUserControls();
+						this.Hide();
+				}
+			}
+			else
+			{
+				this.Height = 0;
+				((MainForm)this.ParentForm).RefreshProtocolUserControls();
+				this.Hide();
+			}
+			
+		}
+		
+		void MinimizebuttonClick(object sender, EventArgs e)
+		{
+			if (this.Height <= 25)
+			{
+
+			this.Height = OldHeight;
+			
+			((MainForm)this.ParentForm).RefreshProtocolUserControls();
+			
+				
+			}
+			else
+			{
+			OldHeight = this.Height;
+			this.Height = 25;
+			
+			((MainForm)this.ParentForm).RefreshProtocolUserControls();
+			
+			}
 		}
 	}
 }
