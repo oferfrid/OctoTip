@@ -44,6 +44,9 @@ namespace OctoTip.OctoTipExperimentControl
 			toolStripStatusLabelProtocolCount.Text = "Protocols:" + Protocols.Count;
 		}
 		
+		
+		
+		
 		public MainForm()
 		{
 			InitializeComponent();
@@ -59,7 +62,7 @@ namespace OctoTip.OctoTipExperimentControl
 		{
 			try
 			{
-			AddAvailableProtocols();
+				AddAvailableProtocols();
 			}
 			catch(Exception err)
 			{
@@ -71,7 +74,7 @@ namespace OctoTip.OctoTipExperimentControl
 		#region Private function
 		
 		
-			// Updates that come from a different thread can not directly change the
+		// Updates that come from a different thread can not directly change the
 		// TextBox component. This must be done through Invoke().
 		private delegate void UpdateDelegate();
 		private void LogUpdate()
@@ -114,30 +117,26 @@ namespace OctoTip.OctoTipExperimentControl
 		private void AddProtocolUserControl(Type ProtocolType)
 		{
 			ProtocolUserControl P	 = new ProtocolUserControl(ProtocolType);
-			if (Protocolpanel.Controls.Count!=0)
-			{
-				ProtocolUserControl LastProtocolUserControl = (ProtocolUserControl)Protocolpanel.Controls[Protocolpanel.Controls.Count-1];
-				P.Location = new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
-			}
 			this.Protocolpanel.Controls.Add(P);
-			
-			
+			RefreshProtocolUserControls();
 		}
 		
 		private void AddProtocolUserControl(Protocol NewProtocol)
 		{
 			ProtocolUserControl P	 = new ProtocolUserControl(NewProtocol);
-			if (Protocolpanel.Controls.Count!=0)
-			{
-				ProtocolUserControl LastProtocolUserControl = (ProtocolUserControl)Protocolpanel.Controls[Protocolpanel.Controls.Count-1];
-				P.Location = new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
-				
-			}
-			//Protocols.Add(NewProtocol);
 			this.Protocolpanel.Controls.Add(P);
-			
+			RefreshProtocolUserControls();
 		}
 		
+		public void RefreshProtocolUserControls()
+		{
+			for(int i=1;i<Protocolpanel.Controls.Count;i++)
+			{
+				Control LastProtocolUserControl = Protocolpanel.Controls[i-1];
+				Protocolpanel.Controls[i].Location =   new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
+			}
+			
+		}
 		
 		private void WriteProtocols2File(string fileName)
 		{
@@ -194,7 +193,7 @@ namespace OctoTip.OctoTipExperimentControl
 			{
 				WriteProtocols2File(saveFileDialog1.FileName);
 			}
-		
+			
 		}
 		void OpenToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -212,17 +211,11 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		#endregion
 		
-		
-		
-		
-		
-		
-		
 		void ButtonClearLogClick(object sender, EventArgs e)
 		{
 
 			myLogger.Clear();
-	
+			
 		}
 	}
 }
