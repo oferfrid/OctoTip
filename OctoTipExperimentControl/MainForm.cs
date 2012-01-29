@@ -57,8 +57,14 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			
+			try
+			{
 			AddAvailableProtocols();
+			}
+			catch(Exception err)
+			{
+				myLogger.Add(err.ToString());
+			}
 		}
 		
 		
