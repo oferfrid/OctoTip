@@ -55,7 +55,7 @@ namespace OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls
 			}
 			else if(FieldType==typeof(double[]))
 			{
-				
+				Field = new DoubleArrayField();
 			}
 			else
 			{
