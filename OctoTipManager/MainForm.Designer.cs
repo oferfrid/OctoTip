@@ -251,7 +251,7 @@ namespace OctoTip.OctoTipManager
 			this.checkBoxServerState.Name = "checkBoxServerState";
 			this.checkBoxServerState.Size = new System.Drawing.Size(171, 34);
 			this.checkBoxServerState.TabIndex = 0;
-			this.checkBoxServerState.Text = "Start Lisiner";
+			this.checkBoxServerState.Text = "Start Listener";
 			this.checkBoxServerState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.checkBoxServerState.UseVisualStyleBackColor = true;
 			this.checkBoxServerState.CheckedChanged += new System.EventHandler(this.CheckBoxServerStateCheckedChanged);

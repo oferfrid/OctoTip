@@ -246,15 +246,15 @@ namespace OctoTip.OctoTipManager
 				// one endpoint per base address for each service contract implemented
 				// by the service.
 				host.Open();
-				myLogger.Add("Lisener Opened at: " + baseAddress.ToString());
-				checkBoxServerState.Text = "Stop Server";
+				myLogger.Add("Listener Opened at: " + baseAddress.ToString());
+				checkBoxServerState.Text = "Stop Listener";
 				
 			}
 			else
 			{
 				host.Close();
-				myLogger.Add("Lisener Closed");
-				checkBoxServerState.Text = "Start Server";
+				myLogger.Add("Listener Closed");
+				checkBoxServerState.Text = "Start Listener";
 			}
 		}
 		
@@ -467,7 +467,7 @@ namespace OctoTip.OctoTipManager
 			if(host.State != CommunicationState.Closed)
 			{
 				host.Close();
-				myLogger.Add("Lisener Closed");
+				myLogger.Add("Listener Closed");
 			}
 			if(FormRobotWorker.Status != RobotWorker.RobotWorkerStatus.Stopped)
 			{
