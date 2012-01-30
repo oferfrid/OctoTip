@@ -51,7 +51,8 @@ namespace KillingCurve
 		protected override void AfterRobotRun()
 		{
 			FileInfo MyFileInfo = GetMeasurementsResultsFile();
-			string NewFileName = "MPN" + MPNLicInd + @"_" + String.Format("{0:yyyyMMddHHmm}", DateTime.Now);
+			string NewFileName = "MPN" + MPNLicInd + @"_" +
+ 				                 String.Format("{0:yyyyMMddHHmm}", DateTime.Now) + @".xml";
 			try 
 			{
 				MyFileInfo.MoveTo(MyFileInfo.Directory.FullName + @"\" + NewFileName);

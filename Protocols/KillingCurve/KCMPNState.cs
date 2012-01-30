@@ -58,8 +58,8 @@ namespace KillingCurve
 			RJP.Add(new RobotJobParameter("MPNPos", RobotJobParameter.ParameterType.Number, LPMPN.Pos));
 			RJP.Add(new RobotJobParameter("CultureWell", RobotJobParameter.ParameterType.Number, RunningInProtocol.ProtocolParameters.WellInd));
 			        
-			//RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_MPN.esc",RJP);
-			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\Temp.esc",RJP);
+			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\KC_MPN.esc",RJP);
+//			RobotJob RJ = new RobotJob(@"D:\RobotScripts\KillingCurve\Temp.esc",RJP);
 			return RJ;
 		}
 		

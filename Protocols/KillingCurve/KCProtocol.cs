@@ -39,6 +39,7 @@ namespace KillingCurve
 		
 		protected override void OnProtocolStart()
 		{		
+			
 			if (ProtocolParameters.PerformInoc)
 			{
 				this.ChangeState(new KCInoculateCultureState(this,
