@@ -8,8 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
+using OctoTip.Lib;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
 
 namespace KillingCurve
 {
@@ -29,7 +30,7 @@ namespace KillingCurve
 		{
 		}
 		
-		protected override OctoTip.OctoTipLib.RobotJob BeforeRobotRun()
+		protected override RobotJob BeforeRobotRun()
 		{
 			throw new NotImplementedException();
 		}

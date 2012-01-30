@@ -9,9 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib;
 
 namespace KillingCurve
 {
@@ -34,7 +34,7 @@ namespace KillingCurve
 			MPNLicInd = MPNLicInd_;
 		}
 			
-		protected override OctoTip.OctoTipLib.RobotJob BeforeRobotRun()
+		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
 			
@@ -51,7 +51,8 @@ namespace KillingCurve
 		protected override void AfterRobotRun()
 		{
 			FileInfo MyFileInfo = GetMeasurementsResultsFile();
-			string NewFileName = "MPN" + MPNLicInd + @"_" + String.Format("{0:yyyyMMddHHmm}", DateTime.Now);
+			string NewFileName = "MPN" + MPNLicInd + @"_" +
+ 				                 String.Format("{0:yyyyMMddHHmm}", DateTime.Now) + @".xml";
 			try 
 			{
 				MyFileInfo.MoveTo(MyFileInfo.Directory.FullName + @"\" + NewFileName);

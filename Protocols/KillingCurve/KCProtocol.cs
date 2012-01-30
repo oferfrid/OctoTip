@@ -9,9 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib;
 
 namespace KillingCurve
 {
@@ -29,8 +29,8 @@ namespace KillingCurve
 			set{base.ProtocolParameters = value;}
 		}
 		
-		public const string LOG_NAME = "OctoTipExperimentManager";
-		private LogString myLogger = LogString.GetLogString(LOG_NAME);
+
+	
 		
 		public KCProtocol(KCProtocolParameters Parameters):base((ProtocolParameters)Parameters)
 		{
@@ -39,6 +39,7 @@ namespace KillingCurve
 		
 		protected override void OnProtocolStart()
 		{		
+			
 			if (ProtocolParameters.PerformInoc)
 			{
 				this.ChangeState(new KCInoculateCultureState(this,
@@ -54,7 +55,7 @@ namespace KillingCurve
 			for (int i=1; i<ProtocolParameters.SamplingTimesArray.Length; i++)
 			{
 				//debug
-				myLogger.Add("adding sampling points");
+				Log("adding sampling points");
 				// end debug
 				TasksList.Add(DateTime.Now.AddHours(ProtocolParameters.SamplingTimesArray[i]),
 				              new KCMPNState(this, 
@@ -62,7 +63,7 @@ namespace KillingCurve
 				                             ProtocolParameters.MPNLicInd+i,
 				                             ProtocolParameters.ReadAfter));
 				//debug
-				myLogger.Add(@"Time: " + ProtocolParameters.SamplingTimesArray[i].ToString() +
+				Log(@"Time: " + ProtocolParameters.SamplingTimesArray[i].ToString() +
 				             @" ind: " + (ProtocolParameters.MPNLicInd+i).ToString());
 				// end debug
 			}
@@ -72,11 +73,11 @@ namespace KillingCurve
 			while(TasksList.Count>0)
 			{
 				//debug
-				myLogger.Add(@"TasksList.Count " + TasksList.Count.ToString());
-				myLogger.Add(@"Keys: ");
+				Log(@"TasksList.Count " + TasksList.Count.ToString());
+				Log(@"Keys: ");
 				for (int i=0; i<TasksList.Count; i++)
 				{
-					myLogger.Add(TasksList.Keys[i].ToString());
+					Log(TasksList.Keys[i].ToString());
 				}
 				// end debug
 				NextTaskTime = TasksList.Keys[0];
