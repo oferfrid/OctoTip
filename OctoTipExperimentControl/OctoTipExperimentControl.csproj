@@ -71,6 +71,7 @@
       <DependentUpon>ProtocolLogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProtocolParametersFieldUserControls\BoolField.cs" />
+    <Compile Include="ProtocolParametersFieldUserControls\DoubleArrayField.cs" />
     <Compile Include="ProtocolParametersFieldUserControls\DoubleField.cs" />
     <Compile Include="ProtocolParametersFieldUserControls\FieldInterface.cs" />
     <Compile Include="ProtocolParametersFieldUserControls\IntArrayField.cs" />
