@@ -22,6 +22,7 @@ namespace OctoTip.Manager
 		[STAThread]
 		private static void Main(string[] args)
 		{
+			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException)
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
