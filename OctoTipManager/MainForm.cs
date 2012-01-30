@@ -331,11 +331,18 @@ namespace OctoTip.OctoTipManager
 		{
 			if(e.RobotWorkerStatus==RobotWorker.RobotWorkerStatus.RunningJob)
 			{
-			myLogger.Add(string.Format("{0}-{1} (parameters:{2}) ,{3}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
+				if (e.CurrentJob == null)
+				{
+					myLogger.Add(string.Format("{0} ,{1}" , e.RobotWorkerStatus,e.Messege));
+				}
+				else
+				{
+					myLogger.Add(string.Format("{0}-{1} (parameters:{2}) ,{3}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
+				}
 			}
 			else
 			{
-			myLogger.Add(string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Messege));
+				myLogger.Add(string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Messege));
 			}
 			
 			bool buttonPauseEnabled ;
