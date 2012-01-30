@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace OctoTip.Manager
@@ -22,11 +23,19 @@ namespace OctoTip.Manager
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException)
+			//Application.ThreadException += new ThreadExceptionEventHandler(OnThreadException);
+			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnUnhandledException);
+			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
 		}
 		
+		static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+		{
+			Exception e = (Exception) args.ExceptionObject;
+			MessageBox.Show("UnhandledException caught : " + e.Message,"OctoTip Manager");
+		}
 	}
 }
