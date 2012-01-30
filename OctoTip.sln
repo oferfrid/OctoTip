@@ -2,14 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 # SharpDevelop 4.0.0.7070
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OctoTipExperiments", "OctoTipExperiments", "{06DDA88F-A759-4032-9555-24A441800A25}"
-	ProjectSection(SolutionItems) = postProject
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evo1", "OctoTipExperiments\Evo1\Evo1.csproj", "{B090BD9E-A62A-4AF8-B869-C3BAA745705B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipExperimentsCore", "OctoTipExperiments\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj", "{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipLib", "OctoTipLib\OctoTipLib.csproj", "{3F447CCC-8530-4E9B-A764-926AD0242173}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoTipManager", "OctoTipManager\OctoTipManager.csproj", "{C5E67D8F-83DF-4C9F-A7A9-5E24CB131530}"
@@ -50,33 +42,5 @@ Global
 		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Release|x86.ActiveCfg = Release|x86
 		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Release|BPC.Build.0 = Release|x86
 		{8D2FBCE2-C42F-4176-AB36-0035560298BF}.Release|BPC.ActiveCfg = Release|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Debug|x86.Build.0 = Debug|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Debug|x86.ActiveCfg = Debug|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Debug|BPC.Build.0 = Debug|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Debug|BPC.ActiveCfg = Debug|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Debug|Any CPU.Build.0 = Debug|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Release|x86.Build.0 = Release|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Release|x86.ActiveCfg = Release|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Release|BPC.Build.0 = Release|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Release|BPC.ActiveCfg = Release|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Release|Any CPU.Build.0 = Release|x86
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}.Release|Any CPU.ActiveCfg = Release|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|x86.Build.0 = Debug|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|x86.ActiveCfg = Debug|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|BPC.Build.0 = Debug|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|BPC.ActiveCfg = Debug|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|Any CPU.Build.0 = Debug|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|x86.Build.0 = Release|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|x86.ActiveCfg = Release|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|BPC.Build.0 = Release|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|BPC.ActiveCfg = Release|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|Any CPU.Build.0 = Release|x86
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|Any CPU.ActiveCfg = Release|x86
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766} = {06DDA88F-A759-4032-9555-24A441800A25}
-		{B090BD9E-A62A-4AF8-B869-C3BAA745705B} = {06DDA88F-A759-4032-9555-24A441800A25}
 	EndGlobalSection
 EndGlobal

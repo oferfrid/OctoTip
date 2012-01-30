@@ -9,9 +9,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib;
+
 
 namespace Evo1
 {
@@ -38,7 +39,7 @@ namespace Evo1
 		}
 		
 		
-		protected override OctoTip.OctoTipLib.RobotJob BeforeRobotRun()
+		protected override RobotJob BeforeRobotRun()
 		{
 			
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);

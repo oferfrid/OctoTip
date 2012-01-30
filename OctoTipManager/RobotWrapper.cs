@@ -11,9 +11,9 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Threading;
 using EVOAPILib;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
 
-namespace OctoTip.OctoTipManager
+namespace OctoTip.Manager
 {
 	/// <summary>
 	/// Description of RobotWrapper.

@@ -2,35 +2,34 @@
  * Created by SharpDevelop.
  * User: Tecan
  * Date: 18/10/2011
- * Time: 16:17
+ * Time: 16:13
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 using System.Collections.Generic;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
+
 
 namespace Evo1
 {
 	/// <summary>
-	/// Description of EvoGrow2State.
+	/// Description of EvoKillState.
 	/// </summary>
-	[State("Grow 2","Grow After Dilution")]
-	public class EvoGrow2State:WaitState
+	[State("Kill","Kill In AMP")]
+	public class EvoKillState:WaitState
 	{
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(EvoGrow2ReadState)};
+			return new List<Type>{typeof(EvoKillReadState),typeof(EvoAddbLacState)};
 		}
 		#endregion
 		EvoProtocol RunningInEvoProtocol;
-	
-		public EvoGrow2State(EvoProtocol RunningInEvoProtocol):base((Protocol)RunningInEvoProtocol,DateTime.Now.AddMinutes( RunningInEvoProtocol.EvoProtocolParameters.TimeBetweenReads))
+		public EvoKillState(EvoProtocol RunningInEvoProtocol,DateTime WaitUntil):base((Protocol)RunningInEvoProtocol , WaitUntil)
 		{
 			this.RunningInEvoProtocol = RunningInEvoProtocol;
-
 		}
 		
 		protected override void OnWaitStart()

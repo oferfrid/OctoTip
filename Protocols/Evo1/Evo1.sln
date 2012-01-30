@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.0.0.7070
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evo1", "Evo1.csproj", "{B090BD9E-A62A-4AF8-B869-C3BAA745705B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+		Debug|BPC = Debug|BPC
+		Release|BPC = Release|BPC
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|x86.Build.0 = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|x86.ActiveCfg = Debug|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|x86.Build.0 = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|x86.ActiveCfg = Release|x86
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|BPC.Build.0 = Debug|BPC
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Debug|BPC.ActiveCfg = Debug|BPC
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|BPC.Build.0 = Release|BPC
+		{B090BD9E-A62A-4AF8-B869-C3BAA745705B}.Release|BPC.ActiveCfg = Release|BPC
+	EndGlobalSection
+EndGlobal

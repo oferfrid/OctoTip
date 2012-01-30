@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
 
-namespace OctoTip.OctoTipManager
+namespace OctoTip.Manager
 {
 	/// <summary>
 	/// Description of RobotWorker.
@@ -36,7 +36,7 @@ namespace OctoTip.OctoTipManager
 			get{return MainForm.FormRobotJobsQueue;}
 		}
 		
-		Dictionary<Guid, OctoTip.OctoTipLib.RobotJob.Status> WorkerRobotJobsQueueHestoryDictionary
+		Dictionary<Guid, OctoTip.Lib.RobotJob.Status> WorkerRobotJobsQueueHestoryDictionary
 		{
 			get {return MainForm.FormRobotJobsQueueHestoryDictionary;}
 		}
@@ -112,14 +112,14 @@ namespace OctoTip.OctoTipManager
 					
 					switch (RJ.JobStatus)
 					{
-						case OctoTip.OctoTipLib.RobotJob.Status.Finished:
+						case OctoTip.Lib.RobotJob.Status.Finished:
 							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job terminated Successfuly "));
 							break;
-						case OctoTip.OctoTipLib.RobotJob.Status.TerminatedByUser:
+						case OctoTip.Lib.RobotJob.Status.TerminatedByUser:
 							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,RJ,"Job Terminated By the User "));
 							_ShouldStop = true;
 							break;
-						case OctoTip.OctoTipLib.RobotJob.Status.Failed:
+						case OctoTip.Lib.RobotJob.Status.Failed:
 							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,RJ,"Job Failed"));
 							_ShouldStop = true;
 							break;
@@ -206,16 +206,16 @@ namespace OctoTip.OctoTipManager
 		{
 			switch (e.ScriptStatus)
 			{
-				case OctoTip.OctoTipLib.RobotJob.Status.RuntimeError:
-					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.RuntimeError;
+				case OctoTip.Lib.RobotJob.Status.RuntimeError:
+					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.RuntimeError;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runtime Error"));
 					break;
-				case OctoTip.OctoTipLib.RobotJob.Status.Paused:
-					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.Paused;
+				case OctoTip.Lib.RobotJob.Status.Paused:
+					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Paused;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,e.Job,"Job Paused"));
 					break;
-				case OctoTip.OctoTipLib.RobotJob.Status.Running:
-					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipLib.RobotJob.Status.Running;
+				case OctoTip.Lib.RobotJob.Status.Running:
+					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Running;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runing From Worker"));
 					break;
 					

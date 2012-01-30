@@ -6,7 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-namespace OctoTip.OctoTipManager
+namespace OctoTip.Manager
 {
 	partial class MainForm
 	{
@@ -48,7 +48,7 @@ namespace OctoTip.OctoTipManager
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
-			this.dataGridViewRobotJobsQueue = new OctoTip.OctoTipManager.ControlWrapper();
+			this.dataGridViewRobotJobsQueue = new OctoTip.Manager.ControlWrapper();
 			this.textBoxRuningJobStatus = new System.Windows.Forms.TextBox();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonPause = new System.Windows.Forms.Button();
@@ -341,7 +341,7 @@ namespace OctoTip.OctoTipManager
 		private System.Windows.Forms.TextBox textBoxRuningJobStatus;
 		private System.Windows.Forms.Button buttonPause;
 		private System.Windows.Forms.Button buttonStart;
-		private OctoTip.OctoTipManager.ControlWrapper dataGridViewRobotJobsQueue;
+		private OctoTip.Manager.ControlWrapper dataGridViewRobotJobsQueue;
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;

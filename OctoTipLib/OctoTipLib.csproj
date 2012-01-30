@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>OctoTip.OctoTipLib</RootNamespace>
-    <AssemblyName>OctoTip.OctoTipLib</AssemblyName>
+    <RootNamespace>OctoTip.Lib</RootNamespace>
+    <AssemblyName>OctoTip.Lib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -46,12 +46,31 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExperimentsCore\Attributes\ProtocolAttribute.cs" />
+    <Compile Include="ExperimentsCore\Attributes\ProtocolParameterAtribute.cs" />
+    <Compile Include="ExperimentsCore\Attributes\StateAttribute.cs" />
+    <Compile Include="ExperimentsCore\Base\Protocol.cs" />
+    <Compile Include="ExperimentsCore\Base\ProtocolParameters.cs" />
+    <Compile Include="ExperimentsCore\Base\ReadState.cs" />
+    <Compile Include="ExperimentsCore\Base\RunRobotState.cs" />
+    <Compile Include="ExperimentsCore\Base\State.cs" />
+    <Compile Include="ExperimentsCore\Base\WaitState.cs" />
+    <Compile Include="ExperimentsCore\Interfaces\IProtocol.cs" />
+    <Compile Include="ExperimentsCore\Interfaces\IProtocolParameters.cs" />
+    <Compile Include="ExperimentsCore\Interfaces\IState.cs" />
+    <Compile Include="ExperimentsCore\ProtocolProvider.cs" />
     <Compile Include="LogString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotJob.cs" />
     <Compile Include="RobotJobsQueue.cs" />
     <Compile Include="RobotJobsQueueService.cs" />
     <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ExperimentsCore" />
+    <Folder Include="ExperimentsCore\Base" />
+    <Folder Include="ExperimentsCore\Interfaces" />
+    <Folder Include="ExperimentsCore\Attributes" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

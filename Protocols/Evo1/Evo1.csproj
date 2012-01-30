@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OctoTip.Lib">
+      <HintPath>..\..\OctoTipLib\bin\Debug\OctoTip.Lib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,16 +57,6 @@
     <Compile Include="EvoStarterState.cs" />
     <Compile Include="EvoGrow1State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\OctoTipLib\OctoTipLib.csproj">
-      <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
-      <Name>OctoTipLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj">
-      <Project>{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}</Project>
-      <Name>OctoTipExperimentsCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
