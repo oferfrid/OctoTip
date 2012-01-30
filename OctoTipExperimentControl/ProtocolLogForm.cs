@@ -9,7 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
 
 namespace OctoTip.OctoTipExperimentControl
 {

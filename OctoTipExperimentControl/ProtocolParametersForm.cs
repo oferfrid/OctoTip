@@ -13,8 +13,8 @@ using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using System.Reflection;
 using OctoTip.OctoTipExperiments.Core;
-using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipExperiments.Core.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls;
 
 namespace OctoTip.OctoTipExperimentControl

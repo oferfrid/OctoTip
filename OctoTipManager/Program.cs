@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace OctoTip.OctoTipManager
+namespace OctoTip.Manager
 {
 	/// <summary>
 	/// Class with program entry point.

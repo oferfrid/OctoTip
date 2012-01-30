@@ -14,9 +14,9 @@ using System.Xml;
 using System.Xml.Serialization;
 
 using OctoTip.OctoTipExperiments.Core;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib;
 
 //using System.Xml.Serialization;
 

@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>OctoTip.OctoTipExperimentControl</RootNamespace>
-    <AssemblyName>OctoTipExperimentControl</AssemblyName>
+    <RootNamespace>OctoTip.ExperimentControl</RootNamespace>
+    <AssemblyName>OctoTip.ExperimentControl</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -108,10 +108,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OctoTipExperiments\OctoTipExperimentsCore\OctoTipExperimentsCore.csproj">
-      <Project>{4BDBCCF8-7AD0-4F15-8D66-27CF383BC766}</Project>
-      <Name>OctoTipExperimentsCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OctoTipLib\OctoTipLib.csproj">
       <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
       <Name>OctoTipLib</Name>

@@ -10,9 +10,9 @@ using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
 
-namespace OctoTip.OctoTipManager
+namespace OctoTip.Manager
 {
 	
 	[ServiceContract]
@@ -25,7 +25,7 @@ namespace OctoTip.OctoTipManager
 		[OperationContract]
 		string GetRobotStatus();
 		[OperationContract]
-		OctoTip.OctoTipLib.RobotJob.Status GetJobStatus(Guid UniqueID);
+		OctoTip.Lib.RobotJob.Status GetJobStatus(Guid UniqueID);
 	}
 
 
@@ -38,7 +38,7 @@ namespace OctoTip.OctoTipManager
 		LogString logger;
 		public RobotJobsQueueService()
 		{
-			logger = LogString.GetLogString(OctoTipManager.MainForm.LOG_NAME);
+			logger = LogString.GetLogString(Manager.MainForm.LOG_NAME);
 		}
 		
 		public string TestConnection(string name)
@@ -50,7 +50,7 @@ namespace OctoTip.OctoTipManager
 		
 		public Guid AddRobotJob(RobotJob RJ)
 		{
-			Guid UniqueID = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueue.InsertRobotJob(RJ);
+			Guid UniqueID = OctoTip.Manager.MainForm.FormRobotJobsQueue.InsertRobotJob(RJ);
 			MainForm.FormRobotJobsQueueHestoryDictionary.Add(RJ.UniqueID,RobotJob.Status.Queued);
 			string Messege = string.Format("Added new job, {0} as UniqueID: {1}", RJ.ScriptName,UniqueID );
 			//logger.Add(Messege);
@@ -59,7 +59,7 @@ namespace OctoTip.OctoTipManager
 		
 		public RobotJob.Status GetJobStatus(Guid UniqueID)
 		{
-			RobotJob.Status SS = OctoTip.OctoTipManager.MainForm.FormRobotJobsQueueHestoryDictionary[UniqueID];
+			RobotJob.Status SS = OctoTip.Manager.MainForm.FormRobotJobsQueueHestoryDictionary[UniqueID];
 			
 			string Messege = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
 			//logger.Add(Messege);

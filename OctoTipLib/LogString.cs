@@ -11,7 +11,7 @@ using System.Collections;
 using System.Threading;
 using System.IO;
 
-namespace OctoTip.OctoTipLib
+namespace OctoTip.Lib
 {
 	/// <summary>
 	/// Description of LogString.

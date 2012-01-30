@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace OctoTip.OctoTipLib
+namespace OctoTip.Lib
 {
 	/// <summary>
 	/// Description of RobotJobsQueue.

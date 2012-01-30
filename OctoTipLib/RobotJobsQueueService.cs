@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OctoTip.OctoTipLib
+namespace OctoTip.Lib
 {
 
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -20,10 +20,10 @@ namespace OctoTip.OctoTipLib
 		string TestConnection(string name);
 		
 		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/AddRobotJob", ReplyAction="http://tempuri.org/IRobotJobsQueueService/AddRobotJobResponse")]
-		System.Guid AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ);
+		System.Guid AddRobotJob(OctoTip.Lib.RobotJob RJ);
 		
 		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/GetJobStatus", ReplyAction="http://tempuri.org/IRobotJobsQueueService/GetJobStatusResponse")]
-		OctoTip.OctoTipLib.RobotJob.Status GetJobStatus(System.Guid UniqueID);
+		OctoTip.Lib.RobotJob.Status GetJobStatus(System.Guid UniqueID);
 		
 		[System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRobotJobsQueueService/GetRobotStatus", ReplyAction="http://tempuri.org/IRobotJobsQueueService/GetRobotStatusResponse")]
 		string GetRobotStatus();
@@ -68,12 +68,12 @@ namespace OctoTip.OctoTipLib
 			return base.Channel.TestConnection(name);
 		}
 		
-		public System.Guid AddRobotJob(OctoTip.OctoTipLib.RobotJob RJ)
+		public System.Guid AddRobotJob(OctoTip.Lib.RobotJob RJ)
 		{
 			return base.Channel.AddRobotJob(RJ);
 		}
 		
-		public OctoTip.OctoTipLib.RobotJob.Status GetJobStatus(System.Guid UniqueID)
+		public OctoTip.Lib.RobotJob.Status GetJobStatus(System.Guid UniqueID)
 		{
 			return base.Channel.GetJobStatus(UniqueID);
 		}

@@ -17,9 +17,9 @@ using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Xml.Serialization;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
 
-namespace OctoTip.OctoTipManager
+namespace OctoTip.Manager
 {
 	/// <summary>
 	/// Description of MainForm.
@@ -37,7 +37,7 @@ namespace OctoTip.OctoTipManager
 		
 		
 		static public RobotJobsQueue FormRobotJobsQueue;
-		static public Dictionary<Guid, OctoTip.OctoTipLib.RobotJob.Status> FormRobotJobsQueueHestoryDictionary;
+		static public Dictionary<Guid, OctoTip.Lib.RobotJob.Status> FormRobotJobsQueueHestoryDictionary;
 		
 		
 		

@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTip.OctoTipManager
+namespace OctoTip.Manager
 {
 	/// <summary>
 	/// Description of ControlWrapper.

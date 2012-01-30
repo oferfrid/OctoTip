@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Configuration;
 
-namespace OctoTip.OctoTipLib
+namespace OctoTip.Lib
 {
 	/// <summary>
 	/// Description of RobotJob.

@@ -13,11 +13,11 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading;
 using Microsoft.Msagl.Drawing;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
 
 //using Microsoft.Msagl;
 
