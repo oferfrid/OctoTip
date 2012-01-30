@@ -51,10 +51,10 @@ namespace KillingCurve
 		protected override void AfterRobotRun()
 		{
 			FileInfo MyFileInfo = GetMeasurementsResultsFile();
-			string NewFileName = "MPN" + MPNLicInd;
+			string NewFileName = "MPN" + MPNLicInd + @"_" + String.Format("{0:yyyyMMddHHmm}", DateTime.Now);
 			try 
 			{
-				MyFileInfo.MoveTo(MyFileInfo.Directory.FullName + NewFileName);
+				MyFileInfo.MoveTo(MyFileInfo.Directory.FullName + @"\" + NewFileName);
 			} catch (Exception ex) {
 				throw(ex);
 			}

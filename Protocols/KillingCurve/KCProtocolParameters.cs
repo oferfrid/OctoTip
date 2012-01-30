@@ -21,7 +21,7 @@ namespace KillingCurve
 		public int CultureLicInd;
 		[ProtocolParameterAtribute("Culture Eppendorf","1")]
 		public int CultureEppendorfInd;
-		[ProtocolParameterAtribute("Perform inoculation","1")]
+		[ProtocolParameterAtribute("Perform inoculation","true")]
 		public bool PerformInoc;
 		[ProtocolParameterAtribute("Culture well","1")]
 		public int WellInd;
