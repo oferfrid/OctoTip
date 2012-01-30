@@ -8,9 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
 
 namespace KillingCurve
 {
@@ -43,7 +43,7 @@ namespace KillingCurve
 			ReadAfter     = ReadAfter_;
 		}
 				
-		protected override OctoTip.OctoTipLib.RobotJob BeforeRobotRun()
+		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(5);
 			
