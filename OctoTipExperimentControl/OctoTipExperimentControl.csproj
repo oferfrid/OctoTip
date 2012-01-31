@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EmailSMSSender">
-      <HintPath>..\..\EmailSMSSender\bin\Debug\EmailSMSSender.dll</HintPath>
+      <HintPath>EmailSMSSender\EmailSMSSender.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Msagl">
       <HintPath>Microsoft Automatic Graph Layout\Microsoft.Msagl.dll</HintPath>
