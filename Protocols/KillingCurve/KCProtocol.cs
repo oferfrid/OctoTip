@@ -39,9 +39,17 @@ namespace KillingCurve
 		
 		protected override void OnProtocolStart()
 		{		
+			string message;
 			
 			if (ProtocolParameters.PerformInoc)
 			{
+				message = string.Format("Eppendorf:{0}, Culture Liconic index{1}, MPN Liconic index{2}, Read after {3}", 
+				                 ProtocolParameters.CultureEppendorfInd,
+                                 ProtocolParameters.CultureLicInd,
+                                 ProtocolParameters.MPNLicInd,
+                                 ProtocolParameters.ReadAfter);
+				Log(message);
+				OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(message));
 				this.ChangeState(new KCInoculateCultureState(this,
 				                                             ProtocolParameters.CultureEppendorfInd,
 				                                             ProtocolParameters.CultureLicInd,
@@ -54,34 +62,28 @@ namespace KillingCurve
 			// --------------------------------------------------------------------------------------------------
 			for (int i=1; i<ProtocolParameters.SamplingTimesArray.Length; i++)
 			{
-				//debug
-				Log("adding sampling points");
-				// end debug
+				Log("MPN time points:");
 				TasksList.Add(DateTime.Now.AddHours(ProtocolParameters.SamplingTimesArray[i]),
 				              new KCMPNState(this, 
 				                             ProtocolParameters.CultureLicInd ,
 				                             ProtocolParameters.MPNLicInd+i,
 				                             ProtocolParameters.ReadAfter));
-				//debug
+
 				Log(@"Time: " + ProtocolParameters.SamplingTimesArray[i].ToString() +
-				             @" ind: " + (ProtocolParameters.MPNLicInd+i).ToString());
-				// end debug
+				    @" ind: " + (ProtocolParameters.MPNLicInd+i).ToString());
+
 			}
 			
 			// going over the task list
 			// -------------------------
 			while(TasksList.Count>0)
 			{
-				//debug
-				Log(@"TasksList.Count " + TasksList.Count.ToString());
-				Log(@"Keys: ");
-				for (int i=0; i<TasksList.Count; i++)
-				{
-					Log(TasksList.Keys[i].ToString());
-				}
-				// end debug
 				NextTaskTime = TasksList.Keys[0];
-				
+				message = string.Format("Next task at: {0} {1}",
+				                  String.Format("{0:dd/MM/yy HH:mm}", NextTaskTime),
+				                  TasksList[TasksList.Keys[0]].ToString() );
+				Log(message);
+				OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(message));
 				this.ChangeState(new KCIncubateState(this,NextTaskTime));
 
 				this.ChangeState(TasksList[TasksList.Keys[0]]);

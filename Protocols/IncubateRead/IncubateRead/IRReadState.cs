@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
-using OctoTip.OctoTipExperiments.Core.Attributes;
-using OctoTip.OctoTipExperiments.Core.Base;
-using OctoTip.OctoTipLib;
+using OctoTip.Lib;
+using OctoTip.Lib.ExperimentsCore.Attributes;
+using OctoTip.Lib.ExperimentsCore.Base;
 
 namespace IncubateRead
 {
@@ -21,7 +21,7 @@ namespace IncubateRead
 	/// Description of IRReadState.
 	/// </summary>
 	[State("Read state","Reading in Infinite")]
-	public class IRReadState:OctoTip.OctoTipExperiments.Core.Base.ReadState
+	public class IRReadState:OctoTip.Lib.ExperimentsCore.Base.ReadState
 	{
 		string Path;
 		
@@ -37,7 +37,7 @@ namespace IncubateRead
 			Path = 	RunningInIRProtocol.ProtocolParameters.Path;
 		}
 		
-		protected override OctoTip.OctoTipLib.RobotJob BeforeRobotRun()
+		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
 			

@@ -51,7 +51,7 @@ namespace KillingCurve
 		protected override void AfterRobotRun()
 		{
 			FileInfo MyFileInfo = GetMeasurementsResultsFile();
-			string NewFileName = "MPN" + MPNLicInd + @"_" +
+			string NewFileName = "MPN" + MPNLicInd.ToString() + @"_" +
  				                 String.Format("{0:yyyyMMddHHmm}", DateTime.Now) + @".xml";
 			try 
 			{
@@ -60,6 +60,14 @@ namespace KillingCurve
 				throw(ex);
 			}
 
+		}
+		
+		public override string ToString()
+		{
+			string txt = this.GetType().ToString() +
+				@" MPN Liconic index: " + MPNLicInd.ToString();
+			
+			return txt;
 		}
 		
 

@@ -70,6 +70,15 @@ namespace KillingCurve
 			                                ReadPlateState);
 		}
 		
+		public override string ToString()
+		{
+			string txt = this.GetType().ToString() +
+				@", Culture Liconic index: " + CultureLicInd.ToString() +
+				@", MPN Liconic index: " + MPNLicInd.ToString() +
+				@", Read MPN after: " + ReadAfter.ToString() + @" hours";
+			return txt;
+		}
+		
 		#region static
 		public static new List<Type> NextStates()
 		{
