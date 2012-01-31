@@ -23,7 +23,7 @@ namespace OctoTip.Manager
 		{
 			try {
 				base.OnPaint(e);
-			} catch (Exception ex) {
+			} catch (Exception) {
 				this.Invalidate();
 			}
 		}

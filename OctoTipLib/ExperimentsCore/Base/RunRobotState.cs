@@ -67,7 +67,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 				throw new Exception("No Listener on " + RJQClient.Endpoint.ListenUri ,e);
 			}
 			RunRobotJob.UniqueID = JobID;
-			
+			RunningInProtocol.Log(string.Format("Queued {0}, UniqueID: {1} (parameters={2})",RunRobotJob.ScriptName,RunRobotJob.UniqueID,RunRobotJob.RobotJobDisplayParameters));
 			
 			do
 			{

@@ -9,10 +9,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
@@ -37,12 +38,12 @@ namespace OctoTip.OctoTipExperimentControl
 		public void AddProtocol(Protocol Protocol2Add)
 		{
 			Protocols.Add(Protocol2Add);
-			toolStripStatusLabelProtocolCount.Text = "Protocols:" + Protocols.Count;
+			toolStripStatusLabelProtocolCount.Text = "Active Protocols:" + Protocols.Count;
 		}
 		public void RemoveProtocol(Protocol Protocol2Remove)
 		{
 			Protocols.Remove(Protocol2Remove);
-			toolStripStatusLabelProtocolCount.Text = "Protocols:" + Protocols.Count;
+			toolStripStatusLabelProtocolCount.Text = "Active Protocols:" + Protocols.Count;
 		}
 		
 		
@@ -61,14 +62,8 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			try
-			{
+			
 				AddAvailableProtocols();
-			}
-			catch(Exception err)
-			{
-				myLogger.Add(err.ToString());
-			}
 		}
 		
 		
@@ -94,7 +89,19 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		
 		private void AddAvailableProtocols()
-		{
+		{	//
+			List<Assembly> UncompitbleTypes = ProtocolProvider.GetUncompitbleProtocolPlugIns();
+			if (UncompitbleTypes.Count>0)
+			{
+				string Massege = string.Empty;
+				foreach(Assembly A in UncompitbleTypes)
+				{
+					Massege +=string.Format("The suplied dll {0} ({1}) is not compatible with the current version, and was not loaded",A.GetName(),A.Location);
+				}
+				
+				MessageBox.Show(Massege,this.Text,MessageBoxButtons.OK,MessageBoxIcon.Warning);
+			}
+			
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			
 			List<Type> ProtocolsData =  ProtocolProvider.GetAvalbleProtocolPlugIns();
@@ -139,6 +146,7 @@ namespace OctoTip.OctoTipExperimentControl
 				Control LastProtocolUserControl = Protocolpanel.Controls[i-1];
 				Protocolpanel.Controls[i].Location =   new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
 			}
+			toolStripStatusLabelAllProtocolCount.Text = "All Protocol:" +Protocolpanel.Controls.Count;
 			
 		}
 		
@@ -222,9 +230,19 @@ namespace OctoTip.OctoTipExperimentControl
 			
 		}
 		
-		void MainFormFormClosed(object sender, FormClosedEventArgs e)
+	
+		
+		void ExitToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			
+			this.Close();
+		}
+		
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(MessageBox.Show("Are you sure you want to exit",this.Text, MessageBoxButtons.YesNo,MessageBoxIcon.Question)!= DialogResult.Yes)
+			{
+				e.Cancel=true;
+			}
 		}
 	}
 }

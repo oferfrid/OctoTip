@@ -22,6 +22,8 @@ namespace OctoTip.OctoTipExperimentControl
 		[STAThread]
 		private static void Main(string[] args)
 		{
+			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+			
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
