@@ -116,10 +116,12 @@ namespace OctoTip.Manager
 		public void RunScript(RobotJob Job)
 		{
 			int ScriptID;
-			
+			Job.CreateScript();
+
+
 			Logon();
 			
-			Job.CreateScript();
+			
 			
 			try
 			{
