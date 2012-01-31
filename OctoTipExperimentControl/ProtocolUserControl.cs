@@ -174,12 +174,15 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonStartEnabled =true;
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.DarkRed;
+					// notify 
+					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType,this.labelProtocolName),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType,this.labelProtocolName,e.Messege));
 					break;
 				case (Protocol.ProtocolStatus.RuntimeError):
 					buttonStopEnabled  = true;
 					buttonStartEnabled =false;
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Yellow;
+					((MainForm)this.ParentForm).Notify(string.Format("Run time error {0} ({1})",this.labelProtocolType,this.labelProtocolName),string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType,this.labelProtocolName,e.Messege));
 					break;
 				default:
 					buttonStopEnabled  = true;

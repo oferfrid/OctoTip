@@ -120,7 +120,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			{
 				handler(this, e);
 			}
-			this.Log(string.Format("Protocol Statuse changed to: {0}",this._Status));
+			this.Log(string.Format("Protocol status changed to: {0}",this._Status));
 		}
 		
 		public event EventHandler<ProtocolDisplayedDataChangeEventArgs> DisplayedDataChange;
@@ -163,7 +163,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			{
 				handler(this, e);
 			}
-			this.Log(string.Format("State {0} Statuse changed to: {1}",e.CurrentState.GetType().Name,e.StateStatus));
+			this.Log(string.Format("State {0} status changed to: {1}",e.CurrentState.GetType().Name,e.StateStatus));
 		}
 		
 		

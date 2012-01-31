@@ -172,8 +172,38 @@ namespace OctoTip.OctoTipExperimentControl
 			}
 			
 		}
+		#endregion	
+		public void Notify(string Subject,string Message)
+		{
+			if (this.NotificationcheckBox.Checked == true)
+			{
+				if (this.NotificationEmailtextBox.Text.Trim()!=string.Empty)
+				{
+					try
+					{
+					 EmailSMSSender.Sender.SendEmail(this.NotificationEmailtextBox.Text.Trim(),Subject + " from " +  this.Text, Message  + "\n" + DateTime.Now.ToString());
+					}
+					catch(Exception ex)
+					{
+						myLogger.Add(ex.ToString());
+					}
+				}
+				if (this.NotificationPhonetextBox.Text.Trim()!=string.Empty)
+				{
+					try
+					{
+					EmailSMSSender.Sender.SendSMS(this.NotificationPhonetextBox.Text.Trim(),Subject + " from " +  this.Text);
+					}
+					catch(Exception ex)
+					{
+						myLogger.Add(ex.ToString());
+					}
+				}
+			}
+			
+		}
 		
-		#endregion
+	
 		
 		#region Event Handeling
 		void ToolStripButtonRefreshProtocolsClick(object sender, EventArgs e)
@@ -221,7 +251,7 @@ namespace OctoTip.OctoTipExperimentControl
 			}
 			
 		}
-		#endregion
+		
 		
 		void ButtonClearLogClick(object sender, EventArgs e)
 		{
@@ -244,5 +274,12 @@ namespace OctoTip.OctoTipExperimentControl
 				e.Cancel=true;
 			}
 		}
+		
+		void TestNotificationbuttonClick(object sender, EventArgs e)
+		{
+			Notify("Test from"+ this.Text , "test test test" );
+		}
+		
+		#endregion
 	}
 }

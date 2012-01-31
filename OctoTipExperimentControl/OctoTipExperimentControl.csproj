@@ -11,6 +11,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ApplicationIcon>OctotipIcon.ico</ApplicationIcon>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\owner\AppData\Roaming\ICSharpCode/SharpDevelop4.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -32,6 +33,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EmailSMSSender">
+      <HintPath>..\..\EmailSMSSender\bin\Debug\EmailSMSSender.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Msagl">
       <HintPath>Microsoft Automatic Graph Layout\Microsoft.Msagl.dll</HintPath>
     </Reference>
@@ -43,10 +47,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
@@ -108,16 +108,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OctoTipLib\OctoTipLib.csproj">
-      <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
-      <Name>OctoTipLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="ProtocolParametersFieldUserControls" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OctoTipLib\OctoTipLib.csproj">
+      <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
+      <Name>OctoTipLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
