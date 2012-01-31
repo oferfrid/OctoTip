@@ -356,14 +356,7 @@ namespace OctoTip.OctoTipExperimentControl
 			{
 				PPF = new ProtocolParametersForm(this,UserControlProtocolParameters);
 			}
-			try
-			{
 			PPF.ShowDialog();
-			}
-			catch(Exception ex)
-			{
-				myLogger.Add(ex.ToString());
-			}
 		}
 		
 		public void SetNewUserControlProtocolParameters(ProtocolParameters ProtocolParameters)

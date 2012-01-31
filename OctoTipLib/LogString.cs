@@ -231,10 +231,21 @@ namespace OctoTip.Lib
                     else
                         m_strLog = m_strLog.Substring(m_strLog.Length - m_nMaxChars); // preserve last N chars
                 }
+                
+                
             }
             // Notify listeners of the update
             if (OnLogUpdate != null) OnLogUpdate();
         }
+        
+          public void Add(string str,bool isPersist)
+          {
+          	 Add( str);
+          	 if (isPersist)
+          	 {
+          	 Persist();
+          	 }
+          }
 
         // Save this log.
         //

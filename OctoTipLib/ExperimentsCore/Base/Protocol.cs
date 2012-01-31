@@ -120,6 +120,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			{
 				handler(this, e);
 			}
+			this.Log(string.Format("Protocol Statuse changed to: {0}",this._Status));
 		}
 		
 		public event EventHandler<ProtocolDisplayedDataChangeEventArgs> DisplayedDataChange;
@@ -162,6 +163,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			{
 				handler(this, e);
 			}
+			this.Log(string.Format("State {0} Statuse changed to: {1}",e.CurrentState.GetType().Name,e.StateStatus));
 		}
 		
 		
@@ -207,7 +209,8 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			Paused,
 			Pausing,
 			Error,
-			RuntimeError
+			RuntimeError,
+			EndedSuccessfully
 		}
 		
 		
@@ -219,12 +222,12 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			Log("Started");
 			try {
 				OnProtocolStart();
-				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Stoped"));	
+				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Ended Successfully!"));	
 			} 
 			catch (Exception e) 
 			{
 				myLogger.Add(e.ToString());
-				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Stopped,"Error:" + e.Message ));
+				OnStatusChanged(new ProtocolStatusChangeEventArgs(ProtocolStatus.Error,"Error:" + e.Message ));
 				Log("Error:" + e.Message);
 				RunningThread.Abort();
 				
@@ -238,7 +241,6 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		public void Log(string Messege)
 		{
 			myProtocolLogger.Add(Messege);
-			myProtocolLogger.Persist();
 		}
 		
 		

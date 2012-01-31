@@ -92,12 +92,33 @@ namespace OctoTip.OctoTipExperiments.Core
 			return NextStates;
 		}
 		
+
+		public static List<Assembly> GetUncompitbleProtocolPlugIns()
+		{
+			List<Assembly> assemblies = LoadPlugInAssemblies();
+			List<Assembly> UncompitbleTypes = new List<Assembly>();
+			foreach (Assembly currentAssembly in assemblies)
+			{
+				try
+				{
+					currentAssembly.GetTypes();
+				}
+				catch(System.Reflection.ReflectionTypeLoadException)
+				{
+					UncompitbleTypes.Add(currentAssembly);
+				}
+			}
+			
+			return UncompitbleTypes;
+			
+		}
+		
+		
 		public static List<Type>  GetAvalbleProtocolPlugIns()
 		{
 			return GetAvalbleProtocolPlugIns(LoadPlugInAssemblies());
 		}
 		
-				
 		static List<Type> GetAvalbleProtocolPlugIns(List<Assembly> assemblies)
 		{
 			List<Type> availableTypes = new List<Type>();
@@ -108,9 +129,9 @@ namespace OctoTip.OctoTipExperiments.Core
 				{
 				availableTypes.AddRange(currentAssembly.GetTypes());
 				}
-				catch(System.Reflection.ReflectionTypeLoadException e)
+				catch(System.Reflection.ReflectionTypeLoadException)
 				{
-					throw new Exception("The suplied dll (" + currentAssembly.GetName()  + ") is not compatible with the current version ",e);
+				//	throw new Exception("The suplied dll (" + currentAssembly.GetName()  + ") is not compatible with the current version, and was not loaded",e);
 				}
 			}
 

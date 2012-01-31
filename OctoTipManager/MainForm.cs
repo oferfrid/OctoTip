@@ -337,7 +337,7 @@ namespace OctoTip.Manager
 				}
 				else
 				{
-					myLogger.Add(string.Format("{0}-{1} (parameters:{2}) ,{3}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
+					myLogger.Add(string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
 				}
 			}
 			else

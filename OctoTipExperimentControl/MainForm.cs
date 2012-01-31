@@ -9,10 +9,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-
 using OctoTip.OctoTipExperiments.Core;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
@@ -61,14 +62,8 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			try
-			{
+			
 				AddAvailableProtocols();
-			}
-			catch(Exception err)
-			{
-				myLogger.Add(err.ToString());
-			}
 		}
 		
 		
@@ -94,7 +89,19 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		
 		private void AddAvailableProtocols()
-		{
+		{	//
+			List<Assembly> UncompitbleTypes = ProtocolProvider.GetUncompitbleProtocolPlugIns();
+			if (UncompitbleTypes.Count>0)
+			{
+				string Massege = string.Empty;
+				foreach(Assembly A in UncompitbleTypes)
+				{
+					Massege +=string.Format("The suplied dll {0} ({1}) is not compatible with the current version, and was not loaded",A.GetName(),A.Location);
+				}
+				
+				MessageBox.Show(Massege,"OctoTip-Experiment Manager",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+			}
+			
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			
 			List<Type> ProtocolsData =  ProtocolProvider.GetAvalbleProtocolPlugIns();
