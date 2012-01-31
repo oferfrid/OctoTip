@@ -38,12 +38,12 @@ namespace OctoTip.OctoTipExperimentControl
 		public void AddProtocol(Protocol Protocol2Add)
 		{
 			Protocols.Add(Protocol2Add);
-			toolStripStatusLabelProtocolCount.Text = "Protocols:" + Protocols.Count;
+			toolStripStatusLabelProtocolCount.Text = "Active Protocols:" + Protocols.Count;
 		}
 		public void RemoveProtocol(Protocol Protocol2Remove)
 		{
 			Protocols.Remove(Protocol2Remove);
-			toolStripStatusLabelProtocolCount.Text = "Protocols:" + Protocols.Count;
+			toolStripStatusLabelProtocolCount.Text = "Active Protocols:" + Protocols.Count;
 		}
 		
 		
@@ -99,7 +99,7 @@ namespace OctoTip.OctoTipExperimentControl
 					Massege +=string.Format("The suplied dll {0} ({1}) is not compatible with the current version, and was not loaded",A.GetName(),A.Location);
 				}
 				
-				MessageBox.Show(Massege,"OctoTip-Experiment Manager",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+				MessageBox.Show(Massege,this.Text,MessageBoxButtons.OK,MessageBoxIcon.Warning);
 			}
 			
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
@@ -146,6 +146,7 @@ namespace OctoTip.OctoTipExperimentControl
 				Control LastProtocolUserControl = Protocolpanel.Controls[i-1];
 				Protocolpanel.Controls[i].Location =   new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
 			}
+			toolStripStatusLabelAllProtocolCount.Text = "All Protocol:" +Protocolpanel.Controls.Count;
 			
 		}
 		
@@ -229,9 +230,19 @@ namespace OctoTip.OctoTipExperimentControl
 			
 		}
 		
-		void MainFormFormClosed(object sender, FormClosedEventArgs e)
+	
+		
+		void ExitToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			
+			this.Close();
+		}
+		
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(MessageBox.Show("Are you sure you want to exit",this.Text, MessageBoxButtons.YesNo,MessageBoxIcon.Question)!= DialogResult.Yes)
+			{
+				e.Cancel=true;
+			}
 		}
 	}
 }

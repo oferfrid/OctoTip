@@ -477,6 +477,14 @@ namespace OctoTip.Manager
 			
 			
 		}
+		
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(MessageBox.Show("Are you sure you want to exit",this.Text, MessageBoxButtons.YesNo,MessageBoxIcon.Question)!= DialogResult.Yes)
+			{
+				e.Cancel=true;
+			}
+		}
 	}
 	
 	

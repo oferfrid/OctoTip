@@ -43,12 +43,14 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonClearLog = new System.Windows.Forms.Button();
 			this.textBoxLog = new System.Windows.Forms.TextBox();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabelAllProtocolCount = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabelProtocolCount = new System.Windows.Forms.ToolStripStatusLabel();
 			this.ProtocoltoolStrip = new System.Windows.Forms.ToolStrip();
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.Protocol1 = new System.Windows.Forms.ToolStripButton();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.protocolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveProtocolsAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,8 +125,8 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// buttonClearLog
 			// 
-			this.buttonClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonClearLog.Location = new System.Drawing.Point(2, 273);
+			this.buttonClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonClearLog.Location = new System.Drawing.Point(3, 273);
 			this.buttonClearLog.Name = "buttonClearLog";
 			this.buttonClearLog.Size = new System.Drawing.Size(75, 23);
 			this.buttonClearLog.TabIndex = 2;
@@ -134,7 +136,8 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// textBoxLog
 			// 
-			this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxLog.Location = new System.Drawing.Point(3, 302);
 			this.textBoxLog.Multiline = true;
 			this.textBoxLog.Name = "textBoxLog";
@@ -144,6 +147,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.toolStripStatusLabelAllProtocolCount,
 									this.toolStripStatusLabelProtocolCount});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 542);
 			this.statusStrip1.Name = "statusStrip1";
@@ -151,11 +155,17 @@ namespace OctoTip.OctoTipExperimentControl
 			this.statusStrip1.TabIndex = 0;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
+			// toolStripStatusLabelAllProtocolCount
+			// 
+			this.toolStripStatusLabelAllProtocolCount.Name = "toolStripStatusLabelAllProtocolCount";
+			this.toolStripStatusLabelAllProtocolCount.Size = new System.Drawing.Size(75, 17);
+			this.toolStripStatusLabelAllProtocolCount.Text = "All Protocols:0";
+			// 
 			// toolStripStatusLabelProtocolCount
 			// 
 			this.toolStripStatusLabelProtocolCount.Name = "toolStripStatusLabelProtocolCount";
-			this.toolStripStatusLabelProtocolCount.Size = new System.Drawing.Size(61, 17);
-			this.toolStripStatusLabelProtocolCount.Text = "Protocols:0";
+			this.toolStripStatusLabelProtocolCount.Size = new System.Drawing.Size(94, 17);
+			this.toolStripStatusLabelProtocolCount.Text = "Active Protocols:0";
 			// 
 			// ProtocoltoolStrip
 			// 
@@ -198,9 +208,18 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// fileToolStripMenuItem
 			// 
+			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
 			this.fileToolStripMenuItem.Text = "File";
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+			this.exitToolStripMenuItem.Text = "Exit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
 			// 
 			// protocolsToolStripMenuItem
 			// 
@@ -256,7 +275,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "OctoTip-Experiment Manager";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormFormClosed);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
 			this.toolStripContainer1.ContentPanel.PerformLayout();
@@ -281,6 +300,8 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStrip1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelAllProtocolCount;
 		private System.Windows.Forms.Button buttonClearLog;
 		private System.Windows.Forms.TextBox textBoxLog;
 		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -298,7 +319,5 @@ namespace OctoTip.OctoTipExperimentControl
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-		
-		
 	}
 }

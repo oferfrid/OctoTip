@@ -416,7 +416,7 @@ namespace OctoTip.OctoTipExperimentControl
 				    this.UserControlProtocol.Status != Protocol.ProtocolStatus.Error)
 				{
 					DialogResult result;
-					result = MessageBox.Show("Protocol is in running state, Are you sure you want to close?", "OctoTip-Experiment Manager", MessageBoxButtons.YesNo);
+					result = MessageBox.Show("Protocol is in running state, Are you sure you want to close?", this.Text, MessageBoxButtons.YesNo,MessageBoxIcon.Hand);
 					if (result == DialogResult.Yes)
 					{
 						//close protocol and remove from list
