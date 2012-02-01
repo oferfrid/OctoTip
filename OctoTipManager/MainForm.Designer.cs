@@ -59,6 +59,7 @@ namespace OctoTip.Manager
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshQueue = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonRemoveJob = new System.Windows.Forms.ToolStripButton();
+			this.errorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitHorizontal)).BeginInit();
 			this.splitHorizontal.Panel1.SuspendLayout();
@@ -133,7 +134,8 @@ namespace OctoTip.Manager
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.aboutToolStripMenuItem});
+									this.aboutToolStripMenuItem,
+									this.errorToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
 			this.helpToolStripMenuItem.Text = "Help";
@@ -141,7 +143,7 @@ namespace OctoTip.Manager
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			// 
 			// splitHorizontal
@@ -306,6 +308,13 @@ namespace OctoTip.Manager
 			this.toolStripButtonRemoveJob.Text = "Remove Job";
 			this.toolStripButtonRemoveJob.Click += new System.EventHandler(this.ToolStripButtonRemoveJobClick);
 			// 
+			// errorToolStripMenuItem
+			// 
+			this.errorToolStripMenuItem.Name = "errorToolStripMenuItem";
+			this.errorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.errorToolStripMenuItem.Text = "Error";
+			this.errorToolStripMenuItem.Click += new System.EventHandler(this.ErrorToolStripMenuItemClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,6 +348,7 @@ namespace OctoTip.Manager
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem errorToolStripMenuItem;
 		private System.Windows.Forms.TextBox textBoxRuningJobStatus;
 		private System.Windows.Forms.Button buttonPause;
 		private System.Windows.Forms.Button buttonStart;

@@ -485,6 +485,11 @@ namespace OctoTip.Manager
 				e.Cancel=true;
 			}
 		}
+		
+		void ErrorToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			throw new Exception("E");
+		}
 	}
 	
 	

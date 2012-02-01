@@ -131,6 +131,7 @@ namespace OctoTip.Lib.ExperimentsCore
 				}
 				catch(System.Reflection.ReflectionTypeLoadException)
 				{
+					// just ignore un sported dlls
 				//	throw new Exception("The suplied dll (" + currentAssembly.GetName()  + ") is not compatible with the current version, and was not loaded",e);
 				}
 			}
