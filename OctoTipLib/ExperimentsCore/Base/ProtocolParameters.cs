@@ -7,7 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-
+using System.Reflection;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
 
@@ -21,5 +21,19 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		[ProtocolParameterAtribute("Name Of The Protocol","",true)]
 		public string Name;
 		public bool IsInitialized = false;
+		
+		public override string ToString()
+		{
+			string FieldNames=string.Empty;// = "Name=" + Name +"\n";
+			
+			FieldInfo[] ProtocolFields = ProtocolProvider.GetProtocolParametersFields(this);
+			foreach (FieldInfo FI in ProtocolFields)
+			{
+				FieldNames += string.Format("{0}={1}\n", FI.Name,FI.GetValue(this).ToString());
+			}
+			return FieldNames;
+			
+		}
+
 	}
 }

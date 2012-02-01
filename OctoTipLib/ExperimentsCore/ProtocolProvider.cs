@@ -17,7 +17,7 @@ using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 
 
-namespace OctoTip.OctoTipExperiments.Core
+namespace OctoTip.Lib.ExperimentsCore
 {
 	/// <summary>
 	/// Description of ProtocolProvider.

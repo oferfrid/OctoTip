@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using OctoTip.OctoTipExperiments.Core;
+using  OctoTip.Lib.ExperimentsCore;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib;
