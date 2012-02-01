@@ -464,7 +464,7 @@ namespace OctoTip.Manager
 		
 		void MainFormFormClosed(object sender, FormClosedEventArgs e)
 		{
-			if(host.State != CommunicationState.Closed)
+			if(host!=null && host.State != CommunicationState.Closed)
 			{
 				host.Close();
 				myLogger.Add("Listener Closed");

@@ -281,5 +281,10 @@ namespace OctoTip.OctoTipExperimentControl
 		}
 		
 		#endregion
+		
+		void ErrorToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			throw new Exception("E");
+		}
 	}
 }

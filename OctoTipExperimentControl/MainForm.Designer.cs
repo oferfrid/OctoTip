@@ -40,6 +40,13 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.Protocolpanel = new System.Windows.Forms.Panel();
+			this.NotificationgroupBox = new System.Windows.Forms.GroupBox();
+			this.TestNotificationbutton = new System.Windows.Forms.Button();
+			this.NotificationcheckBox = new System.Windows.Forms.CheckBox();
+			this.NotificationPhonetextBox = new System.Windows.Forms.TextBox();
+			this.NotificationEmailtextBox = new System.Windows.Forms.TextBox();
+			this.Phonelabel = new System.Windows.Forms.Label();
+			this.Emaillabel = new System.Windows.Forms.Label();
 			this.buttonClearLog = new System.Windows.Forms.Button();
 			this.textBoxLog = new System.Windows.Forms.TextBox();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -56,13 +63,8 @@ namespace OctoTip.OctoTipExperimentControl
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshProtocols = new System.Windows.Forms.ToolStripButton();
-			this.NotificationgroupBox = new System.Windows.Forms.GroupBox();
-			this.Emaillabel = new System.Windows.Forms.Label();
-			this.Phonelabel = new System.Windows.Forms.Label();
-			this.NotificationEmailtextBox = new System.Windows.Forms.TextBox();
-			this.NotificationPhonetextBox = new System.Windows.Forms.TextBox();
-			this.NotificationcheckBox = new System.Windows.Forms.CheckBox();
-			this.TestNotificationbutton = new System.Windows.Forms.Button();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.errorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -71,11 +73,11 @@ namespace OctoTip.OctoTipExperimentControl
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			this.NotificationgroupBox.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.ProtocoltoolStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
-			this.NotificationgroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStripContainer1
@@ -132,6 +134,78 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Protocolpanel.Size = new System.Drawing.Size(596, 542);
 			this.Protocolpanel.TabIndex = 0;
 			// 
+			// NotificationgroupBox
+			// 
+			this.NotificationgroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.NotificationgroupBox.Controls.Add(this.TestNotificationbutton);
+			this.NotificationgroupBox.Controls.Add(this.NotificationcheckBox);
+			this.NotificationgroupBox.Controls.Add(this.NotificationPhonetextBox);
+			this.NotificationgroupBox.Controls.Add(this.NotificationEmailtextBox);
+			this.NotificationgroupBox.Controls.Add(this.Phonelabel);
+			this.NotificationgroupBox.Controls.Add(this.Emaillabel);
+			this.NotificationgroupBox.Location = new System.Drawing.Point(4, 3);
+			this.NotificationgroupBox.Name = "NotificationgroupBox";
+			this.NotificationgroupBox.Size = new System.Drawing.Size(227, 103);
+			this.NotificationgroupBox.TabIndex = 3;
+			this.NotificationgroupBox.TabStop = false;
+			this.NotificationgroupBox.Text = "Notifications";
+			// 
+			// TestNotificationbutton
+			// 
+			this.TestNotificationbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.TestNotificationbutton.Location = new System.Drawing.Point(154, 72);
+			this.TestNotificationbutton.Name = "TestNotificationbutton";
+			this.TestNotificationbutton.Size = new System.Drawing.Size(63, 23);
+			this.TestNotificationbutton.TabIndex = 3;
+			this.TestNotificationbutton.Text = "Test";
+			this.TestNotificationbutton.UseVisualStyleBackColor = true;
+			this.TestNotificationbutton.Click += new System.EventHandler(this.TestNotificationbuttonClick);
+			// 
+			// NotificationcheckBox
+			// 
+			this.NotificationcheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.NotificationcheckBox.Location = new System.Drawing.Point(7, 71);
+			this.NotificationcheckBox.Name = "NotificationcheckBox";
+			this.NotificationcheckBox.Size = new System.Drawing.Size(141, 24);
+			this.NotificationcheckBox.TabIndex = 2;
+			this.NotificationcheckBox.Text = "Notification enabled";
+			this.NotificationcheckBox.UseVisualStyleBackColor = true;
+			// 
+			// NotificationPhonetextBox
+			// 
+			this.NotificationPhonetextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.NotificationPhonetextBox.Location = new System.Drawing.Point(56, 45);
+			this.NotificationPhonetextBox.Name = "NotificationPhonetextBox";
+			this.NotificationPhonetextBox.Size = new System.Drawing.Size(162, 20);
+			this.NotificationPhonetextBox.TabIndex = 1;
+			// 
+			// NotificationEmailtextBox
+			// 
+			this.NotificationEmailtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.NotificationEmailtextBox.Location = new System.Drawing.Point(56, 19);
+			this.NotificationEmailtextBox.Name = "NotificationEmailtextBox";
+			this.NotificationEmailtextBox.Size = new System.Drawing.Size(162, 20);
+			this.NotificationEmailtextBox.TabIndex = 1;
+			// 
+			// Phonelabel
+			// 
+			this.Phonelabel.Location = new System.Drawing.Point(7, 48);
+			this.Phonelabel.Name = "Phonelabel";
+			this.Phonelabel.Size = new System.Drawing.Size(43, 20);
+			this.Phonelabel.TabIndex = 0;
+			this.Phonelabel.Text = "Phone";
+			// 
+			// Emaillabel
+			// 
+			this.Emaillabel.Location = new System.Drawing.Point(7, 20);
+			this.Emaillabel.Name = "Emaillabel";
+			this.Emaillabel.Size = new System.Drawing.Size(43, 20);
+			this.Emaillabel.TabIndex = 0;
+			this.Emaillabel.Text = "Email";
+			// 
 			// buttonClearLog
 			// 
 			this.buttonClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -184,7 +258,7 @@ namespace OctoTip.OctoTipExperimentControl
 									this.Protocol1});
 			this.ProtocoltoolStrip.Location = new System.Drawing.Point(0, 3);
 			this.ProtocoltoolStrip.Name = "ProtocoltoolStrip";
-			this.ProtocoltoolStrip.Size = new System.Drawing.Size(90, 48);
+			this.ProtocoltoolStrip.Size = new System.Drawing.Size(90, 50);
 			this.ProtocoltoolStrip.TabIndex = 0;
 			// 
 			// toolStripLabel1
@@ -208,7 +282,8 @@ namespace OctoTip.OctoTipExperimentControl
 			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.fileToolStripMenuItem,
-									this.protocolsToolStripMenuItem});
+									this.protocolsToolStripMenuItem,
+									this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(924, 24);
@@ -242,14 +317,14 @@ namespace OctoTip.OctoTipExperimentControl
 			// saveProtocolsAsToolStripMenuItem
 			// 
 			this.saveProtocolsAsToolStripMenuItem.Name = "saveProtocolsAsToolStripMenuItem";
-			this.saveProtocolsAsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+			this.saveProtocolsAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.saveProtocolsAsToolStripMenuItem.Text = "Save As...";
 			this.saveProtocolsAsToolStripMenuItem.Click += new System.EventHandler(this.SaveProtocolsAsToolStripMenuItemClick);
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.openToolStripMenuItem.Text = "Open";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
 			// 
@@ -261,7 +336,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStrip1.Location = new System.Drawing.Point(3, 24);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolStrip1.Size = new System.Drawing.Size(33, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(35, 25);
 			this.toolStrip1.TabIndex = 0;
 			// 
 			// toolStripButtonRefreshProtocols
@@ -274,77 +349,20 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripButtonRefreshProtocols.Text = "Refresh Protocols";
 			this.toolStripButtonRefreshProtocols.Click += new System.EventHandler(this.ToolStripButtonRefreshProtocolsClick);
 			// 
-			// NotificationgroupBox
+			// helpToolStripMenuItem
 			// 
-			this.NotificationgroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.NotificationgroupBox.Controls.Add(this.TestNotificationbutton);
-			this.NotificationgroupBox.Controls.Add(this.NotificationcheckBox);
-			this.NotificationgroupBox.Controls.Add(this.NotificationPhonetextBox);
-			this.NotificationgroupBox.Controls.Add(this.NotificationEmailtextBox);
-			this.NotificationgroupBox.Controls.Add(this.Phonelabel);
-			this.NotificationgroupBox.Controls.Add(this.Emaillabel);
-			this.NotificationgroupBox.Location = new System.Drawing.Point(4, 3);
-			this.NotificationgroupBox.Name = "NotificationgroupBox";
-			this.NotificationgroupBox.Size = new System.Drawing.Size(227, 103);
-			this.NotificationgroupBox.TabIndex = 3;
-			this.NotificationgroupBox.TabStop = false;
-			this.NotificationgroupBox.Text = "Notifications";
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.errorToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.helpToolStripMenuItem.Text = "Help";
 			// 
-			// Emaillabel
+			// errorToolStripMenuItem
 			// 
-			this.Emaillabel.Location = new System.Drawing.Point(7, 20);
-			this.Emaillabel.Name = "Emaillabel";
-			this.Emaillabel.Size = new System.Drawing.Size(43, 20);
-			this.Emaillabel.TabIndex = 0;
-			this.Emaillabel.Text = "Email";
-			// 
-			// Phonelabel
-			// 
-			this.Phonelabel.Location = new System.Drawing.Point(7, 48);
-			this.Phonelabel.Name = "Phonelabel";
-			this.Phonelabel.Size = new System.Drawing.Size(43, 20);
-			this.Phonelabel.TabIndex = 0;
-			this.Phonelabel.Text = "Phone";
-			// 
-			// NotificationEmailtextBox
-			// 
-			this.NotificationEmailtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.NotificationEmailtextBox.Location = new System.Drawing.Point(56, 19);
-			this.NotificationEmailtextBox.Name = "NotificationEmailtextBox";
-			this.NotificationEmailtextBox.Size = new System.Drawing.Size(162, 20);
-			this.NotificationEmailtextBox.TabIndex = 1;
-			// 
-			// NotificationPhonetextBox
-			// 
-			this.NotificationPhonetextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.NotificationPhonetextBox.Location = new System.Drawing.Point(56, 45);
-			this.NotificationPhonetextBox.Name = "NotificationPhonetextBox";
-			this.NotificationPhonetextBox.Size = new System.Drawing.Size(162, 20);
-			this.NotificationPhonetextBox.TabIndex = 1;
-			// 
-			// NotificationcheckBox
-			// 
-			this.NotificationcheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.NotificationcheckBox.Location = new System.Drawing.Point(7, 71);
-			this.NotificationcheckBox.Name = "NotificationcheckBox";
-			this.NotificationcheckBox.Size = new System.Drawing.Size(141, 24);
-			this.NotificationcheckBox.TabIndex = 2;
-			this.NotificationcheckBox.Text = "Notification enabled";
-			this.NotificationcheckBox.UseVisualStyleBackColor = true;
-			// 
-			// TestNotificationbutton
-			// 
-			this.TestNotificationbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.TestNotificationbutton.Location = new System.Drawing.Point(154, 72);
-			this.TestNotificationbutton.Name = "TestNotificationbutton";
-			this.TestNotificationbutton.Size = new System.Drawing.Size(63, 23);
-			this.TestNotificationbutton.TabIndex = 3;
-			this.TestNotificationbutton.Text = "Test";
-			this.TestNotificationbutton.UseVisualStyleBackColor = true;
-			this.TestNotificationbutton.Click += new System.EventHandler(this.TestNotificationbuttonClick);
+			this.errorToolStripMenuItem.Name = "errorToolStripMenuItem";
+			this.errorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.errorToolStripMenuItem.Text = "Error";
+			this.errorToolStripMenuItem.Click += new System.EventHandler(this.ErrorToolStripMenuItemClick);
 			// 
 			// MainForm
 			// 
@@ -371,6 +389,8 @@ namespace OctoTip.OctoTipExperimentControl
 			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
+			this.NotificationgroupBox.ResumeLayout(false);
+			this.NotificationgroupBox.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.ProtocoltoolStrip.ResumeLayout(false);
@@ -379,10 +399,10 @@ namespace OctoTip.OctoTipExperimentControl
 			this.menuStrip1.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
-			this.NotificationgroupBox.ResumeLayout(false);
-			this.NotificationgroupBox.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem errorToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.Button TestNotificationbutton;
 		private System.Windows.Forms.CheckBox NotificationcheckBox;
 		private System.Windows.Forms.Label Emaillabel;
