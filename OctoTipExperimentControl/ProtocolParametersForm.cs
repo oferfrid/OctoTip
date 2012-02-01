@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using System.Reflection;
-using OctoTip.OctoTipExperiments.Core;
+using  OctoTip.Lib.ExperimentsCore;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.OctoTipExperimentControl.ProtocolParametersFieldUserControls;

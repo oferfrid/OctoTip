@@ -40,6 +40,7 @@ namespace KillingCurve
 		protected override void OnProtocolStart()
 		{		
 			string message;
+			Log(ProtocolParameters.ToString());
 			
 			if (ProtocolParameters.PerformInoc)
 			{

@@ -15,7 +15,7 @@ using System.Threading;
 using Microsoft.Msagl.Drawing;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
-using OctoTip.OctoTipExperiments.Core;
+using OctoTip.Lib.ExperimentsCore;
 using OctoTip.OctoTipExperiments.Core.Interfaces;
 using OctoTip.Lib;
 
