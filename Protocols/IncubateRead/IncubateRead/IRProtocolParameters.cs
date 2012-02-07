@@ -23,7 +23,9 @@ namespace IncubateRead
 		public double TotalTime;
 		[ProtocolParameterAtribute("Frequency of reading (min)","10")]
 		public double ReadFrequency;
-		[ProtocolParameterAtribute("Results file path and name",@"c:\")]
-		public string Path;
+		[ProtocolParameterAtribute("Plate type","24")]
+		public int PlateType;
+//		[ProtocolParameterAtribute("Results file path and name",@"c:\")]
+//		public string Path;
 	}
 }

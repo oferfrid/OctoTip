@@ -64,11 +64,23 @@ namespace KillingCurve
 			for (int i=1; i<ProtocolParameters.SamplingTimesArray.Length; i++)
 			{
 				Log("MPN time points:");
-				TasksList.Add(DateTime.Now.AddHours(ProtocolParameters.SamplingTimesArray[i]),
+				try
+				{
+					TasksList.Add(DateTime.Now.AddHours(ProtocolParameters.SamplingTimesArray[i]),
 				              new KCMPNState(this, 
 				                             ProtocolParameters.CultureLicInd ,
 				                             ProtocolParameters.MPNLicInd+i,
 				                             ProtocolParameters.ReadAfter));
+				}
+				catch (ArgumentException )
+				{
+					// in case it's the same time as another task - it adds a second
+					TasksList.Add(DateTime.Now.AddHours(ProtocolParameters.SamplingTimesArray[i]).AddSeconds(1),
+				              new KCMPNState(this, 
+				                             ProtocolParameters.CultureLicInd ,
+				                             ProtocolParameters.MPNLicInd+i,
+				                             ProtocolParameters.ReadAfter));
+				}
 
 				Log(@"Time: " + ProtocolParameters.SamplingTimesArray[i].ToString() +
 				    @" ind: " + (ProtocolParameters.MPNLicInd+i).ToString());
@@ -85,8 +97,8 @@ namespace KillingCurve
 				                  TasksList[TasksList.Keys[0]].ToString() );
 				Log(message);
 				OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(message));
+				
 				this.ChangeState(new KCIncubateState(this,NextTaskTime));
-
 				this.ChangeState(TasksList[TasksList.Keys[0]]);
 				TasksList.Remove(NextTaskTime);
 			}

@@ -23,7 +23,7 @@ namespace IncubateRead
 	[State("Read state","Reading in Infinite")]
 	public class IRReadState:OctoTip.Lib.ExperimentsCore.Base.ReadState
 	{
-		string Path;
+//		string Path;
 		
 		new IRProtocol RunningInProtocol
 		{
@@ -34,7 +34,7 @@ namespace IncubateRead
 		
 		public IRReadState(IRProtocol RunningInIRProtocol):base((Protocol)RunningInIRProtocol)
 		{
-			Path = 	RunningInIRProtocol.ProtocolParameters.Path;
+//			Path = 	RunningInIRProtocol.ProtocolParameters.Path;
 		}
 		
 		protected override RobotJob BeforeRobotRun()
@@ -46,35 +46,26 @@ namespace IncubateRead
 			RJP.Add(new RobotJobParameter("PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			        
-			RobotJob RJ = new RobotJob(@"D:\RobotScripts\Irit\IncubateRead\IRRead.esc",RJP);
+			RobotJob RJ = new RobotJob(
+				@"D:\RobotScripts\Irit\IncubateRead\IRRead"+RunningInProtocol.ProtocolParameters.PlateType.ToString()+".esc"
+				,RJP);
 			
 			return RJ;
 		}
 		
 		protected override void AfterRobotRun()
 		{
-//			XPathDocument MeasurementsResults = GetXPathMeasurementsResults();
-//			XPathNavigator navigator    = MeasurementsResults.CreateNavigator();			
-//			XPathNodeIterator DataNodes = XPathNavigator.Select("MeasurementResultData/Section/Data"); //reads
-//			MeasurementsResults = new Dictionary<int, List<double>>(6);
+			FileInfo MyFileInfo = GetMeasurementsResultsFile();
+			string NewFileName = "IR" + RunningInProtocol.ProtocolParameters.PlateType.ToString() + @"_" +
+				                 RunningInProtocol.ProtocolParameters.LicInd.ToString() + @"_" +
+ 				                 String.Format("{0:yyyyMMddHHmm}", DateTime.Now) + @".xml";
+			try 
+			{
+				MyFileInfo.MoveTo(MyFileInfo.Directory.FullName + @"\" + NewFileName);
+			} catch (Exception ex) {
+				throw(ex);
+			}
 //			
-//			foreach (XPathNavigator DataNode in DataNodes)
-//			{
-//				
-//				foreach (XPathNavigator node in DataNode.SelectChildren("Well",""))
-//				{	
-//					
-//					node.MoveToAttribute("Pos",string.Empty);
-//					int WellInd =  CalcIndFromPlatePos(node.Value);
-//					if(!MeasurementsResults.ContainsKey(WellInd))
-//					{
-//						MeasurementsResults.Add(WellInd,new List<double>(5));
-//					}
-//					node.MoveToParent();
-//					MeasurementsResults[WellInd].Add(Convert.ToDouble(node.Value));
-//					
-//				}
-//			}
 		}
 		
 		

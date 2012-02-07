@@ -33,13 +33,20 @@ namespace IncubateRead
 		protected override void OnProtocolStart()
 		{
 			DateTime StartTime = DateTime.Now;
+			string message;
 			
-			while (StartTime.Subtract(DateTime.Now).TotalHours < this.ProtocolParameters.TotalTime)
+			while (DateTime.Now.Subtract(StartTime).TotalHours < this.ProtocolParameters.TotalTime && !ShouldStop)
 			{
+				message = "Hours left: " + 
+					(this.ProtocolParameters.TotalTime-DateTime.Now.Subtract(StartTime).TotalHours).ToString("0.00");
+				OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(message));
 				this.ChangeState(new IRReadState(this));
-				this.ChangeState(new IRIncubateState(this));
+				message = "Hours left: " + 
+					(this.ProtocolParameters.TotalTime-DateTime.Now.Subtract(StartTime).TotalHours).ToString("0.00");
+				OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(message));
+				this.ChangeState(new IRIncubateState(this));	
 			}
-			if (StartTime.Subtract(DateTime.Now).TotalHours > 0)
+			if (DateTime.Now.Subtract(StartTime).TotalHours > 0)
 			{
 				this.ChangeState(new IRReadState(this));
 			}
