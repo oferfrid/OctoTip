@@ -119,14 +119,19 @@ namespace OctoTip.Manager
 			Job.CreateScript();
 
 
+			myLogger.Add("B4 OctoTip.Manager.RobotWrapper.Logon");
 			Logon();
-			
+			myLogger.Add("After OctoTip.Manager.RobotWrapper.Logon");
 			
 			
 			try
 			{
-				 ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
+				myLogger.Add("B4 OctoTip.Manager.RobotWrapper.PrepareScript");
+				ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
+				myLogger.Add("After OctoTip.Manager.RobotWrapper.PrepareScript");
+				myLogger.Add("B4 OctoTip.Manager.RobotWrapper.StartScript");
 				Evo.StartScript(ScriptID, 0, 0);
+				myLogger.Add("After OctoTip.Manager.RobotWrapper.StartScript");
 
 				Job.JobStatus = RobotJob.Status.Running;
 				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
