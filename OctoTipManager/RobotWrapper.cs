@@ -159,7 +159,8 @@ namespace OctoTip.Manager
 			{
 				SC_ScriptStatus ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
 				SC_ScriptStatus ScriptStatus   = Evo.GetScriptStatus(ScriptID);
-				
+				myLogger.Add("ScriptStatusEx:" + ScriptStatusEx.ToString());
+				myLogger.Add("ScriptStatus:" + ScriptStatus.ToString());
 				while(ScriptStatus == SC_ScriptStatus.SS_BUSY && !_ShouldStop)
 				{
 					System.Threading.Thread.Sleep(RobotSamplingRate);
@@ -221,7 +222,7 @@ namespace OctoTip.Manager
 				else
 				{
 					ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
-					
+					myLogger.Add("ScriptStatusEx:" + ScriptStatusEx.ToString());
 					// determain script termination status
 					switch (ScriptStatusEx)
 					{
