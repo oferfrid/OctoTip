@@ -212,6 +212,7 @@ namespace OctoTip.Manager
 				else
 				{
 					ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
+					myLogger.Add(ScriptStatusEx.ToString());
 					
 					// determain script termination status
 					switch (ScriptStatusEx)
