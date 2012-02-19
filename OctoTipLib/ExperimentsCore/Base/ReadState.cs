@@ -37,8 +37,6 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		{
 			
 			
-			
-				
 			XPathNavigator navigator = GetXPathMeasurementsResults().CreateNavigator();
 
 			Dictionary<int, List<double>> MeasurementsResults;
@@ -124,6 +122,8 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	
 		private int CalcIndFromPlatePos(string Pos)
 		{
+			//TODO:wrong Calculation!
+			throw new Exception("This is wrong, Fix it!");
 			int Row = char.Parse(Pos.Substring(0,1))-'A';
 			int Col =  Convert.ToInt32(Pos.Substring(1,Pos.Length-1))-1;
 			return Row + Col*2+1;
