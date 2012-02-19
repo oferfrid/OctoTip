@@ -17,14 +17,16 @@ namespace IncubateRead
 	/// </summary>
 	public class IRProtocolParameters:ProtocolParameters
 	{
-		[ProtocolParameterAtribute("Index in Liconic","1")]
+		[ProtocolParameterAtribute("Index in Liconic","1",true)]
 		public int LicInd;
-		[ProtocolParameterAtribute("Total Growth time (hr)","24")]
+		[ProtocolParameterAtribute("Total Growth time (hr)","24",true)]
 		public double TotalTime;
-		[ProtocolParameterAtribute("Frequency of reading (min)","10")]
+		[ProtocolParameterAtribute("Frequency of reading (min)","10",true)]
 		public double ReadFrequency;
-		[ProtocolParameterAtribute("Plate type","24")]
+		[ProtocolParameterAtribute("Plate type","6",true)]
 		public int PlateType;
+		[ProtocolParameterAtribute("364 Plate Position Index [1:3]","1",true)]
+		public int Plate364PlatePositionIndex;
 //		[ProtocolParameterAtribute("Results file path and name",@"c:\")]
 //		public string Path;
 	}
