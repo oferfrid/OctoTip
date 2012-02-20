@@ -124,7 +124,7 @@ namespace IncubateRead
 			{
 				for (int i=0;i<ReadResults[0].Count;i++)
 				{
-					sw.WriteLine("{0:DD/MM/yyyy HH:mm:ss}\t{1}\t{2}" ,DateTime.Now,ReadResults[0][i],ReadResults[1][i]);
+					sw.WriteLine("{0:dd/MM/yyyy HH:mm:ss}\t{1}\t{2}" ,DateTime.Now,ReadResults[0][i],ReadResults[1][i]);
 				}	
 			}			
 			

@@ -136,6 +136,8 @@ namespace OctoTip.Manager
 					}
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
 				}
+				
+				Thread.Sleep(QueueSumplelingRate);
 			}
 			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,null,"Stopped..."));
 		}
@@ -168,7 +170,16 @@ namespace OctoTip.Manager
 				case( RobotWorkerStatus.Stopped):
 						
 						_ShouldPause  = false;
-					RunningThread.Start();
+					try
+					{
+						RunningThread.Start();
+					}
+					catch(System.Threading.ThreadStateException)
+					{
+						RunningThread = null;
+						RunningThread = new Thread(StartReadingQueue);
+						RunningThread.Start();
+					}
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
 					break;
 					

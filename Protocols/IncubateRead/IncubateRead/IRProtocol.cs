@@ -18,7 +18,7 @@ namespace IncubateRead
 	/// <summary>
 	/// Description of MyClass.
 	/// </summary>
-	[Protocol("Incubate Read" ,"Irit Reisman","OD measurements while growing in Liconic in 24 plate")]
+	[Protocol("Incubate Read 384" ,"Ofer Fridman","OD measurements while growing in Liconic in 6 plate")]
 	public class IRProtocol:Protocol
 	{
 		public List<double>[] OD = new List<double>[2];
@@ -68,8 +68,7 @@ namespace IncubateRead
 				
 				this.ChangeState(new IRReadState(this,round++ ));
 				UpdateProtocolMessege();
-				
-				
+				this.ChangeState(new IRIncubateState(this));	
 //				message = string.Format( "End of read, Remainig time: {0} Hours",(this.ProtocolParameters.TotalTime-DateTime.Now.Subtract(StartTime).TotalHours).ToString("0.00"));
 //				OnDisplayedDataChange(new ProtocolDisplayedDataChangeEventArgs(message));
 //				
@@ -83,7 +82,7 @@ namespace IncubateRead
 			
 			for (int i = 0;i<OD[1].Count;i++)
 			{
-				message += string.Format("{0}|\t{1}\t{1}\n",i.ToString(),OD[1][i].ToString("0.000"),OD[2][i].ToString("0.000"));
+				message += string.Format("{0}|\t{1}\t{1}\n",i.ToString(),OD[0][i].ToString("0.000"),OD[1][i].ToString("0.000"));
 			}
 			
 			
