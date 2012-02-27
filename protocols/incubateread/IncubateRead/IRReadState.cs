@@ -81,7 +81,7 @@ namespace IncubateRead
 			XPathDocument  ResultsXPathDocument = this.GetXPathMeasurementsResults();
 			
 			
-			XPathNavigator navigator = GetXPathMeasurementsResults().CreateNavigator();
+			XPathNavigator navigator = ResultsXPathDocument.CreateNavigator();
 
 			
 			XPathNodeIterator DataNodes = navigator.Select("MeasurementResultData/Section/Data"); //reads
@@ -137,7 +137,8 @@ namespace IncubateRead
 			//384
 			int Row = char.Parse(Pos.Substring(0,1))-'A';
 			int Col =  Convert.ToInt32(Pos.Substring(1,Pos.Length-1))-1;
-			return Row + Col*8*4+1;
+			int ind = Row + Col*4*4+1;
+			return ind;
 		}
 		
 		
