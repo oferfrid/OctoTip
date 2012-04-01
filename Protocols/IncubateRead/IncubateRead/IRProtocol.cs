@@ -59,6 +59,7 @@ namespace IncubateRead
             using (StreamWriter sw = OutputFile.CreateText()) 
             {
             	sw.WriteLine("Time\tOD reads");
+            	sw.Flush();
             }	
         }
 			
@@ -66,7 +67,7 @@ namespace IncubateRead
 			{
 				 
 				UpdateProtocolMessege();
-				IRReadState _IRReadState = new IRReadState(round++,ProtocolParameters.LicInd,ProtocolParameters.Plate364PlatePositionIndex,ProtocolParameters.OutputFile );
+				IRReadState _IRReadState = new IRReadState(round++,ProtocolParameters.LicInd,ProtocolParameters.OutputFile );
 				this.ChangeState(_IRReadState);
 				double[] Result = 	 _IRReadState.GetReadResult();
 				OD[0].Add(Result[0]);
@@ -87,7 +88,7 @@ namespace IncubateRead
 			
 			for (int i = 0;i<OD[1].Count;i++)
 			{
-				message += string.Format("{0}|\t{1}\t{1}\n",i.ToString(),OD[0][i].ToString("0.000"),OD[1][i].ToString("0.000"));
+				message += string.Format("{0}|\t{1}\t{2}\n",i.ToString(),OD[0][i].ToString("0.0000"),OD[1][i].ToString("0.0000"));
 			}
 			
 				this.DisplayData(message);

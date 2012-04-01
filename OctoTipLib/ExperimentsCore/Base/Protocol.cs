@@ -176,28 +176,28 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			{
 				handler(this, e);
 			}
-			
+
 			switch(e.StateStatus)
 			{
 					case State.Statuses.Paused:
-					this.SetCurrentStatus(Statuses.Paused,"Paused from state");
+					this.SetCurrentStatus(Statuses.Paused,"Paused from state:" + e.Messege );
 					break;
 					case State.Statuses.Started:
-					this.SetCurrentStatus(Statuses.Started,"started from state");
+					this.SetCurrentStatus(Statuses.Started,"started from state:" + e.Messege );
 					break;
 					case State.Statuses.Stopped:
-					this.SetCurrentStatus(Statuses.Stopped,"Stopped From State");
+					this.SetCurrentStatus(Statuses.Stopped,"Stopped From State:" + e.Messege );
 					break;
 					case State.Statuses.FatalError:
-					this.SetCurrentStatus(Statuses.FatalError,"FatalError From State");
+					this.SetCurrentStatus(Statuses.FatalError,"FatalError From State:" + e.Messege );
 					break;
 					
 					case State.Statuses.RuntimeError:
-					this.SetCurrentStatus(Statuses.RuntimeError,"RuntimeError From State");
+					this.SetCurrentStatus(Statuses.RuntimeError,"RuntimeError From State:" + e.Messege );
 					break;
 					
 					case State.Statuses.EndedSuccessfully:
-					this.SetCurrentStatus(Statuses.EndedSuccessfully,"Ended Successfully From State");
+					this.SetCurrentStatus(Statuses.EndedSuccessfully,"Ended Successfully From State:" + e.Messege );
 					break;
 		
 			//Stoping ??,
@@ -265,6 +265,11 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		
 		#endregion
+		protected void Log (string Messege)
+		{
+			myLogger.Add(this.GetType().Name  + "(" + this.ProtocolParameters.Name  + ")>" + Messege );
+		}
+		
 		public void Start()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(Statuses.Started,"Started"));
@@ -287,10 +292,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			
 		}
 		
-		public void Log(string Messege)
-		{
-			myProtocolLogger.Add("Protocol(" + this.ProtocolParameters.Name + "):" + Messege);
-		}
+		
 		
 		
 		protected abstract   void DoWork();
