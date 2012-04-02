@@ -49,7 +49,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		public  Protocol(ProtocolParameters ProtocolParameters)
 		{
 			this.ProtocolParameters = ProtocolParameters;
-			RunningThread = new Thread(DoWork);
+			RunningThread = new Thread(_DoWork);
 			myProtocolLogger = LogString.GetLogString(ProtocolParameters.Name);
 			
 		}
@@ -293,7 +293,17 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		}
 		
 		
-		
+		private void _DoWork()
+		{
+			try
+			{
+				DoWork();
+			}
+			catch(Exception e)
+			{
+				SetCurrentStatus(Statuses.FatalError,"Exception:" +  e.ToString());
+			}
+		}
 		
 		protected abstract   void DoWork();
 		
