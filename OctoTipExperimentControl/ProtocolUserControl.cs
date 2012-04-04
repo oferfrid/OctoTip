@@ -180,6 +180,14 @@ namespace OctoTip.OctoTipExperimentControl
 					// notify 
 					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType,this.labelProtocolName),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType,this.labelProtocolName,e.Messege));
 					break;
+				case (Protocol.Statuses.FatalError):
+					buttonStopEnabled  = false;
+					buttonStartEnabled =true;
+					buttonPauseEnabled=false ;
+					ProtocolBackColor = System.Drawing.Color.Black;
+					// notify 
+					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType,this.labelProtocolName),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType,this.labelProtocolName,e.Messege));
+					break;
 				case (Protocol.Statuses.RuntimeError):
 					buttonStopEnabled  = true;
 					buttonStartEnabled =false;

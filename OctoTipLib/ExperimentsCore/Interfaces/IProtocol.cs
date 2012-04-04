@@ -23,7 +23,6 @@ namespace OctoTip.OctoTipExperiments.Core.Interfaces
 		void RequestPause();
 		void RequestStart();
 		void ChangeState(State NewState);
-		void Log(string Messege);
 		
 		//TODO: Save State!
 	}

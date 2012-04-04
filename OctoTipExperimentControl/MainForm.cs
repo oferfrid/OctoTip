@@ -62,7 +62,6 @@ namespace OctoTip.OctoTipExperimentControl
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			
 				AddAvailableProtocols();
 		}
 		
@@ -181,7 +180,7 @@ namespace OctoTip.OctoTipExperimentControl
 				{
 					try
 					{
-					 EmailSMSSender.Sender.SendEmail(this.NotificationEmailtextBox.Text.Trim(),Subject + " from " +  this.Text, Message  + "\n" + DateTime.Now.ToString());
+					 EmailSMSSender.Sender.SendEmail(this.NotificationEmailtextBox.Text.Trim(),Subject , Message  + "\n" + DateTime.Now.ToString());
 					}
 					catch(Exception ex)
 					{
@@ -192,7 +191,7 @@ namespace OctoTip.OctoTipExperimentControl
 				{
 					try
 					{
-					EmailSMSSender.Sender.SendSMS(this.NotificationPhonetextBox.Text.Trim(),Subject + " from " +  this.Text);
+					EmailSMSSender.Sender.SendSMS(this.NotificationPhonetextBox.Text.Trim(),Subject);
 					}
 					catch(Exception ex)
 					{

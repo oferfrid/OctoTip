@@ -17,15 +17,13 @@ namespace IncubateRead
 	/// </summary>
 	public class IRProtocolParameters:ProtocolParameters
 	{
-		[ProtocolParameterAtribute("Index in Liconic","1",true)]
+		[ProtocolParameterAtribute("Index in Liconic","17",true)]
 		public int LicInd;
 		[ProtocolParameterAtribute("Total Growth time (hr)","24",true)]
 		public double TotalTime;
-		[ProtocolParameterAtribute("Frequency of reading (min)","10",true)]
+		[ProtocolParameterAtribute("Frequency of reading (min)","2",true)]
 		public double ReadFrequency;
-		[ProtocolParameterAtribute("364 Plate Position Index [1:3]","1",true)]
-		public int Plate364PlatePositionIndex;
-		[ProtocolParameterAtribute("Results file path and name",@"c:\")]
+		[ProtocolParameterAtribute("Results file path and name",@"D:\OctoTip\Protocols\IncubateRead\Output\Out.csv")]
 		public string OutputFile;
 	}
 }

@@ -20,6 +20,9 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	public abstract class State:IState
 	{
 
+		public const string LOG_NAME = "OctoTipExperimentManager";
+		private LogString myLogger = LogString.GetLogString(LOG_NAME);
+		
 		protected int StateSamplelingRate  = 0;
 		public State( )
 		{
@@ -134,7 +137,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		protected void Log (string Messege)
 		{
-		//TODO:LOG!
+			myLogger.Add(this.GetType().Name + ">" + Messege );
 		}
 		
 		#region static

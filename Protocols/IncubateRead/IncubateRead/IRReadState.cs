@@ -29,23 +29,21 @@ namespace IncubateRead
 		
 		int ReadPlateFirstInd;
 		int LicInd;
-		int Plate364PlatePositionIndex;
 		FileInfo OutputFile;
 		
-		List<double>[] ReadResults = new List<double>[2];
+		double[] ReadResults = new double[2];
 			
+
 		
 		
-		public IRReadState(int ReadPlateFirstInd,int LicInd,int Plate364PlatePositionIndex,string OutputFilePath):base()
+		
+		public IRReadState(int ReadPlateFirstInd,int LicInd,string OutputFilePath):base()
 		{
 			this.ReadPlateFirstInd = ReadPlateFirstInd;
 			this.LicInd = LicInd;
-			this.Plate364PlatePositionIndex = Plate364PlatePositionIndex;
 			this.OutputFile = new FileInfo(OutputFilePath);
 			
 			
-			ReadResults[0] = new List<double>(10);
-			ReadResults[1] = new List<double>(10);
 
 		}
 		
@@ -57,8 +55,6 @@ namespace IncubateRead
 			
 			RJP.Add(new RobotJobParameter("PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
-			
-			RJP.Add(new RobotJobParameter("ReadPlateInd",RobotJobParameter.ParameterType.Number,Plate364PlatePositionIndex));
 			RJP.Add(new RobotJobParameter("ReadPlateFirstInd",RobotJobParameter.ParameterType.Number,ReadPlateFirstInd));
 			
 			
@@ -74,16 +70,31 @@ namespace IncubateRead
 		protected override void AfterRobotRun()
 		{
 			
+			
 			//rename the results file
-			FileInfo MyFileInfo = GetMeasurementsResultsFile();
-			string NewFileName = "IR6" + @"_" +
-				String.Format("{0:yyyyMMddHHmm}", DateTime.Now) + @".xml";
+			
 			try
 			{
-				MyFileInfo.MoveTo(MyFileInfo.Directory.FullName + @"\" + NewFileName);
-			} catch (Exception ex) {
-				throw(ex);
+			FileInfo MyFileInfo = GetMeasurementsResultsFile();
 			}
+			 catch (Exception ex) 
+			{
+				throw(new Exception("Unable to GetMeasurementsResultsFile!",ex));
+			}
+			
+			
+			
+//			
+//			string NewFileName = "IR6" + @"_" +
+//				String.Format("{0:yyyyMMddHHmm}", DateTime.Now) + @".xml";
+//			try
+//			{
+//				myLogger.Add("in try " + MyFileInfo.FullName);
+//				MyFileInfo.MoveTo(MyFileInfo.Directory.FullName + @"\" + NewFileName);
+//			} catch (Exception ex) 
+//			{
+//				throw(new Exception("Unable to move file!",ex));
+//			}
 			
 			//add output to result file
 			XPathDocument  ResultsXPathDocument = this.GetXPathMeasurementsResults();
@@ -108,24 +119,29 @@ namespace IncubateRead
 					if (ReadPlateFirstInd == WellInd)
 					{
 						node.MoveToParent();
-						ReadResults[0].Add(Convert.ToDouble(node.Value));
+						Log(WellInd + "=" + node.Value);
+						ReadResults[0]=Convert.ToDouble(node.Value);
 					}
 					if (ReadPlateFirstInd + 192 == WellInd)
 					{
 						node.MoveToParent();
-						ReadResults[1].Add(Convert.ToDouble(node.Value));
+						Log(WellInd + "=" + node.Value);
+						ReadResults[1]=Convert.ToDouble(node.Value);
 					}
 				}
 				
 
 			}
 			
+			
+			
+			
 			using (StreamWriter sw = OutputFile.AppendText())
 			{
-				for (int i=0;i<ReadResults[0].Count;i++)
-				{
-					sw.WriteLine("{0:dd/MM/yyyy HH:mm:ss}\t{1}\t{2}" ,DateTime.Now,ReadResults[0][i],ReadResults[1][i]);
-				}	
+//				for (int i=0;i<ReadResults[0].Count;i++)
+//				{
+					sw.WriteLine("{0:dd/MM/yyyy HH:mm:ss}\t{1:0.0000}\t{2:0.0000}" ,DateTime.Now,ReadResults[0],ReadResults[1]);
+//				}	
 			}			
 			
 //
@@ -133,7 +149,7 @@ namespace IncubateRead
 		
 		public double[] GetReadResult()
 		{
-			return new double[2]{ReadResults[1].Average(),	ReadResults[2].Average()};
+			return ReadResults;
 		}
 		
 		private int CalcIndFromPlatePos(string Pos)

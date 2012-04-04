@@ -77,12 +77,11 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 						System.Threading.Thread.Sleep(this.StateSamplelingRate);
 					}
 					
-				}
-				if (!this.ShouldPause)
+					if (!this.ShouldPause && !this.ShouldStop)
 					{
 						this.SetCurrentStatus(State.Statuses.Started,"Protocol resumed");
 					}
-				
+				}
 				
 				if (JobStatus == RobotJob.Status.RuntimeError)
 				{
