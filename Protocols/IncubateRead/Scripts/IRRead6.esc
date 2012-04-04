@@ -1,5 +1,5 @@
-EA40661A
-20120401_120449 Tecan           
+F88E4BFB
+20120402_100902 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -129,8 +129,8 @@ V;200
 998;22;
 996;0;0;
 --{ RPG }--
-Wash(255,1,1,1,0,"0.5",500,"0.5",500,10,70,30,0,0,1000,0);
-Periodic_Wash(255,1,1,1,0,"0.5",500,".5",500,10,70,30,0,0,"1",1000,0);
+Wash(255,1,1,1,0,"0.1",500,"0.1",500,10,70,30,0,0,1000,0);
+Periodic_Wash(255,1,1,1,0,"0.1",500,"0.1",500,10,70,30,0,0,"1",1000,0);
 ActivateADH("Box DiTi 50ul","D:\OctoTip\Protocols\IncubateRead\Scripts\IRReplaceDiTi50.esc");
 ImportVariable(PlateCart#PlatePos#ReadPlateFirstInd,"D:\OctoTip\Protocols\IncubateRead\Scripts\IRReadData.csv",0#0#0,"1#1#1",0,1,0,1,1);
 Comment("Open 364 Plate");

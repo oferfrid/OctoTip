@@ -48,7 +48,7 @@ namespace IncubateRead
 			this.StartTime = DateTime.Now;
 			
 			
-			int round = 1;
+			int round = ProtocolParameters.StartRound;
 	
 			OutputFile = new FileInfo(ProtocolParameters.OutputFile);
 			

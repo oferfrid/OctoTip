@@ -23,6 +23,8 @@ namespace IncubateRead
 		public double TotalTime;
 		[ProtocolParameterAtribute("Frequency of reading (min)","2",true)]
 		public double ReadFrequency;
+		[ProtocolParameterAtribute("Start in round ","1",true)]
+		public int StartRound;
 		[ProtocolParameterAtribute("Results file path and name",@"D:\OctoTip\Protocols\IncubateRead\Output\Out.csv")]
 		public string OutputFile;
 	}
