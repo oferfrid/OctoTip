@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTip.OctoTipExperiments.Core.Interfaces
+namespace OctoTip.Lib.ExperimentsCore.Interfaces
 {
 	/// <summary>
 	/// Description of IState.

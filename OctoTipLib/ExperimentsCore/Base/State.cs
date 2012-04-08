@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Runtime.Serialization;
-using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace OctoTip.Lib.ExperimentsCore.Base
 {

@@ -12,7 +12,7 @@ using System.Reflection;
 using System.IO;
 
 
-using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 

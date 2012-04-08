@@ -9,7 +9,7 @@
 using System;
 using System.Reflection;
 using OctoTip.Lib.ExperimentsCore.Attributes;
-using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace OctoTip.Lib.ExperimentsCore.Base
 {

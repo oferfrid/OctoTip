@@ -12,7 +12,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Threading;
-using OctoTip.OctoTipExperiments.Core.Interfaces;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 using OctoTip.Lib;
 
 namespace OctoTip.Lib.ExperimentsCore.Base
@@ -41,7 +41,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		//Log
 		public const string LOG_NAME = "OctoTipExperimentManager";
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
-		private static LogString myProtocolLogger;
+		protected static LogString myProtocolLogger;
 		
 		
 		public  ProtocolParameters ProtocolParameters;
