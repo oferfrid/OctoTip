@@ -196,7 +196,7 @@ namespace OctoTip.Lib.ExperimentsCore
 				foreach (ParameterInfo ProtocolConstructorParameterInfo in ProtocolConstructorParameterInfos)
 				{
 					
-					if (ProtocolConstructorParameterInfo.ParameterType.GetInterface("OctoTip.OctoTipExperiments.Core.Interfaces.IProtocolParameters")!=null)
+					if (ProtocolConstructorParameterInfo.ParameterType.GetInterface("OctoTip.Lib.ExperimentsCore.Interfaces.IProtocolParameters")!=null)
 					{
 						ProtocolParametersType = ProtocolConstructorParameterInfo.ParameterType;
 						break;
