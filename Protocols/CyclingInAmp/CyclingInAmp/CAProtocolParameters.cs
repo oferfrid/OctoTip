@@ -20,15 +20,20 @@ namespace CyclingInAmp
 		public CAProtocolParameters()
 		{
 		}	
-		[ProtocolParameterAtribute("Index in Liconic","17",true)]
-		public int LicInd;
-		[ProtocolParameterAtribute("Total Growth time (hr)","24",true)]
-		public double TotalTime;
-		[ProtocolParameterAtribute("Frequency of reading (min)","2",true)]
+		[ProtocolParameterAtribute("Indexes in Liconic","1,2,3",true)]
+		public int[] LicInds;
+		[ProtocolParameterAtribute("Kill Time (Hours)","4",true)]
+		public double KillTime;
+		[ProtocolParameterAtribute("Frequency of reading (min)","10",true)]
 		public double ReadFrequency;
-		[ProtocolParameterAtribute("Results file path and name",@"D:\OctoTip\Protocols\IncubateRead\Output\Out.csv")]
-		public string OutputFile;
-		
+		[ProtocolParameterAtribute("Absolut OD 2 Dilut","0.1",true)]
+		public double AbsolutOD2Dilut;
+		[ProtocolParameterAtribute("Time To ON after dilution (Hours)","5",true)]
+		public double Time2ON;
+		[ProtocolParameterAtribute("384 Plate Empty Ind file",@"D:\OctoTip\Protocols\CyclingInAmp\Scripts\384WellInd.csv")]
+		public string Empty384WellIndFilePath;
+		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\CyclingInAmp\Output\")]
+		public string OutputFilePath;
 		
 	}
 }

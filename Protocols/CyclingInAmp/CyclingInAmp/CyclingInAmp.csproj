@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OctoTip.Lib">
-      <HintPath>..\..\OctoTipLib\bin\Debug\OctoTip.Lib.dll</HintPath>
+      <HintPath>..\..\..\OctoTipLib\bin\Debug\OctoTip.Lib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -44,8 +44,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CAAddbLac.cs" />
+    <Compile Include="CADilut.cs" />
+    <Compile Include="CADilutb2Amp.cs" />
+    <Compile Include="CADilutb2AmpInNewPlate.cs" />
+    <Compile Include="CAGetOD.cs" />
+    <Compile Include="CAGrowToOD.cs" />
+    <Compile Include="CAGrowToON.cs" />
+    <Compile Include="CAKill.cs" />
     <Compile Include="CAProtocol.cs" />
     <Compile Include="CAProtocolParameters.cs" />
+    <Compile Include="CAStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />

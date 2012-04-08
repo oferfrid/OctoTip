@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("CyclingInAmp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("NQB-Lab")]
 [assembly: AssemblyProduct("CyclingInAmp")]
 [assembly: AssemblyCopyright("Copyright 2012")]
 [assembly: AssemblyTrademark("")]
