@@ -41,7 +41,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		//Log
 		public const string LOG_NAME = "OctoTipExperimentManager";
 		private LogString myLogger = LogString.GetLogString(LOG_NAME);
-		private LogString myProtocolLogger;
+		private static LogString myProtocolLogger;
 		
 		
 		public  ProtocolParameters ProtocolParameters;
