@@ -194,7 +194,7 @@ namespace OctoTip.Manager
 					catch(System.Threading.ThreadStateException)
 					{
 						RunningThread = null;
-						RunningThread = new Thread(StartReadingQueue);
+						RunningThread = new Thread(_StartReadingQueue);
 						RunningThread.Start();
 					}
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
