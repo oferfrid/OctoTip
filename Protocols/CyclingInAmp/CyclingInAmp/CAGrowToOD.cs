@@ -21,7 +21,7 @@ namespace CyclingInAmp
 	public class CAGrowToOD:WaitState
 	{
 
-		public CAGrowToOD(double TimeOfGrow):base(new DateTime().AddHours(TimeOfGrow))
+		public CAGrowToOD(double TimeOfGrow):base( DateTime.Now.AddHours(TimeOfGrow))
 		{
 
 		}

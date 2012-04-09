@@ -26,12 +26,12 @@ namespace CyclingInAmp
 			set{base.ProtocolParameters = value;}
 		}
 		
-		public CAProtocol(CAProtocolParameters ProtocolParameters):base(ProtocolParameters)
+		public CAProtocol(CAProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
 			//create protocol File
 			
-			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath);
-			ReportProtocolState(0,string.Format(@"Creating Protoclo {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
+			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") +".txt");
+			ReportProtocolState(0,string.Format("Creating Protoclo {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
 		}
 		
@@ -67,17 +67,20 @@ namespace CyclingInAmp
 		
 		protected override void DoWork( )
 		{
-			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + ProtocolParameters.Name + DateTime.Now.ToString());
+			
 			int CycleInd = 0;
 			int PlateInd = 1;
 			ReportProtocolState(CycleInd,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
+			if(ProtocolParameters.RunStart)
+			{
 			this.ChangeState(new CAStart(ProtocolParameters.LicInds[0]));
+			}
 			
 			while(!this.ShouldStop)
 			{
 				CycleInd++;
 				
-				ReportProtocolState(CycleInd,string.Format("End of dilution Starting the Kill state ({0.0})",ProtocolParameters.KillTime));
+				ReportProtocolState(CycleInd,string.Format("End of dilution Starting the Kill state ({0:0.0} hours)",ProtocolParameters.KillTime));
 				ChangeState(new CAKill(ProtocolParameters.KillTime));
 				
 				
@@ -88,19 +91,22 @@ namespace CyclingInAmp
 				ReportProtocolState(CycleInd,"End b-Lac addition");
 				// whait for OD
 				double OD;
+				ReportProtocolState(CycleInd,string.Format("Waiting for OD > {0:0.000} in plate {1} to well ind={2}",ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
 				do
 				{
-					CAGetOD _CAGetOD = new CAGetOD(GetEmpty384WellInd(),LiconicInd,ProtocolParameters.OutputFilePath);
-					ReportProtocolState(CycleInd,string.Format("Waiting for OD > {0:0.000} in plate {1} to well ind={2}",ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
+					CAGetOD _CAGetOD = new CAGetOD(GetEmpty384WellInd(),LiconicInd,WellInd,ProtocolParameters.OutputFilePath);
 					ChangeState(_CAGetOD);
 					OD = _CAGetOD.GetReadResult();
 					ReportProtocolState(CycleInd,string.Format("OD={0:0.000}",OD));
+					if(OD<ProtocolParameters.AbsolutOD2Dilut)
+					{
 					ChangeState(new CAGrowToOD(ProtocolParameters.ReadFrequency/60));
-				}while(OD>ProtocolParameters.AbsolutOD2Dilut);
+					}
+				}while(OD<ProtocolParameters.AbsolutOD2Dilut);
 				
 				ReportProtocolState(CycleInd,string.Format(" OD = {0:0.000} > {1:0.000} in plate {1} to well ind={2} starting Dilution ",OD,ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
 				ChangeState(new CADilut(LiconicInd,WellInd+1));
-				ReportProtocolState(CycleInd,string.Format("Dilution Ended Witing to ON ({0.0} hours)",ProtocolParameters.Time2ON));
+				ReportProtocolState(CycleInd,string.Format("Dilution Ended Witing to ON ({0:0.0} hours)",ProtocolParameters.Time2ON));
 				ChangeState(new CAGrowToON(ProtocolParameters.Time2ON));
 				if ((CycleInd-1)%3==2 )
 				{//replace plate
@@ -121,7 +127,7 @@ namespace CyclingInAmp
 		FileInfo ProtocolStateFile;
 		public void ReportProtocolState(int CycleInd,string Messege)
 		{
-			using (StreamWriter sw = ProtocolStateFile.CreateText())
+			using (StreamWriter sw = ProtocolStateFile.AppendText())
 			{
 				sw.WriteLine("({0}){1}:\t{2}",CycleInd,DateTime.Now,Messege);
 				sw.Flush();

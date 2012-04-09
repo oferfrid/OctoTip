@@ -35,8 +35,6 @@ namespace CyclingInAmp
 			
 			LicPos LP = Utils.Ind2LicPos(LicInd);
 			
-			
-			
 			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("Add2WellInd",RobotJobParameter.ParameterType.Number,Add2WellInd));

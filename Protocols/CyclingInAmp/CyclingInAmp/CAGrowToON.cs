@@ -20,7 +20,7 @@ namespace CyclingInAmp
 	public class CAGrowToON:WaitState
 	{
 
-		public CAGrowToON(double TimeOfGrow):base(new DateTime().AddHours(TimeOfGrow))
+		public CAGrowToON(double TimeOfGrow):base(DateTime.Now.AddHours(TimeOfGrow))
 		{
 
 		}

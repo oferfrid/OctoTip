@@ -20,7 +20,7 @@ namespace CyclingInAmp
 	[State("Kill","Kill in AMP")]
 	public class CAKill:WaitState
 	{
-		public CAKill(double TimeOfKill):base(new DateTime().AddHours(TimeOfKill))
+		public CAKill(double TimeOfKill):base(DateTime.Now.AddHours(TimeOfKill))
 		{
 
 		}

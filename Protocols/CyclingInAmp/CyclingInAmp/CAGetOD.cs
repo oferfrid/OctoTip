@@ -24,13 +24,15 @@ namespace CyclingInAmp
 	{
 		int Empty384WellInd;
 		int Lic6PlateInd;
+		int MeasureWellInd;
 		
 		double ReadResults ;
 		
-		public CAGetOD(int Empty384WellInd,int Lic6PlateInd,string OutputFilePath):base()
+		public CAGetOD(int Empty384WellInd,int Lic6PlateInd,int MeasureWellInd,string OutputFilePath):base()
 		{
 			this.Empty384WellInd = Empty384WellInd;
 			this.Lic6PlateInd = Lic6PlateInd;
+			this.MeasureWellInd=MeasureWellInd;
 		}
 		
 		
@@ -45,9 +47,10 @@ namespace CyclingInAmp
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
 			
 			LicPos LP = Utils.Ind2LicPos(Lic6PlateInd);
-
+			
 			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("MeasureWellInd",RobotJobParameter.ParameterType.Number,MeasureWellInd));
 			RJP.Add(new RobotJobParameter("Empty384WellInd",RobotJobParameter.ParameterType.Number,Empty384WellInd));
 			
 			RobotJob RJ = new RobotJob(

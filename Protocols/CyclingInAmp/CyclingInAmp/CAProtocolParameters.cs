@@ -20,6 +20,8 @@ namespace CyclingInAmp
 		public CAProtocolParameters()
 		{
 		}	
+		[ProtocolParameterAtribute("Run Start","true",true)]
+		public bool RunStart;
 		[ProtocolParameterAtribute("Indexes in Liconic","1,2,3",true)]
 		public int[] LicInds;
 		[ProtocolParameterAtribute("Kill Time (Hours)","4",true)]
