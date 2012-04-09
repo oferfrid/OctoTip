@@ -1,5 +1,5 @@
-3AB31E1B
-20120404_185926 Tecan           
+E8B85323
+20120409_141306 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -130,7 +130,7 @@ V;200
 998;22;
 996;0;0;
 --{ RPG }--
-ImportVariable(DiTi200Ind,"D:\OctoTip\Protocols\IncubateRead\Scripts\DiTi200Ind.csv",0,"1",0,1,0,1,1);
+ImportVariable(DiTi200Ind,"D:\OctoTip\Protocols\CyclingInAmp\Scripts\DiTi200Ind.csv",0,"1",0,1,0,1,1);
 IfThen("DiTi200Ind",2,"2");
 UserPrompt("No More DiTi replace Diti50 In Hotels",0,-1);
 Variable(DiTi50Ind,"1",0,"",0,1.000000,10.000000,0,2,0,0);
