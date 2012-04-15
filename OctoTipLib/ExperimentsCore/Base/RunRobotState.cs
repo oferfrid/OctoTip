@@ -120,7 +120,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 					break;
 				case (RobotJob.Status.TerminatedByUser):
 					this.SetCurrentStatus(State.Statuses.FatalError, "Terminated by user");
-					this.RequestStop("Terminated by user");
+					//this.RequestStop("Terminated by user");
 					break;
 				case (RobotJob.Status.Finished):
 					this.SetCurrentStatus( State.Statuses.EndedSuccessfully, "Terminated successfully");

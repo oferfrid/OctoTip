@@ -7,10 +7,11 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using System.ComponentModel;
 using System.Configuration;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace OctoTip.Lib
 {
@@ -18,7 +19,7 @@ namespace OctoTip.Lib
 	/// Description of RobotJob.
 	/// </summary>
 	[Serializable]
-	public class RobotJob : IComparable<RobotJob>
+	public class RobotJob : IComparable<RobotJob>,INotifyPropertyChanged
 	{
 		
 		
@@ -30,14 +31,15 @@ namespace OctoTip.Lib
 		private string _ScriptFilePath = string.Empty;
 		private string _ScriptName ;
 		
-		public RobotJob.Status JobStatus = RobotJob.Status.Created;
+		private RobotJob.Status _JobStatus = RobotJob.Status.Created;
 		public string ParametersFilePath = string.Empty;
 		public bool PrametersFileHasHeader = true;
 		public string Script;
-		public double _Priority;
+		private double _Priority;
 		public List<RobotJobParameter> RobotJobParameters;
 		#region RobotJob constructors
 
+		
 		public RobotJob()
 		{
 			
@@ -71,7 +73,7 @@ namespace OctoTip.Lib
 		
 		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters):this(ScriptFilePath, RobotJobParameters,0.5)
 		{
-		
+			
 
 		}
 		
@@ -90,6 +92,16 @@ namespace OctoTip.Lib
 		#endregion
 		
 		#region RobotJob Properties
+		
+		public RobotJob.Status JobStatus 
+		{
+			get{return _JobStatus ;}
+			set
+			{
+				_JobStatus = value;
+				NotifyPropertyChanged("JobStatus");
+			}
+		}
 		
 		public string ScriptFilePath
 		{
@@ -138,6 +150,7 @@ namespace OctoTip.Lib
 				}
 				
 				this._Priority = value;
+				NotifyPropertyChanged("Priority");
 			}
 		}
 		
@@ -313,6 +326,18 @@ namespace OctoTip.Lib
 		}
 		#endregion
 		
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		private void NotifyPropertyChanged(String info)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(info));
+			}
+		}
+		
+		
 		public enum Status
 		{
 			Created,
@@ -337,10 +362,10 @@ namespace OctoTip.Lib
 				{
 					if((this.RobotJobParameters[i].Name != RJP[i].Name)
 					   || (this.RobotJobParameters[i].Type != RJP[i].Type))
-					   {
-					   	Equal = false;
-					   	break; 
-					   }
+					{
+						Equal = false;
+						break;
+					}
 				}
 			}
 			else
@@ -352,7 +377,9 @@ namespace OctoTip.Lib
 		}
 		
 		
-			
+		
+		
+		
 		
 		
 		

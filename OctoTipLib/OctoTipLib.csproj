@@ -46,6 +46,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingListView.cs" />
     <Compile Include="ExperimentsCore\Attributes\ProtocolAttribute.cs" />
     <Compile Include="ExperimentsCore\Attributes\ProtocolParameterAtribute.cs" />
     <Compile Include="ExperimentsCore\Attributes\StateAttribute.cs" />

@@ -8,14 +8,16 @@
  */
 using System;
 using System.Collections.Generic;
-
+using System.ComponentModel;
+using System.Linq;
 
 namespace OctoTip.Lib
 {
 	/// <summary>
 	/// Description of RobotJobsQueue.
 	/// </summary>
-	public class RobotJobsQueue:List<RobotJob>
+//	public class RobotJobsQueue:BindingList<RobotJob>
+	public class RobotJobsQueue:BindingListView<RobotJob>
 	{
 		
 		public event EventHandler<RobotJobsQueueChangedEventArgs> RobotJobsQueueChanged;
@@ -32,22 +34,50 @@ namespace OctoTip.Lib
 			}
 		}
 		
-				
+		
 		public RobotJobsQueue():base()
 		{
 			
 		}
+		
+//		protected override bool SupportsSortingCore
+//		{
+//			get
+//			{
+//				return true;
+//			}
+//		}
+//		
+//		protected override void ApplySortCore(PropertyDescriptor prop, ListSortDirection direction)
+//		{
+//			var modifier = direction == ListSortDirection.Ascending ? 1 : -1;
+//			if (prop.PropertyType.GetInterface("IComparable") != null)
+//			{
+//				var items = Items.ToList();
+//				items.Sort(new Comparison<RobotJob>((a, b) =>
+//				                             {
+//				                             	var aVal = prop.GetValue(a) as IComparable;
+//				                             	var bVal = prop.GetValue(b) as IComparable;
+//				                             	return aVal.CompareTo(bVal) * modifier;
+//				                             }));
+//				Items.Clear();
+//				foreach (var i in items)
+//					Items.Add(i);
+//			}
+//		}
+//		
 		
 		public RobotJob GetNextRobotJob()
 		{
 			RobotJob RJ = null;
 			if (this.Count>0)
 			{
-				this.Sort();
+				//TODO:change the delection by priority...
 				RJ = this[0];
-				this.RemoveAt(0);
+				//this.RemoveAt(0);
 				RJ.JobStatus = RobotJob.Status.Enqueued;
-				OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("remove 1"));
+				//OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("remove 1"));
+				//this.ResetBindings();
 			}
 			return RJ;
 			
@@ -58,17 +88,9 @@ namespace OctoTip.Lib
 		{
 			Guid UniqueID =  RJ.GenerateUniqueID();
 			RJ.UniqueID = UniqueID;
-			int index = this.BinarySearch(RJ);
-			if (index < 0)
-			{
-				this.Insert(~index, RJ);
-			}
-			else
-			{
-				this.Insert(index, RJ);
-			}
+			this.Insert(Count, RJ);
 			RJ.JobStatus = RobotJob.Status.Queued;
-			OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("Insert 1"));
+			//OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("Insert 1"));
 			return UniqueID;
 		}
 		
