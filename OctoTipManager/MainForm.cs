@@ -91,8 +91,6 @@ namespace OctoTip.Manager
 				delegate
 				{
 					txtLog.Text = myLogger.Log;
-					//TODO: Quick-and-dirty solution for updating the Q
-					//UpdateRobotJobsQueue();
 				})
 			      );
 		}
