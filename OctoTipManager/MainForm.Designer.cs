@@ -51,6 +51,8 @@ namespace OctoTip.Manager
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
 			this.dataGridViewRobotJobsQueue = new OctoTip.Manager.ControlWrapper();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.RemoveRuningJob = new System.Windows.Forms.Button();
+			this.ReDoRuningJob = new System.Windows.Forms.Button();
 			this.textBoxRuningJobStatus = new System.Windows.Forms.TextBox();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonPause = new System.Windows.Forms.Button();
@@ -61,8 +63,6 @@ namespace OctoTip.Manager
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshQueue = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonRemoveJob = new System.Windows.Forms.ToolStripButton();
-			this.ReDoRuningJob = new System.Windows.Forms.Button();
-			this.RemoveRuningJob = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitHorizontal)).BeginInit();
 			this.splitHorizontal.Panel1.SuspendLayout();
@@ -222,6 +222,28 @@ namespace OctoTip.Manager
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Runing Job";
 			// 
+			// RemoveRuningJob
+			// 
+			this.RemoveRuningJob.Enabled = false;
+			this.RemoveRuningJob.Location = new System.Drawing.Point(98, 81);
+			this.RemoveRuningJob.Name = "RemoveRuningJob";
+			this.RemoveRuningJob.Size = new System.Drawing.Size(64, 20);
+			this.RemoveRuningJob.TabIndex = 1;
+			this.RemoveRuningJob.Text = "Remove";
+			this.RemoveRuningJob.UseVisualStyleBackColor = true;
+			this.RemoveRuningJob.Click += new System.EventHandler(this.RemoveRuningJobClick);
+			// 
+			// ReDoRuningJob
+			// 
+			this.ReDoRuningJob.Enabled = false;
+			this.ReDoRuningJob.Location = new System.Drawing.Point(28, 81);
+			this.ReDoRuningJob.Name = "ReDoRuningJob";
+			this.ReDoRuningJob.Size = new System.Drawing.Size(64, 20);
+			this.ReDoRuningJob.TabIndex = 0;
+			this.ReDoRuningJob.Text = "Redo";
+			this.ReDoRuningJob.UseVisualStyleBackColor = true;
+			this.ReDoRuningJob.Click += new System.EventHandler(this.ReDoRuningJobClick);
+			// 
 			// textBoxRuningJobStatus
 			// 
 			this.textBoxRuningJobStatus.Location = new System.Drawing.Point(3, 218);
@@ -330,26 +352,6 @@ namespace OctoTip.Manager
 			this.toolStripButtonRemoveJob.Size = new System.Drawing.Size(23, 22);
 			this.toolStripButtonRemoveJob.Text = "Remove Job";
 			this.toolStripButtonRemoveJob.Click += new System.EventHandler(this.ToolStripButtonRemoveJobClick);
-			// 
-			// ReDoRuningJob
-			// 
-			this.ReDoRuningJob.Enabled = false;
-			this.ReDoRuningJob.Location = new System.Drawing.Point(28, 81);
-			this.ReDoRuningJob.Name = "ReDoRuningJob";
-			this.ReDoRuningJob.Size = new System.Drawing.Size(64, 20);
-			this.ReDoRuningJob.TabIndex = 0;
-			this.ReDoRuningJob.Text = "Redo";
-			this.ReDoRuningJob.UseVisualStyleBackColor = true;
-			// 
-			// RemoveRuningJob
-			// 
-			this.RemoveRuningJob.Enabled = false;
-			this.RemoveRuningJob.Location = new System.Drawing.Point(98, 81);
-			this.RemoveRuningJob.Name = "RemoveRuningJob";
-			this.RemoveRuningJob.Size = new System.Drawing.Size(64, 20);
-			this.RemoveRuningJob.TabIndex = 1;
-			this.RemoveRuningJob.Text = "Remove";
-			this.RemoveRuningJob.UseVisualStyleBackColor = true;
 			// 
 			// MainForm
 			// 

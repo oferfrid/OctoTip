@@ -143,7 +143,7 @@ namespace OctoTip.Manager
 		{
 			WriteRobotJobQueue2File("RobotJobsQueueState.xml");
 			
-			if (FormRobotJobsQueue .Count>0)
+			if (FormRobotJobsQueue.Count>0)
 			{
 				//BindingSource BS = new BindingSource();
 				BS.DataSource =FormRobotJobsQueue ;
@@ -491,6 +491,16 @@ namespace OctoTip.Manager
 		void ErrorToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			throw new Exception("E");
+		}
+		
+		void ReDoRuningJobClick(object sender, EventArgs e)
+		{
+
+		}
+		
+		void RemoveRuningJobClick(object sender, EventArgs e)
+		{
+			
 		}
 	}
 	

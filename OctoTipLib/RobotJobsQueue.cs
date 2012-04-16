@@ -47,7 +47,7 @@ namespace OctoTip.Lib
 //				return true;
 //			}
 //		}
-//		
+//
 //		protected override void ApplySortCore(PropertyDescriptor prop, ListSortDirection direction)
 //		{
 //			var modifier = direction == ListSortDirection.Ascending ? 1 : -1;
@@ -65,22 +65,28 @@ namespace OctoTip.Lib
 //					Items.Add(i);
 //			}
 //		}
-//		
+//
 		
 		public RobotJob GetNextRobotJob()
 		{
 			RobotJob RJ = null;
-			if (this.Count>0)
+			
+			double Priority = 1;
+			
+			for (int i=0;i<this.Count;i++)
 			{
-				//TODO:change the delection by priority...
-				RJ = this[0];
-				//this.RemoveAt(0);
+				//TODO:change the selection by priority...
+				if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority < Priority)
+				{
+					RJ = this[i];
+				}
+				
+			}
+			if (RJ!=null)
+			{
 				RJ.JobStatus = RobotJob.Status.Enqueued;
-				//OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("remove 1"));
-				//this.ResetBindings();
 			}
 			return RJ;
-			
 		}
 		
 		
