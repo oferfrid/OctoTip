@@ -139,7 +139,7 @@ namespace OctoTip.Manager
 		
 		private void  UpdateRobotJobsQueue()
 		{
-			WriteRobotJobQueue2File("RobotJobsQueueState.xml");
+			//WriteRobotJobQueue2File("RobotJobsQueueState.xml");
 			
 			if (FormRobotJobsQueue.Count>0)
 			{

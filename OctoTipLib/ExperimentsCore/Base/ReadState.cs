@@ -67,7 +67,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		protected FileInfo GetMeasurementsResultsFile()
 		{
-						const string ImportVariableFunctionName = @"FACTS(""ReaderNETwork"",""ReaderNETwork_Measure""";
+		    const string ImportVariableFunctionName = @"FACTS(""ReaderNETwork"",""ReaderNETwork_Measure""";
 			
 			string[] ScriptLines = RunRobotJob.Script.Split('\n');
 			

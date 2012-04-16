@@ -182,6 +182,7 @@ namespace OctoTip.Manager
 				case( RobotWorkerStatus.Stopped):
 						
 						_ShouldPause  = false;
+						_ShouldStop  = false;
 					try
 					{
 						RunningThread.Start();

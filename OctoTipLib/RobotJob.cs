@@ -181,16 +181,16 @@ namespace OctoTip.Lib
 			
 		}
 		
-		public void CreateScript()
-		{
-			// Write the string to a file.
-			string ScriptFileName = string.Format("{0}\\{1}",ConfigurationManager.AppSettings["DefultScriptFolder"],ScriptName);
-			StreamWriter file = new StreamWriter(ScriptFileName);
-			file.Write(Script);
-			file.Close();
-			_ScriptFilePath = ScriptFileName;
-			WriteParameterFile();
-		}
+//		public void CreateScript()
+//		{
+//			// Write the string to a file.
+//			string ScriptFileName = string.Format("{0}\\{1}",ConfigurationManager.AppSettings["DefultScriptFolder"],ScriptName);
+//			StreamWriter file = new StreamWriter(ScriptFileName);
+//			file.Write(Script);
+//			file.Close();
+//			_ScriptFilePath = ScriptFileName;
+//			WriteParameterFile();
+//		}
 		
 		public Guid GenerateUniqueID()
 		{
@@ -264,12 +264,13 @@ namespace OctoTip.Lib
 		
 		private void InitScript( string ScriptPath)
 		{
+			
 			FileInfo FI = new FileInfo(ScriptPath);
 			if (!FI.Exists)
 			{
 				throw new Exception("Script file "  + ScriptPath + " doesn't exsist");
 			}
-			
+			_ScriptFilePath = ScriptPath;
 			ScriptName = FI.Name;
 			
 			StreamReader streamReader = new StreamReader(ScriptPath);
