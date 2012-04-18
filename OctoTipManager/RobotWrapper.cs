@@ -37,6 +37,21 @@ namespace OctoTip.Manager
 		{
 			Evo = new EVOAPILib.SystemClass();
 			
+			Evo.ErrorEvent += delegate(DateTime StartTime, DateTime EndTime, string Device, string Macro, string Object, string Message, short Status, string ProcessName, int ProcessID, string MacroID)
+			{
+				myLogger.Add(string.Format("****Error from Evo:StartTime={0} EndTime={1} Device={2} Macro={3} Object={4} Message={5} Status={6} ProcessName={7} ProcessID={8} MacroID={9}", StartTime,  EndTime,  Device,  Macro,  Object,  Message,  Status,  ProcessName,  ProcessID,  MacroID));
+				};
+			Evo.StatusChanged += delegate(SC_Status Status)
+			{
+				myLogger.Add(string.Format("****Status From Evo:{0}" , Status));
+			};
+			
+//			Evo.UserPromptEvent += delegate(int ID, string Text, string Caption, int Choices, out int Answer) 
+//			{  
+//				myLogger.Add(string.Format("****UserPromptEvent: ID={0} Text={1} Caption={2} Choices={3}", ID,  Text,  Caption,  Choices));
+//				Answer = 0;
+//			};
+			
 			RobotSamplingRate = Convert.ToInt32(ConfigurationManager.AppSettings["RobotSamplelingRate"]);
 			if (RobotSamplingRate == 0)
 			{
@@ -108,10 +123,6 @@ namespace OctoTip.Manager
 		{
 			try
 			{
-				
-				
-				
-				
 				Evo.Logoff();
 				
 			}
@@ -258,7 +269,10 @@ namespace OctoTip.Manager
 			
 		}
 		
-		
+		private void Evo_StatusChanged(object sender,SC_Status e)
+		{
+			
+		}
 		
 		public bool ShouldStop
 		{

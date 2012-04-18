@@ -137,7 +137,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		protected void Log (string Messege)
 		{
-			myLogger.Add(this.GetType().Name + ">" + Messege );
+			myLogger.Add(this.GetType().Name + ":" + Messege );
 		}
 		
 		#region static
@@ -153,7 +153,10 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		{
 			SetCurrentStatus(Statuses.Started,"Starting State");
 			DoWork();
+			if (CurrentStatus == Statuses.Started)
+			{
 			SetCurrentStatus(Statuses.EndedSuccessfully,"Ending State");
+			}
 		}
 		protected abstract void DoWork();
 	

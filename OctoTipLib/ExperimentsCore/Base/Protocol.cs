@@ -190,6 +190,8 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 					break;
 					case State.Statuses.FatalError:
 					this.SetCurrentStatus(Statuses.FatalError,"FatalError From State:" + e.Messege );
+					ShouldStop = true;
+					ShouldPause  = false;
 					break;
 					
 					case State.Statuses.RuntimeError:

@@ -36,12 +36,7 @@ namespace OctoTip.Manager
 			get{return MainForm.FormRobotJobsQueue;}
 		}
 		
-		Dictionary<Guid, OctoTip.Lib.RobotJob.Status> WorkerRobotJobsQueueHestoryDictionary
-		{
-			get {return MainForm.FormRobotJobsQueueHestoryDictionary;}
-		}
-		
-		
+				
 		// Volatile is used as hint to the compiler that this data
 		// member will be accessed by multiple threads.
 		
@@ -194,7 +189,7 @@ namespace OctoTip.Manager
 					catch(System.Threading.ThreadStateException)
 					{
 						RunningThread = null;
-						RunningThread = new Thread(StartReadingQueue);
+						RunningThread = new Thread(_StartReadingQueue);
 						RunningThread.Start();
 					}
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
@@ -235,15 +230,15 @@ namespace OctoTip.Manager
 			switch (e.ScriptStatus)
 			{
 				case OctoTip.Lib.RobotJob.Status.RuntimeError:
-					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.RuntimeError;
+					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.RuntimeError;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runtime Error"));
 					break;
 				case OctoTip.Lib.RobotJob.Status.Paused:
-					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Paused;
+					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Paused;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,e.Job,"Job Paused"));
 					break;
 				case OctoTip.Lib.RobotJob.Status.Running:
-					WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Running;
+					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Running;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runing From Worker"));
 					break;
 					

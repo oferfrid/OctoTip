@@ -37,10 +37,10 @@ namespace OctoTip.Manager
 		
 		
 		static public RobotJobsQueue FormRobotJobsQueue;
-		static public Dictionary<Guid, OctoTip.Lib.RobotJob.Status> FormRobotJobsQueueHestoryDictionary;
+		BindingSource BS = new BindingSource();
 		
-		
-		
+		static  private volatile RobotJob RuningJob;
+
 		
 		public MainForm()
 		{
@@ -48,7 +48,6 @@ namespace OctoTip.Manager
 			
 			
 			FormRobotJobsQueue = new RobotJobsQueue();
-			FormRobotJobsQueueHestoryDictionary =new Dictionary<Guid, RobotJob.Status>();
 			
 			string ListeningPort = ConfigurationManager.AppSettings["ListeningPort"];
 			if (ListeningPort == null)
@@ -94,8 +93,6 @@ namespace OctoTip.Manager
 				delegate
 				{
 					txtLog.Text = myLogger.Log;
-					//TODO: Quick-and-dirty solution for updating the Q
-					//UpdateRobotJobsQueue();
 				})
 			      );
 		}
@@ -103,12 +100,10 @@ namespace OctoTip.Manager
 		private void BindRobotJobsQueue()
 		{
 
-			BindingSource BS = new BindingSource();
-			BS.DataSource =FormRobotJobsQueue ;
 			
-			dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
-			dataGridViewRobotJobsQueue.DataSource = BS;
-
+			UpdateRobotJobsQueue();
+			
+			
 			dataGridViewRobotJobsQueue.Columns.Clear();
 			DataGridViewColumn column;
 			column = new DataGridViewTextBoxColumn();
@@ -117,6 +112,12 @@ namespace OctoTip.Manager
 			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
 			dataGridViewRobotJobsQueue.Columns.Add(column);
 
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "JobStatus";
+			column.Name = "JobStatus";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+			
 			column = new DataGridViewTextBoxColumn();
 			column.DataPropertyName = "ScriptName";
 			column.Name = "Script Name";
@@ -138,16 +139,17 @@ namespace OctoTip.Manager
 			//dataGridViewRobotJobsQueue.AutoResizeColumns(  DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader);
 		}
 		
-		private void UpdateRobotJobsQueue()
+		private void  UpdateRobotJobsQueue()
 		{
 			WriteRobotJobQueue2File("RobotJobsQueueState.xml");
 			
-			if (FormRobotJobsQueue .Count>0)
+			if (FormRobotJobsQueue.Count>0)
 			{
-				BindingSource BS = new BindingSource();
+				//BindingSource BS = new BindingSource();
 				BS.DataSource =FormRobotJobsQueue ;
 				dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
-				
+				BS.Filter = "JobStatus = 'Queued'";
+				BS.Sort = "JobStatus ASC , Priority ASC";
 				dataGridViewRobotJobsQueue.DataSource = BS;
 			}
 			else
@@ -198,9 +200,9 @@ namespace OctoTip.Manager
 			{
 				RobotJob RJ = (RobotJob)Row.DataBoundItem;
 				RJ.JobStatus = RobotJob.Status.TerminatedByUser;
-				FormRobotJobsQueueHestoryDictionary[RJ.UniqueID] = RJ.JobStatus;
-				FormRobotJobsQueue.Remove((RobotJob)RJ);
-				UpdateRobotJobsQueue();
+				//FormRobotJobsQueueHestoryDictionary[RJ.UniqueID] = RJ.JobStatus;
+				//FormRobotJobsQueue.Remove((RobotJob)RJ);
+				//UpdateRobotJobsQueue();
 			}
 
 			
@@ -323,7 +325,7 @@ namespace OctoTip.Manager
 		private string GetJobStatus(RobotJob Job)
 		{
 			string status = string.Format("{0}({1})>{2}",Job.ScriptName,Job.UniqueID,Job.JobStatus);
-				return status;
+			return status;
 		}
 		
 
@@ -334,10 +336,14 @@ namespace OctoTip.Manager
 				if (e.CurrentJob == null)
 				{
 					myLogger.Add(string.Format("{0} ,{1}" , e.RobotWorkerStatus,e.Messege));
+					RuningJob = null;
+					UpdateRunningJob();
 				}
 				else
 				{
 					myLogger.Add(string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
+					RuningJob = e.CurrentJob;
+					UpdateRunningJob();
 				}
 			}
 			else
@@ -351,14 +357,14 @@ namespace OctoTip.Manager
 			
 			string textBoxRuningJobStatusText = string.Empty;
 			
-			if(e.CurrentJob!=null)
-			{
-				textBoxRuningJobStatusText = GetJobStatus(e.CurrentJob);
-				
-				
-				MainForm.FormRobotJobsQueueHestoryDictionary[e.CurrentJob.UniqueID] = e.CurrentJob.JobStatus;
-				
-			}
+//			if(e.CurrentJob!=null)
+//			{
+//				textBoxRuningJobStatusText = GetJobStatus(e.CurrentJob);
+//
+//
+//				MainForm.FormRobotJobsQueueHestoryDictionary[e.CurrentJob.UniqueID] = e.CurrentJob.JobStatus;
+//
+//			}
 			
 			
 			
@@ -418,11 +424,37 @@ namespace OctoTip.Manager
 			textBoxRuningJobStatus.BeginInvoke(textBoxRuningJobStatusInvoker);
 			
 			
-			
-			
 		}
 		
+		private void UpdateRunningJob()
+		{
+			string RunningJobNameText;
+			string RunningJobStatusText;
+			if (RuningJob!=null)
+			{
+				 RunningJobNameText = RuningJob.ScriptName;
+				 RunningJobStatusText = RuningJob.JobStatus.ToString();
+			}
+			else
+			{
+				 RunningJobNameText = string.Empty;
+				 RunningJobStatusText = string.Empty;
+			}
+			
 
+			MethodInvoker UpdateRunningJobName = delegate
+			{
+				RunningJobName.Text = RunningJobNameText ;
+			};
+			RunningJobName.BeginInvoke(UpdateRunningJobName);
+			
+			MethodInvoker UpdateRunningJobStatus = delegate
+			{
+				RunningJobStatus.Text = RunningJobStatusText ;
+			};
+			RunningJobStatus.BeginInvoke(UpdateRunningJobStatus);
+			
+		}
 
 
 		
@@ -473,7 +505,7 @@ namespace OctoTip.Manager
 			{
 				FormRobotWorker.RequestStop();
 			}
-				
+			
 			
 			
 		}
@@ -489,6 +521,16 @@ namespace OctoTip.Manager
 		void ErrorToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			throw new Exception("E");
+		}
+		
+		void ReDoRuningJobClick(object sender, EventArgs e)
+		{
+
+		}
+		
+		void RemoveRuningJobClick(object sender, EventArgs e)
+		{
+			
 		}
 	}
 	
