@@ -63,6 +63,8 @@ namespace OctoTip.Manager
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshQueue = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonRemoveJob = new System.Windows.Forms.ToolStripButton();
+			this.RunningJobName = new System.Windows.Forms.Label();
+			this.RunningJobStatus = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitHorizontal)).BeginInit();
 			this.splitHorizontal.Panel1.SuspendLayout();
@@ -213,6 +215,8 @@ namespace OctoTip.Manager
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.RunningJobStatus);
+			this.groupBox1.Controls.Add(this.RunningJobName);
 			this.groupBox1.Controls.Add(this.RemoveRuningJob);
 			this.groupBox1.Controls.Add(this.ReDoRuningJob);
 			this.groupBox1.Location = new System.Drawing.Point(6, 105);
@@ -353,6 +357,20 @@ namespace OctoTip.Manager
 			this.toolStripButtonRemoveJob.Text = "Remove Job";
 			this.toolStripButtonRemoveJob.Click += new System.EventHandler(this.ToolStripButtonRemoveJobClick);
 			// 
+			// RunningJobName
+			// 
+			this.RunningJobName.Location = new System.Drawing.Point(6, 16);
+			this.RunningJobName.Name = "RunningJobName";
+			this.RunningJobName.Size = new System.Drawing.Size(100, 23);
+			this.RunningJobName.TabIndex = 2;
+			// 
+			// RunningJobStatus
+			// 
+			this.RunningJobStatus.Location = new System.Drawing.Point(6, 39);
+			this.RunningJobStatus.Name = "RunningJobStatus";
+			this.RunningJobStatus.Size = new System.Drawing.Size(100, 23);
+			this.RunningJobStatus.TabIndex = 2;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -387,6 +405,8 @@ namespace OctoTip.Manager
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label RunningJobName;
+		private System.Windows.Forms.Label RunningJobStatus;
 		private System.Windows.Forms.Button ReDoRuningJob;
 		private System.Windows.Forms.Button RemoveRuningJob;
 		private System.Windows.Forms.GroupBox groupBox1;

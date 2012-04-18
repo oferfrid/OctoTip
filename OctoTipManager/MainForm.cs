@@ -39,14 +39,16 @@ namespace OctoTip.Manager
 		static public RobotJobsQueue FormRobotJobsQueue;
 		BindingSource BS = new BindingSource();
 		
-				
+		static  private volatile RobotJob RuningJob;
+
+		
 		public MainForm()
 		{
 			InitializeComponent();
 			
 			
 			FormRobotJobsQueue = new RobotJobsQueue();
-				
+			
 			string ListeningPort = ConfigurationManager.AppSettings["ListeningPort"];
 			if (ListeningPort == null)
 			{
@@ -100,8 +102,8 @@ namespace OctoTip.Manager
 
 			
 			UpdateRobotJobsQueue();
-				
-				
+			
+			
 			dataGridViewRobotJobsQueue.Columns.Clear();
 			DataGridViewColumn column;
 			column = new DataGridViewTextBoxColumn();
@@ -323,7 +325,7 @@ namespace OctoTip.Manager
 		private string GetJobStatus(RobotJob Job)
 		{
 			string status = string.Format("{0}({1})>{2}",Job.ScriptName,Job.UniqueID,Job.JobStatus);
-				return status;
+			return status;
 		}
 		
 
@@ -334,10 +336,14 @@ namespace OctoTip.Manager
 				if (e.CurrentJob == null)
 				{
 					myLogger.Add(string.Format("{0} ,{1}" , e.RobotWorkerStatus,e.Messege));
+					RuningJob = null;
+					UpdateRunningJob();
 				}
 				else
 				{
 					myLogger.Add(string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
+					RuningJob = e.CurrentJob;
+					UpdateRunningJob();
 				}
 			}
 			else
@@ -354,10 +360,10 @@ namespace OctoTip.Manager
 //			if(e.CurrentJob!=null)
 //			{
 //				textBoxRuningJobStatusText = GetJobStatus(e.CurrentJob);
-//				
-//				
+//
+//
 //				MainForm.FormRobotJobsQueueHestoryDictionary[e.CurrentJob.UniqueID] = e.CurrentJob.JobStatus;
-//				
+//
 //			}
 			
 			
@@ -418,11 +424,37 @@ namespace OctoTip.Manager
 			textBoxRuningJobStatus.BeginInvoke(textBoxRuningJobStatusInvoker);
 			
 			
-			
-			
 		}
 		
+		private void UpdateRunningJob()
+		{
+			string RunningJobNameText;
+			string RunningJobStatusText;
+			if (RuningJob!=null)
+			{
+				 RunningJobNameText = RuningJob.ScriptName;
+				 RunningJobStatusText = RuningJob.JobStatus.ToString();
+			}
+			else
+			{
+				 RunningJobNameText = string.Empty;
+				 RunningJobStatusText = string.Empty;
+			}
+			
 
+			MethodInvoker UpdateRunningJobName = delegate
+			{
+				RunningJobName.Text = RunningJobNameText ;
+			};
+			RunningJobName.BeginInvoke(UpdateRunningJobName);
+			
+			MethodInvoker UpdateRunningJobStatus = delegate
+			{
+				RunningJobStatus.Text = RunningJobStatusText ;
+			};
+			RunningJobStatus.BeginInvoke(UpdateRunningJobStatus);
+			
+		}
 
 
 		
@@ -473,7 +505,7 @@ namespace OctoTip.Manager
 			{
 				FormRobotWorker.RequestStop();
 			}
-				
+			
 			
 			
 		}

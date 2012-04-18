@@ -134,7 +134,15 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		private RobotJob.Status GetJobStatus(RobotJob RunRobotJob)
 		{
-			RobotJob.Status JobStatus = RJQClient.GetJobStatus(RunRobotJob.UniqueID);
+			RobotJob.Status JobStatus;
+			try
+			{
+			 JobStatus = RJQClient.GetJobStatus(RunRobotJob.UniqueID);
+			}
+			catch(System.ServiceModel.EndpointNotFoundException ex)
+			{
+				JobStatus = RobotJob.Status.RuntimeError;
+			}
 			string messege = string.Format("{0}({1})>{2}",RunRobotJob.ScriptName,RunRobotJob.UniqueID,JobStatus.ToString());
 			this.DisplayData(messege);
 			return JobStatus;
