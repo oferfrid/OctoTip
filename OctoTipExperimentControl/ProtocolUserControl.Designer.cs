@@ -62,7 +62,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-			this.buttonStop.Location = new System.Drawing.Point(498, 248);
+			this.buttonStop.Location = new System.Drawing.Point(497, 247);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(53, 28);
 			this.buttonStop.TabIndex = 2;
@@ -74,7 +74,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.EditParametersbutton.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.EditParametersbutton.BackColor = System.Drawing.Color.Red;
-			this.EditParametersbutton.Location = new System.Drawing.Point(437, 248);
+			this.EditParametersbutton.Location = new System.Drawing.Point(436, 247);
 			this.EditParametersbutton.Name = "EditParametersbutton";
 			this.EditParametersbutton.Size = new System.Drawing.Size(55, 28);
 			this.EditParametersbutton.TabIndex = 4;
@@ -129,7 +129,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonStart.Enabled = false;
 			this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStart.Image = ((System.Drawing.Image)(resources.GetObject("buttonStart.Image")));
-			this.buttonStart.Location = new System.Drawing.Point(437, 282);
+			this.buttonStart.Location = new System.Drawing.Point(436, 281);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(55, 28);
 			this.buttonStart.TabIndex = 8;
@@ -143,7 +143,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.buttonPause.Enabled = false;
 			this.buttonPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonPause.Image = ((System.Drawing.Image)(resources.GetObject("buttonPause.Image")));
-			this.buttonPause.Location = new System.Drawing.Point(498, 282);
+			this.buttonPause.Location = new System.Drawing.Point(497, 281);
 			this.buttonPause.Name = "buttonPause";
 			this.buttonPause.Size = new System.Drawing.Size(53, 28);
 			this.buttonPause.TabIndex = 8;
@@ -154,7 +154,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// textBoxProtocolData
 			// 
 			this.textBoxProtocolData.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.textBoxProtocolData.Location = new System.Drawing.Point(437, 30);
+			this.textBoxProtocolData.Location = new System.Drawing.Point(436, 29);
 			this.textBoxProtocolData.Multiline = true;
 			this.textBoxProtocolData.Name = "textBoxProtocolData";
 			this.textBoxProtocolData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -165,7 +165,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// textBoxStateData
 			// 
 			this.textBoxStateData.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.textBoxStateData.Location = new System.Drawing.Point(437, 185);
+			this.textBoxStateData.Location = new System.Drawing.Point(436, 184);
 			this.textBoxStateData.Multiline = true;
 			this.textBoxStateData.Name = "textBoxStateData";
 			this.textBoxStateData.Size = new System.Drawing.Size(114, 57);
@@ -224,7 +224,9 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// ProtocolUserControl
 			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.AutoSize = true;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.Color.Silver;
 			this.Controls.Add(this.labelProtocolType);
 			this.Controls.Add(this.Minimizebutton);
@@ -237,8 +239,9 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Controls.Add(this.buttonStop);
 			this.Controls.Add(this.textBoxStateData);
 			this.Controls.Add(this.textBoxProtocolData);
+			this.MinimumSize = new System.Drawing.Size(553, 313);
 			this.Name = "ProtocolUserControl";
-			this.Size = new System.Drawing.Size(554, 314);
+			this.Size = new System.Drawing.Size(553, 313);
 			this.Load += new System.EventHandler(this.ProtocolUserControlLoad);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();

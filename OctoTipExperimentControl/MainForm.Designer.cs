@@ -61,10 +61,10 @@ namespace OctoTip.OctoTipExperimentControl
 			this.protocolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveProtocolsAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.toolStripButtonRefreshProtocols = new System.Windows.Forms.ToolStripButton();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.errorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStripButtonRefreshProtocols = new System.Windows.Forms.ToolStripButton();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.LeftToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -122,7 +122,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.splitContainer1.Panel2.Controls.Add(this.buttonClearLog);
 			this.splitContainer1.Panel2.Controls.Add(this.textBoxLog);
 			this.splitContainer1.Size = new System.Drawing.Size(834, 542);
-			this.splitContainer1.SplitterDistance = 596;
+			this.splitContainer1.SplitterDistance = 586;
 			this.splitContainer1.TabIndex = 1;
 			// 
 			// Protocolpanel
@@ -131,7 +131,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Protocolpanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.Protocolpanel.Location = new System.Drawing.Point(0, 0);
 			this.Protocolpanel.Name = "Protocolpanel";
-			this.Protocolpanel.Size = new System.Drawing.Size(596, 542);
+			this.Protocolpanel.Size = new System.Drawing.Size(586, 542);
 			this.Protocolpanel.TabIndex = 0;
 			// 
 			// NotificationgroupBox
@@ -146,7 +146,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.NotificationgroupBox.Controls.Add(this.Emaillabel);
 			this.NotificationgroupBox.Location = new System.Drawing.Point(4, 3);
 			this.NotificationgroupBox.Name = "NotificationgroupBox";
-			this.NotificationgroupBox.Size = new System.Drawing.Size(227, 103);
+			this.NotificationgroupBox.Size = new System.Drawing.Size(237, 103);
 			this.NotificationgroupBox.TabIndex = 3;
 			this.NotificationgroupBox.TabStop = false;
 			this.NotificationgroupBox.Text = "Notifications";
@@ -154,7 +154,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// TestNotificationbutton
 			// 
 			this.TestNotificationbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.TestNotificationbutton.Location = new System.Drawing.Point(154, 72);
+			this.TestNotificationbutton.Location = new System.Drawing.Point(164, 72);
 			this.TestNotificationbutton.Name = "TestNotificationbutton";
 			this.TestNotificationbutton.Size = new System.Drawing.Size(63, 23);
 			this.TestNotificationbutton.TabIndex = 3;
@@ -174,20 +174,20 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// NotificationPhonetextBox
 			// 
-			this.NotificationPhonetextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.NotificationPhonetextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.NotificationPhonetextBox.Location = new System.Drawing.Point(56, 45);
 			this.NotificationPhonetextBox.Name = "NotificationPhonetextBox";
-			this.NotificationPhonetextBox.Size = new System.Drawing.Size(162, 20);
+			this.NotificationPhonetextBox.Size = new System.Drawing.Size(172, 20);
 			this.NotificationPhonetextBox.TabIndex = 1;
 			// 
 			// NotificationEmailtextBox
 			// 
-			this.NotificationEmailtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.NotificationEmailtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.NotificationEmailtextBox.Location = new System.Drawing.Point(56, 19);
 			this.NotificationEmailtextBox.Name = "NotificationEmailtextBox";
-			this.NotificationEmailtextBox.Size = new System.Drawing.Size(162, 20);
+			this.NotificationEmailtextBox.Size = new System.Drawing.Size(172, 20);
 			this.NotificationEmailtextBox.TabIndex = 1;
 			// 
 			// Phonelabel
@@ -224,8 +224,10 @@ namespace OctoTip.OctoTipExperimentControl
 			this.textBoxLog.Location = new System.Drawing.Point(3, 302);
 			this.textBoxLog.Multiline = true;
 			this.textBoxLog.Name = "textBoxLog";
-			this.textBoxLog.Size = new System.Drawing.Size(228, 237);
+			this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.textBoxLog.Size = new System.Drawing.Size(238, 237);
 			this.textBoxLog.TabIndex = 1;
+			this.textBoxLog.WordWrap = false;
 			// 
 			// statusStrip1
 			// 
@@ -317,16 +319,31 @@ namespace OctoTip.OctoTipExperimentControl
 			// saveProtocolsAsToolStripMenuItem
 			// 
 			this.saveProtocolsAsToolStripMenuItem.Name = "saveProtocolsAsToolStripMenuItem";
-			this.saveProtocolsAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveProtocolsAsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
 			this.saveProtocolsAsToolStripMenuItem.Text = "Save As...";
 			this.saveProtocolsAsToolStripMenuItem.Click += new System.EventHandler(this.SaveProtocolsAsToolStripMenuItemClick);
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
 			this.openToolStripMenuItem.Text = "Open";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
+			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.errorToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// errorToolStripMenuItem
+			// 
+			this.errorToolStripMenuItem.Name = "errorToolStripMenuItem";
+			this.errorToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+			this.errorToolStripMenuItem.Text = "Error";
+			this.errorToolStripMenuItem.Click += new System.EventHandler(this.ErrorToolStripMenuItemClick);
 			// 
 			// toolStrip1
 			// 
@@ -348,21 +365,6 @@ namespace OctoTip.OctoTipExperimentControl
 			this.toolStripButtonRefreshProtocols.Size = new System.Drawing.Size(23, 22);
 			this.toolStripButtonRefreshProtocols.Text = "Refresh Protocols";
 			this.toolStripButtonRefreshProtocols.Click += new System.EventHandler(this.ToolStripButtonRefreshProtocolsClick);
-			// 
-			// helpToolStripMenuItem
-			// 
-			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.errorToolStripMenuItem});
-			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-			this.helpToolStripMenuItem.Text = "Help";
-			// 
-			// errorToolStripMenuItem
-			// 
-			this.errorToolStripMenuItem.Name = "errorToolStripMenuItem";
-			this.errorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.errorToolStripMenuItem.Text = "Error";
-			this.errorToolStripMenuItem.Click += new System.EventHandler(this.ErrorToolStripMenuItemClick);
 			// 
 			// MainForm
 			// 
