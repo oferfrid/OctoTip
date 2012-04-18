@@ -51,6 +51,8 @@ namespace OctoTip.Manager
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
 			this.dataGridViewRobotJobsQueue = new OctoTip.Manager.ControlWrapper();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.RunningJobStatus = new System.Windows.Forms.Label();
+			this.RunningJobName = new System.Windows.Forms.Label();
 			this.RemoveRuningJob = new System.Windows.Forms.Button();
 			this.ReDoRuningJob = new System.Windows.Forms.Button();
 			this.textBoxRuningJobStatus = new System.Windows.Forms.TextBox();
@@ -63,8 +65,6 @@ namespace OctoTip.Manager
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshQueue = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonRemoveJob = new System.Windows.Forms.ToolStripButton();
-			this.RunningJobName = new System.Windows.Forms.Label();
-			this.RunningJobStatus = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitHorizontal)).BeginInit();
 			this.splitHorizontal.Panel1.SuspendLayout();
@@ -175,7 +175,7 @@ namespace OctoTip.Manager
 			this.splitHorizontal.Panel2.Controls.Add(this.ClearLogButton);
 			this.splitHorizontal.Panel2.Controls.Add(this.txtLog);
 			this.splitHorizontal.Size = new System.Drawing.Size(713, 484);
-			this.splitHorizontal.SplitterDistance = 299;
+			this.splitHorizontal.SplitterDistance = 304;
 			this.splitHorizontal.TabIndex = 2;
 			// 
 			// splitVertical
@@ -196,7 +196,7 @@ namespace OctoTip.Manager
 			this.splitVertical.Panel2.Controls.Add(this.buttonPause);
 			this.splitVertical.Panel2.Controls.Add(this.buttonStop);
 			this.splitVertical.Panel2.Controls.Add(this.checkBoxServerState);
-			this.splitVertical.Size = new System.Drawing.Size(713, 299);
+			this.splitVertical.Size = new System.Drawing.Size(713, 304);
 			this.splitVertical.SplitterDistance = 529;
 			this.splitVertical.TabIndex = 0;
 			// 
@@ -204,6 +204,9 @@ namespace OctoTip.Manager
 			// 
 			this.dataGridViewRobotJobsQueue.AllowUserToAddRows = false;
 			this.dataGridViewRobotJobsQueue.AllowUserToDeleteRows = false;
+			this.dataGridViewRobotJobsQueue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.dataGridViewRobotJobsQueue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridViewRobotJobsQueue.Location = new System.Drawing.Point(12, 28);
 			this.dataGridViewRobotJobsQueue.Name = "dataGridViewRobotJobsQueue";
@@ -215,6 +218,8 @@ namespace OctoTip.Manager
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.RunningJobStatus);
 			this.groupBox1.Controls.Add(this.RunningJobName);
 			this.groupBox1.Controls.Add(this.RemoveRuningJob);
@@ -225,6 +230,20 @@ namespace OctoTip.Manager
 			this.groupBox1.TabIndex = 6;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Runing Job";
+			// 
+			// RunningJobStatus
+			// 
+			this.RunningJobStatus.Location = new System.Drawing.Point(6, 39);
+			this.RunningJobStatus.Name = "RunningJobStatus";
+			this.RunningJobStatus.Size = new System.Drawing.Size(100, 23);
+			this.RunningJobStatus.TabIndex = 2;
+			// 
+			// RunningJobName
+			// 
+			this.RunningJobName.Location = new System.Drawing.Point(6, 16);
+			this.RunningJobName.Name = "RunningJobName";
+			this.RunningJobName.Size = new System.Drawing.Size(100, 23);
+			this.RunningJobName.TabIndex = 2;
 			// 
 			// RemoveRuningJob
 			// 
@@ -250,6 +269,9 @@ namespace OctoTip.Manager
 			// 
 			// textBoxRuningJobStatus
 			// 
+			this.textBoxRuningJobStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxRuningJobStatus.Location = new System.Drawing.Point(3, 218);
 			this.textBoxRuningJobStatus.Multiline = true;
 			this.textBoxRuningJobStatus.Name = "textBoxRuningJobStatus";
@@ -258,6 +280,7 @@ namespace OctoTip.Manager
 			// 
 			// buttonStart
 			// 
+			this.buttonStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStart.Image = ((System.Drawing.Image)(resources.GetObject("buttonStart.Image")));
 			this.buttonStart.Location = new System.Drawing.Point(6, 68);
@@ -270,6 +293,7 @@ namespace OctoTip.Manager
 			// 
 			// buttonPause
 			// 
+			this.buttonPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonPause.Enabled = false;
 			this.buttonPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonPause.Image = ((System.Drawing.Image)(resources.GetObject("buttonPause.Image")));
@@ -283,6 +307,7 @@ namespace OctoTip.Manager
 			// 
 			// buttonStop
 			// 
+			this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonStop.Enabled = false;
 			this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
@@ -296,6 +321,7 @@ namespace OctoTip.Manager
 			// 
 			// checkBoxServerState
 			// 
+			this.checkBoxServerState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkBoxServerState.Appearance = System.Windows.Forms.Appearance.Button;
 			this.checkBoxServerState.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.checkBoxServerState.Location = new System.Drawing.Point(6, 28);
@@ -309,6 +335,7 @@ namespace OctoTip.Manager
 			// 
 			// ClearLogButton
 			// 
+			this.ClearLogButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.ClearLogButton.Location = new System.Drawing.Point(613, 4);
 			this.ClearLogButton.Name = "ClearLogButton";
 			this.ClearLogButton.Size = new System.Drawing.Size(97, 23);
@@ -319,11 +346,14 @@ namespace OctoTip.Manager
 			// 
 			// txtLog
 			// 
-			this.txtLog.Location = new System.Drawing.Point(3, 3);
+			this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtLog.Location = new System.Drawing.Point(3, 4);
 			this.txtLog.Multiline = true;
 			this.txtLog.Name = "txtLog";
 			this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtLog.Size = new System.Drawing.Size(604, 175);
+			this.txtLog.Size = new System.Drawing.Size(604, 169);
 			this.txtLog.TabIndex = 0;
 			// 
 			// toolStrip1
@@ -356,20 +386,6 @@ namespace OctoTip.Manager
 			this.toolStripButtonRemoveJob.Size = new System.Drawing.Size(23, 22);
 			this.toolStripButtonRemoveJob.Text = "Remove Job";
 			this.toolStripButtonRemoveJob.Click += new System.EventHandler(this.ToolStripButtonRemoveJobClick);
-			// 
-			// RunningJobName
-			// 
-			this.RunningJobName.Location = new System.Drawing.Point(6, 16);
-			this.RunningJobName.Name = "RunningJobName";
-			this.RunningJobName.Size = new System.Drawing.Size(100, 23);
-			this.RunningJobName.TabIndex = 2;
-			// 
-			// RunningJobStatus
-			// 
-			this.RunningJobStatus.Location = new System.Drawing.Point(6, 39);
-			this.RunningJobStatus.Name = "RunningJobStatus";
-			this.RunningJobStatus.Size = new System.Drawing.Size(100, 23);
-			this.RunningJobStatus.TabIndex = 2;
 			// 
 			// MainForm
 			// 

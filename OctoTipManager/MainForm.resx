@@ -127,8 +127,8 @@
   <data name="buttonStart.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALAAAA
-        CwAB5DetvwAABp9JREFUSEuVlQ1UVGUax9+ZgQVWBFJsEBhQS0sDMQ0Us0whCk10SVA0Ez/ASXZRPiIi
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAK+wAA
+        CvsBy58dkAAABp9JREFUSEuVlQ1UVGUax9+ZgQVWBFJsEBhQS0sDMQ0Us0whCk10SVA0Ez/ASXZRPiIi
         tBRFRUShSGwHV9tdCFPBD/yoTNT20DFN6pgCfiE4zAf3zsyde+eTYf77Dmqum3lO95z/uXdm7jy/93ne
         //s8IpHneNJ/wUGIewgRDZhBiP06cbqPJcTBiiRitczDd/yrAaHRsd4+YqmzT9TH9uhamVv7Gx3m9mbw
         ddzdAL9zuQD98hhLRN5vEPGTnxDis0rsMaIhPiLhl3NvZiutWds5VNUbsbfRiD1HjSirMWLxh3rEpd3s
@@ -162,8 +162,8 @@
   <data name="buttonPause.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALAAAA
-        CwAB5DetvwAABbxJREFUSEu1lnlQlGUcx99dpuO/bLKZsmOmk44/uhxbS0RCREtyyBlLmZoxUwozTVNA
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAK+wAA
+        CvsBy58dkAAABbxJREFUSEu1lnlQlGUcx99dpuO/bLKZsmOmk44/uhxbS0RCREtyyBlLmZoxUwozTVNA
         MB0vxEISU7voosPpYDKaKCxuZQ2IS1wWWGGXPdhlYVmOBd7d5dPzbIBW1tQf7cxv9n2f5/d8v8/vfjXJ
         W5KVf/jpxN48rVY7Oyws7F7gOqmr0WhswWCwfnx8vEq8lgrR/y2GJLiIRKQkp7yduS/TXvh9IWeazuBy
         uVBVNSTyWa7JPakjdQVGxMWwLgaetGP7jnq9Xo/P56PV5ed4s0rOSZW0IpVtQt6sUCloUjE5/SEdqSvP
