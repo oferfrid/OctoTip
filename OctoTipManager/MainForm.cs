@@ -331,25 +331,27 @@ namespace OctoTip.Manager
 
 		void FormRobotWorker_StatusChanged(object sender, RobotWorkerStatusChangeEventArgs e)
 		{
-			if(e.RobotWorkerStatus==RobotWorker.RobotWorkerStatus.RunningJob)
+			if(e.RobotWorkerStatus==RobotWorker.RobotWorkerStatus.RunningJob && e.CurrentJob!=null)
 			{
-				if (e.CurrentJob == null)
-				{
-					myLogger.Add(string.Format("{0} ,{1}" , e.RobotWorkerStatus,e.Messege));
-					RuningJob = null;
-					UpdateRunningJob();
-				}
-				else
-				{
-					myLogger.Add(string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
-					RuningJob = e.CurrentJob;
-					UpdateRunningJob();
-				}
+				myLogger.Add(string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
 			}
 			else
 			{
 				myLogger.Add(string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Messege));
 			}
+			
+			
+			if (e.CurrentJob == null)
+				{
+					RuningJob = null;
+					UpdateRunningJob();
+				}
+				else
+				{
+					
+					RuningJob = e.CurrentJob;
+					UpdateRunningJob();
+				}
 			
 			bool buttonPauseEnabled ;
 			bool buttonStartEnabled ;
