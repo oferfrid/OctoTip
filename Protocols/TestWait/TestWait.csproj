@@ -47,6 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TWProtocol.cs" />
     <Compile Include="TWProtocolParameters.cs" />
+    <Compile Include="TWRoboTestState.cs" />
     <Compile Include="TWWait1State.cs" />
     <Compile Include="TWWait2State.cs" />
   </ItemGroup>

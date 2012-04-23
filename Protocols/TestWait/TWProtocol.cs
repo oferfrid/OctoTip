@@ -31,7 +31,14 @@ namespace TestWait
 			while(((TimeSpan)(DateTime.Now - Start)).TotalMinutes <  ProtocolParameters.TotalTime && !this.ShouldStop)
 			{
 				this.ChangeState(new TWWait1State());
+				if(this.ProtocolParameters.UseRobot)
+				{
+				this.ChangeState(new TWRoboTestState());
+				}
+				else
+				{
 				this.ChangeState(new TWWait2State());
+				}
 				
 			}
 		}
@@ -47,8 +54,10 @@ namespace TestWait
 		#region static	
 		public static new List<Type> ProtocolStates()
 		{
-			return new List<Type>{ typeof(TWWait1State)
-					,typeof(TWWait2State)};
+			return new List<Type>{ 
+				typeof(TWWait1State),
+				typeof(TWWait2State),
+				typeof(TWRoboTestState)	};
 		}
 		#endregion
 	}

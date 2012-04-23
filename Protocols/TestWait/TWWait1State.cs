@@ -37,7 +37,7 @@ namespace TestWait
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(TWWait1State),typeof(TWWait2State)};
+			return new List<Type>{typeof(TWWait1State),typeof(TWWait2State),typeof(TWRoboTestState)};
 		}
 		#endregion
 	}
