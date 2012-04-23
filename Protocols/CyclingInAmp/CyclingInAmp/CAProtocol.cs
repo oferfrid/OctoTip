@@ -104,7 +104,7 @@ namespace CyclingInAmp
 					}
 				}while(OD<ProtocolParameters.AbsolutOD2Dilut);
 				
-				ReportProtocolState(CycleInd,string.Format(" OD = {0:0.000} > {1:0.000} in plate {1} to well ind={2} starting Dilution ",OD,ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
+				ReportProtocolState(CycleInd,string.Format(" OD = {0:0.000} > {1:0.000} in plate {2} to well ind={3} starting Dilution ",OD,ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
 				ChangeState(new CADilut(LiconicInd,WellInd+1));
 				ReportProtocolState(CycleInd,string.Format("Dilution Ended Witing to ON ({0:0.0} hours)",ProtocolParameters.Time2ON));
 				ChangeState(new CAGrowToON(ProtocolParameters.Time2ON));
