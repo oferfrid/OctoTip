@@ -24,7 +24,7 @@ namespace OctoTip.OctoTipExperimentControl
 		private static void Main(string[] args)
 		{
 			//Application.SetUnhandledExceptionMode(UnhandledExceptionMode.Automatic);
-			Application.ThreadException += new ThreadExceptionEventHandler(new ThreadExceptionHandler().ApplicationThreadException);
+			//Application.ThreadException += new ThreadExceptionEventHandler(new ThreadExceptionHandler().ApplicationThreadException);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
