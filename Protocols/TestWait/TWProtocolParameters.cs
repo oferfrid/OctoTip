@@ -21,5 +21,7 @@ namespace TestWait
 		public double TotalTime;
 		[ProtocolParameterAtribute("Time to wait (min)","1",true)]
 		public double Time2Wait;
+		[ProtocolParameterAtribute("UseRobot?","true",true)]
+		public bool UseRobot;
 	}
 }

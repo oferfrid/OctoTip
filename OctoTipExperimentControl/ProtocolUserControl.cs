@@ -178,7 +178,7 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.DarkRed;
 					// notify 
-					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType,this.labelProtocolName),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType,this.labelProtocolName,e.Messege));
+					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
 					break;
 				case (Protocol.Statuses.FatalError):
 					buttonStopEnabled  = false;
@@ -186,14 +186,14 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Black;
 					// notify 
-					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType,this.labelProtocolName),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType,this.labelProtocolName,e.Messege));
+					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
 					break;
 				case (Protocol.Statuses.RuntimeError):
 					buttonStopEnabled  = true;
 					buttonStartEnabled =false;
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Yellow;
-					((MainForm)this.ParentForm).Notify(string.Format("Run time error {0} ({1})",this.labelProtocolType,this.labelProtocolName),string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType,this.labelProtocolName,e.Messege));
+					((MainForm)this.ParentForm).Notify(string.Format("Run time error {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
 					break;
 				default:
 					buttonStopEnabled  = true;

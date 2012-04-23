@@ -241,7 +241,9 @@ namespace OctoTip.Manager
 					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Running;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runing From Worker"));
 					break;
-					
+					case OctoTip.Lib.RobotJob.Status.Finished:
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.FinishRunningJob,e.Job,"Job Runing From Worker"));
+					break;
 			}
 			
 		}
