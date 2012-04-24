@@ -32,7 +32,7 @@ namespace CyclingInAmp
 
 		public void Restart()
 		{
-			this.DoWork();
+			this.Start();
 		}
 		
 		protected override RobotJob BeforeRobotRun()

@@ -1,5 +1,5 @@
-2AFD79C0
-20120405_155600 Tecan           
+59996EA9
+20120424_124103 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -142,10 +142,10 @@ Transfer_Rack("4","4",1,1,0,0,1,"17","384WellPlate","Narrow","","","MP 2Pos elev
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
 Comment("Take 50ul to 384 Plate");
 Variable(WELL_OFFSET,"MeasureWellInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Mix(1,"Water free dispense LD","180",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"03021",3,0,0);
-Aspirate(1,"Water free dispense","50",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"03021",0,0);
+Mix(1,"Water free dispense no LD","180",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"03021",3,0,0);
+Aspirate(1,"Water free dispense no LD","50",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"03021",0,0);
 Variable(WELL_OFFSET,"Empty384WellInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Dispense(1,"Water free dispense","50",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18101000000000000000000000000000000000000000000000000000000",0,0);
+Dispense(1,"Water free dispense no LD","50",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18101000000000000000000000000000000000000000000000000000000",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 DropDITI(1,1,6,10,70,0);
 Comment("Return plate to Liconic");
