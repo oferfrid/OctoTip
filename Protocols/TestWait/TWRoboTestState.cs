@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace TestWait
 {
@@ -18,7 +19,7 @@ namespace TestWait
 	/// Description of TWRoboTestState.
 	/// </summary>
 	[State("RobotTest","Not mutch")]
-	public class TWRoboTestState:RunRobotState
+	public class TWRoboTestState:RunRobotState,IRestartableState
 	{
 		
 		
@@ -44,5 +45,10 @@ namespace TestWait
 			return new List<Type>{typeof(TWWait1State)};
 		}
 		#endregion
+		
+		public void Restart()
+		{
+			this.DoWork();
+		}
 	}
 }

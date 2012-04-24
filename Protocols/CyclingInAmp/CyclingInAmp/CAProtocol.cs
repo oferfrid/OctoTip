@@ -36,34 +36,7 @@ namespace CyclingInAmp
 		}
 		
 		
-		private	int GetEmpty384WellInd()
-		{
-			int index ;
-			FileInfo Empty384WellIndFile =  new FileInfo(ProtocolParameters.Empty384WellIndFilePath);
-			if (Empty384WellIndFile.Exists)
-			{
-				using (StreamReader sr = Empty384WellIndFile.OpenText())
-				{
-					
-					index = Convert.ToInt32(sr.ReadLine());
-					
-				}
-				Empty384WellIndFile.Delete();
-			}
-			else
-			{
-				index =1;
-			}
-			
-			using (StreamWriter sw = Empty384WellIndFile.CreateText())
-			{
-				sw.WriteLine(index+1);
-				sw.Flush();
-			}
-			return index;
-			
-			
-		}
+		
 		
 		protected override void DoWork( )
 		{
@@ -94,7 +67,7 @@ namespace CyclingInAmp
 				ReportProtocolState(CycleInd,string.Format("Waiting for OD > {0:0.000} in plate {1} to well ind={2}",ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
 				do
 				{
-					CAGetOD _CAGetOD = new CAGetOD(GetEmpty384WellInd(),LiconicInd,WellInd,ProtocolParameters.OutputFilePath);
+					CAGetOD _CAGetOD = new CAGetOD(ProtocolParameters.Empty384WellIndFilePath,LiconicInd,WellInd,ProtocolParameters.OutputFilePath);
 					ChangeState(_CAGetOD);
 					OD = _CAGetOD.GetReadResult();
 					ReportProtocolState(CycleInd,string.Format("OD={0:0.000}",OD));

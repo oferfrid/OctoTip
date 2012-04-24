@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace CyclingInAmp
 {
@@ -18,7 +19,7 @@ namespace CyclingInAmp
 	/// Description of CAAddbLac.
 	/// </summary>
 	[State("Add b-Lac","Add b-Lac to stop Killing")]
-	public class CAAddbLac:RunRobotState
+	public class CAAddbLac:RunRobotState,IRestartableState
 	{
 		int LicInd;
 		int Add2WellInd;
@@ -29,6 +30,11 @@ namespace CyclingInAmp
 			this.Add2WellInd = Add2WellInd;
 		}
 
+		public void Restart()
+		{
+			this.DoWork();
+		}
+		
 		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
@@ -57,6 +63,8 @@ namespace CyclingInAmp
 			return new List<Type>{typeof(CAGetOD)};
 		}
 		#endregion
+		
+		
 		
 		
 	}

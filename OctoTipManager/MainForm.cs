@@ -525,15 +525,7 @@ namespace OctoTip.Manager
 			throw new Exception("E");
 		}
 		
-		void ReDoRuningJobClick(object sender, EventArgs e)
-		{
-
-		}
 		
-		void RemoveRuningJobClick(object sender, EventArgs e)
-		{
-			
-		}
 	}
 	
 	

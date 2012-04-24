@@ -26,7 +26,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		public RunRobotState():base()
 		{
-		
+			
 		}
 		
 		
@@ -50,11 +50,11 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			
 			Guid JobID ;
 			
-			try 
+			try
 			{
-				 JobID = RJQClient.AddRobotJob(RunRobotJob);
+				JobID = RJQClient.AddRobotJob(RunRobotJob);
 				
-			} 
+			}
 			catch (System.ServiceModel.EndpointNotFoundException e)
 			{
 				throw new Exception("No Listener on " + RJQClient.Endpoint.ListenUri ,e);
@@ -137,7 +137,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			RobotJob.Status JobStatus;
 			try
 			{
-			 JobStatus = RJQClient.GetJobStatus(RunRobotJob.UniqueID);
+				JobStatus = RJQClient.GetJobStatus(RunRobotJob.UniqueID);
 			}
 			catch(System.ServiceModel.EndpointNotFoundException ex)
 			{

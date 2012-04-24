@@ -114,13 +114,30 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 				}
 				if(!this.ShouldStop)
 				{
-					SetCurrentStatus( Statuses.Started,"Started");				
+					
+					SetCurrentStatus( Statuses.Started,"Started");
 					CurrentState = NewState;
 					CurrentState.StateDisplayedDataChange += OnProtocolStateDisplayedDataChange;
 					CurrentState.StateStatusChange +=	OnProtocolStateStatusChange;
 					Log(CurrentState.GetType().ToString() + " Started");
 					CurrentState.Start();
-					Log(CurrentState.GetType().ToString() + " Ended");
+					
+					while (!this.ShouldStop && CurrentState is IRestartableState && CurrentState.CurrentStatus == State.Statuses.FatalError)
+					{//test if restartblr after failier and maintain a pause like state if failed
+						
+						SetCurrentStatus( Statuses.Paused,"Paused after FatalError");
+						while (ShouldPause && !ShouldStop)
+						{
+							Thread.Sleep(StateSamplelingRate);
+						}
+						
+						if (!ShouldStop)
+						{
+							IRestartableState RestartableCurrentState = CurrentState as IRestartableState;
+							RestartableCurrentState.Restart();
+						}
+					}
+					
 				}
 				
 			}
@@ -190,8 +207,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 					break;
 					case State.Statuses.FatalError:
 					this.SetCurrentStatus(Statuses.FatalError,"FatalError From State:" + e.Messege );
-					ShouldStop = true;
-					ShouldPause  = false;
+					ShouldPause  = true;
 					break;
 					
 					case State.Statuses.RuntimeError:

@@ -8,10 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
-
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace CyclingInAmp
 {
@@ -19,7 +19,7 @@ namespace CyclingInAmp
 	/// Description of CADilut.
 	/// </summary>
 	[State("Dilut","Dilut in exponential phase")]
-	public class CADilut:RunRobotState
+	public class CADilut:RunRobotState,IRestartableState
 	{
 	
 		int LicInd;
@@ -31,6 +31,11 @@ namespace CyclingInAmp
 			this.Dilut2WellInd = Dilut2WellInd;
 		}
 
+		public void Restart()
+		{
+			this.DoWork();
+		}
+		
 		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);

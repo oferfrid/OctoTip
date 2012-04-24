@@ -13,6 +13,7 @@ using System.Xml.XPath;
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace CyclingInAmp
 {
@@ -20,28 +21,27 @@ namespace CyclingInAmp
 	/// Description of CAGetOD.
 	/// </summary>
 	[State("Get OD","Reading OD in Infinite")]
-	public class CAGetOD:ReadState
+	public class CAGetOD:ReadState,IRestartableState
 	{
 		int Empty384WellInd;
 		int Lic6PlateInd;
 		int MeasureWellInd;
+		string Empty384WellIndFilePath;
 		
 		double ReadResults ;
 		
-		public CAGetOD(int Empty384WellInd,int Lic6PlateInd,int MeasureWellInd,string OutputFilePath):base()
+		public CAGetOD(string Empty384WellIndFilePath,int Lic6PlateInd,int MeasureWellInd,string OutputFilePath):base()
 		{
-			this.Empty384WellInd = Empty384WellInd;
+			this.Empty384WellIndFilePath = Empty384WellIndFilePath;
 			this.Lic6PlateInd = Lic6PlateInd;
 			this.MeasureWellInd=MeasureWellInd;
 		}
 		
-		
-			#region static
-		public static new List<Type> NextStates()
+		public void Restart()
 		{
-			return new List<Type>{typeof(CADilut),typeof(CAGrowToOD)};
+			this.DoWork();
 		}
-		#endregion
+		
 		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
@@ -51,6 +51,9 @@ namespace CyclingInAmp
 			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("MeasureWellInd",RobotJobParameter.ParameterType.Number,MeasureWellInd));
+			
+			Empty384WellInd =GetEmpty384WellInd();
+			
 			RJP.Add(new RobotJobParameter("Empty384WellInd",RobotJobParameter.ParameterType.Number,Empty384WellInd));
 			
 			RobotJob RJ = new RobotJob(
@@ -122,9 +125,44 @@ namespace CyclingInAmp
 			return ind;
 		}
 		
-	
+	private	int GetEmpty384WellInd()
+		{
+			int index ;
+			FileInfo Empty384WellIndFile =  new FileInfo(Empty384WellIndFilePath);
+			if (Empty384WellIndFile.Exists)
+			{
+				using (StreamReader sr = Empty384WellIndFile.OpenText())
+				{
+					
+					index = Convert.ToInt32(sr.ReadLine());
+					
+				}
+				Empty384WellIndFile.Delete();
+			}
+			else
+			{
+				index =1;
+			}
+			
+			using (StreamWriter sw = Empty384WellIndFile.CreateText())
+			{
+				sw.WriteLine(index+1);
+				sw.Flush();
+			}
+			return index;
+			
+			
+		}
 		
+			#region static
+		public static new List<Type> NextStates()
+		{
+			return new List<Type>{typeof(CADilut),typeof(CAGrowToOD)};
+		}
+		#endregion
 		
 
+		
+		
 	}
 }

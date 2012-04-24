@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace CyclingInAmp
 {
@@ -18,7 +19,7 @@ namespace CyclingInAmp
 	/// Description of CADilutb2AmpInNewPlate.
 	/// </summary>
 	[State("Dilut 2 new AMP","Dilut ON to AMP in palte ")]
-	public class CADilutb2AmpInNewPlate:RunRobotState
+	public class CADilutb2AmpInNewPlate:RunRobotState,IRestartableState
 	{
 		
 		
@@ -33,6 +34,11 @@ namespace CyclingInAmp
 			this.FreezeIndex =FreezeIndex;
 		}
 
+		public void Restart()
+		{
+			this.DoWork();
+		}
+		
 		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);

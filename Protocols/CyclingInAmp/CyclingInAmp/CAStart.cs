@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.ExperimentsCore.Interfaces;
 
 namespace CyclingInAmp
 {
@@ -18,7 +19,7 @@ namespace CyclingInAmp
 	/// Description of CAStartState.
 	/// </summary>
 	[State("Start","Dilution of bacteria to AMP at the first time")]
-	public class CAStart:RunRobotState
+	public class CAStart:RunRobotState,IRestartableState
 	{
 		int LicInd;
 		
@@ -27,6 +28,12 @@ namespace CyclingInAmp
 			this.LicInd = LicInd;
 		}
 
+		
+		public void Restart()
+		{
+			this.DoWork();
+		}
+		
 		protected override RobotJob BeforeRobotRun()
 		{
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
@@ -57,6 +64,8 @@ namespace CyclingInAmp
 			return new List<Type>{typeof(CAKill)};
 		}
 		#endregion
+		
+		
 		
 		
 	}

@@ -58,6 +58,7 @@
     <Compile Include="ExperimentsCore\Base\WaitState.cs" />
     <Compile Include="ExperimentsCore\Interfaces\IProtocol.cs" />
     <Compile Include="ExperimentsCore\Interfaces\IProtocolParameters.cs" />
+    <Compile Include="ExperimentsCore\Interfaces\IRestartableState.cs" />
     <Compile Include="ExperimentsCore\Interfaces\IState.cs" />
     <Compile Include="ExperimentsCore\ProtocolProvider.cs" />
     <Compile Include="LogString.cs" />
