@@ -48,7 +48,7 @@ namespace TestWait
 		
 		public void Restart()
 		{
-			this.DoWork();
+			this.Start();
 		}
 	}
 }

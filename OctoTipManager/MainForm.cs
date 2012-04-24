@@ -204,9 +204,23 @@ namespace OctoTip.Manager
 				//FormRobotJobsQueue.Remove((RobotJob)RJ);
 				//UpdateRobotJobsQueue();
 			}
-
-			
 		}
+		
+		
+		void ToolStripButtonAddJobClick(object sender, EventArgs e)
+		{
+			
+			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
+			{
+				RobotJob RJ = (RobotJob)Row.DataBoundItem;
+				RJ.JobStatus = RobotJob.Status.Queued;
+				//FormRobotJobsQueueHestoryDictionary[RJ.UniqueID] = RJ.JobStatus;
+				//FormRobotJobsQueue.Remove((RobotJob)RJ);
+				//UpdateRobotJobsQueue();
+			}
+		}
+		
+		
 		void ClearLogButtonClick(object sender, EventArgs e)
 		{
 			myLogger.Clear();
@@ -524,6 +538,7 @@ namespace OctoTip.Manager
 		{
 			throw new Exception("E");
 		}
+		
 		
 		
 	}

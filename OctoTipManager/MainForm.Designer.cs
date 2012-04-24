@@ -63,6 +63,7 @@ namespace OctoTip.Manager
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonRefreshQueue = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonRemoveJob = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButtonAddJob = new System.Windows.Forms.ToolStripButton();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitHorizontal)).BeginInit();
 			this.splitHorizontal.Panel1.SuspendLayout();
@@ -334,7 +335,8 @@ namespace OctoTip.Manager
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStripButtonRefreshQueue,
-									this.toolStripButtonRemoveJob});
+									this.toolStripButtonRemoveJob,
+									this.toolStripButtonAddJob});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(713, 25);
@@ -360,6 +362,16 @@ namespace OctoTip.Manager
 			this.toolStripButtonRemoveJob.Size = new System.Drawing.Size(23, 22);
 			this.toolStripButtonRemoveJob.Text = "Remove Job";
 			this.toolStripButtonRemoveJob.Click += new System.EventHandler(this.ToolStripButtonRemoveJobClick);
+			// 
+			// toolStripButtonAddJob
+			// 
+			this.toolStripButtonAddJob.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButtonAddJob.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAddJob.Image")));
+			this.toolStripButtonAddJob.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonAddJob.Name = "toolStripButtonAddJob";
+			this.toolStripButtonAddJob.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButtonAddJob.Text = "Add Job";
+			this.toolStripButtonAddJob.Click += new System.EventHandler(this.ToolStripButtonAddJobClick);
 			// 
 			// MainForm
 			// 
@@ -395,6 +407,7 @@ namespace OctoTip.Manager
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripButton toolStripButtonAddJob;
 		private System.Windows.Forms.Label RunningJobName;
 		private System.Windows.Forms.Label RunningJobStatus;
 		private System.Windows.Forms.GroupBox groupBox1;

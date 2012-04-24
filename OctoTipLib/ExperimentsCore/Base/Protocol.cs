@@ -133,6 +133,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 						
 						if (!ShouldStop)
 						{
+							SetCurrentStatus( Statuses.Started,"resumed after FatalError");
 							IRestartableState RestartableCurrentState = CurrentState as IRestartableState;
 							RestartableCurrentState.Restart();
 						}

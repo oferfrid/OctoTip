@@ -1,5 +1,5 @@
-6B58928F
-20120420_095855 Tecan           
+A304D61C
+20120424_103935 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -135,6 +135,7 @@ Wash(255,1,1,1,0,"0.1",500,"0.1",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"0.1",500,"0.1",500,10,70,30,0,0,"1",1000,0);
 ImportVariable(loop,"D:\OctoTip\Protocols\TestWait\scripts\Testdata.csv",0,"1",0,1,0,1,1);
 BeginLoop("loop","rep");
-Transfer_Rack("4","11",0,0,0,0,0,"","384WellPlate","Narrow","","","MP 2Pos elevated TorreyPines","","MP 3Pos Flat","2","(Not defined)","3");
-Transfer_Rack("11","4",0,0,0,0,0,"","384WellPlate","Narrow","","","MP 3Pos Flat","","MP 2Pos elevated TorreyPines","3","(Not defined)","2");
+Transfer_Rack("4","11",0,0,1,0,0,"","384WellPlate","Narrow","","","MP 2Pos elevated TorreyPines","","MP 3Pos Flat","2","(Not defined)","3");
+Transfer_Rack("11","4",0,0,1,0,0,"","384WellPlate","Narrow","","","MP 3Pos Flat","","MP 2Pos elevated TorreyPines","3","(Not defined)","2");
 EndLoop();
+UserPrompt("trh",0,-1);

@@ -128,12 +128,12 @@ namespace OctoTip.Manager
 							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job terminated Successfuly "));
 							break;
 						case OctoTip.Lib.RobotJob.Status.TerminatedByUser:
-							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,RJ,"Job Terminated By the User "));
-							_ShouldStop = true;
+							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,RJ,"Job Terminated By the User "));
+							_ShouldPause = true;
 							break;
 						case OctoTip.Lib.RobotJob.Status.Failed:
-							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,RJ,"Job Failed"));
-							_ShouldStop = true;
+							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,RJ,"Job Failed"));
+							_ShouldPause = true;
 							break;
 					}
 				}

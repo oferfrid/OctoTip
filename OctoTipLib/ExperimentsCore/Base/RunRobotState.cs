@@ -116,7 +116,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			{
 				case (RobotJob.Status.Failed):
 					this.SetCurrentStatus(State.Statuses.FatalError, "Failed");
-					this.RequestStop("Robot Job Failed");
+					//this.RequestStop("Robot Job Failed");
 					break;
 				case (RobotJob.Status.TerminatedByUser):
 					this.SetCurrentStatus(State.Statuses.FatalError, "Terminated by user");
