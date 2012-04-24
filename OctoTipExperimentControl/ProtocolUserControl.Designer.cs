@@ -225,7 +225,6 @@ namespace OctoTip.OctoTipExperimentControl
 			// ProtocolUserControl
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.Color.Silver;
 			this.Controls.Add(this.labelProtocolType);
@@ -239,7 +238,7 @@ namespace OctoTip.OctoTipExperimentControl
 			this.Controls.Add(this.buttonStop);
 			this.Controls.Add(this.textBoxStateData);
 			this.Controls.Add(this.textBoxProtocolData);
-			this.MinimumSize = new System.Drawing.Size(553, 313);
+			this.MinimumSize = new System.Drawing.Size(553, 0);
 			this.Name = "ProtocolUserControl";
 			this.Size = new System.Drawing.Size(553, 313);
 			this.Load += new System.EventHandler(this.ProtocolUserControlLoad);
