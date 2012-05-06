@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CyclingInAmp")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Cyclic AMP Enviorment experiment")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NQB-Lab")]
 [assembly: AssemblyProduct("CyclingInAmp")]
-[assembly: AssemblyCopyright("Copyright 2012")]
+[assembly: AssemblyCopyright("Copyright 2012 Ofer Fridman")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
