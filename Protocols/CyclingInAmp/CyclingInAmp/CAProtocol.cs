@@ -41,9 +41,8 @@ namespace CyclingInAmp
 		protected override void DoWork( )
 		{
 			
-			int CycleInd = 0;
-			int PlateInd = 1;
-			ReportProtocolState(CycleInd,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
+
+			ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
 			if(ProtocolParameters.RunStart)
 			{
 			this.ChangeState(new CAStart(ProtocolParameters.LicInds[0]));
@@ -51,47 +50,47 @@ namespace CyclingInAmp
 			
 			while(!this.ShouldStop)
 			{
-				CycleInd++;
+				ProtocolParameters.CycleInd++;
 				
-				ReportProtocolState(CycleInd,string.Format("End of dilution Starting the Kill state ({0:0.0} hours)",ProtocolParameters.KillTime));
+				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("End of dilution Starting the Kill state ({0:0.0} hours)",ProtocolParameters.KillTime));
 				ChangeState(new CAKill(ProtocolParameters.KillTime));
 				
 				
-				int WellInd = ((CycleInd-1)%3)*2+1;
-				int LiconicInd =ProtocolParameters.LicInds[PlateInd - 1];
-				ReportProtocolState(CycleInd,string.Format("End of Kill state and start of b-Lac add state on plate {0} to well ind={1} ",LiconicInd,WellInd ));
+				int WellInd = ((ProtocolParameters.CycleInd-1)%3)*2+1;
+				int LiconicInd =ProtocolParameters.LicInds[ProtocolParameters.PlateInd - 1];
+				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("End of Kill state and start of b-Lac add state on plate {0} to well ind={1} ",LiconicInd,WellInd ));
 				ChangeState(new CAAddbLac(LiconicInd,WellInd));
-				ReportProtocolState(CycleInd,"End b-Lac addition");
+				ReportProtocolState(ProtocolParameters.CycleInd,"End b-Lac addition");
 				// whait for OD
 				double OD;
-				ReportProtocolState(CycleInd,string.Format("Waiting for OD > {0:0.000} in plate {1} to well ind={2}",ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
+				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Waiting for OD > {0:0.000} in plate {1} to well ind={2}",ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
 				do
 				{
 					CAGetOD _CAGetOD = new CAGetOD(ProtocolParameters.Empty384WellIndFilePath,LiconicInd,WellInd,ProtocolParameters.OutputFilePath);
 					ChangeState(_CAGetOD);
 					OD = _CAGetOD.GetReadResult();
-					ReportProtocolState(CycleInd,string.Format("OD={0:0.000}",OD));
+					ReportProtocolState(ProtocolParameters.CycleInd,string.Format("OD={0:0.000}",OD));
 					if(OD<ProtocolParameters.AbsolutOD2Dilut)
 					{
 					ChangeState(new CAGrowToOD(ProtocolParameters.ReadFrequency/60));
 					}
-				}while(OD<ProtocolParameters.AbsolutOD2Dilut);
+				}while(OD<ProtocolParameters.AbsolutOD2Dilut && !this.ShouldStop);
 				
-				ReportProtocolState(CycleInd,string.Format(" OD = {0:0.000} > {1:0.000} in plate {2} to well ind={3} starting Dilution ",OD,ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
+				ReportProtocolState(ProtocolParameters.CycleInd,string.Format(" OD = {0:0.000} > {1:0.000} in plate {2} to well ind={3} starting Dilution ",OD,ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
 				ChangeState(new CADilut(LiconicInd,WellInd+1));
-				ReportProtocolState(CycleInd,string.Format("Dilution Ended Witing to ON ({0:0.0} hours)",ProtocolParameters.Time2ON));
+				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Dilution Ended Witing to ON ({0:0.0} hours)",ProtocolParameters.Time2ON));
 				ChangeState(new CAGrowToON(ProtocolParameters.Time2ON));
-				if ((CycleInd-1)%3==2 )
+				if ((ProtocolParameters.CycleInd-1)%3==2 && !this.ShouldStop)
 				{//replace plate
-					int NewLiconicInd =ProtocolParameters.LicInds[PlateInd++];
-					ReportProtocolState(CycleInd,string.Format("Incubation Ended. diluting to AMP from plate {0} to new Plate {1}",LiconicInd,NewLiconicInd));	
-					ChangeState(new CADilutb2AmpInNewPlate(LiconicInd,NewLiconicInd,CycleInd));
+					int NewLiconicInd =ProtocolParameters.LicInds[ProtocolParameters.PlateInd++];
+					ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Incubation Ended. diluting to AMP from plate {0} to new Plate {1}, freezing ON at position {2}",LiconicInd,NewLiconicInd,ProtocolParameters.FreezeInd));	
+					ChangeState(new CADilutb2AmpInNewPlate(LiconicInd,NewLiconicInd,ProtocolParameters.FreezeInd++));
 				}
 				else
 				{
-					ReportProtocolState(CycleInd,string.Format("Incubation Ended. diluting to AMP plate {0}",LiconicInd));	
-					int Dilut2WellInd = ((CycleInd-1)%3)*2+3;
-					ChangeState(new CADilutb2Amp(LiconicInd,Dilut2WellInd,CycleInd));
+					ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Incubation Ended. diluting to AMP plate {0}",LiconicInd));	
+					int Dilut2WellInd = ((ProtocolParameters.CycleInd-1)%3)*2+3;
+					ChangeState(new CADilutb2Amp(LiconicInd,Dilut2WellInd,ProtocolParameters.CycleInd));
 				}
 				
 			}

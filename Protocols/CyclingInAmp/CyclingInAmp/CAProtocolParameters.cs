@@ -36,6 +36,11 @@ namespace CyclingInAmp
 		public string Empty384WellIndFilePath;
 		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\CyclingInAmp\Output\")]
 		public string OutputFilePath;
-		
+		[ProtocolParameterAtribute("Cycle Index","0",true)]
+		public int CycleInd;
+		[ProtocolParameterAtribute("Plate Ind","1",true)]
+		public int PlateInd;
+		[ProtocolParameterAtribute("Freezing Index","1",true)]
+		public int FreezeInd;
 	}
 }
