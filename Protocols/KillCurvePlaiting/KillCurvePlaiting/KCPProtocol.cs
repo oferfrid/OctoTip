@@ -20,9 +20,11 @@ namespace KillCurvePlaiting
 	[Protocol("Cyclic AMP","Ofer Fridman","Cyclic Evolution In AMP with b-lac")]
 	public class KCPProtocol:Protocol
 	{
+		DateTime StartTime;
+		
 		public new KCPProtocolParameters ProtocolParameters
 		{
-			get{return (CAProtocolParameters) base.ProtocolParameters;}
+			get{return (KCPProtocolParameters) base.ProtocolParameters;}
 			set{base.ProtocolParameters = value;}
 		}
 		
@@ -36,72 +38,59 @@ namespace KillCurvePlaiting
 		}
 		
 		
-		
-		
 		protected override void DoWork( )
 		{
-			
-
-			ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
 			if(ProtocolParameters.RunStart)
 			{
-				this.ChangeState(new CAStart(ProtocolParameters.LicInds[0]));
+				
+				this.ChangeState(new KCPStartKillState(ProtocolParameters.Plate6Ind,ProtocolParameters.NumberOfSamples));
 			}
+			StartTime = DateTime.Now;
 			
-			while(!this.ShouldStop)
+
+			bool IsFirst = true;
+			
+			while(!this.ShouldStop & ProtocolParameters.SampleIndex>ProtocolParameters.SampleTimes.Length )
 			{
-				ProtocolParameters.CycleInd++;
+				ProtocolParameters.SampleIndex++;
 				
-				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("End of dilution Starting the Kill state ({0:0.0} hours)",ProtocolParameters.KillTime));
-				ChangeState(new CAKill(ProtocolParameters.KillTime));
+				int SampleEppendorfInd = ProtocolParameters.SampleEppendorfInd;
+				ProtocolParameters.SampleEppendorfInd += ProtocolParameters.NumberOfSamples;
 				
 				
-				int WellInd = ((ProtocolParameters.CycleInd-1)%3)*2+1;
-				int LiconicInd =ProtocolParameters.LicInds[ProtocolParameters.PlateInd - 1];
-				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("End of Kill state and start of b-Lac add state on plate {0} to well ind={1} ",LiconicInd,WellInd ));
-				ChangeState(new CAAddbLac(LiconicInd,WellInd));
-				ReportProtocolState(ProtocolParameters.CycleInd,"End b-Lac addition");
-				// whait for OD
-				double OD;
-				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Waiting for OD > {0:0.000} in plate {1} to well ind={2}",ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
-				do
+				
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples time stemp {3:0.0} starting at {4:0.0} Minuts",ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
+				ChangeState(new KCPSampleState(ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,IsFirst));
+				IsFirst = false;
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("end Sampleling at {0:0.0} Minuts",TimeFromStart().TotalMinutes));
+				
+				
+				double TimeOfWait  =  ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] - TimeFromStart().TotalMinutes;
+				if (TimeOfWait>0)
 				{
-					CAGetOD _CAGetOD = new CAGetOD(ProtocolParameters.Empty384WellIndFilePath,LiconicInd,WellInd,ProtocolParameters.OutputFilePath);
-					ChangeState(_CAGetOD);
-					OD = _CAGetOD.GetReadResult();
-					ReportProtocolState(ProtocolParameters.CycleInd,string.Format("OD={0:0.000}",OD));
-					if(OD<ProtocolParameters.AbsolutOD2Dilut)
-					{
-						ChangeState(new CAGrowToOD(ProtocolParameters.ReadFrequency/60));
-					}
-				}while(OD<ProtocolParameters.AbsolutOD2Dilut && !this.ShouldStop);
+					
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("start whait for {0:0.0} Minuts to {1:0.0} time point",TimeOfWait,ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex] ));
+				ChangeState(new KCPWaitState(TimeOfWait));
+				}
 				
-				ReportProtocolState(ProtocolParameters.CycleInd,string.Format(" OD = {0:0.000} > {1:0.000} in plate {2} to well ind={3} starting Dilution ",OD,ProtocolParameters.AbsolutOD2Dilut,LiconicInd,WellInd));
-				ChangeState(new CADilut(LiconicInd,WellInd+1));
-				ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Dilution Ended Witing to ON ({0:0.0} hours)",ProtocolParameters.Time2ON));
-				ChangeState(new CAGrowToON(ProtocolParameters.Time2ON));
-				if ((ProtocolParameters.CycleInd-1)%3==2 && !this.ShouldStop)
-				{//replace plate
-					int NewLiconicInd =ProtocolParameters.LicInds[ProtocolParameters.PlateInd++];
-					ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Incubation Ended. diluting to AMP from plate {0} to new Plate {1}, freezing ON at position {2}",LiconicInd,NewLiconicInd,ProtocolParameters.FreezeInd));
-					ChangeState(new CADilutb2AmpInNewPlate(LiconicInd,NewLiconicInd,ProtocolParameters.FreezeInd++));
-				}
-				else
-				{
-					ReportProtocolState(ProtocolParameters.CycleInd,string.Format("Incubation Ended. diluting to AMP plate {0}",LiconicInd));
-					int Dilut2WellInd = ((ProtocolParameters.CycleInd-1)%3)*2+3;
-					ChangeState(new CADilutb2Amp(LiconicInd,Dilut2WellInd,ProtocolParameters.CycleInd));
-				}
 				
 			}
 		}
 		
 		FileInfo ProtocolStateFile;
-		public void ReportProtocolState(int CycleInd,string Messege)
+		
+		private TimeSpan TimeFromStart()
+		{
+			return (DateTime.Now - StartTime);
+		}
+		
+		
+		public void ReportProtocolState(int SampleID,string Messege)
 		{
 			using (StreamWriter sw = ProtocolStateFile.AppendText())
 			{
-				sw.WriteLine("({0}){1}:\t{2}",CycleInd,DateTime.Now,Messege);
+				sw.WriteLine("({0}){1}:\t{2}",SampleID,DateTime.Now,Messege);
 				sw.Flush();
 			}
 			DisplayData(Messege);
@@ -114,15 +103,10 @@ namespace KillCurvePlaiting
 		public static new List<Type> ProtocolStates()
 		{
 			return new List<Type>{
-				typeof(CAAddbLac),
-				typeof(CADilut),
-				typeof(CADilutb2Amp),
-				typeof(CADilutb2AmpInNewPlate),
-				typeof(CAGrowToOD),
-				typeof(CAGrowToON),
-				typeof(CAKill),
-				typeof(CAStart),
-				typeof(CAGetOD)
+				typeof(KCPStartKillState),
+				typeof(KCPSampleState),
+				typeof(KCPWaitState)
+				
 			};
 		}
 		#endregion

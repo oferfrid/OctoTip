@@ -47,6 +47,7 @@
     <Compile Include="KCPProtocol.cs" />
     <Compile Include="KCPProtocolParameters.cs" />
     <Compile Include="KCPStartKillState.cs" />
+    <Compile Include="KCPSampleState.cs" />
     <Compile Include="KCPWaitState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

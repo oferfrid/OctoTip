@@ -16,11 +16,11 @@ namespace KillCurvePlaiting
 	/// <summary>
 	/// Description of KCPWaitState.
 	/// </summary>
-	[State("Grow 2 ON","Grow to ON")]
+	[State("Wait 4 sample","Wait for next sample")]
 	public class KCPWaitState:WaitState
 	{
 
-		public KCPWaitState(double TimeOfGrow):base(DateTime.Now.AddHours(TimeOfGrow))
+		public KCPWaitState(double TimeOfWait):base(DateTime.Now.AddMinutes(TimeOfWait))
 		{
 
 		}
@@ -37,7 +37,7 @@ namespace KillCurvePlaiting
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(CADilutb2Amp),typeof(CADilutb2AmpInNewPlate)};
+			return new List<Type>{typeof(KCPSampleState)};
 		}
 		#endregion
 	}
