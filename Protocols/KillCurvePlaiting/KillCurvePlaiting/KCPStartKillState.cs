@@ -64,7 +64,7 @@ namespace KillCurvePlaiting
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(KCPWaitState)};
+			return new List<Type>{typeof(KCPSampleState)};
 		}
 		#endregion
 	}

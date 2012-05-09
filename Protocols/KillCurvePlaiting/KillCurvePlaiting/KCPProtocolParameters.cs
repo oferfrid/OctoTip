@@ -23,7 +23,7 @@ namespace KillCurvePlaiting
 		public bool RunStart;
 		[ProtocolParameterAtribute("Start eppendorf Index","1",true)]
 		public int SampleEppendorfInd;
-		[ProtocolParameterAtribute("Sample times (minutes)","4",true)]
+		[ProtocolParameterAtribute("Sample times (minutes)","10,15,20",true)]
 		public double[] SampleTimes;
 		[ProtocolParameterAtribute("Number Of Samples","1",true)]
 		public int NumberOfSamples;
@@ -31,7 +31,7 @@ namespace KillCurvePlaiting
 		public int Plate6Ind;
 		[ProtocolParameterAtribute("Start in sample","0",true)]
 		public int SampleIndex;
-		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\CyclingInAmp\Output\")]
+		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\KillCurvePlaiting\Output\")]
 		public string OutputFilePath;
 		
 		

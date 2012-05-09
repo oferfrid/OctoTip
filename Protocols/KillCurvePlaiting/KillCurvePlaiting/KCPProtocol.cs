@@ -17,7 +17,7 @@ namespace KillCurvePlaiting
 	/// <summary>
 	/// Description of KCPProtocol.
 	/// </summary>
-	[Protocol("Cyclic AMP","Ofer Fridman","Cyclic Evolution In AMP with b-lac")]
+	[Protocol("Kill Curve Plaiting","Ofer Fridman","Kill courve by plaiting.")]
 	public class KCPProtocol:Protocol
 	{
 		DateTime StartTime;
@@ -43,37 +43,38 @@ namespace KillCurvePlaiting
 			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
 			if(ProtocolParameters.RunStart)
 			{
-				
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Kill for {0} samples in plate index {1})",ProtocolParameters.NumberOfSamples,ProtocolParameters.Plate6Ind));
 				this.ChangeState(new KCPStartKillState(ProtocolParameters.Plate6Ind,ProtocolParameters.NumberOfSamples));
 			}
 			StartTime = DateTime.Now;
 			
-
-			bool IsFirst = true;
-			
-			while(!this.ShouldStop & ProtocolParameters.SampleIndex>ProtocolParameters.SampleTimes.Length )
+			while(!this.ShouldStop & ProtocolParameters.SampleIndex<=ProtocolParameters.SampleTimes.Length )
 			{
-				ProtocolParameters.SampleIndex++;
-				
 				int SampleEppendorfInd = ProtocolParameters.SampleEppendorfInd;
 				ProtocolParameters.SampleEppendorfInd += ProtocolParameters.NumberOfSamples;
 				
 				
+				if (0==ProtocolParameters.SampleIndex)
+				{
+					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, 0 ,TimeFromStart().TotalMinutes));
+					ChangeState(new KCPSampleState(ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,true));
+				}
+				else
+				{
+					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
+					ChangeState(new KCPSampleState(ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,false));
+				}
 				
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples time stemp {3:0.0} starting at {4:0.0} Minuts",ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
-				ChangeState(new KCPSampleState(ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,IsFirst));
-				IsFirst = false;
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("end Sampleling at {0:0.0} Minuts",TimeFromStart().TotalMinutes));
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("end Sampleling at {0:0.0} Minutes",TimeFromStart().TotalMinutes));
 				
-				
-				double TimeOfWait  =  ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] - TimeFromStart().TotalMinutes;
+				double TimeOfWait  =  ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex] - TimeFromStart().TotalMinutes;
 				if (TimeOfWait>0)
 				{
 					
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("start whait for {0:0.0} Minuts to {1:0.0} time point",TimeOfWait,ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex] ));
-				ChangeState(new KCPWaitState(TimeOfWait));
+					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("start whait for {0:0.0} Minutes to {1:0.0} time point",TimeOfWait,ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex ] ));
+					ChangeState(new KCPWaitState(TimeOfWait));
 				}
-				
+				ProtocolParameters.SampleIndex++;
 				
 			}
 		}
@@ -106,7 +107,7 @@ namespace KillCurvePlaiting
 				typeof(KCPStartKillState),
 				typeof(KCPSampleState),
 				typeof(KCPWaitState)
-				
+					
 			};
 		}
 		#endregion
