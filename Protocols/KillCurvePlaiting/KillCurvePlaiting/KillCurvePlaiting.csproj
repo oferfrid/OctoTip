@@ -44,8 +44,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KCPEndGrowState.cs" />
+    <Compile Include="KCPGrowState.cs" />
     <Compile Include="KCPProtocol.cs" />
     <Compile Include="KCPProtocolParameters.cs" />
+    <Compile Include="KCPStartGrowState.cs" />
     <Compile Include="KCPStartKillState.cs" />
     <Compile Include="KCPSampleState.cs" />
     <Compile Include="KCPWaitState.cs" />

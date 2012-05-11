@@ -50,7 +50,7 @@ namespace KillCurvePlaiting
 			RJP.Add(new RobotJobParameter("NumberOfSamples",RobotJobParameter.ParameterType.Number,NumberOfSamples));
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\Start.esc",RJP);
+				@"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\StartKill.esc",RJP);
 			
 			return RJ;
 		}

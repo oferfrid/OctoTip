@@ -19,6 +19,8 @@ namespace KillCurvePlaiting
 	{		public KCPProtocolParameters()
 		{
 		}	
+		[ProtocolParameterAtribute("Run Grow","true",true)]
+		public bool RunGrow;
 		[ProtocolParameterAtribute("Run Start","true",true)]
 		public bool RunStart;
 		[ProtocolParameterAtribute("Start eppendorf Index","1",true)]
@@ -28,9 +30,15 @@ namespace KillCurvePlaiting
 		[ProtocolParameterAtribute("Number Of Samples","1",true)]
 		public int NumberOfSamples;
 		[ProtocolParameterAtribute("Sample Position in Liconic","1",true)]
-		public int Plate6Ind;
+		public int Sample6IndInLiconic;
+		[ProtocolParameterAtribute("ON Position in Liconic","2",true)]
+		public int ON96IndInLiconic;
+		[ProtocolParameterAtribute("ON start well index","1",true)]
+		public int ONStartwellIndex;
 		[ProtocolParameterAtribute("Start in sample","0",true)]
 		public int SampleIndex;
+		[ProtocolParameterAtribute("Hours 2 Grow 2 ON ","5",true)]
+		public double Hours2Grow2ON;
 		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\KillCurvePlaiting\Output\")]
 		public string OutputFilePath;
 		

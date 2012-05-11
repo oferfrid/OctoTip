@@ -41,10 +41,24 @@ namespace KillCurvePlaiting
 		protected override void DoWork( )
 		{
 			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
+			
+			
+			if(ProtocolParameters.RunGrow)
+			{
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting grow in plate index {0})",ProtocolParameters.ON96IndInLiconic));
+				this.ChangeState(new KCPStartGrowState(ProtocolParameters.ON96IndInLiconic));
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Wating for ON ({0:0.0} Hours) in plate index {1})",ProtocolParameters.Hours2Grow2ON,ProtocolParameters.ON96IndInLiconic));
+				this.ChangeState(new KCPGrowState(ProtocolParameters.Hours2Grow2ON));
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("End Grow in plate index {0})",ProtocolParameters.ON96IndInLiconic));
+				this.ChangeState(new KCPEndGrowState(ProtocolParameters.ON96IndInLiconic));
+				
+			}
+			
+			
 			if(ProtocolParameters.RunStart)
 			{
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Kill for {0} samples in plate index {1})",ProtocolParameters.NumberOfSamples,ProtocolParameters.Plate6Ind));
-				this.ChangeState(new KCPStartKillState(ProtocolParameters.Plate6Ind,ProtocolParameters.NumberOfSamples));
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Kill for {0} samples in plate index {1})",ProtocolParameters.NumberOfSamples,ProtocolParameters.Sample6IndInLiconic));
+				this.ChangeState(new KCPStartKillState(ProtocolParameters.Sample6IndInLiconic,ProtocolParameters.NumberOfSamples));
 			}
 			StartTime = DateTime.Now;
 			
@@ -56,13 +70,13 @@ namespace KillCurvePlaiting
 				
 				if (0==ProtocolParameters.SampleIndex)
 				{
-					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, 0 ,TimeFromStart().TotalMinutes));
-					ChangeState(new KCPSampleState(ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,true));
+					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, 0 ,TimeFromStart().TotalMinutes));
+					ChangeState(new KCPSampleState(ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,true));
 				}
 				else
 				{
-					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
-					ChangeState(new KCPSampleState(ProtocolParameters.Plate6Ind,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,false));
+					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
+					ChangeState(new KCPSampleState(ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,false));
 				}
 				
 				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("end Sampleling at {0:0.0} Minutes",TimeFromStart().TotalMinutes));
@@ -106,7 +120,10 @@ namespace KillCurvePlaiting
 			return new List<Type>{
 				typeof(KCPStartKillState),
 				typeof(KCPSampleState),
-				typeof(KCPWaitState)
+				typeof(KCPWaitState),
+				typeof(KCPStartGrowState),
+				typeof(KCPEndGrowState),
+				typeof(KCPGrowState)
 					
 			};
 		}
