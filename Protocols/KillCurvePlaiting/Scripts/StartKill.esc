@@ -1,5 +1,5 @@
-CB9FB4B7
-20120507_144434 Tecan           
+6E8F7467
+20120511_142626 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -132,8 +132,7 @@ V;200
 Wash(255,1,1,1,0,"0.1",500,"0.1",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"0.2",500,"0.2",500,10,70,30,0,0,"1",1000,0);
 ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\Replace200ulTips.esc");
-ImportVariable(Liconic6PlateCart#Liconic6PlatePos#NumberOfSamples,"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\StartData.csv",0#0#0,"1#1#1",0,1,0,1,1);
-Variable(SampleFirstLocation,"1",1,"Sample First Location in 96 plate?",1,1.000000,96.000000,0,2,1,1);
+ImportVariable(Liconic6PlateCart#Liconic6PlatePos#NumberOfSamples#ONStartIndex,"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\StartData.csv",0#0#0#0,"1#1#1#1",0,1,0,1,1);
 Comment("Openl 6 Platte");
 Transfer_Rack("11","11",1,1,0,0,1,"17","6WellCaCo2Plate","Narrow","","","MP 3Pos Flat","MP 3Pos Flat","MP 3Pos Flat","2","2","2");
 Comment("Fill 6 Plate");
@@ -149,7 +148,7 @@ Comment("Inoculate Sampels");
 Transfer_Rack("11","11",1,1,0,0,1,"17","96WellMicroplate","Narrow","","","MP 3Pos Flat","MP 3Pos Flat","MP 3Pos Flat","3","3","3");
 BeginLoop("NumberOfSamples","Inoc");
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
-Variable(WELL_OFFSET,"SampleFirstLocation -1",0,"",0,1.000000,10.000000,0,2,0,0);
+Variable(WELL_OFFSET,"ONStartIndex-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Mix(1,">> Water free dispense no LD <<	102","60",0,0,0,0,0,0,0,0,0,0,0,11,2,1,"0C0810000000000000",3,1,"Inoc",2,1,0);
 Aspirate(1,">> Water free dispense no LD <<	103","60",0,0,0,0,0,0,0,0,0,0,0,11,2,1,"0C0810000000000000",1,"Inoc",2,1,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
