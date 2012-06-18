@@ -10,7 +10,7 @@ using System;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 
-namespace IncubateRead
+namespace IncubateReadin384
 {
 	/// <summary>
 	/// Description of IRProtocolParameters.
@@ -21,11 +21,11 @@ namespace IncubateRead
 		public int LicInd;
 		[ProtocolParameterAtribute("Total Growth time (hr)","24",true)]
 		public double TotalTime;
-		[ProtocolParameterAtribute("Frequency of reading (min)","2",true)]
+		[ProtocolParameterAtribute("Frequency of reading (min)","5",true)]
 		public double ReadFrequency;
 		[ProtocolParameterAtribute("Start in round ","1",true)]
 		public int StartRound;
-		[ProtocolParameterAtribute("Results file path and name",@"D:\OctoTip\Protocols\IncubateRead\Output\Out.csv")]
-		public string OutputFile;
+		[ProtocolParameterAtribute("Results file path",@"D:\OctoTip\Protocols\IncubateReadin384\Output\")]
+		public string OutputPath;
 	}
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 
-namespace IncubateRead
+namespace IncubateReadin384
 {
 	/// <summary>
 	/// Description of Class1.
