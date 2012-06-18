@@ -46,7 +46,7 @@ namespace OctoTip.Lib.ExperimentsCore
 			{
 				foreach (FileInfo file in files)
 				{
-					plugInAssemblyList.Add(Assembly.LoadFile(file.FullName));
+					plugInAssemblyList.Add(Assembly.Load(File.ReadAllBytes(file.FullName)));
 				}
 			}
 			return plugInAssemblyList;
