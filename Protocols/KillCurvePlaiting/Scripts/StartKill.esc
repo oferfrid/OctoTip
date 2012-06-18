@@ -1,5 +1,5 @@
-6E8F7467
-20120511_142626 Tecan           
+6A1C6DDA
+20120514_084948 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -129,7 +129,7 @@ V;200
 998;22;
 996;0;0;
 --{ RPG }--
-Wash(255,1,1,1,0,"0.1",500,"0.1",500,10,70,30,0,0,1000,0);
+Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"0.2",500,"0.2",500,10,70,30,0,0,"1",1000,0);
 ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\Replace200ulTips.esc");
 ImportVariable(Liconic6PlateCart#Liconic6PlatePos#NumberOfSamples#ONStartIndex,"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\StartData.csv",0#0#0#0,"1#1#1#1",0,1,0,1,1);

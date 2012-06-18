@@ -25,12 +25,14 @@ namespace KillCurvePlaiting
 		
 		int LicInd;
 		int NumberOfSamples;
+		int ONStartIndex;
 
 		
-		public KCPStartKillState(int LicInd,int NumberOfSamples):base()
+		public KCPStartKillState(int LicInd,int NumberOfSamples,int ONStartIndex):base()
 		{
 			this.LicInd = LicInd;
 			this.NumberOfSamples = NumberOfSamples;
+			this.ONStartIndex = ONStartIndex;
 		}
 		
 		public void Restart()
@@ -48,6 +50,7 @@ namespace KillCurvePlaiting
 			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("NumberOfSamples",RobotJobParameter.ParameterType.Number,NumberOfSamples));
+			RJP.Add(new RobotJobParameter("ONStartIndex",RobotJobParameter.ParameterType.Number,ONStartIndex));			
 			
 			RobotJob RJ = new RobotJob(
 				@"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\StartKill.esc",RJP);
@@ -69,4 +72,5 @@ namespace KillCurvePlaiting
 		#endregion
 	}
 }
+
 
