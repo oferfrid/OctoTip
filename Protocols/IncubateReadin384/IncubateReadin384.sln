@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.1.0.7915
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncubateRead", "IncubateRead\IncubateRead.csproj", "{299D30B7-145A-4E71-9B6A-3FED8AE5F43B}"
+# SharpDevelop 4.0.0.7070
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncubateReadin384", "IncubateRead\IncubateReadin384.csproj", "{299D30B7-145A-4E71-9B6A-3FED8AE5F43B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
