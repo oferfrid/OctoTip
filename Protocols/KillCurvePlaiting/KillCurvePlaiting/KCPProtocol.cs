@@ -58,7 +58,7 @@ namespace KillCurvePlaiting
 			if(ProtocolParameters.RunStart)
 			{
 				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Kill for {0} samples in plate index {1})",ProtocolParameters.NumberOfSamples,ProtocolParameters.Sample6IndInLiconic));
-				this.ChangeState(new KCPStartKillState(ProtocolParameters.Sample6IndInLiconic,ProtocolParameters.NumberOfSamples,ProtocolParameters.ONStartwellIndex));
+				this.ChangeState(new KCPStartKillState(ProtocolParameters.Sample6IndInLiconic,ProtocolParameters.NumberOfSamples,ProtocolParameters.ONStartwellIndex,ProtocolParameters.AMPPosision));
 			}
 			StartTime = DateTime.Now;
 			

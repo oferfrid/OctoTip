@@ -1,5 +1,5 @@
-D8F3D55A
-20120514_181330 Tecan           
+46D810A7
+20120916_124233 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -113,21 +113,23 @@ V;200
 998;2;
 998;252;17;
 998;252;22;
-998;4;
+998;5;
 998;4;0;System;
+998;0;3;Infinite 200;
 998;0;0;Storex;
 998;0;2;Hotel 3Pos DiTi;
 998;0;1;Hotel 3Pos DiTi;
 998;1;
 998;251;6WellCaCo2Plate;
 998;1;
+998;27;
 998;26;
 998;17;
 998;22;
 996;0;0;
 --{ RPG }--
-Wash(255,1,1,1,0,"0.1",500,"0.1",500,10,70,30,0,0,1000,0);
-Periodic_Wash(255,1,1,1,0,"0.2",500,"0.2",500,10,70,30,0,0,"1",1000,0);
+Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,1000,0);
+Periodic_Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,"1",1000,0);
 ImportVariable(Liconic6PlateCart#Liconic6PlatePos#NumberOfSamples#FirstSampleInd#IsFirst,"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\TakeSampleData.csv",0#0#0#0#0,"1#1#2#1#0",0,1,0,1,1);
 IfThen("IsFirst",1,"1");
 Comment("Get 6 Plate");

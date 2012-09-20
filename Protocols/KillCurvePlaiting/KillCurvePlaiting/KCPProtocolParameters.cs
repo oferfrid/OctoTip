@@ -41,6 +41,10 @@ namespace KillCurvePlaiting
 		public double Hours2Grow2ON;
 		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\KillCurvePlaiting\Output\")]
 		public string OutputFilePath;
+		[ProtocolParameterAtribute("AMP Posision in block","24",true)]
+		public int AMPPosision;
+		
+		
 		
 		
 	}
