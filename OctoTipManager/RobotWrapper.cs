@@ -150,7 +150,23 @@ namespace OctoTip.Manager
 				ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
 				myLogger.Add("After OctoTip.Manager.RobotWrapper.PrepareScript");
 				myLogger.Add("B4 OctoTip.Manager.RobotWrapper.StartScript");
-				Evo.StartScript(ScriptID, 0, 0);
+				try
+				{
+					Evo.StartScript(ScriptID, 0, 0);
+				}
+				catch (System.Runtime.InteropServices.COMException e)
+				{
+					if (e.Message.Contains("Previous script could not be unloaded"))
+					{
+						Evo.StartScript(ScriptID, 0, 0);
+					}
+					else
+					{
+						throw e;
+					}
+					
+				}
+				
 				myLogger.Add("After OctoTip.Manager.RobotWrapper.StartScript");
 
 				Job.JobStatus = RobotJob.Status.Running;
