@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace OctoTip.Lib
@@ -185,7 +186,7 @@ namespace OctoTip.Lib
 		{
 			// Write the string to a file.
 			string ScriptFileName = string.Format("{0}\\{1}",ConfigurationManager.AppSettings["DefultScriptFolder"],ScriptName);
-			StreamWriter file = new StreamWriter(ScriptFileName);
+			StreamWriter file = new StreamWriter(ScriptFileName,false,Encoding.GetEncoding(1252));
 			file.Write(Script);
 			file.Close();
 			_ScriptFilePath = ScriptFileName;
@@ -272,7 +273,7 @@ namespace OctoTip.Lib
 			
 			ScriptName = FI.Name;
 			
-			StreamReader streamReader = new StreamReader(ScriptPath);
+			StreamReader streamReader = new StreamReader(ScriptPath,Encoding.GetEncoding(1252));
 			Script = streamReader.ReadToEnd();
 			streamReader.Close();
 			
