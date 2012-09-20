@@ -357,9 +357,9 @@ namespace OctoTip.Lib
 		public  bool HasSameParameters( List<RobotJobParameter> RJP)
 		{
 			bool Equal = true;
-			if(this.RobotJobParameters.Count == RJP.Count)
+			if((this.RobotJobParameters == null && RJP.Count==0) || (this.RobotJobParameters.Count == RJP.Count))
 			{
-				for(int i=0;i<this.RobotJobParameters.Count;i++)
+				for(int i=0;i<RJP.Count;i++)
 				{
 					if((this.RobotJobParameters[i].Name != RJP[i].Name)
 					   || (this.RobotJobParameters[i].Type != RJP[i].Type))
