@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore.Interfaces;
@@ -22,15 +23,31 @@ namespace SerialDilutionEvolution
 	public class SDEReadODState:ReadState,IRestartableState
 	{
 		double _OD;
+		int LicPlateInd;
 		int WellInd;
-		public SDEReadODState(int WellInd):base()
+		public SDEReadODState(int LicPlateInd , int WellInd):base()
 		{
+			this.LicPlateInd = LicPlateInd;
 			this.WellInd = WellInd;
+			
 		}
 		
 		protected override OctoTip.Lib.RobotJob BeforeRobotRun()
 		{
-			throw new NotImplementedException();
+			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
+			
+			LicPos LP = Utils.Ind2LicPos(LicPlateInd);
+			
+
+			//ImportVariable(Lic24PlateCart#Lic24PlatePos#Dilution348Ind#FromWell#FreezeInd,"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\DiluteData.csv",0#0#0#0#0,"1#1#1#1#0",0,1,0,1,1);
+
+			RJP.Add(new RobotJobParameter("Liconic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
+			RJP.Add(new RobotJobParameter("Liconic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			
+			RobotJob RJ = new RobotJob(
+				@"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\Read.esc",RJP);
+			
+			return RJ;
 		}
 		
 		protected override void AfterRobotRun()

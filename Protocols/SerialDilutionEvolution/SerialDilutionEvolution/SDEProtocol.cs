@@ -23,7 +23,7 @@ namespace SerialDilutionEvolution
 	{
 		FileInfo ProtocolStateFile;
 		
-				public new SDEProtocolParameters ProtocolParameters
+		public new SDEProtocolParameters ProtocolParameters
 		{
 			get{return (SDEProtocolParameters) base.ProtocolParameters;}
 			set{base.ProtocolParameters = value;}
@@ -52,6 +52,7 @@ namespace SerialDilutionEvolution
 				TimeSpan GrowthTime = DateTime.Now - StartGrowTime;
 				int DiluteUsing384PlatePos = LocalUtils.GetNext384Index(ProtocolParameters.SharedResourcesFilePath);
 				double BackroundOD;
+				double OD;
 				if(ProtocolParameters.CurentWell<24)
 				{
 					//dilute in same plate
@@ -70,6 +71,7 @@ namespace SerialDilutionEvolution
 					ProtocolParameters.LicPlatePosition = NewPlateInd;
 					ProtocolParameters.CurentWell = 1;
 				}
+				ProtocolParameters.Cycle++;
 				StartGrowTime = DateTime.Now;
 				//
 				ReportProtocolState(ProtocolParameters.Cycle,string.Format("read Backround from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
@@ -78,6 +80,26 @@ namespace SerialDilutionEvolution
 				
 				BackroundOD = ReadBackroundState.BackroundOD;
 				ReportProtocolState(ProtocolParameters.Cycle,string.Format("End reading Backround from plate {0} Well {1} OD={2:0.0000}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,BackroundOD));
+
+				
+				ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for first OD read for plate {0} Well {1}, {2:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.Time4TheFirstODTest));
+				ChangeState(new SDEWait2ODState(ProtocolParameters.Time4TheFirstODTest));
+				do
+				{
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("read OD from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
+					SDEReadODState ReadODState = new SDEReadODState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell);
+					ChangeState(ReadODState);
+					
+					OD = ReadODState.OD;
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("End reading OD from plate {0} Well {1} Net OD={2:0.0000} (OD={3:0.0000})",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,OD-BackroundOD,OD));
+
+					if((OD - BackroundOD)<=ProtocolParameters.NetODtoDilute)
+					{
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for OD read for plate {0} Well {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.TimeBetweenODreads));
+					ChangeState(new SDEWait2ODState(ProtocolParameters.TimeBetweenODreads/60));
+					}
+				}
+				while((OD - BackroundOD)>ProtocolParameters.NetODtoDilute);
 				
 				
 			}
@@ -97,17 +119,17 @@ namespace SerialDilutionEvolution
 			myProtocolLogger.Add(Messege);
 		}
 		
-			#region static
+		#region static
 		
 		
 		public static new List<Type> ProtocolStates()
 		{
 			return new List<Type>{
 				typeof(SDEDiluteState),
-				typeof(SDEDilute2NewPlateState),					
-				typeof(SDEWait2ODState),					
-				typeof(SDEReadBackroundState),					
-				typeof(SDEReadODState),					
+				typeof(SDEDilute2NewPlateState),
+				typeof(SDEWait2ODState),
+				typeof(SDEReadBackroundState),
+				typeof(SDEReadODState),
 			};
 		}
 		#endregion

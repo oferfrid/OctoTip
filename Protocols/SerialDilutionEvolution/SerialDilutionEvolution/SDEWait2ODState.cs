@@ -20,7 +20,7 @@ namespace SerialDilutionEvolution
 	public class SDEWait2ODState:WaitState
 	{
 		
-		public SDEWait2ODState(double MinutesOfWait):base(DateTime.Now.AddMinutes(MinutesOfWait))
+		public SDEWait2ODState(double Hours2Wait):base(DateTime.Now.AddHours(Hours2Wait))
 		{
 		}
 		
