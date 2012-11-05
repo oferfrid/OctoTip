@@ -48,8 +48,17 @@ namespace SerialDilutionEvolution
 			string FilePath  = @"FreezPlate.txt";
 			FileStream fileStream = new FileStream( FilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
 			TextReader TRead = new StreamReader(fileStream);
-			int Index = Convert.ToInt32(ReadLastline(fileStream).Split(new Char[] {','})[0]);
-
+			string sIndex = ReadLastline(fileStream).Split(new Char[] {','})[0];
+			int Index;
+				if (sIndex ==string.Empty)
+			{
+				Index = 0;
+			}
+			else
+			{
+				Index = Convert.ToInt32(sIndex);
+			}
+			
 
 			fileStream.Seek(0, SeekOrigin.End);
 			TextWriter TWrite = new StreamWriter(fileStream);
@@ -79,8 +88,6 @@ namespace SerialDilutionEvolution
 				byte[] vagnretur = new byte[2];
 				fs.Seek(-2, SeekOrigin.Current);
 				fs.Read(vagnretur, 0, 2);
-
-				Console.WriteLine(ASCIIEncoding.ASCII.GetString(vagnretur));
 				if (ASCIIEncoding.ASCII.GetString(vagnretur).Equals("\r\n"))
 				{
 					//move it back
