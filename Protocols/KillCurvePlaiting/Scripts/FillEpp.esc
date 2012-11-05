@@ -1,5 +1,5 @@
-024A13D9
-20120930_130322 Tecan           
+11957DE0
+20121024_111815 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -129,7 +129,7 @@ V;200
 Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,"1",1000,0);
 GetDITI2(1,"BoxDiTi 1000ul",1,0,10,70);
-BeginLoop("23","fill24");
+BeginLoop("24","fill24");
 BeginLoop("2","fill24well");
 Aspirate(1,"Water free dispense LD & Trace","500",0,0,0,0,0,0,0,0,0,0,0,1,5,1,"010810",0,0);
 Dispense(1,"Water free dispense LD & Trace","500",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",1,"fill24",2,1,0);

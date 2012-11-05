@@ -1,5 +1,5 @@
-EE29DBA2
-20121015_175841 Tecan           
+5B8A5A0E
+20121025_195158 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -153,7 +153,7 @@ Comment("Dilute");
 BeginLoop("3","DiluteGroup");
 BeginLoop("3","DiluteGroupRows");
 GetDITI2(255,"Box DiTi 200 ul",1,0,10,70);
-Mix(255,"Water free dispense no LD","200","200","200","200","200","200","200","200",0,0,0,0,11,1,1,"0C08¯1000000000000",1,2,"DiluteGroupRows",0,1,"DiluteGroup",0,4,0);
+Mix(255,"Water free dispense no LD","50","50","50","50","50","50","50","50",0,0,0,0,11,1,1,"0C08¯1000000000000",3,2,"DiluteGroupRows",0,1,"DiluteGroup",0,4,0);
 Aspirate(255,">> Water free dispense LD & Trace <<	109","10","10","10","10","10","10","10","10",0,0,0,0,11,1,1,"0C08¯1000000000000",2,"DiluteGroupRows",0,1,"DiluteGroup",0,4,0);
 Dispense(255,"Water free dispense no LD","10","10","10","10","10","10","10","10",0,0,0,0,11,1,1,"0C080®300000000000",2,"DiluteGroupRows",0,1,"DiluteGroup",0,4,0);
 DropDITI(255,1,6,10,70,0);
