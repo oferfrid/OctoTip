@@ -43,9 +43,9 @@ namespace SerialDilutionEvolution
 			return Pos;
 		}
 		
-		public static int GetNextFreezPos(string Title)
+		public static int GetNextFreezPos(string SharedResourcesFilePath,string Title)
 		{
-			string FilePath  = @"FreezPlate.txt";
+			string FilePath  = SharedResourcesFilePath + @"FreezPlate.csv";
 			FileStream fileStream = new FileStream( FilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
 			TextReader TRead = new StreamReader(fileStream);
 			int Index = Convert.ToInt32(ReadLastline(fileStream).Split(new Char[] {','})[0]);
