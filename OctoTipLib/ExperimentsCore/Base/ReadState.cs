@@ -32,12 +32,10 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		return new XPathDocument(GetMeasurementsResultsFile().Open(FileMode.Open));
 			
 		}
-		protected Dictionary<int, List<double>> GetMeasurementsResults()
+		
+		protected Dictionary<int, List<double>> GetMeasurementsResults(int PlateType)
 		{
 			
-			
-			
-				
 			XPathNavigator navigator = GetXPathMeasurementsResults().CreateNavigator();
 
 			Dictionary<int, List<double>> MeasurementsResults;
@@ -50,7 +48,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 					foreach (XPathNavigator node in DataNode.SelectChildren("Well",""))
 					{
 						node.MoveToAttribute("Pos",string.Empty);
-						int WellInd =  CalcIndFromPlatePos(node.Value);
+						int WellInd =  CalcIndFromPlatePos(node.Value,PlateType);
 						if(!MeasurementsResults.ContainsKey(WellInd))
 						{
 							MeasurementsResults.Add(WellInd,new List<double>(5));
@@ -119,13 +117,13 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			}
 		}
 		
-
-	
-		private int CalcIndFromPlatePos(string Pos)
+		private int CalcIndFromPlatePos(string Pos,int PlateType)
 		{
-			int Row = char.Parse(Pos.Substring(0,1))-'A';
+			int RowNum =Convert.ToInt32( Math.Round(((double)PlateType)*2.0/3.0));
+			int Row = char.Parse(Pos.Substring(0,1))-'A' + 1;
 			int Col =  Convert.ToInt32(Pos.Substring(1,Pos.Length-1))-1;
-			return Row + Col*4*4+1;
+			int Ind = RowNum= (Col-1)*RowNum +Row;
+			return Ind;
 		}
 		
 	}
