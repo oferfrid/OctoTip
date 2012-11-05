@@ -50,7 +50,8 @@ namespace SerialDilutionEvolution
 			{
 				
 				TimeSpan GrowthTime = DateTime.Now - StartGrowTime;
-				int DiluteUsing384PlatePos = LocalUtils.GetNext384Index(ProtocolParameters.SharedResourcesFilePath);
+				int DiluteUsing384PlateIndex = LocalUtils.GetNext384Index(ProtocolParameters.SharedResourcesFilePath);
+				int DiluteUsing384PlatePos = LocalUtils.GetNext384Pos(DiluteUsing384PlateIndex);
 				double BackroundOD;
 				double OD;
 				int freezeIndex = 0;
