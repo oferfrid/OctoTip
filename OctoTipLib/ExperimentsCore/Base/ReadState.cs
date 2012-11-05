@@ -119,7 +119,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		private int CalcIndFromPlatePos(string Pos,int PlateType)
 		{
-			int RowNum =Convert.ToInt32( Math.Round(((double)PlateType)*2.0/3.0));
+			int RowNum =Convert.ToInt32( Math.Round(Math.Sqrt(Convert.ToDouble(PlateType)*2.0/3.0)));
 			int Row = char.Parse(Pos.Substring(0,1))-'A' + 1;
 			int Col =  Convert.ToInt32(Pos.Substring(1,Pos.Length-1))-1;
 			int Ind = RowNum= (Col-1)*RowNum +Row;
