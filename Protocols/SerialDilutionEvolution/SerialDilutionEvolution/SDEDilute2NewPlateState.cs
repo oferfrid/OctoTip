@@ -59,7 +59,7 @@ namespace SerialDilutionEvolution
 		
 		protected override void AfterRobotRun()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 			public void Restart()
 		{
