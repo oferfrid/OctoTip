@@ -53,19 +53,26 @@ namespace SerialDilutionEvolution
 				int DiluteUsing384PlatePos = LocalUtils.GetNext384Index(ProtocolParameters.SharedResourcesFilePath);
 				double BackroundOD;
 				double OD;
+				int freezeIndex = 0;
+				bool freez = Array.IndexOf(ProtocolParameters.FreezeWells,ProtocolParameters.CurentWell)<0;
+				if(freez)
+				{
+					freezeIndex = LocalUtils.GetNextFreezPos(string.Format("{0}-Cycle:{1}(Plate:{2} Well:{3})",ProtocolParameters.Name, ProtocolParameters.Cycle,ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell));
+				}
 				if(ProtocolParameters.CurentWell<24)
 				{
 					//dilute in same plate
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} Well {1} after {2:0.00} Hours (using 384 {3} Position)",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,GrowthTime.TotalHours,DiluteUsing384PlatePos));
-					ChangeState(new SDEDiluteState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,0,DiluteUsing384PlatePos));
+					
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} Well {1} after {2:0.00} Hours (using 384 {3} Position) freeze:{4}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,GrowthTime.TotalHours,DiluteUsing384PlatePos,freezeIndex));
+					ChangeState(new SDEDiluteState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,freezeIndex ,DiluteUsing384PlatePos));
 					ProtocolParameters.CurentWell++;
 				}
 				else
 				{
 					//dilute to new plate
 					int NewPlateInd = ProtocolParameters.LicPlatePositions[0];
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} to Plate {1} after {2:0.00} Hours (using 384 {3} Position)",ProtocolParameters.LicPlatePosition ,NewPlateInd,GrowthTime.TotalHours,DiluteUsing384PlatePos));
-					ChangeState(new SDEDilute2NewPlateState(ProtocolParameters.LicPlatePosition,NewPlateInd,0,DiluteUsing384PlatePos));
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} to Plate {1} after {2:0.00} Hours (using 384 {3} Position) freeze:{4}",ProtocolParameters.LicPlatePosition ,NewPlateInd,GrowthTime.TotalHours,DiluteUsing384PlatePos,freezeIndex));
+					ChangeState(new SDEDilute2NewPlateState(ProtocolParameters.LicPlatePosition,NewPlateInd,freezeIndex,DiluteUsing384PlatePos));
 					//remove old plate index from list
 					ProtocolParameters.LicPlatePositions = ProtocolParameters.LicPlatePositions.Skip(1).ToArray();
 					ProtocolParameters.LicPlatePosition = NewPlateInd;
@@ -95,8 +102,8 @@ namespace SerialDilutionEvolution
 
 					if((OD - BackroundOD)<=ProtocolParameters.NetODtoDilute)
 					{
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for OD read for plate {0} Well {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.TimeBetweenODreads));
-					ChangeState(new SDEWait2ODState(ProtocolParameters.TimeBetweenODreads/60));
+						ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for OD read for plate {0} Well {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.TimeBetweenODreads));
+						ChangeState(new SDEWait2ODState(ProtocolParameters.TimeBetweenODreads/60));
 					}
 				}
 				//while((OD - BackroundOD)>ProtocolParameters.NetODtoDilute);
