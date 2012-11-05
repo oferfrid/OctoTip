@@ -17,8 +17,8 @@ namespace SerialDilutionEvolution
 	/// </summary>
 	public static class LocalUtils
 	{
-		const int WellsInDilution = 3;
-		const int WellsInRow = 16;
+		const double WellsInDilution = 3.0;
+		const double WellsInRow = 16.0;
 		
 		public static int GetNext384Index(string SharedResourcesFilePath)
 		{
@@ -39,7 +39,7 @@ namespace SerialDilutionEvolution
 		}
 		public static int GetNext384Pos(int Index)
 		{
-			int Pos = Convert.ToInt32((Math.Floor((double)(Index-1)/WellsInRow)*WellsInDilution*WellsInRow)+(Index-1)%(WellsInDilution*WellsInRow)+1);
+			int Pos =Convert.ToInt32(((double)Index-1)%WellsInRow+1 + Math.Floor(((double)Index-1)/WellsInRow)*(WellsInDilution*WellsInRow));
 			return Pos;
 		}
 		
@@ -50,7 +50,7 @@ namespace SerialDilutionEvolution
 			TextReader TRead = new StreamReader(fileStream);
 			string sIndex = ReadLastline(fileStream).Split(new Char[] {','})[0];
 			int Index;
-				if (sIndex ==string.Empty)
+			if (sIndex ==string.Empty)
 			{
 				Index = 0;
 			}
@@ -70,7 +70,7 @@ namespace SerialDilutionEvolution
 			return NewIndex;
 		}
 		
-			
+		
 		private static string ReadLastline(FileStream fs)
 		{
 			byte[] line;
