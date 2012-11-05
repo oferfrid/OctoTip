@@ -22,15 +22,15 @@ namespace SerialDilutionEvolution
 		}
 		[ProtocolParameterAtribute("Cycle","0",true)]
 		public int Cycle;
-		[ProtocolParameterAtribute("Liconic curent plate Index","0",true)]
+		[ProtocolParameterAtribute("Liconic curent plate Index","1",true)]
 		public int LicPlatePosition;
-		[ProtocolParameterAtribute("Liconic curent plate Indexes","1,2,3",true)]
+		[ProtocolParameterAtribute("Liconic curent plate Indexes","2",true)]
 		public int[] LicPlatePositions;
 		[ProtocolParameterAtribute("Curent well","1",true)]
 		public int CurentWell;
 		[ProtocolParameterAtribute("Wells to freeze","1,4,3",true)]
 		public int[] FreezeWells;
-		[ProtocolParameterAtribute("Time Till the first OD (Hours)","1.5",true)]
+		[ProtocolParameterAtribute("Time Till the first OD (Hours)","0.05",true)]
 		public double Time4TheFirstODTest;
 		[ProtocolParameterAtribute("Time between OD reads (min)","1.5",true)]
 		public double TimeBetweenODreads;

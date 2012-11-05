@@ -41,11 +41,11 @@ namespace SerialDilutionEvolution
 
 			//ImportVariable(Lic24PlateCart#Lic24PlatePos#Dilution348Ind#FromWell#FreezeInd,"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\DiluteData.csv",0#0#0#0#0,"1#1#1#1#0",0,1,0,1,1);
 
-			RJP.Add(new RobotJobParameter("Liconic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
-			RJP.Add(new RobotJobParameter("Liconic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("Lic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
+			RJP.Add(new RobotJobParameter("Lic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\Read.esc",RJP);
+				@"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\ReadPlate.esc",RJP);
 			
 			return RJ;
 			

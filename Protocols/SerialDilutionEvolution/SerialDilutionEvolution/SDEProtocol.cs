@@ -99,7 +99,8 @@ namespace SerialDilutionEvolution
 					ChangeState(new SDEWait2ODState(ProtocolParameters.TimeBetweenODreads/60));
 					}
 				}
-				while((OD - BackroundOD)>ProtocolParameters.NetODtoDilute);
+				//while((OD - BackroundOD)>ProtocolParameters.NetODtoDilute);
+				while(false);
 				
 				
 			}
