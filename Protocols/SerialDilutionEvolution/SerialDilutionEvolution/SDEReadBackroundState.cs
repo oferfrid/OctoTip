@@ -53,7 +53,7 @@ namespace SerialDilutionEvolution
 		
 		protected override void AfterRobotRun()
 		{
-			Dictionary<int, List<double>> MeasurementsResults = this.GetMeasurementsResults();
+			Dictionary<int, List<double>> MeasurementsResults = this.GetMeasurementsResults(24);
 			_BackroundOD = MeasurementsResults[WellInd].Average();
 		}
 		
