@@ -59,6 +59,11 @@ namespace SerialDilutionEvolution
 				if(freez)
 				{
 					freezeIndex = LocalUtils.GetNextFreezPos(ProtocolParameters.SharedResourcesFilePath,string.Format("{0}-Cycle:{1}(Plate:{2} Well:{3})",ProtocolParameters.Name, ProtocolParameters.Cycle,ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell));
+					if (freezeIndex>24)
+					{
+						ReportProtocolState(ProtocolParameters.Cycle,string.Format("No freeze in pos:{0} (> 24)",freezeIndex));
+						freezeIndex = 0;
+					}
 				}
 				if(ProtocolParameters.CurentWell<24)
 				{
