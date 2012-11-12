@@ -64,7 +64,7 @@ namespace SerialDilutionEvolution
 			TextWriter TWrite = new StreamWriter(fileStream);
 			int NewIndex = Index + 1;
 			
-			TWrite.WriteLine(NewIndex.ToString() + ","+ "Title");
+			TWrite.WriteLine(NewIndex.ToString() + ","+ Title);
 			TWrite.Flush();
 			fileStream.Close();
 			return NewIndex;
