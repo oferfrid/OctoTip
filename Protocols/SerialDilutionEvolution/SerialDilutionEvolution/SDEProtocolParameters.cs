@@ -24,17 +24,17 @@ namespace SerialDilutionEvolution
 		public int Cycle;
 		[ProtocolParameterAtribute("Liconic curent plate Index","1",true)]
 		public int LicPlatePosition;
-		[ProtocolParameterAtribute("Liconic curent plate Indexes","2",true)]
+		[ProtocolParameterAtribute("Liconic next plates Indexes","2,3",true)]
 		public int[] LicPlatePositions;
 		[ProtocolParameterAtribute("Curent well","1",true)]
 		public int CurentWell;
-		[ProtocolParameterAtribute("Wells to freeze","1,4,3",true)]
+		[ProtocolParameterAtribute("Wells to freeze","1,4,6",true)]
 		public int[] FreezeWells;
-		[ProtocolParameterAtribute("Time Till the first OD (Hours)","0.05",true)]
+		[ProtocolParameterAtribute("Time Till the first OD (Hours)","1",true)]
 		public double Time4TheFirstODTest;
-		[ProtocolParameterAtribute("Time between OD reads (min)","1.5",true)]
+		[ProtocolParameterAtribute("Time between OD reads (min)","15",true)]
 		public double TimeBetweenODreads;
-		[ProtocolParameterAtribute("Net OD to dilute","0.08",true)]
+		[ProtocolParameterAtribute("Net OD to dilute","0.06",true)]
 		public double NetODtoDilute;		
 		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\SerialDilutionEvolution\Output\")]
 		public string OutputFilePath;
