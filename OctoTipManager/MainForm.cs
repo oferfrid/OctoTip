@@ -89,12 +89,15 @@ namespace OctoTip.Manager
 		private delegate void UpdateDelegate();
 		private void LogUpdate()
 		{
-			Invoke(new UpdateDelegate(
-				delegate
-				{
-					txtLog.Text = myLogger.Log;
-				})
-			      );
+			if(!this.IsDisposed)
+			{
+				Invoke(new UpdateDelegate(
+					delegate
+					{
+						txtLog.Text = myLogger.Log;
+					})
+				      );
+			}
 		}
 
 		private void BindRobotJobsQueue()
@@ -356,16 +359,16 @@ namespace OctoTip.Manager
 			
 			
 			if (e.CurrentJob == null)
-				{
-					RuningJob = null;
-					UpdateRunningJob();
-				}
-				else
-				{
-					
-					RuningJob = e.CurrentJob;
-					UpdateRunningJob();
-				}
+			{
+				RuningJob = null;
+				UpdateRunningJob();
+			}
+			else
+			{
+				
+				RuningJob = e.CurrentJob;
+				UpdateRunningJob();
+			}
 			
 			bool buttonPauseEnabled ;
 			bool buttonStartEnabled ;
@@ -415,30 +418,33 @@ namespace OctoTip.Manager
 					break;
 					
 			}
-			MethodInvoker buttonPauseInvoker = delegate
-			{
-				buttonPause.Enabled = buttonPauseEnabled ;
-			};
-			buttonPause.BeginInvoke(buttonPauseInvoker);
 			
-			MethodInvoker buttonStartInvoker = delegate
+			if (!this.IsDisposed)
 			{
-				buttonStart.Enabled = buttonStartEnabled ;
-			};
-			buttonPause.BeginInvoke(buttonStartInvoker);
-			
-			MethodInvoker buttonStopInvoker = delegate
-			{
-				buttonStop.Enabled = buttonStopEnabled ;
-			};
-			buttonPause.BeginInvoke(buttonStopInvoker);
-			
-			MethodInvoker textBoxRuningJobStatusInvoker = delegate
-			{
-				textBoxRuningJobStatus.Text = textBoxRuningJobStatusText ;
-			};
-			textBoxRuningJobStatus.BeginInvoke(textBoxRuningJobStatusInvoker);
-			
+				MethodInvoker buttonPauseInvoker = delegate
+				{
+					buttonPause.Enabled = buttonPauseEnabled ;
+				};
+				buttonPause.BeginInvoke(buttonPauseInvoker);
+				
+				MethodInvoker buttonStartInvoker = delegate
+				{
+					buttonStart.Enabled = buttonStartEnabled ;
+				};
+				buttonPause.BeginInvoke(buttonStartInvoker);
+				
+				MethodInvoker buttonStopInvoker = delegate
+				{
+					buttonStop.Enabled = buttonStopEnabled ;
+				};
+				buttonPause.BeginInvoke(buttonStopInvoker);
+				
+				MethodInvoker textBoxRuningJobStatusInvoker = delegate
+				{
+					textBoxRuningJobStatus.Text = textBoxRuningJobStatusText ;
+				};
+				textBoxRuningJobStatus.BeginInvoke(textBoxRuningJobStatusInvoker);
+			}
 			
 		}
 		
@@ -448,27 +454,29 @@ namespace OctoTip.Manager
 			string RunningJobStatusText;
 			if (RuningJob!=null)
 			{
-				 RunningJobNameText = RuningJob.ScriptName;
-				 RunningJobStatusText = RuningJob.JobStatus.ToString();
+				RunningJobNameText = RuningJob.ScriptName;
+				RunningJobStatusText = RuningJob.JobStatus.ToString();
 			}
 			else
 			{
-				 RunningJobNameText = string.Empty;
-				 RunningJobStatusText = string.Empty;
+				RunningJobNameText = string.Empty;
+				RunningJobStatusText = string.Empty;
 			}
 			
-
-			MethodInvoker UpdateRunningJobName = delegate
+			if(!this.IsDisposed)
 			{
-				RunningJobName.Text = RunningJobNameText ;
-			};
-			RunningJobName.BeginInvoke(UpdateRunningJobName);
-			
-			MethodInvoker UpdateRunningJobStatus = delegate
-			{
-				RunningJobStatus.Text = RunningJobStatusText ;
-			};
-			RunningJobStatus.BeginInvoke(UpdateRunningJobStatus);
+				MethodInvoker UpdateRunningJobName = delegate
+				{
+					RunningJobName.Text = RunningJobNameText ;
+				};
+				RunningJobName.BeginInvoke(UpdateRunningJobName);
+				
+				MethodInvoker UpdateRunningJobStatus = delegate
+				{
+					RunningJobStatus.Text = RunningJobStatusText ;
+				};
+				RunningJobStatus.BeginInvoke(UpdateRunningJobStatus);
+			}
 			
 		}
 
