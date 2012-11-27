@@ -1,5 +1,5 @@
-E01982CC
-20121105_172930 Tecan           
+C4AA56B2
+20121126_182415 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -122,7 +122,7 @@ V;200
 998;1;
 998;251;24WellCaCo2Plate;
 998;1;
-998;1;
+998;27;
 998;26;
 998;17;
 998;22;
@@ -148,7 +148,7 @@ Comment("Fill384Plate");
 MoveLiha(1,1,3,1,"010810",0,0,0,10,0,0);
 Transfer_Rack("4","4",1,1,0,0,1,"17","384WellPlate","Narrow","","","MP 2Pos elevated TorreyPines","MP 3Pos Flat","MP 2Pos elevated TorreyPines","2","1","2");
 Aspirate(1,"Water free dispense LD & Trace","270",0,0,0,0,0,0,0,0,0,0,0,1,3,1,"010810",0,0);
-BeginLoop("3","FillRow");
+BeginLoop("2","FillRow");
 Variable(WELL_OFFSET,"Dilution348Ind-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense no LD","90",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18101000000000000000000000000000000000000000000000000000000",1,"FillRow",0,1,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
@@ -156,8 +156,8 @@ EndLoop();
 Comment("Freeze");
 IfThen("FreezeInd",1,"0");
 Variable(WELL_OFFSET,"FromWell-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Mix(1,"Water free dispense LD & Trace","300",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06041000",3,0,0);
-Aspirate(1,"Water free dispense LD & Trace","300",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06041000",0,0);
+Mix(1,">> Water free dispense LD & Trace <<	120","300",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06041000",3,0,0);
+Aspirate(1,">> Water free dispense LD & Trace <<	119","300",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06041000",0,0);
 Variable(WELL_OFFSET,"FreezeInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense no LD","300",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",0,0);
 Mix(1,"Water free dispense no LD","200",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",3,0,0);
@@ -168,14 +168,14 @@ DropDITI(1,1,6,10,70,0);
 Comment("Dilute2384Plate");
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
 Variable(WELL_OFFSET,"FromWell-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Aspirate(1,"Water free dispense LD & Trace","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06041000",0,0);
+Aspirate(1,">> Water free dispense LD & Trace <<	121","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06041000",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 Variable(WELL_OFFSET,"Dilution348Ind-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18101000000000000000000000000000000000000000000000000000000",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 DropDITI(1,1,6,10,70,0);
 Comment("DiluteIn384Plate");
-BeginLoop("2","Dilute384");
+BeginLoop("1","Dilute384");
 Variable(WELL_OFFSET,"Dilution348Ind-1",0,"",0,1.000000,10.000000,0,2,0,0);
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
 Variable(WELL_OFFSET,"Dilution348Ind-1",0,"",0,1.000000,10.000000,0,2,0,0);
@@ -188,8 +188,8 @@ EndLoop();
 Comment("Dilute224Plate");
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
 Variable(WELL_OFFSET,"Dilution348Ind-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Mix(1,"Water free dispense LD & Trace","20",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18100000@00000000000000000000000000000000000000000000000000",3,0,0);
-Aspirate(1,"Water free dispense LD & Trace","10",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18100000@00000000000000000000000000000000000000000000000000",0,0);
+Mix(1,"Water free dispense LD & Trace","20",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18100040000000000000000000000000000000000000000000000000000",3,0,0);
+Aspirate(1,"Water free dispense LD & Trace","10",0,0,0,0,0,0,0,0,0,0,0,4,1,1,"18100040000000000000000000000000000000000000000000000000000",0,0);
 Variable(WELL_OFFSET,"FromWell",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06041000",0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
