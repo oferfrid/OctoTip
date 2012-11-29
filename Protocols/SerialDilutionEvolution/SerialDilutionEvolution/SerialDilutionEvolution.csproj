@@ -31,6 +31,18 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.GData.Client">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Documents">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Spreadsheets">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Spreadsheets.dll</HintPath>
+    </Reference>
     <Reference Include="OctoTip.Lib">
       <HintPath>..\..\..\OctoTipLib\bin\Debug\OctoTip.Lib.dll</HintPath>
     </Reference>
@@ -44,6 +56,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IniFile.cs" />
+    <Compile Include="LogInGoogleDocs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDEReadBackroundState.cs" />
     <Compile Include="SDEDilute2NewPlateState.cs" />
@@ -53,6 +67,9 @@
     <Compile Include="SDEReadODState.cs" />
     <Compile Include="SDEWait2ODState.cs" />
     <Compile Include="LocalUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GoogleDocs.ini" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
