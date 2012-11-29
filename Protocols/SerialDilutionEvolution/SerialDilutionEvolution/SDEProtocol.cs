@@ -46,7 +46,7 @@ namespace SerialDilutionEvolution
 			ReportProtocolState(ProtocolParameters.Cycle,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
 			
 			
-			while(ProtocolParameters.CurentWell<6 || ProtocolParameters.LicPlatePositions.Length>0)
+			while((ProtocolParameters.CurentWell<6 || ProtocolParameters.LicPlatePositions.Length>0)&& !this.ShouldStop)
 			{
 				
 				TimeSpan GrowthTime = DateTime.Now - StartGrowTime;
@@ -55,7 +55,7 @@ namespace SerialDilutionEvolution
 				double BackroundOD;
 				double OD;
 				int freezeIndex = 0;
-				bool freez = Array.IndexOf(ProtocolParameters.FreezeWells,ProtocolParameters.CurentWell)<0;
+				bool freez = (Array.IndexOf(ProtocolParameters.FreezeWells,ProtocolParameters.CurentWell)>0);
 				if(freez)
 				{
 					freezeIndex = LocalUtils.GetNextFreezPos(ProtocolParameters.SharedResourcesFilePath,string.Format("{0}-Cycle:{1}(Plate:{2} Well:{3})",ProtocolParameters.Name, ProtocolParameters.Cycle,ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell));
@@ -112,7 +112,7 @@ namespace SerialDilutionEvolution
 						ChangeState(new SDEWait2ODState(ProtocolParameters.TimeBetweenODreads/60));
 					}
 				}
-				while((OD - BackroundOD)<ProtocolParameters.NetODtoDilute);
+				while((OD - BackroundOD)<ProtocolParameters.NetODtoDilute && !this.ShouldStop);
 				//while(false);
 				
 				
