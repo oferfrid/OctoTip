@@ -34,8 +34,8 @@ namespace SerialDilutionEvolution
 		public SDEProtocol(SDEProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
 			//create protocol File
-			string LogName = ProtocolParameters.OutputFilePath + ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
-			ProtocolStateFile = new FileInfo(LogName+".txt");
+			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
+			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + LogName+".txt");
 			myLogInGoogleDocs = new LogInGoogleDocs(LogName,this.ProtocolParameters.SharedResourcesFilePath);
 			ReportProtocolState(0,string.Format("Creating Protoclo {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
@@ -128,13 +128,20 @@ namespace SerialDilutionEvolution
 		{
 			string LogMessege = string.Format("({0}):{1}",Cycle,Messege);
 			
-			using (StreamWriter sw = ProtocolStateFile.AppendText())
+			try
+			{
+				using (StreamWriter sw = ProtocolStateFile.AppendText())
 			{
 				sw.WriteLine("({0}){1}:\t{2}",Cycle,DateTime.Now,Messege);
 				sw.Flush();
 			}
 			myLogInGoogleDocs.Log(LogMessege);
 			DisplayData(LogMessege);
+			}
+			catch(Exception e)
+			{
+				myProtocolLogger.Add("Error:" + e.ToString());
+			}
 			myProtocolLogger.Add(LogMessege);
 			
 		}
