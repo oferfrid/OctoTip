@@ -96,7 +96,7 @@ namespace SerialDilutionEvolution
 					
 					CellEntry cellEntry= new CellEntry (1, 1,DateHeader);
 					cellFeed.Insert(cellEntry);
-					cellEntry= new CellEntry (1, 1, MessegeHeader);
+					cellEntry= new CellEntry (1, 2, MessegeHeader);
 					cellFeed.Insert(cellEntry);
 					
 					
