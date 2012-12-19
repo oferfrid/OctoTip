@@ -52,7 +52,7 @@ namespace SerialDilutionEvolution
 
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\Dilute2NewPlate.esc",RJP);
+				@"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\Dilute2NewPlate.esc",RJP,0.9);
 			
 			return RJ;
 		}
