@@ -1,5 +1,5 @@
-0469F111
-20121122_100931 Tecan           
+747EA73B
+20121227_135838 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -130,7 +130,7 @@ V;200
 996;0;0;
 --{ RPG }--
 ImportVariable(Lic24PlateCart#Lic24PlatePos,"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\ReadPlateData.csv",0#0,"1#1",0,1,0,1,1);
-Comment("Get & Open Plate");
+Comment("Get & Open Plate ");
 FACTS("StoreX","StoreX_PresentPlate","~Lic24PlateCart~,~Lic24PlatePos~","1","24WellCaCo2Plate");
 FACTS("StoreX","StoreX_EndAccess","","0","");
 FACTS("ReaderNETwork","ReaderNETwork_Open","","0","");
