@@ -68,8 +68,5 @@
     <Compile Include="SDEWait2ODState.cs" />
     <Compile Include="LocalUtils.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="GoogleDocs.ini" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

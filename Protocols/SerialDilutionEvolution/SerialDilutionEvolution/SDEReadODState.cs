@@ -44,7 +44,7 @@ namespace SerialDilutionEvolution
 			RJP.Add(new RobotJobParameter("Lic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\ReadPlate.esc",RJP);
+				@"D:\OctoTip\Protocols\SerialDilutionEvolution\Scripts\ReadPlate.esc",RJP,0.7);
 			
 			return RJ;
 		}
