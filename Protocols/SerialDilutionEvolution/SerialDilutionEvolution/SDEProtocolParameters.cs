@@ -32,8 +32,10 @@ namespace SerialDilutionEvolution
 		public int[] FreezeWells;
 		[ProtocolParameterAtribute("Time Till the first OD (Hours)","1",true)]
 		public double Time4TheFirstODTest;
-		[ProtocolParameterAtribute("Time between OD reads (min)","15",true)]
-		public double TimeBetweenODreads;
+		[ProtocolParameterAtribute("Min Time between OD reads (min)","5",true)]
+		public double MinTimeBetweenODreads;
+		[ProtocolParameterAtribute("Max Time between OD reads (min)","5",true)]
+		public double MaxTimeBetweenODreads;
 		[ProtocolParameterAtribute("Net OD to dilute","0.06",true)]
 		public double NetODtoDilute;		
 		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\SerialDilutionEvolution\Output\")]
