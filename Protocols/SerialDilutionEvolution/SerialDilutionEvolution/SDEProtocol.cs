@@ -110,8 +110,9 @@ namespace SerialDilutionEvolution
 
 					if((OD - BackroundOD)<=ProtocolParameters.NetODtoDilute)
 					{
-						ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for OD read for plate {0} Well {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.TimeBetweenODreads));
-						ChangeState(new SDEWait2ODState(ProtocolParameters.TimeBetweenODreads/60));
+						double TimeTillNextRead = GetTimeTillNextRead((OD - BackroundOD),ProtocolParameters.NetODtoDilute);
+						ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for OD read for plate {0} Well {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeTillNextRead));
+						ChangeState(new SDEWait2ODState(TimeTillNextRead/60));
 					}
 				}
 				while((OD - BackroundOD)<ProtocolParameters.NetODtoDilute && !this.ShouldStop);
@@ -123,6 +124,12 @@ namespace SerialDilutionEvolution
 			
 		}
 		
+		private double GetTimeTillNextRead(double NetOD,double TargetOD)
+		{
+			double TimeTillNextRead = (ProtocolParameters.MaxTimeBetweenODreads - ProtocolParameters.MinTimeBetweenODreads)/(ProtocolParameters.NetODtoDilute)*NetOD + ProtocolParameters.MinTimeBetweenODreads;
+			return TimeTillNextRead;
+						
+		}
 		
 		public void ReportProtocolState(int Cycle,string Messege)
 		{
