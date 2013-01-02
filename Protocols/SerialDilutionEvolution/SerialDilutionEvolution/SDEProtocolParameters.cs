@@ -34,7 +34,7 @@ namespace SerialDilutionEvolution
 		public double Time4TheFirstODTest;
 		[ProtocolParameterAtribute("Min Time between OD reads (min)","5",true)]
 		public double MinTimeBetweenODreads;
-		[ProtocolParameterAtribute("Max Time between OD reads (min)","5",true)]
+		[ProtocolParameterAtribute("Max Time between OD reads (min)","30",true)]
 		public double MaxTimeBetweenODreads;
 		[ProtocolParameterAtribute("Net OD to dilute","0.06",true)]
 		public double NetODtoDilute;		
