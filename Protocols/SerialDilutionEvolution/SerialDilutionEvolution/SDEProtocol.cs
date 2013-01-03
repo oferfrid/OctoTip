@@ -126,7 +126,7 @@ namespace SerialDilutionEvolution
 		
 		private double GetTimeTillNextRead(double NetOD,double TargetOD)
 		{
-			double TimeTillNextRead = (ProtocolParameters.MaxTimeBetweenODreads - ProtocolParameters.MinTimeBetweenODreads)/(ProtocolParameters.NetODtoDilute)*NetOD + ProtocolParameters.MinTimeBetweenODreads;
+			double TimeTillNextRead = -(ProtocolParameters.MaxTimeBetweenODreads - ProtocolParameters.MinTimeBetweenODreads)/(ProtocolParameters.NetODtoDilute)*NetOD + ProtocolParameters.MaxTimeBetweenODreads;
 			return TimeTillNextRead;
 						
 		}
