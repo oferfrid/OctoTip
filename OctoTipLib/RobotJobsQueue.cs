@@ -71,16 +71,14 @@ namespace OctoTip.Lib
 		{
 			RobotJob RJ = null;
 			
-			double Priority = 1;
+			double Priority = 0;
 			
 			for (int i=0;i<this.Count;i++)
 			{
-				//TODO:change the selection by priority...
-				if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority < Priority)
+				if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority >= Priority)
 				{
 					RJ = this[i];
 				}
-				
 			}
 			if (RJ!=null)
 			{
