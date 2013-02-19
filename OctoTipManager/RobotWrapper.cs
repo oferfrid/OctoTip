@@ -40,14 +40,14 @@ namespace OctoTip.Manager
 			Evo.ErrorEvent += delegate(DateTime StartTime, DateTime EndTime, string Device, string Macro, string Object, string Message, short Status, string ProcessName, int ProcessID, string MacroID)
 			{
 				myLogger.Add(string.Format("****Error from Evo:StartTime={0} EndTime={1} Device={2} Macro={3} Object={4} Message={5} Status={6} ProcessName={7} ProcessID={8} MacroID={9}", StartTime,  EndTime,  Device,  Macro,  Object,  Message,  Status,  ProcessName,  ProcessID,  MacroID));
-				};
+			};
 			Evo.StatusChanged += delegate(SC_Status Status)
 			{
 				myLogger.Add(string.Format("****Status From Evo:{0}" , Status));
 			};
 			
-//			Evo.UserPromptEvent += delegate(int ID, string Text, string Caption, int Choices, out int Answer) 
-//			{  
+//			Evo.UserPromptEvent += delegate(int ID, string Text, string Caption, int Choices, out int Answer)
+//			{
 //				myLogger.Add(string.Format("****UserPromptEvent: ID={0} Text={1} Caption={2} Choices={3}", ID,  Text,  Caption,  Choices));
 //				Answer = 0;
 //			};
@@ -146,19 +146,15 @@ namespace OctoTip.Manager
 			
 			try
 			{
-				myLogger.Add("B4 OctoTip.Manager.RobotWrapper.PrepareScript");
-				ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
-				myLogger.Add("After OctoTip.Manager.RobotWrapper.PrepareScript");
-				myLogger.Add("B4 OctoTip.Manager.RobotWrapper.StartScript");
 				try
 				{
-					Evo.StartScript(ScriptID, 0, 0);
+					ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
 				}
 				catch (System.Runtime.InteropServices.COMException e)
 				{
 					if (e.Message.Contains("Previous script could not be unloaded"))
 					{
-						Evo.StartScript(ScriptID, 0, 0);
+						ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
 					}
 					else
 					{
@@ -166,8 +162,10 @@ namespace OctoTip.Manager
 					}
 					
 				}
+				Evo.StartScript(ScriptID, 0, 0);
 				
-				myLogger.Add("After OctoTip.Manager.RobotWrapper.StartScript");
+				
+				//myLogger.Add("After OctoTip.Manager.RobotWrapper.StartScript");
 
 				Job.JobStatus = RobotJob.Status.Running;
 				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
