@@ -25,18 +25,14 @@ namespace KillCurveExpPlaiting
 		
 		
 		int LicInd;
-		int SampleEppendorfInd;
 		int NumberOfSamples;
-		bool IsFirst;
+
 
 		
-		public KCEPSampleState(int LicInd,int SampleEppendorfInd,int NumberOfSamples,bool IsFirst):base()
+		public KCEPSampleState(int LicInd, int NumberOfSamples,int FirstSampleEppendorfInd ):base()
 		{
 			this.LicInd = LicInd;
-			this.SampleEppendorfInd = SampleEppendorfInd;
 			this.NumberOfSamples =NumberOfSamples;
-			this.IsFirst = IsFirst;
-
 		}
 		
 		public void Restart()
@@ -46,7 +42,7 @@ namespace KillCurveExpPlaiting
 
 		protected override RobotJob BeforeRobotRun()
 		{
-			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
+			List<RobotJobParameter> RJP = new List<RobotJobParameter>(4);
 			
 			LicPos LP = Utils.Ind2LicPos(LicInd);
 
@@ -55,10 +51,7 @@ namespace KillCurveExpPlaiting
 			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("NumberOfSamples",RobotJobParameter.ParameterType.Number,NumberOfSamples));
-			RJP.Add(new RobotJobParameter("FirstSampleInd",RobotJobParameter.ParameterType.Number,SampleEppendorfInd));
-			RJP.Add(new RobotJobParameter("IsFirst",RobotJobParameter.ParameterType.Number, IsFirst ? 1 : 0));
-
-			
+		
 			RobotJob RJ = new RobotJob(
 				@"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\TakeSample.esc",RJP);
 			

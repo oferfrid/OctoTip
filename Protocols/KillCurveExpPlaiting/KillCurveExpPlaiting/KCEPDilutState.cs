@@ -18,23 +18,20 @@ namespace KillCurveExpPlaiting
 	/// <summary>
 	/// Description of KCEPStartKillState.
 	/// </summary>
-	[State("Dilut 2 AMP","Dilut Sample To AMP")]
-	public class KCEPStartKillState:RunRobotState,IRestartableState
+	public abstract class KCEPDilut:RunRobotState,IRestartableState
 	{
 		
-		
 		int LicInd;
-		int NumberOfSamples;
-		int NumberOfExpSamples;
-		int AMPPosision;
-
-		
-		public KCEPStartKillState(int LicInd,int NumberOfSamples,int NumberOfExpSamples,int AMPPosision):base()
+		int NumberOfSamplesToDilute;
+		string SharedResourcesFilePath;
+	
+			
+			public KCEPDilut(int LicInd,int Row,int NumberOfSamplesToDilute,string SharedResourcesFilePath):base()
 		{
 			this.LicInd = LicInd;
-			this.NumberOfSamples = NumberOfSamples;
-			this.NumberOfExpSamples = NumberOfExpSamples;
-			this.AMPPosision = AMPPosision;
+			this.NumberOfSamplesToDilute = NumberOfSamplesToDilute;
+			this.SharedResourcesFilePath = SharedResourcesFilePath;
+			
 		}
 		
 		public void Restart()
@@ -48,18 +45,29 @@ namespace KillCurveExpPlaiting
 			
 			LicPos LP = Utils.Ind2LicPos(LicInd);
 			
+			int DiluteUsing384PlateIndex = LocalUtils.GetNext384Index(SharedResourcesFilePath);
+			int DiluteUsing384PlatePos = LocalUtils.GetNext384Pos(DiluteUsing384PlateIndex);
+			
+			//increase the index off 384 in the number of samples
+			for (int i=0;i<(NumberOfSamplesToDilute-1);i++)
+			{
+				LocalUtils.GetNext384Pos(LocalUtils.GetNext384Index(SharedResourcesFilePath));
+			}
+			
 			//ImportVariable(Liconic6PlateCart#Liconic6PlatePos#NumberOfSamples#SampleFirstLocation,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\StartData.csv",0#0#0#0#0,"1#1#2#22#1",0,1,0,1,1);
 			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
-			RJP.Add(new RobotJobParameter("NumberOfSamples",RobotJobParameter.ParameterType.Number,NumberOfSamples));
-			RJP.Add(new RobotJobParameter("AMPPosision",RobotJobParameter.ParameterType.Number,AMPPosision));
+			RJP.Add(new RobotJobParameter("NumberOfSamplesToDilute",RobotJobParameter.ParameterType.Number,NumberOfSamplesToDilute));
+			RJP.Add(new RobotJobParameter("DiluteUsing384PlatePos",RobotJobParameter.ParameterType.Number,DiluteUsing384PlatePos));
 			
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\StartKill.esc",RJP);
+				@"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\Dilut1.esc",RJP);
 			
 			return RJ;
 		}
+		
+		
 		
 		protected override void AfterRobotRun()
 		{
@@ -67,12 +75,7 @@ namespace KillCurveExpPlaiting
 		}
 		
 		
-		#region static
-		public static new List<Type> NextStates()
-		{
-			return new List<Type>{typeof(KCEPSampleState)};
-		}
-		#endregion
+		
 	}
 }
 

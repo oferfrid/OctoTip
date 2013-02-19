@@ -44,15 +44,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KCEPDilutState.cs" />
+    <Compile Include="KCEPDilut1State.cs" />
+    <Compile Include="KCEPDilut2State.cs" />
     <Compile Include="KCEPEndGrowState.cs" />
+    <Compile Include="KCEPGrow1State.cs" />
     <Compile Include="KCEPGrowState.cs" />
     <Compile Include="KCEPProtocol.cs" />
     <Compile Include="KCEPProtocolParameters.cs" />
+    <Compile Include="KCEPReadBackroundState.cs" />
+    <Compile Include="KCEPReadODState.cs" />
     <Compile Include="KCEPStartGrowState.cs" />
     <Compile Include="KCEPStartKillState.cs" />
     <Compile Include="KCEPSampleState.cs" />
     <Compile Include="KCEPWaitState.cs" />
+    <Compile Include="LocalUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="KCEPWait2ODReadState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

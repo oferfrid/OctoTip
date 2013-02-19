@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 
@@ -17,10 +18,10 @@ namespace KillCurveExpPlaiting
 	/// <summary>
 	/// Description of KCEPProtocol.
 	/// </summary>
-	[Protocol("Kill Curve Plaiting","Ofer Fridman","Kill courve by plaiting.")]
+	[Protocol("Kill Curve Exp Plaiting","Ofer Fridman","Kill courve of Exponential by plaiting.")]
 	public class KCEPProtocol:Protocol
 	{
-		DateTime StartTime;
+		DateTime KillStartTime;
 		
 		public new KCEPProtocolParameters ProtocolParameters
 		{
@@ -42,42 +43,45 @@ namespace KillCurveExpPlaiting
 		{
 			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
 			
+			//Wait for grow1
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting grow1 in plate index {0})",ProtocolParameters.LicPlatePosition));
+			ChangeState(new KCEPGrow1State(ProtocolParameters.Grow1Time));
 			
-			if(ProtocolParameters.RunGrow)
-			{
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting grow in plate index {0})",ProtocolParameters.ON96IndInLiconic));
-				this.ChangeState(new KCEPStartGrowState(ProtocolParameters.ON96IndInLiconic));
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Wating for ON ({0:0.0} Hours) in plate index {1})",ProtocolParameters.Hours2Grow2ON,ProtocolParameters.ON96IndInLiconic));
-				this.ChangeState(new KCEPGrowState(ProtocolParameters.Hours2Grow2ON));
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("End Grow in plate index {0})",ProtocolParameters.ON96IndInLiconic));
-				this.ChangeState(new KCEPEndGrowState(ProtocolParameters.ON96IndInLiconic));
-				
-			}
+			//Dilute sampels 1
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute 1 in plate index {0})",ProtocolParameters.LicPlatePosition));
+			ChangeState(new KCEPDilut1State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfSamples,ProtocolParameters.SharedResourcesFilePath));
 			
 			
-			if(ProtocolParameters.RunStart)
-			{
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Kill for {0} samples in plate index {1})",ProtocolParameters.NumberOfSamples,ProtocolParameters.Sample6IndInLiconic));
-				this.ChangeState(new KCEPStartKillState(ProtocolParameters.Sample6IndInLiconic,ProtocolParameters.NumberOfSamples,ProtocolParameters.ONStartwellIndex,ProtocolParameters.AMPPosision));
-			}
-			StartTime = DateTime.Now;
+			//Wait BG OD
+			Whait4OD(2);
+			
+			//Dilute Exponential
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute of exponential in plate index {0})",ProtocolParameters.LicPlatePosition));
+			ChangeState(new KCEPDilut2State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfExpSamples,ProtocolParameters.SharedResourcesFilePath));
+
+			//Wait BG OD
+			Whait4OD(3);
+			
+			//Add Amp for exponential  and start kill
+			KillStartTime = DateTime.Now;
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Kill for {0} samples in plate index {1})",ProtocolParameters.NumberOfSamples,ProtocolParameters.LicPlatePosition));
+			ChangeState(new KCEPStartKillState(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfSamples,ProtocolParameters.NumberOfExpSamples,ProtocolParameters.AMPPosision));
+			
+			
 			
 			while(!this.ShouldStop & ProtocolParameters.SampleIndex<=ProtocolParameters.SampleTimes.Length )
 			{
-				int SampleEppendorfInd = ProtocolParameters.SampleEppendorfInd;
-				ProtocolParameters.SampleEppendorfInd += ProtocolParameters.NumberOfSamples;
-				
-				
-				if (0==ProtocolParameters.SampleIndex)
+				int SampleEppendorfInd = 0;
+				for (int i=0;i<(ProtocolParameters.NumberOfSamples);i++)
 				{
-					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, 0 ,TimeFromStart().TotalMinutes));
-					ChangeState(new KCEPSampleState(ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,true));
+					SampleEppendorfInd = LocalUtils.GetNextFreezPos(ProtocolParameters.SharedResourcesFilePath,string.Format("{0}:t{1}, S{2} - {3}",ProtocolParameters.Name + ProtocolParameters.SampleIndex , (i+1),DateTime.Now));
 				}
-				else
-				{
-					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
-					ChangeState(new KCEPSampleState(ProtocolParameters.Sample6IndInLiconic,SampleEppendorfInd,ProtocolParameters.NumberOfSamples,false));
-				}
+				
+				int firstSampleEppendorfInd = SampleEppendorfInd - ProtocolParameters.NumberOfSamples;
+				
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.LicPlatePosition,firstSampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
+				ChangeState(new KCEPSampleState(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfSamples,firstSampleEppendorfInd));
+				
 				
 				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("end Sampleling at {0:0.0} Minutes",TimeFromStart().TotalMinutes));
 				
@@ -93,11 +97,62 @@ namespace KillCurveExpPlaiting
 			}
 		}
 		
+		private void Whait4OD(int Row)
+		{
+			double[] BackroundOD ;
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("read Backround from plate {0} row {1}",ProtocolParameters.LicPlatePosition,Row));
+			
+			KCEPReadBackroundState ReadBackroundState = new KCEPReadBackroundState(ProtocolParameters.LicPlatePosition,Row,ProtocolParameters.NumberOfExpSamples);
+			ChangeState(ReadBackroundState);
+			
+			BackroundOD = ReadBackroundState.BackroundOD;
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("End reading Backround from plate {0} row,{1} ODs={2}",ProtocolParameters.LicPlatePosition,Row ,string.Join(",", BackroundOD)));
+			
+			//Wait for the first exponential well to reach Dilution Net OD
+			
+			
+			
+			double[] NetOD = new double[ProtocolParameters.NumberOfExpSamples];
+			//Wait for the first exponential well to reach Dilution Net OD
+			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("wait for first OD read for plate {0} Row {1}, {2:0.00} Hours",ProtocolParameters.LicPlatePosition ,Row,ProtocolParameters.Time4TheFirstODTest));
+			ChangeState(new KCEPWait2ODReadState(ProtocolParameters.Time4TheFirstODTest));
+			do
+			{
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("read OD from plate {0}",ProtocolParameters.LicPlatePosition));
+				KCEPReadODState ReadODState = new KCEPReadODState(ProtocolParameters.LicPlatePosition,2,ProtocolParameters.NumberOfExpSamples);
+				ChangeState(ReadODState);
+				
+				double[] OD = ReadODState.OD;
+				for(int i=0;i<OD.Length;i++)
+				{
+					NetOD[i] = OD[i]-BackroundOD[i];
+				}
+				
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("End reading OD from plate {0} Row {1} Net OD={2} (OD={3})",ProtocolParameters.LicPlatePosition ,Row,string.Join(",", NetOD),string.Join(",", OD)));
+
+				if(NetOD.Max()<=ProtocolParameters.NetODtoDilute)
+				{
+					double TimeTillNextRead = GetTimeTillNextRead(NetOD.Max(),ProtocolParameters.NetODtoDilute);
+					ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("wait for OD read for plate {0} Row {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,Row,TimeTillNextRead));
+					ChangeState(new KCEPWait2ODReadState(TimeTillNextRead/60));
+				}
+			}
+			while(NetOD.Max()<ProtocolParameters.NetODtoDilute && !this.ShouldStop);
+			
+		}
+		
 		FileInfo ProtocolStateFile;
 		
+		private double GetTimeTillNextRead(double NetOD,double TargetOD)
+		{
+			double TimeTillNextRead = -(ProtocolParameters.MaxTimeBetweenODreads - ProtocolParameters.MinTimeBetweenODreads)/(ProtocolParameters.NetODtoDilute)*NetOD + ProtocolParameters.MaxTimeBetweenODreads;
+			return TimeTillNextRead;
+			
+		}
+
 		private TimeSpan TimeFromStart()
 		{
-			return (DateTime.Now - StartTime);
+			return (DateTime.Now - KillStartTime);
 		}
 		
 		
@@ -118,13 +173,15 @@ namespace KillCurveExpPlaiting
 		public static new List<Type> ProtocolStates()
 		{
 			return new List<Type>{
+				typeof(KCEPGrow1State),
+				typeof(KCEPDilut1State),
+				typeof(KCEPDilut2State),
 				typeof(KCEPStartKillState),
 				typeof(KCEPSampleState),
 				typeof(KCEPWaitState),
-				typeof(KCEPStartGrowState),
-				typeof(KCEPEndGrowState),
-				typeof(KCEPGrowState)
-					
+				typeof(KCEPReadBackroundState),
+				typeof(KCEPWait2ODReadState),
+				typeof(KCEPReadODState)
 			};
 		}
 		#endregion
