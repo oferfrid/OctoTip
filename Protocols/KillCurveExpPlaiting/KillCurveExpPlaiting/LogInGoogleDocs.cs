@@ -13,7 +13,7 @@ using Google.GData.Spreadsheets;
 
 
 
-namespace SerialDilutionEvolution
+namespace KillCurveExpPlaiting
 {
 	/// <summary>
 	/// Description of LogInGoogleDocs.

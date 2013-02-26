@@ -26,6 +26,7 @@ namespace KillCurveExpPlaiting
 		
 		int LicInd;
 		int NumberOfSamples;
+		int FirstSampleEppendorfInd;
 
 
 		
@@ -33,6 +34,7 @@ namespace KillCurveExpPlaiting
 		{
 			this.LicInd = LicInd;
 			this.NumberOfSamples =NumberOfSamples;
+			this.FirstSampleEppendorfInd =FirstSampleEppendorfInd;
 		}
 		
 		public void Restart()
@@ -45,12 +47,13 @@ namespace KillCurveExpPlaiting
 			List<RobotJobParameter> RJP = new List<RobotJobParameter>(4);
 			
 			LicPos LP = Utils.Ind2LicPos(LicInd);
+//ImportVariable(Liconic24PlateCart#Liconic24PlatePos#NumberOfSamples#FirstSampleEppendorfInd,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\TakeSampleData.csv",0#0#0#0,"1#1#2#1",0,1,0,1,1);
 
-///				@"ImportVariable(Liconic6PlateCart#Liconic6PlatePos#NumberOfSamples#FirstSampleInd#IsFirst,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\TakeSampleData.csv",0#0#0#0#0,"1#1#2#1#0",0,1,0,1,1);",RJP);
 
-			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
-			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("Liconic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
+			RJP.Add(new RobotJobParameter("Liconic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("NumberOfSamples",RobotJobParameter.ParameterType.Number,NumberOfSamples));
+			RJP.Add(new RobotJobParameter("FirstSampleEppendorfInd",RobotJobParameter.ParameterType.Number,FirstSampleEppendorfInd));
 		
 			RobotJob RJ = new RobotJob(
 				@"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\TakeSample.esc",RJP);

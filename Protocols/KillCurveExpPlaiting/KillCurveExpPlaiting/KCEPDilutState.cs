@@ -23,13 +23,16 @@ namespace KillCurveExpPlaiting
 		
 		int LicInd;
 		int NumberOfSamplesToDilute;
+		int Row;
 		string SharedResourcesFilePath;
+		
 	
 			
 			public KCEPDilut(int LicInd,int Row,int NumberOfSamplesToDilute,string SharedResourcesFilePath):base()
 		{
 			this.LicInd = LicInd;
 			this.NumberOfSamplesToDilute = NumberOfSamplesToDilute;
+			this.Row = Row;
 			this.SharedResourcesFilePath = SharedResourcesFilePath;
 			
 		}
@@ -54,15 +57,17 @@ namespace KillCurveExpPlaiting
 				LocalUtils.GetNext384Pos(LocalUtils.GetNext384Index(SharedResourcesFilePath));
 			}
 			
-			//ImportVariable(Liconic6PlateCart#Liconic6PlatePos#NumberOfSamples#SampleFirstLocation,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\StartData.csv",0#0#0#0#0,"1#1#2#22#1",0,1,0,1,1);
-			RJP.Add(new RobotJobParameter("Liconic6PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
-			RJP.Add(new RobotJobParameter("Liconic6PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			//ImportVariable(Lic24PlateCart#Lic24PlatePos#Dilution348Ind#Row#NumberOfSamplesToDilute,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\DiluteData.csv",0#0#0#0#0,"1#1#1#2#4",0,1,0,1,1);
+			RJP.Add(new RobotJobParameter("Lic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
+			RJP.Add(new RobotJobParameter("Lic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("Dilution348Ind",RobotJobParameter.ParameterType.Number,DiluteUsing384PlatePos));
+			RJP.Add(new RobotJobParameter("Row",RobotJobParameter.ParameterType.Number,Row));
 			RJP.Add(new RobotJobParameter("NumberOfSamplesToDilute",RobotJobParameter.ParameterType.Number,NumberOfSamplesToDilute));
-			RJP.Add(new RobotJobParameter("DiluteUsing384PlatePos",RobotJobParameter.ParameterType.Number,DiluteUsing384PlatePos));
+			
 			
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\Dilut1.esc",RJP);
+				@"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\Dilute.esc",RJP);
 			
 			return RJ;
 		}

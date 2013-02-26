@@ -1,5 +1,5 @@
-3919B560
-20120511_151633 Tecan           
+825E8A0D
+20130219_191736 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -130,8 +130,8 @@ V;200
 998;22;
 996;0;0;
 --{ RPG }--
-ImportVariable(DiTi200Ind,"D:\OctoTip\Protocols\KillCurvePlaiting\Scripts\DiTi200Ind.csv",0,"1",0,1,0,1,1);
-IfThen("DiTi200Ind",2,"2");
+ImportVariable(DiTi200Ind,"D:\OctoTip\Protocols\KillCurveExpPlaiting\SharedResources\DiTi200Ind.csv",0,"1",0,1,0,1,1);
+IfThen("DiTi200Ind",2,"3");
 UserPrompt("No More DiTi replace Diti50 In Hotels",0,-1);
 Variable(DiTi50Ind,"1",0,"",0,1.000000,10.000000,0,2,0,0);
 Else();
@@ -151,4 +151,6 @@ Transfer_Rack("22","22",1,0,0,0,0,"","12 Well CaCo2 Plate","Narrow","","","Hotel
 EndIf();
 Comment("Incriment DiTi Pos");
 Variable(DiTi200Ind,"DiTi200Ind+1",0,"",0,1.000000,10.000000,0,2,0,0);
-ExportVariable(DiTi200Ind,"D:\RobotScripts\KillingCurve\DiTi200Ind.csv",1,1);
+ExportVariable(DiTi200Ind,"D:\OctoTip\Protocols\SerialDilutionEvolution\SharedResources\DiTi200Ind.csv",1,1);
+Set_DITI_Counter2("Box DiTi 200 ul","4","1","96",1);
+Set_DITI_Counter2("Box DiTi 200 ul","4","1","1",0);

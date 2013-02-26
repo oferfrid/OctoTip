@@ -16,8 +16,7 @@ namespace KillCurveExpPlaiting
 	/// <summary>
 	/// Description of KCEPGrowState.
 	/// </summary>
-	[State("Wait 2 ON","Wait for sample to get ro ON")]
-	public class KCEPGrowState:WaitState
+	public abstract class KCEPGrowState:WaitState
 	{
 
 		public KCEPGrowState(double HoursOfGrow):base(DateTime.Now.AddHours(HoursOfGrow))
@@ -34,12 +33,7 @@ namespace KillCurveExpPlaiting
 		{
 			
 		}
-		#region static
-		public static new List<Type> NextStates()
-		{
-			return new List<Type>{typeof(KCEPEndGrowState)};
-		}
-		#endregion
+		
 	}
 }
 

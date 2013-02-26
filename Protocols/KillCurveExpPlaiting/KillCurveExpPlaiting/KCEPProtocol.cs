@@ -22,6 +22,7 @@ namespace KillCurveExpPlaiting
 	public class KCEPProtocol:Protocol
 	{
 		DateTime KillStartTime;
+		LogInGoogleDocs myLogInGoogleDocs;
 		
 		public new KCEPProtocolParameters ProtocolParameters
 		{
@@ -32,7 +33,8 @@ namespace KillCurveExpPlaiting
 		public KCEPProtocol(KCEPProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
 			//create protocol File
-			
+			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
+			myLogInGoogleDocs = new LogInGoogleDocs(LogName,this.ProtocolParameters.SharedResourcesFilePath);
 			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") +".txt");
 			ReportProtocolState(0,string.Format("Creating Protoclo {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
@@ -42,26 +44,27 @@ namespace KillCurveExpPlaiting
 		protected override void DoWork( )
 		{
 			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
-			
-			//Wait for grow1
-			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting grow1 in plate index {0})",ProtocolParameters.LicPlatePosition));
-			ChangeState(new KCEPGrow1State(ProtocolParameters.Grow1Time));
-			
-			//Dilute sampels 1
-			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute 1 in plate index {0})",ProtocolParameters.LicPlatePosition));
-			ChangeState(new KCEPDilut1State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfSamples,ProtocolParameters.SharedResourcesFilePath));
-			
-			
-			//Wait BG OD
-			Whait4OD(2);
-			
-			//Dilute Exponential
-			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute of exponential in plate index {0})",ProtocolParameters.LicPlatePosition));
-			ChangeState(new KCEPDilut2State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfExpSamples,ProtocolParameters.SharedResourcesFilePath));
+			if (!ProtocolParameters.StartInKill)
+			{
+				//Wait for grow1
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting grow1 in plate index {0})",ProtocolParameters.LicPlatePosition));
+				ChangeState(new KCEPGrow1State(ProtocolParameters.Grow1Time));
+				
+				//Dilute sampels 1
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute 1 in plate index {0})",ProtocolParameters.LicPlatePosition));
+				ChangeState(new KCEPDilut1State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfSamples,ProtocolParameters.SharedResourcesFilePath));
+				
+				
+				//Wait BG OD
+				Whait4OD(2);
+				
+				//Dilute Exponential
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute of exponential in plate index {0})",ProtocolParameters.LicPlatePosition));
+				ChangeState(new KCEPDilut2State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfExpSamples,ProtocolParameters.SharedResourcesFilePath));
 
-			//Wait BG OD
-			Whait4OD(3);
-			
+				//Wait BG OD
+				Whait4OD(3);
+			}
 			//Add Amp for exponential  and start kill
 			KillStartTime = DateTime.Now;
 			ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Kill for {0} samples in plate index {1})",ProtocolParameters.NumberOfSamples,ProtocolParameters.LicPlatePosition));
@@ -79,7 +82,7 @@ namespace KillCurveExpPlaiting
 				
 				int firstSampleEppendorfInd = SampleEppendorfInd - ProtocolParameters.NumberOfSamples;
 				
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.LicPlatePosition,firstSampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex - 1] ,TimeFromStart().TotalMinutes));
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Sampleling from plate {0} to Eppendorf {1} + {2} samples timestamp {3:0.0} starting at {4:0.0} Minutes",ProtocolParameters.LicPlatePosition,firstSampleEppendorfInd,ProtocolParameters.NumberOfSamples, ProtocolParameters.SampleTimes[ProtocolParameters.SampleIndex] ,TimeFromStart().TotalMinutes));
 				ChangeState(new KCEPSampleState(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfSamples,firstSampleEppendorfInd));
 				
 				
@@ -158,13 +161,23 @@ namespace KillCurveExpPlaiting
 		
 		public void ReportProtocolState(int SampleID,string Messege)
 		{
-			using (StreamWriter sw = ProtocolStateFile.AppendText())
+			string LogMessege = string.Format("({0}):{1}",SampleID,Messege);
+			
+			try
 			{
-				sw.WriteLine("({0}){1}:\t{2}",SampleID,DateTime.Now,Messege);
-				sw.Flush();
+				using (StreamWriter sw = ProtocolStateFile.AppendText())
+				{
+					sw.WriteLine("({0}){1}:\t{2}",SampleID,DateTime.Now,Messege);
+					sw.Flush();
+				}
+				myLogInGoogleDocs.Log(LogMessege);
+				DisplayData(LogMessege);
 			}
-			DisplayData(Messege);
-			myProtocolLogger.Add(Messege);
+			catch(Exception e)
+			{
+				myProtocolLogger.Add("Error:" + e.ToString());
+			}
+			myProtocolLogger.Add(LogMessege);
 		}
 		
 		#region static

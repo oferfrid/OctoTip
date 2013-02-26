@@ -52,7 +52,8 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// Updatebutton
 			// 
-			this.Updatebutton.Location = new System.Drawing.Point(293, 357);
+			this.Updatebutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Updatebutton.Location = new System.Drawing.Point(297, 360);
 			this.Updatebutton.Name = "Updatebutton";
 			this.Updatebutton.Size = new System.Drawing.Size(55, 28);
 			this.Updatebutton.TabIndex = 2;
@@ -62,7 +63,8 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			// Cancelbutton
 			// 
-			this.Cancelbutton.Location = new System.Drawing.Point(232, 357);
+			this.Cancelbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Cancelbutton.Location = new System.Drawing.Point(236, 360);
 			this.Cancelbutton.Name = "Cancelbutton";
 			this.Cancelbutton.Size = new System.Drawing.Size(55, 28);
 			this.Cancelbutton.TabIndex = 3;
@@ -74,7 +76,7 @@ namespace OctoTip.OctoTipExperimentControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(364, 388);
+			this.ClientSize = new System.Drawing.Size(364, 400);
 			this.Controls.Add(this.Cancelbutton);
 			this.Controls.Add(this.Updatebutton);
 			this.Controls.Add(this.ParametersPanel);

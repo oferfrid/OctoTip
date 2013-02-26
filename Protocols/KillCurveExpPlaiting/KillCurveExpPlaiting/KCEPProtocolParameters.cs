@@ -18,7 +18,7 @@ namespace KillCurveExpPlaiting
 	public class KCEPProtocolParameters:ProtocolParameters
 	{		public KCEPProtocolParameters()
 		{
-		}	
+		}
 		[ProtocolParameterAtribute("Sample Position in Liconic","1",true)]
 		public int LicPlatePosition;
 		
@@ -40,7 +40,8 @@ namespace KillCurveExpPlaiting
 		public double MinTimeBetweenODreads;
 		[ProtocolParameterAtribute("Max Time between OD reads (min)","30",true)]
 		public double MaxTimeBetweenODreads;
-		
+		[ProtocolParameterAtribute("Start in kill","false",true)]
+		public bool StartInKill;
 		
 		[ProtocolParameterAtribute("Sample times (minutes)","10,15,20",true)]
 		public double[] SampleTimes;
