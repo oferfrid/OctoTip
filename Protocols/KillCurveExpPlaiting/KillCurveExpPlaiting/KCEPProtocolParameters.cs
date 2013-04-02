@@ -25,7 +25,7 @@ namespace KillCurveExpPlaiting
 		[ProtocolParameterAtribute("Number of samples","4",true)]
 		public int NumberOfSamples;
 		
-		[ProtocolParameterAtribute("Number of Exponential samples","1",true)]
+		[ProtocolParameterAtribute("Number of Exponential samples","2",true)]
 		public int NumberOfExpSamples;
 		
 		[ProtocolParameterAtribute("Grow 1 (Hr)","0",true)]
@@ -34,7 +34,7 @@ namespace KillCurveExpPlaiting
 		[ProtocolParameterAtribute("Time wait for First OD after dilution (Hr)","4",true)]
 		public double Time4TheFirstODTest;
 		
-		[ProtocolParameterAtribute("Net OD to dilute","0.06",true)]
+		[ProtocolParameterAtribute("Net OD to dilute","0.05",true)]
 		public double NetODtoDilute;
 		[ProtocolParameterAtribute("Min Time between OD reads (min)","5",true)]
 		public double MinTimeBetweenODreads;
@@ -43,7 +43,7 @@ namespace KillCurveExpPlaiting
 		[ProtocolParameterAtribute("Start in kill","false",true)]
 		public bool StartInKill;
 		
-		[ProtocolParameterAtribute("Sample times (minutes)","10,15,20",true)]
+		[ProtocolParameterAtribute("Sample times (minutes)","0,30,60,120,300",true)]
 		public double[] SampleTimes;
 		[ProtocolParameterAtribute("Curent Sample Index","0",true)]
 		public int SampleIndex;

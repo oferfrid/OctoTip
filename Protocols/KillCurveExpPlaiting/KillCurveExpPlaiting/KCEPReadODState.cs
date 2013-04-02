@@ -59,7 +59,7 @@ namespace KillCurveExpPlaiting
 			Dictionary<int, List<double>> MeasurementsResults = this.GetMeasurementsResults(24);
 			for (int i=0;i<NumberOfExpSamples;i++)
 			{
-				int WellInd = (RowInd-1)*4 + i;
+				int WellInd = (RowInd-1)*4 + i + 1;
 				_OD[i] = MeasurementsResults[WellInd].Average();
 			}
 			
