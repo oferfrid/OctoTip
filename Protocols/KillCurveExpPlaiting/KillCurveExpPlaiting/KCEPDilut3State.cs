@@ -15,10 +15,10 @@ namespace KillCurveExpPlaiting
 	/// <summary>
 	/// Description of KCEPDilut2.
 	/// </summary>
-	[State("Dilut Exponential 1","Dilut Exponential fist")]
-	public class KCEPDilut2State:KCEPDilut
+	[State("Dilut Exponential 2","Dilut Exponential fist")]
+	public class KCEPDilut3State:KCEPDilut
 	{
-		public KCEPDilut2State(int LicInd,int NumberOfExpSamples,string SharedResourcesFilePath):base( LicInd, 3, NumberOfExpSamples, SharedResourcesFilePath)
+		public KCEPDilut3State(int LicInd,int NumberOfExpSamples,string SharedResourcesFilePath):base( LicInd,4, NumberOfExpSamples, SharedResourcesFilePath)
 			{}
 		
 		#region static

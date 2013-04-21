@@ -1,5 +1,5 @@
-858B87D0
-20130305_091158 Tecan           
+E59736C9
+20130405_131436 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -138,8 +138,8 @@ Transfer_Rack("26","11",1,1,1,0,1,"17","6WellCaCo2Plate","Narrow","","","Storex"
 Comment("TakeSamples");
 BeginLoop("NumberOfSamples","Sample");
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
-Mix(1,"Water free dispense no LD","180",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",3,1,"Sample",2,1,0);
-Aspirate(1,"Water free dispense LD & Trace","20",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",1,"Sample",2,1,0);
+Mix(1,"Water free dispense no LD","180",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040P00",3,1,"Sample",2,1,0);
+Aspirate(1,"Water free dispense LD & Trace","20",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040P00",1,"Sample",2,1,0);
 Variable(WELL_OFFSET,"FirstSampleEppendorfInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense no LD","20",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",1,"Sample",2,1,0);
 Mix(1,"Water free dispense LD & Trace","150",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",3,1,"Sample",2,1,0);

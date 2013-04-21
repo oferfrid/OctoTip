@@ -78,7 +78,7 @@ namespace KillCurveExpPlaiting
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(KCEPWait2ODReadState),typeof(KCEPDilut2State),typeof(KCEPStartKillState)};
+			return new List<Type>{typeof(KCEPWait2ODReadState),typeof(KCEPDilut2State),typeof(KCEPDilut3State),typeof(KCEPStartKillState)};
 		}
 		#endregion
 		

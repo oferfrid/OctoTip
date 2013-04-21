@@ -19,7 +19,7 @@ namespace KillCurveExpPlaiting
 	{		public KCEPProtocolParameters()
 		{
 		}
-		[ProtocolParameterAtribute("Sample Position in Liconic","1",true)]
+		[ProtocolParameterAtribute("Sample Position in Liconic","34",true)]
 		public int LicPlatePosition;
 		
 		[ProtocolParameterAtribute("Number of samples","4",true)]
@@ -28,13 +28,13 @@ namespace KillCurveExpPlaiting
 		[ProtocolParameterAtribute("Number of Exponential samples","2",true)]
 		public int NumberOfExpSamples;
 		
-		[ProtocolParameterAtribute("Grow 1 (Hr)","0",true)]
+		[ProtocolParameterAtribute("Grow 1 (Hr)","12",true)]
 		public double Grow1Time;
 		
 		[ProtocolParameterAtribute("Time wait for First OD after dilution (Hr)","4",true)]
 		public double Time4TheFirstODTest;
 		
-		[ProtocolParameterAtribute("Net OD to dilute","0.05",true)]
+		[ProtocolParameterAtribute("Net OD to dilute","0.025",true)]
 		public double NetODtoDilute;
 		[ProtocolParameterAtribute("Min Time between OD reads (min)","5",true)]
 		public double MinTimeBetweenODreads;
@@ -43,7 +43,7 @@ namespace KillCurveExpPlaiting
 		[ProtocolParameterAtribute("Start in kill","false",true)]
 		public bool StartInKill;
 		
-		[ProtocolParameterAtribute("Sample times (minutes)","0,30,60,120,300",true)]
+		[ProtocolParameterAtribute("Sample times (minutes)","0,30,110,300,500",true)]
 		public double[] SampleTimes;
 		[ProtocolParameterAtribute("Curent Sample Index","0",true)]
 		public int SampleIndex;

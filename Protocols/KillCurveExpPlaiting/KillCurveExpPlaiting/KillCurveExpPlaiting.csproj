@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IniFile.cs" />
+    <Compile Include="KCEPDilut3State.cs" />
     <Compile Include="KCEPDilutState.cs" />
     <Compile Include="KCEPDilut1State.cs" />
     <Compile Include="KCEPDilut2State.cs" />

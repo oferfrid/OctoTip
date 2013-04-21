@@ -58,12 +58,19 @@ namespace KillCurveExpPlaiting
 				//Wait BG OD
 				Whait4OD(2);
 				
-				//Dilute Exponential
-				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute of exponential in plate index {0}",ProtocolParameters.LicPlatePosition));
+				//Dilute Exponential 1 
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute of exponential 1 in plate index {0}",ProtocolParameters.LicPlatePosition));
 				ChangeState(new KCEPDilut2State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfExpSamples,ProtocolParameters.SharedResourcesFilePath));
 
 				//Wait BG OD
 				Whait4OD(3);
+				
+				//Dilute Exponential 1 
+				ReportProtocolState(ProtocolParameters.SampleIndex,string.Format("Starting Diulute of exponential  2 in plate index {0}",ProtocolParameters.LicPlatePosition));
+				ChangeState(new KCEPDilut3State(ProtocolParameters.LicPlatePosition,ProtocolParameters.NumberOfExpSamples,ProtocolParameters.SharedResourcesFilePath));
+
+				//Wait BG OD
+				Whait4OD(4);
 			}
 			
 			if (ProtocolParameters.SampleIndex == 0)
@@ -195,6 +202,7 @@ namespace KillCurveExpPlaiting
 				typeof(KCEPGrow1State),
 				typeof(KCEPDilut1State),
 				typeof(KCEPDilut2State),
+				typeof(KCEPDilut3State),
 				typeof(KCEPStartKillState),
 				typeof(KCEPSampleState),
 				typeof(KCEPWaitState),
