@@ -22,13 +22,13 @@ namespace GrowKillCurvePlaiting
 		[ProtocolParameterAtribute("Sample Position in Liconic","34",true)]
 		public int LicPlatePosition;
 		
-		[ProtocolParameterAtribute("Number of samples","4",true)]
+		[ProtocolParameterAtribute("Number of samples","3",true)]
 		public int NumberOfSamples;
 		
 		[ProtocolParameterAtribute("Grow 1 (Hr)","12",true)]
 		public double Grow1Time;
 		
-		[ProtocolParameterAtribute("Time wait for First OD after dilution (Hr)","4",true)]
+		[ProtocolParameterAtribute("Time wait for First OD after dilution (Hr)","8",true)]
 		public double Time4TheFirstODTest;
 		
 		[ProtocolParameterAtribute("Net OD to dilute","0.7",true)]
@@ -40,7 +40,7 @@ namespace GrowKillCurvePlaiting
 		[ProtocolParameterAtribute("Start in kill","false",true)]
 		public bool StartInKill;
 		
-		[ProtocolParameterAtribute("Sample times (minutes)","0,30,110,300,500",true)]
+		[ProtocolParameterAtribute("Sample times (minutes)","0,30,105,180,255,330,405,480",true)]
 		public double[] SampleTimes;
 		[ProtocolParameterAtribute("Curent Sample Index","0",true)]
 		public int SampleIndex;

@@ -1,5 +1,5 @@
-52438118
-20130422_103351 Tecan           
+DE751CC7
+20130521_102740 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -131,7 +131,7 @@ V;200
 Wash(255,1,1,1,0,"0.5",500,"0.5",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"0.5",500,"0.5",500,10,70,30,0,0,"1",1000,0);
 ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\ReplaceDiTi200.esc");
-ImportVariable(Lic24PlateCart#Lic24PlatePos#Dilution348Ind#Row#NumberOfSamplesToDilute,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\DiluteData.csv",0#0#0#0#0,"2#17#25#2#4",0,1,0,1,1);
+ImportVariable(Lic24PlateCart#Lic24PlatePos#Dilution348Ind#Row#NumberOfSamplesToDilute,"D:\OctoTip\Protocols\GrowKillCurvePlaiting\Scripts\DiluteData.csv",0#0#0#0#0,"2#17#25#2#4",0,1,0,1,1);
 FACTS("StoreX","StoreX_PresentPlate","~Lic24PlateCart~,~Lic24PlatePos~","1","24WellCaCo2Plate");
 FACTS("StoreX","StoreX_EndAccess","","0","");
 Comment("Get & Open Plat");

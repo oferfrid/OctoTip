@@ -1,5 +1,5 @@
-4A598F38
-20130422_153153 Tecan           
+C94C75D0
+20130521_100534 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -115,10 +115,10 @@ V;200
 998;252;22;
 998;5;
 998;4;0;System;
-998;0;3;Infinite 200;
-998;0;0;Storex;
-998;0;2;Hotel 3Pos DiTi;
+998;0;2;Infinite 200;
+998;0;3;Storex;
 998;0;1;Hotel 3Pos DiTi;
+998;0;0;Hotel 3Pos DiTi;
 998;1;
 998;251;24WellCaCo2Plate;
 998;1;
@@ -130,31 +130,28 @@ V;200
 --{ RPG }--
 Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"0.5",500,"0.5",500,10,70,30,0,0,"1",1000,0);
-ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\ReplaceDiTi200.esc");
-ImportVariable(Lic24PlateCart#Lic24PlatePos#NumberOfSamples#NumberOfExpSamples#AMPPosision,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\StartKillData.csv",0#0#0#0#0,"1#1#4#2#24",0,1,0,1,1);
+ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\GrowKillCurvePlaiting\Scripts\ReplaceDiTi200.esc");
+ImportVariable(Lic24PlateCart#Lic24PlatePos#NumberOfSamples#AMPPosision,"D:\OctoTip\Protocols\GrowKillCurvePlaiting\Scripts\StartKillData.csv",0#0#0#0,"1#1#4#24",0,1,0,1,1);
 Comment("Get & Open Plat");
 FACTS("StoreX","StoreX_PresentPlate","~Lic24PlateCart~,~Lic24PlatePos~","1","24WellCaCo2Plate");
 FACTS("StoreX","StoreX_EndAccess","","0","");
 Transfer_Rack("26","11",1,1,1,0,1,"17","24WellCaCo2Plate","Narrow","","","Storex","MP 3Pos Flat","MP 3Pos Flat","1","2","2");
 Comment("Fill 24 Plate row");
 GetDITI2(1,"BoxDiTi 1000ul",1,0,10,70);
-BeginLoop("NumberOfSamples-NumberOfExpSamples","FillWellsLB");
+BeginLoop("NumberOfSamples","FillWellsLB");
 BeginLoop("2","FillWell");
 Aspirate(1,"Water free dispense no LD","500",0,0,0,0,0,0,0,0,0,0,0,1,3,1,"010840",0,0);
-Variable(WELL_OFFSET,"NumberOfExpSamples",0,"",0,1.000000,10.000000,0,2,0,0);
-Dispense(1,"Water free dispense no LD","500",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040P00",1,"FillWellsLB",2,1,0);
-Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
+Dispense(1,"Water free dispense no LD","500",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",1,"FillWellsLB",2,1,0);
 EndLoop();
 EndLoop();
 DropDITI(1,1,6,10,70,0);
 Comment("Inoculate non Exp");
-BeginLoop("NumberOfSamples-NumberOfExpSamples","Inoc");
+BeginLoop("NumberOfSamples","Inoc");
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
-Variable(WELL_OFFSET,"NumberOfExpSamples",0,"",0,1.000000,10.000000,0,2,0,0);
 Mix(1,">> Water free dispense no LD <<	147","150",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"0604@000",3,1,"Inoc",2,1,0);
 Aspirate(1,"Water free dispense LD & Trace","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"0604@000",1,"Inoc",2,1,0);
-Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040P00",1,"Inoc",2,1,0);
-Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
+Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",1,"Inoc",2,1,0);
+Mix(1,">> Water free dispense no LD <<	151","150",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",3,1,"Inoc",2,1,0);
 DropDITI(1,1,6,10,70,0);
 EndLoop();
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
@@ -165,7 +162,7 @@ Aspirate(1,"Water free dispense no LD","(NumberOfSamples+1)*10",0,0,0,0,0,0,0,0,
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,1,1,1,"010840",0,0);
 BeginLoop("NumberOfSamples","FillWellsAmp");
-Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040P00",1,"FillWellsAmp",2,1,0);
+Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",1,"FillWellsAmp",2,1,0);
 EndLoop();
 DropDITI(1,1,6,10,70,0);
 Comment("ReturnPlate");

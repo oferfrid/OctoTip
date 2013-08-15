@@ -1,5 +1,5 @@
-E59736C9
-20130405_131436 Tecan           
+27E8BBBF
+20130523_122146 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -115,10 +115,10 @@ V;200
 998;252;22;
 998;5;
 998;4;0;System;
-998;0;3;Infinite 200;
-998;0;0;Storex;
-998;0;2;Hotel 3Pos DiTi;
+998;0;2;Infinite 200;
+998;0;3;Storex;
 998;0;1;Hotel 3Pos DiTi;
+998;0;0;Hotel 3Pos DiTi;
 998;1;
 998;251;24WellCaCo2Plate;
 998;1;
@@ -130,7 +130,8 @@ V;200
 --{ RPG }--
 Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"1",500,"1",500,10,70,30,0,0,"1",1000,0);
-ImportVariable(Liconic24PlateCart#Liconic24PlatePos#NumberOfSamples#FirstSampleEppendorfInd,"D:\OctoTip\Protocols\KillCurveExpPlaiting\Scripts\TakeSampleData.csv",0#0#0#0,"1#1#2#1",0,1,0,1,1);
+ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\GrowKillCurvePlaiting\Scripts\ReplaceDiTi200.esc");
+ImportVariable(Liconic24PlateCart#Liconic24PlatePos#NumberOfSamples#FirstSampleEppendorfInd,"D:\OctoTip\Protocols\GrowKillCurvePlaiting\Scripts\TakeSampleData.csv",0#0#0#0,"1#1#2#1",0,1,0,1,1);
 Comment("Get 24 Plate");
 FACTS("StoreX","StoreX_PresentPlate","~Liconic24PlateCart~,~Liconic24PlatePos~","1","24WellCaCo2Plate");
 FACTS("StoreX","StoreX_EndAccess","","0","");
@@ -138,8 +139,8 @@ Transfer_Rack("26","11",1,1,1,0,1,"17","6WellCaCo2Plate","Narrow","","","Storex"
 Comment("TakeSamples");
 BeginLoop("NumberOfSamples","Sample");
 GetDITI2(1,"Box DiTi 200 ul",1,0,10,70);
-Mix(1,"Water free dispense no LD","180",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040P00",3,1,"Sample",2,1,0);
-Aspirate(1,"Water free dispense LD & Trace","20",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040P00",1,"Sample",2,1,0);
+Mix(1,"Water free dispense no LD","180",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",3,1,"Sample",2,1,0);
+Aspirate(1,"Water free dispense LD & Trace","20",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"06040200",1,"Sample",2,1,0);
 Variable(WELL_OFFSET,"FirstSampleEppendorfInd-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Dispense(1,"Water free dispense no LD","20",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",1,"Sample",2,1,0);
 Mix(1,"Water free dispense LD & Trace","150",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",3,1,"Sample",2,1,0);
