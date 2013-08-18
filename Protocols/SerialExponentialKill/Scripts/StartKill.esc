@@ -1,5 +1,5 @@
-8E7434D5
-20130815_211005 Tecan           
+A493F7C1
+20130818_173521 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -131,7 +131,7 @@ V;200
 Wash(255,1,1,1,0,"0.5",500,"0.5",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"0.5",500,"0.5",500,10,70,30,0,0,"1",1000,0);
 ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\SerialExponentialKill\Scripts\ReplaceDiTi200.esc");
-ImportVariable(Lic24PlateCart#Lic24PlatePos#AmpPos#FreezePos#CurrWell#FreezeInd,"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\StartKillData.csv",0#0#0#0#0#0,"1#1#1#1#1#0",0,1,0,1,1);
+ImportVariable(Lic24PlateCart#Lic24PlatePos#AmpPos#FreezePos#CurrWell,"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\StartKillData.csv",0#0#0#0#0,"1#1#1#0#1",0,1,0,1,1);
 FACTS("StoreX","StoreX_PresentPlate","~Lic24PlateCart~,~Lic24PlatePos~","1","24WellCaCo2Plate");
 FACTS("StoreX","StoreX_EndAccess","","0","");
 Transfer_Rack("26","11",1,1,1,0,1,"17","24WellCaCo2Plate","Narrow","","","Storex","MP 3Pos Flat","MP 3Pos Flat","1","2","2");
@@ -145,7 +145,7 @@ Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,11,1,1,"060410
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 DropDITI(1,1,6,10,70,0);
 Comment("Freeze");
-IfThen("FreezeInd",1,"0");
+IfThen("FreezePos",1,"0");
 Variable(WELL_OFFSET,"CurrWell-2",0,"",0,1.000000,10.000000,0,2,0,0);
 IfThen("CurrWell",1,"1");
 GetDITI2(1,"BoxDiTi 1000ul",1,0,10,70);
