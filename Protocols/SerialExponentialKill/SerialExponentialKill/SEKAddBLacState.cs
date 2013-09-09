@@ -19,19 +19,22 @@ namespace SerialExponentialKill
 	/// <summary>
 	/// Description of SEKDiluteState.
 	/// </summary>
-	[State("Dilut","Dilute main evolution batch culture")]
-	public class SEKDiluteState:RunRobotState,IRestartableState
+	[State("Add b-Lac","Add b-Lac")]
+	public class SEKAddBLacState:RunRobotState,IRestartableState
 	{
 		int LicPlateInd;
-		int FromWell;
-		public SEKDiluteState(int LicPlateInd,int FromWell):base()
+		int CurentWell;
+		int BetalacPos;
+		public SEKAddBLacState(int LicPlateInd,int CurentWell,int BetalacPos ):base()
 		{
 			this.LicPlateInd=LicPlateInd;
-			this.FromWell=FromWell;
+			this.CurentWell=CurentWell;
+			this.BetalacPos=BetalacPos;
+	
 		}
 		protected override RobotJob BeforeRobotRun()
 		{
-			List<RobotJobParameter> RJP = new List<RobotJobParameter>(2);
+			List<RobotJobParameter> RJP = new List<RobotJobParameter>(3);
 			
 			LicPos LP = Utils.Ind2LicPos(LicPlateInd);
 			
@@ -39,15 +42,16 @@ namespace SerialExponentialKill
 //ImportVariable(Lic24PlateCart#Lic24PlatePos#CurentWell#BetalacPos,"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\AddBetalacData.csv",0#0#0#0,"1#1#1#1",0,1,0,1,1);
 
 
-
 			RJP.Add(new RobotJobParameter("Lic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
-			RJP.Add(new RobotJobParameter("FromWell",RobotJobParameter.ParameterType.Number,FromWell));
+			RJP.Add(new RobotJobParameter("CurentWell",RobotJobParameter.ParameterType.Number,CurentWell));
+			RJP.Add(new RobotJobParameter("BetalacPos",RobotJobParameter.ParameterType.Number,BetalacPos));
+			
 			
 
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\Dilute.esc",RJP,0.9);
+				@"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\AddBetalac.esc",RJP,0.9);
 			
 			return RJ;
 		}

@@ -23,14 +23,10 @@ namespace SerialExponentialKill
 	{
 		int LicFromPlateInd;
 		int LicToPlateInd;
-		int FreezeInd;
-		int Dilution348Ind;
-		public SEKDilute2NewPlateState(int LicFromPlateInd,int LicToPlateInd,int FreezeInd,int Dilution348Ind ):base()
+		public SEKDilute2NewPlateState(int LicFromPlateInd,int LicToPlateInd ):base()
 		{
 			this.LicFromPlateInd = LicToPlateInd;
 			this.LicToPlateInd =  LicToPlateInd;
-			this.FreezeInd = FreezeInd;
-			this.Dilution348Ind = Dilution348Ind;
 		}
 		protected override RobotJob BeforeRobotRun()
 		{
@@ -39,20 +35,15 @@ namespace SerialExponentialKill
 			LicPos LPFrom = Utils.Ind2LicPos(LicFromPlateInd);
 			LicPos LPTo = Utils.Ind2LicPos(LicToPlateInd);
 
-//ImportVariable(Lic24PlateCart#Lic24PlatePos#Lic24NewPlateCart#Lic24NewPlatePos#Dilution348Ind#FreezeInd,"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\Dilute2NewPlateData.csv",0#0#0#0#0#0,"1#1#2#2#1#0",0,1,0,1,1);			
+//ImportVariable(Lic24PlateCart#Lic24PlatePos#Lic24PlateCartNew#Lic24PlatePosNew,"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\DiluteDataChangePlate.csv",0#0#0#0,"1#1#1#1",0,1,0,1,1);
 
-			RJP.Add(new RobotJobParameter("Liconic24PlateCart",RobotJobParameter.ParameterType.Number,LPFrom.Cart));
-			RJP.Add(new RobotJobParameter("Liconic24PlatePos",RobotJobParameter.ParameterType.Number,LPFrom.Pos));
-			RJP.Add(new RobotJobParameter("Liconic24NewPlateCart",RobotJobParameter.ParameterType.Number,LPTo.Cart));
-			RJP.Add(new RobotJobParameter("Liconic24NewPlatePos",RobotJobParameter.ParameterType.Number,LPTo.Pos));
-			
-			RJP.Add(new RobotJobParameter("Dilution348Ind",RobotJobParameter.ParameterType.Number,Dilution348Ind));
-			RJP.Add(new RobotJobParameter("FreezeInd",RobotJobParameter.ParameterType.Number,FreezeInd));
+			RJP.Add(new RobotJobParameter("Lic24PlateCart",RobotJobParameter.ParameterType.Number,LPFrom.Cart));
+			RJP.Add(new RobotJobParameter("Lic24PlatePos",RobotJobParameter.ParameterType.Number,LPFrom.Pos));
+			RJP.Add(new RobotJobParameter("Lic24PlateCartNew",RobotJobParameter.ParameterType.Number,LPTo.Cart));
+			RJP.Add(new RobotJobParameter("Lic24PlatePosNew",RobotJobParameter.ParameterType.Number,LPTo.Pos));
 
-
-			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\Dilute2NewPlate.esc",RJP,0.9);
+				@"D:\OctoTip\Protocols\SerialExponentialKill\Scripts\DiluteNewPlate.esc",RJP,0.9);
 			
 			return RJ;
 		}

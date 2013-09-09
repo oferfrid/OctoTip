@@ -68,7 +68,7 @@ namespace SerialExponentialKill
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(SEKWait2ODState),typeof(SEKDiluteState),typeof(SEKDilute2NewPlateState)};
+			return new List<Type>{typeof(SEKWait2ODState),typeof(SEKAddAmpState),typeof(SEKDiluteState),typeof(SEKDilute2NewPlateState)};
 		}
 		#endregion
 		

@@ -47,7 +47,7 @@ namespace SerialExponentialKill
 			
 			
 			ReportProtocolState(ProtocolParameters.Cycle,string.Format("Insert first plate to pos:{0}",ProtocolParameters.LicPlatePosition ));
-			ChangeState(new SEKStartState(ProtocolParameters.LicPlatePosition));	
+			ChangeState(new SEKStartState(ProtocolParameters.LicPlatePosition));
 			
 			while((ProtocolParameters.CurentWell<24 || ProtocolParameters.LicPlatePositions.Length>0)&& !this.ShouldStop)
 			{
@@ -64,45 +64,43 @@ namespace SerialExponentialKill
 					}
 				}
 				
-							
 				
-				ReportProtocolState(ProtocolParameters.Cycle,string.Format("Add Amp to plate {0} Well {1} and freez in pos {2}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,freezeIndex));
-				ChangeState(new AddAmpState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,freezeIndex,ProtocolParameters.AMPPosition));
-					
+				
+				ReportProtocolState(ProtocolParameters.Cycle,string.Format("Add Amp to plate {0} Well {1} from pos {2} and freez in pos {3}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.AMPPosition,freezeIndex));
+				ChangeState(new SEKAddAmpState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,freezeIndex,ProtocolParameters.AMPPosition));
+				
 				ReportProtocolState(ProtocolParameters.Cycle,string.Format("Kiling in plate {0} Well {1} for {2:0.00} (Hours)",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.KillTime));
-				ChangeState(new KillState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,freezeIndex,ProtocolParameters.AMPPosition));
-			
+				ChangeState(new SEKKillState(ProtocolParameters.KillTime));
+				
+				ReportProtocolState(ProtocolParameters.Cycle,string.Format("Add b-Lac to plate {0} Well {1} from pos {2}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.BlacPosition));
+				ChangeState(new SEKAddBLacState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,ProtocolParameters.BlacPosition));
+				
+				Wait4OD();
 				
 				
-				TimeSpan GrowthTime = DateTime.Now - StartGrowTime;
-				int DiluteUsing384PlateIndex = LocalUtils.GetNext384Index(ProtocolParameters.SharedResourcesFilePath);
-				int DiluteUsing384PlatePos = LocalUtils.GetNext384Pos(DiluteUsing384PlateIndex);
 				
 				
 				if(ProtocolParameters.CurentWell<24)
 				{
 					//dilute in same plate
 					
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} Well {1} after {2:0.00} Hours (using 384 {3} Position) freeze:{4}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,GrowthTime.TotalHours,DiluteUsing384PlatePos,freezeIndex));
-					ChangeState(new SEKDiluteState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,freezeIndex ,DiluteUsing384PlatePos));
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
+					ChangeState(new SEKDiluteState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell));
 					ProtocolParameters.CurentWell++;
 				}
 				else
 				{
 					//dilute to new plate
 					int NewPlateInd = ProtocolParameters.LicPlatePositions[0];
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} to Plate {1} after {2:0.00} Hours (using 384 {3} Position) freeze:{4}",ProtocolParameters.LicPlatePosition ,NewPlateInd,GrowthTime.TotalHours,DiluteUsing384PlatePos,freezeIndex));
-					ChangeState(new SEKDilute2NewPlateState(ProtocolParameters.LicPlatePosition,NewPlateInd,freezeIndex,DiluteUsing384PlatePos));
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Dilute from plate {0} to Plate {1}",ProtocolParameters.LicPlatePosition ,NewPlateInd));
+					ChangeState(new SEKDilute2NewPlateState(ProtocolParameters.LicPlatePosition,NewPlateInd));
 					//remove old plate index from list
 					ProtocolParameters.LicPlatePositions = ProtocolParameters.LicPlatePositions.Skip(1).ToArray();
 					ProtocolParameters.LicPlatePosition = NewPlateInd;
 					ProtocolParameters.CurentWell = 1;
 				}
 				ProtocolParameters.Cycle++;
-				StartGrowTime = DateTime.Now;
-				//
-				//while(false);
-				
+
 				
 			}
 			
@@ -111,48 +109,48 @@ namespace SerialExponentialKill
 		
 		private void Wait4OD()
 		{
-				double BackroundOD;
-				double OD;
-				
-				DateTime StartGrowTime = DateTime.Now;
-				
-				ReportProtocolState(ProtocolParameters.Cycle,string.Format("read Backround from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
-				SEKReadBackroundState ReadBackroundState = new SEKReadBackroundState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell);
-				ChangeState(ReadBackroundState);
-				
-				BackroundOD = ReadBackroundState.BackroundOD;
-				ReportProtocolState(ProtocolParameters.Cycle,string.Format("End reading Backround from plate {0} Well {1} OD={2:0.0000}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,BackroundOD));
-
-				ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for first OD read for plate {0} Well {1}, {2:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.Time4TheFirstODTest));
-				ChangeState(new SEKWait2ODState(ProtocolParameters.Time4TheFirstODTest));
-				do
-				{
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("read OD from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
-					SEKReadODState ReadODState = new SEKReadODState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell);
-					ChangeState(ReadODState);
-					
-					OD = ReadODState.OD;
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("End reading OD from plate {0} Well {1} Net OD={2:0.0000} (OD={3:0.0000})",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,OD-BackroundOD,OD));
-
-					if(((OD - BackroundOD)<=ProtocolParameters.NetODtoDilute )&& !this.ShouldStop)
-					{
-						double TimeTillNextRead = GetTimeTillNextRead((OD - BackroundOD),ProtocolParameters.NetODtoDilute);
-						ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for OD read for plate {0} Well {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeTillNextRead));
-						ChangeState(new SEKWait2ODState(TimeTillNextRead/60));
-					}
-				}
-				while((OD - BackroundOD)<ProtocolParameters.NetODtoDilute && !this.ShouldStop);
+			double BackroundOD;
+			double OD;
 			
-				TimeSpan TimeOfGrow = DateTime.Now- StartGrowTime;
+			DateTime StartGrowTime = DateTime.Now;
+			
+			ReportProtocolState(ProtocolParameters.Cycle,string.Format("read Backround from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
+			SEKReadBackroundState ReadBackroundState = new SEKReadBackroundState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell);
+			ChangeState(ReadBackroundState);
+			
+			BackroundOD = ReadBackroundState.BackroundOD;
+			ReportProtocolState(ProtocolParameters.Cycle,string.Format("End reading Backround from plate {0} Well {1} OD={2:0.0000}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,BackroundOD));
+
+			ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for first OD read for plate {0} Well {1}, {2:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,ProtocolParameters.Time4TheFirstODTest));
+			ChangeState(new SEKWait2ODState(ProtocolParameters.Time4TheFirstODTest));
+			do
+			{
+				ReportProtocolState(ProtocolParameters.Cycle,string.Format("read OD from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
+				SEKReadODState ReadODState = new SEKReadODState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell);
+				ChangeState(ReadODState);
 				
-				ReportProtocolState(ProtocolParameters.Cycle,string.Format("Net OD {0:0.000}>{1:0.000} in plate {2} Well {3}, after {2:0.00} Hours",(OD - BackroundOD),ProtocolParameters.NetODtoDilute,ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeOfGrow.TotalHours));
+				OD = ReadODState.OD;
+				ReportProtocolState(ProtocolParameters.Cycle,string.Format("End reading OD from plate {0} Well {1} Net OD={2:0.0000} (OD={3:0.0000})",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,OD-BackroundOD,OD));
+
+				if(((OD - BackroundOD)<=ProtocolParameters.NetODtoDilute )&& !this.ShouldStop)
+				{
+					double TimeTillNextRead = GetTimeTillNextRead((OD - BackroundOD),ProtocolParameters.NetODtoDilute);
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for OD read for plate {0} Well {1}, {2:0.00} min",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeTillNextRead));
+					ChangeState(new SEKWait2ODState(TimeTillNextRead/60));
+				}
+			}
+			while((OD - BackroundOD)<ProtocolParameters.NetODtoDilute && !this.ShouldStop);
+			
+			TimeSpan TimeOfGrow = DateTime.Now- StartGrowTime;
+			
+			ReportProtocolState(ProtocolParameters.Cycle,string.Format("Net OD {0:0.000}>{1:0.000} in plate {2} Well {3}, after {2:0.00} Hours",(OD - BackroundOD),ProtocolParameters.NetODtoDilute,ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeOfGrow.TotalHours));
 		}
 		
 		private double GetTimeTillNextRead(double NetOD,double TargetOD)
 		{
 			double TimeTillNextRead = -(ProtocolParameters.MaxTimeBetweenODreads - ProtocolParameters.MinTimeBetweenODreads)/(ProtocolParameters.NetODtoDilute)*NetOD + ProtocolParameters.MaxTimeBetweenODreads;
 			return TimeTillNextRead;
-						
+			
 		}
 		
 		public void ReportProtocolState(int Cycle,string Messege)
@@ -162,12 +160,12 @@ namespace SerialExponentialKill
 			try
 			{
 				using (StreamWriter sw = ProtocolStateFile.AppendText())
-			{
-				sw.WriteLine("({0}){1}:\t{2}",Cycle,DateTime.Now,Messege);
-				sw.Flush();
-			}
-			myLogInGoogleDocs.Log(LogMessege);
-			DisplayData(LogMessege);
+				{
+					sw.WriteLine("({0}){1}:\t{2}",Cycle,DateTime.Now,Messege);
+					sw.Flush();
+				}
+				myLogInGoogleDocs.Log(LogMessege);
+				DisplayData(LogMessege);
 			}
 			catch(Exception e)
 			{
@@ -183,14 +181,18 @@ namespace SerialExponentialKill
 		public static new List<Type> ProtocolStates()
 		{
 			return new List<Type>{
-				typeof(SEKDiluteState),
+				typeof(SEKAddAmpState),
+				typeof(SEKAddBLacState),
 				typeof(SEKDilute2NewPlateState),
-				typeof(SEKWait2ODState),
+				typeof(SEKDiluteState),
+				typeof(SEKKillState),
 				typeof(SEKReadBackroundState),
 				typeof(SEKReadODState),
-				typeof(SEKStartState)
+				typeof(SEKStartState),
+				typeof(SEKWait2ODState)
 			};
 		}
 		#endregion
 	}
 }
+

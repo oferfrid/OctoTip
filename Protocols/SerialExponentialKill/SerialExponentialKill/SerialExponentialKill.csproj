@@ -56,10 +56,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddAmpState.cs" />
+    <Compile Include="SEKAddAmpState.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="LogInGoogleDocs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SEKAddBLacState.cs" />
+    <Compile Include="SEKKillState.cs" />
     <Compile Include="SEKReadBackroundState.cs" />
     <Compile Include="SEKDilute2NewPlateState.cs" />
     <Compile Include="SEKDiluteState.cs" />

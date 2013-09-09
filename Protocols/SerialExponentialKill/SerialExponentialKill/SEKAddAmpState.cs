@@ -20,13 +20,13 @@ namespace SerialExponentialKill
 	/// Description of SEKDiluteState.
 	/// </summary>
 	[State("Add AMP","Add AMP and freez if needed")]
-	public class AddAmpState:RunRobotState,IRestartableState
+	public class SEKAddAmpState:RunRobotState,IRestartableState
 	{
 		int LicPlateInd;
 		int CurentWell;
 		int FreezeInd;
 		int AMPPos;
-		public AddAmpState(int LicPlateInd,int CurentWell,int FreezeInd, int AMPPos ):base()
+		public SEKAddAmpState(int LicPlateInd,int CurentWell,int FreezeInd, int AMPPos ):base()
 		{
 			this.LicPlateInd=LicPlateInd;
 			this.CurentWell=CurentWell;
@@ -71,7 +71,7 @@ namespace SerialExponentialKill
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(SEKReadBackroundState)};
+			return new List<Type>{typeof(SEKKillState)};
 		}
 		#endregion
 	}
