@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.0.0.7070
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDK99", "MDK99\MDK99.csproj", "{7D77BD06-076F-456F-8AC6-13CFFBB8D8FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D77BD06-076F-456F-8AC6-13CFFBB8D8FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D77BD06-076F-456F-8AC6-13CFFBB8D8FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D77BD06-076F-456F-8AC6-13CFFBB8D8FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D77BD06-076F-456F-8AC6-13CFFBB8D8FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
