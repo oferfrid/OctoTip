@@ -34,6 +34,10 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			return FieldNames;
 			
 		}
+		
+		public abstract bool IsValid();
+		public abstract string GetErrorMessege();
+	
 
 	}
 }

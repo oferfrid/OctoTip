@@ -95,7 +95,7 @@ namespace OctoTip.OctoTipExperimentControl
 				string Massege = string.Empty;
 				foreach(Assembly A in UncompitbleTypes)
 				{
-					Massege +=string.Format("The suplied dll {0} ({1}) is not compatible with the current version, and was not loaded",A.GetName(),A.Location);
+					Massege +=string.Format("The suplied dll {0} is not compatible with the current version, and was not loaded\n",A.GetName());
 				}
 				
 				MessageBox.Show(Massege,this.Text,MessageBoxButtons.OK,MessageBoxIcon.Warning);

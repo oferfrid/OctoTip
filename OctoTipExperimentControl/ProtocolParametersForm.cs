@@ -116,9 +116,15 @@ namespace OctoTip.OctoTipExperimentControl
 					ErrorFlag = true;
 				}
 			}
+			
+			if(!ErrorFlag &&!FormProtocolParameters.IsValid())
+			{
+				Errorlabel.Text = FormProtocolParameters.GetErrorMessege();
+				ErrorFlag = true;
+			}
+			
 			if(!ErrorFlag)
 			{
-				
 				FormProtocolParameters.IsInitialized = true;
 				ParentProtocolUserControl.SetNewUserControlProtocolParameters(FormProtocolParameters);
 				ParentProtocolUserControl.UpdateUserControlProtocolName();

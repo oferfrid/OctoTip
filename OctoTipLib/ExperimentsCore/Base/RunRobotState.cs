@@ -139,7 +139,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			{
 				JobStatus = RJQClient.GetJobStatus(RunRobotJob.UniqueID);
 			}
-			catch(System.ServiceModel.EndpointNotFoundException ex)
+			catch(System.ServiceModel.EndpointNotFoundException)
 			{
 				JobStatus = RobotJob.Status.RuntimeError;
 			}

@@ -150,20 +150,24 @@ namespace OctoTip.Lib.ExperimentsCore
 		}
 		
 		
-		public static Type  GetStatePlugInByDesplayName(string StateDesplayName)
+		public static Type  GetStatePlugInByDesplayName(string StateDesplayName,Type UserControlProtocolType)
 		{
-			return GetStatePlugInByDesplayName(LoadPlugInAssemblies(),StateDesplayName);
+			Assembly ProtocolAssembly =  Assembly.GetAssembly(UserControlProtocolType);
+
+			
+			return GetStatePlugInByDesplayName(ProtocolAssembly,StateDesplayName);
 		}
 		
 				
-		static Type GetStatePlugInByDesplayName(List<Assembly> assemblies,string StateDesplayName)
+		static Type GetStatePlugInByDesplayName(Assembly ProtocolAssembly,string StateDesplayName)
 		{
 			List<Type> availableTypes = new List<Type>();
+			availableTypes.AddRange(ProtocolAssembly.GetTypes());
 
-			foreach (Assembly currentAssembly in assemblies)
-			{
-				availableTypes.AddRange(currentAssembly.GetTypes());
-			}
+//			foreach (Assembly currentAssembly in assemblies)
+//			{
+//				availableTypes.AddRange(currentAssembly.GetTypes());
+//			}
 
 			// get a list of objects that implement the IProtocol interface AND
 			// have the CalculationPlugInAttribute

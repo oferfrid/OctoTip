@@ -401,7 +401,7 @@ namespace OctoTip.OctoTipExperimentControl
 				else if (selectedObject is Node)
 				{
 					Node SelectedNode = selectedObject as Node;
-					string DescriptionAttribute = ProtocolProvider.GetStateDescription(ProtocolProvider.GetStatePlugInByDesplayName(SelectedNode.Id));
+					string DescriptionAttribute = ProtocolProvider.GetStateDescription(ProtocolProvider.GetStatePlugInByDesplayName(SelectedNode.Id,UserControlProtocolType));
 					ProtocolStatesViewer.SetToolTip(new ToolTip(),DescriptionAttribute);
 				}
 
