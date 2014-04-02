@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{A699B9AD-4EA8-41D6-AFA6-3BC370372D50}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>OctoTip.OctoTipPlus</RootNamespace>
+    <AssemblyName>OctoTipPlus</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.Evoapi">
+      <HintPath>..\OctoTipManager\bin\Debug\Interop.Evoapi.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Msagl">
+      <HintPath>..\OctoTipExperimentControl\Microsoft Automatic Graph Layout\Microsoft.Msagl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Msagl.Drawing">
+      <HintPath>..\OctoTipExperimentControl\Microsoft Automatic Graph Layout\Microsoft.Msagl.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Msagl.GraphViewerGdi">
+      <HintPath>..\OctoTipExperimentControl\Microsoft Automatic Graph Layout\Microsoft.Msagl.GraphViewerGdi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ControlWrapper.cs" />
+    <Compile Include="Logging\EventLogLogger.cs" />
+    <Compile Include="Logging\LogingEntery.cs" />
+    <Compile Include="MainForm.cs" />
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolParametersFields\BoolField.cs" />
+    <Compile Include="ProtocolParametersFields\DoubleArrayField.cs" />
+    <Compile Include="ProtocolParametersFields\DoubleField.cs" />
+    <Compile Include="ProtocolParametersFields\FieldInterface.cs" />
+    <Compile Include="ProtocolParametersFields\IntArrayField.cs" />
+    <Compile Include="ProtocolParametersFields\IntField.cs" />
+    <Compile Include="ProtocolParametersFields\ProtocolParametersFieldUserControl.cs" />
+    <Compile Include="ProtocolParametersFields\ProtocolParametersFieldUserControl.Designer.cs">
+      <DependentUpon>ProtocolParametersFieldUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolParametersFields\StringField.cs" />
+    <Compile Include="ProtocolParametersForm.cs" />
+    <Compile Include="ProtocolParametersForm.Designer.cs">
+      <DependentUpon>ProtocolParametersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProtocolUserControl.cs" />
+    <Compile Include="ProtocolUserControl.Designer.cs">
+      <DependentUpon>ProtocolUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotWorker.cs" />
+    <Compile Include="RobotWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProtocolParametersFields\ProtocolParametersFieldUserControl.resx">
+      <DependentUpon>ProtocolParametersFieldUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProtocolParametersForm.resx">
+      <DependentUpon>ProtocolParametersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProtocolUserControl.resx">
+      <DependentUpon>ProtocolUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logging" />
+    <Folder Include="ProtocolParametersFields" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OctoTipLib\OctoTipLib.csproj">
+      <Project>{3F447CCC-8530-4E9B-A764-926AD0242173}</Project>
+      <Name>OctoTipLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
