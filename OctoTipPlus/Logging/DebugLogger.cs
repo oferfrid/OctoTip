@@ -24,7 +24,7 @@ namespace OctoTip.OctoTipPlus.Logging
 		{
 			System.Diagnostics.Debug.WriteLine("Looger Error");
 			System.Diagnostics.Debug.WriteLine("--------------");
-			System.Diagnostics.Debug.WriteLine("Sender:" + LE.Sender);
+			System.Diagnostics.Debug.WriteLine("Sender:" + LE.Sender +"(" + LE.SubSender + ")");
 			System.Diagnostics.Debug.WriteLine("Title:" + LE.Title);
 			System.Diagnostics.Debug.WriteLine("Messege:" + LE.Messege);
 			System.Diagnostics.Debug.WriteLine("EnteryType:" + LE.EnteryType.ToString());
