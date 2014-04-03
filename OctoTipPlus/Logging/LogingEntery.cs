@@ -18,17 +18,20 @@ namespace OctoTip.OctoTipPlus.Logging
 		public enum EnteryTypes {Critical,Error,Warning,Informational};
 	
 		public string Sender;
+		public string SubSender;
 		public string Title;
 		public string Messege;
 		public EnteryTypes EnteryType;
 		
-		public LoggingEntery(string Sender,string Title, string Messege, EnteryTypes EnteryType)
+		public LoggingEntery(string Sender,string SubSender,string Title, string Messege, EnteryTypes EnteryType)
 		{
 			this.Sender = Sender;
+			this.SubSender = SubSender;
 			this.Title = Title;
 			this.Messege = Messege; 
 			this.EnteryType = EnteryType;
 		}
+		
 	}
 		
 }

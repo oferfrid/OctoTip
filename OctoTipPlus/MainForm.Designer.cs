@@ -52,6 +52,10 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.CreateErrorButton = new System.Windows.Forms.Button();
+			this.ActiveLoggersCheckedListBox = new System.Windows.Forms.CheckedListBox();
 			this.RobotGroupBox = new System.Windows.Forms.GroupBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -76,6 +80,7 @@ namespace OctoTip.OctoTipPlus
 			this.RobotQTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotJobsQueue)).BeginInit();
 			this.RobotQToolStrip.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.RobotGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.MainMenuStrip.SuspendLayout();
@@ -85,7 +90,7 @@ namespace OctoTip.OctoTipPlus
 			// 
 			this.MainStatusStrip.Location = new System.Drawing.Point(0, 540);
 			this.MainStatusStrip.Name = "MainStatusStrip";
-			this.MainStatusStrip.Size = new System.Drawing.Size(784, 22);
+			this.MainStatusStrip.Size = new System.Drawing.Size(923, 22);
 			this.MainStatusStrip.TabIndex = 1;
 			this.MainStatusStrip.Text = "MainStatusStrip";
 			// 
@@ -101,9 +106,10 @@ namespace OctoTip.OctoTipPlus
 			// 
 			// MainSplitContainer.Panel2
 			// 
+			this.MainSplitContainer.Panel2.Controls.Add(this.groupBox2);
 			this.MainSplitContainer.Panel2.Controls.Add(this.RobotGroupBox);
-			this.MainSplitContainer.Size = new System.Drawing.Size(784, 516);
-			this.MainSplitContainer.SplitterDistance = 603;
+			this.MainSplitContainer.Size = new System.Drawing.Size(923, 516);
+			this.MainSplitContainer.SplitterDistance = 719;
 			this.MainSplitContainer.TabIndex = 2;
 			// 
 			// MainTabControl
@@ -114,7 +120,7 @@ namespace OctoTip.OctoTipPlus
 			this.MainTabControl.Location = new System.Drawing.Point(0, 0);
 			this.MainTabControl.Name = "MainTabControl";
 			this.MainTabControl.SelectedIndex = 0;
-			this.MainTabControl.Size = new System.Drawing.Size(603, 516);
+			this.MainTabControl.Size = new System.Drawing.Size(719, 516);
 			this.MainTabControl.TabIndex = 0;
 			// 
 			// ProtocolTab
@@ -124,7 +130,7 @@ namespace OctoTip.OctoTipPlus
 			this.ProtocolTab.Location = new System.Drawing.Point(4, 22);
 			this.ProtocolTab.Name = "ProtocolTab";
 			this.ProtocolTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ProtocolTab.Size = new System.Drawing.Size(595, 490);
+			this.ProtocolTab.Size = new System.Drawing.Size(711, 490);
 			this.ProtocolTab.TabIndex = 0;
 			this.ProtocolTab.Text = "Protocols";
 			this.ProtocolTab.UseVisualStyleBackColor = true;
@@ -135,7 +141,7 @@ namespace OctoTip.OctoTipPlus
 			this.ProtocolPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ProtocolPanel.Location = new System.Drawing.Point(67, 3);
 			this.ProtocolPanel.Name = "ProtocolPanel";
-			this.ProtocolPanel.Size = new System.Drawing.Size(525, 484);
+			this.ProtocolPanel.Size = new System.Drawing.Size(641, 484);
 			this.ProtocolPanel.TabIndex = 1;
 			// 
 			// ProtocolsToolStrip
@@ -179,7 +185,7 @@ namespace OctoTip.OctoTipPlus
 			this.RobotQTab.Location = new System.Drawing.Point(4, 22);
 			this.RobotQTab.Name = "RobotQTab";
 			this.RobotQTab.Padding = new System.Windows.Forms.Padding(3);
-			this.RobotQTab.Size = new System.Drawing.Size(595, 490);
+			this.RobotQTab.Size = new System.Drawing.Size(711, 490);
 			this.RobotQTab.TabIndex = 1;
 			this.RobotQTab.Text = "Robot-Q";
 			this.RobotQTab.UseVisualStyleBackColor = true;
@@ -193,7 +199,7 @@ namespace OctoTip.OctoTipPlus
 			this.dataGridViewRobotJobsQueue.Location = new System.Drawing.Point(3, 28);
 			this.dataGridViewRobotJobsQueue.Name = "dataGridViewRobotJobsQueue";
 			this.dataGridViewRobotJobsQueue.ReadOnly = true;
-			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(589, 459);
+			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(705, 459);
 			this.dataGridViewRobotJobsQueue.TabIndex = 1;
 			// 
 			// RobotQToolStrip
@@ -204,7 +210,7 @@ namespace OctoTip.OctoTipPlus
 									this.toolStripButton3});
 			this.RobotQToolStrip.Location = new System.Drawing.Point(3, 3);
 			this.RobotQToolStrip.Name = "RobotQToolStrip";
-			this.RobotQToolStrip.Size = new System.Drawing.Size(589, 25);
+			this.RobotQToolStrip.Size = new System.Drawing.Size(705, 25);
 			this.RobotQToolStrip.TabIndex = 0;
 			this.RobotQToolStrip.Text = "RobotQToolStrip";
 			// 
@@ -235,6 +241,49 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
 			this.toolStripButton3.Text = "toolStripButton3";
 			// 
+			// groupBox2
+			// 
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.label2);
+			this.groupBox2.Controls.Add(this.CreateErrorButton);
+			this.groupBox2.Controls.Add(this.ActiveLoggersCheckedListBox);
+			this.groupBox2.Location = new System.Drawing.Point(3, 287);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(193, 225);
+			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Logging and Errors";
+			// 
+			// label2
+			// 
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.label2.Location = new System.Drawing.Point(6, 20);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(181, 23);
+			this.label2.TabIndex = 2;
+			this.label2.Text = "Avalble Loggers:";
+			// 
+			// CreateErrorButton
+			// 
+			this.CreateErrorButton.Location = new System.Drawing.Point(6, 144);
+			this.CreateErrorButton.Name = "CreateErrorButton";
+			this.CreateErrorButton.Size = new System.Drawing.Size(45, 24);
+			this.CreateErrorButton.TabIndex = 1;
+			this.CreateErrorButton.Text = "Test";
+			this.CreateErrorButton.UseVisualStyleBackColor = true;
+			this.CreateErrorButton.Click += new System.EventHandler(this.CreateErrorButtonClick);
+			// 
+			// ActiveLoggersCheckedListBox
+			// 
+			this.ActiveLoggersCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.ActiveLoggersCheckedListBox.FormattingEnabled = true;
+			this.ActiveLoggersCheckedListBox.Location = new System.Drawing.Point(6, 44);
+			this.ActiveLoggersCheckedListBox.Name = "ActiveLoggersCheckedListBox";
+			this.ActiveLoggersCheckedListBox.Size = new System.Drawing.Size(181, 94);
+			this.ActiveLoggersCheckedListBox.TabIndex = 0;
+			// 
 			// RobotGroupBox
 			// 
 			this.RobotGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -246,7 +295,7 @@ namespace OctoTip.OctoTipPlus
 			this.RobotGroupBox.Controls.Add(this.buttonRobotStop);
 			this.RobotGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.RobotGroupBox.Name = "RobotGroupBox";
-			this.RobotGroupBox.Size = new System.Drawing.Size(171, 192);
+			this.RobotGroupBox.Size = new System.Drawing.Size(193, 192);
 			this.RobotGroupBox.TabIndex = 0;
 			this.RobotGroupBox.TabStop = false;
 			this.RobotGroupBox.Text = "Robot Control";
@@ -269,7 +318,7 @@ namespace OctoTip.OctoTipPlus
 			this.groupBox1.Controls.Add(this.RunningJobName);
 			this.groupBox1.Location = new System.Drawing.Point(6, 55);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(156, 76);
+			this.groupBox1.Size = new System.Drawing.Size(181, 76);
 			this.groupBox1.TabIndex = 10;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Runing Job";
@@ -293,7 +342,7 @@ namespace OctoTip.OctoTipPlus
 			this.buttonRobotStart.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.buttonRobotStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonRobotStart.Image = ((System.Drawing.Image)(resources.GetObject("buttonRobotStart.Image")));
-			this.buttonRobotStart.Location = new System.Drawing.Point(6, 19);
+			this.buttonRobotStart.Location = new System.Drawing.Point(21, 19);
 			this.buttonRobotStart.Name = "buttonRobotStart";
 			this.buttonRobotStart.Size = new System.Drawing.Size(53, 30);
 			this.buttonRobotStart.TabIndex = 9;
@@ -306,7 +355,7 @@ namespace OctoTip.OctoTipPlus
 			this.buttonRobotPause.Enabled = false;
 			this.buttonRobotPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonRobotPause.Image = ((System.Drawing.Image)(resources.GetObject("buttonRobotPause.Image")));
-			this.buttonRobotPause.Location = new System.Drawing.Point(59, 19);
+			this.buttonRobotPause.Location = new System.Drawing.Point(74, 19);
 			this.buttonRobotPause.Name = "buttonRobotPause";
 			this.buttonRobotPause.Size = new System.Drawing.Size(53, 30);
 			this.buttonRobotPause.TabIndex = 8;
@@ -319,7 +368,7 @@ namespace OctoTip.OctoTipPlus
 			this.buttonRobotStop.Enabled = false;
 			this.buttonRobotStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
 			this.buttonRobotStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonRobotStop.Image")));
-			this.buttonRobotStop.Location = new System.Drawing.Point(112, 19);
+			this.buttonRobotStop.Location = new System.Drawing.Point(127, 19);
 			this.buttonRobotStop.Name = "buttonRobotStop";
 			this.buttonRobotStop.Size = new System.Drawing.Size(53, 30);
 			this.buttonRobotStop.TabIndex = 7;
@@ -334,7 +383,7 @@ namespace OctoTip.OctoTipPlus
 									this.toolStripMenuItem3});
 			this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.MainMenuStrip.Name = "MainMenuStrip";
-			this.MainMenuStrip.Size = new System.Drawing.Size(784, 24);
+			this.MainMenuStrip.Size = new System.Drawing.Size(923, 24);
 			this.MainMenuStrip.TabIndex = 3;
 			this.MainMenuStrip.Text = "MainMenuStrip";
 			// 
@@ -369,14 +418,14 @@ namespace OctoTip.OctoTipPlus
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(784, 562);
+			this.ClientSize = new System.Drawing.Size(923, 562);
 			this.Controls.Add(this.MainSplitContainer);
 			this.Controls.Add(this.MainStatusStrip);
 			this.Controls.Add(this.MainMenuStrip);
@@ -398,6 +447,7 @@ namespace OctoTip.OctoTipPlus
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotJobsQueue)).EndInit();
 			this.RobotQToolStrip.ResumeLayout(false);
 			this.RobotQToolStrip.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
 			this.RobotGroupBox.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.MainMenuStrip.ResumeLayout(false);
@@ -405,6 +455,10 @@ namespace OctoTip.OctoTipPlus
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Button CreateErrorButton;
+		private System.Windows.Forms.CheckedListBox ActiveLoggersCheckedListBox;
+		private System.Windows.Forms.GroupBox groupBox2;
 		private OctoTip.Manager.ControlWrapper dataGridViewRobotJobsQueue;
 		private System.Windows.Forms.Button buttonRobotStop;
 		private System.Windows.Forms.Button buttonRobotPause;

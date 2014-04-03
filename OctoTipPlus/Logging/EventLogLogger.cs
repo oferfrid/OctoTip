@@ -14,11 +14,12 @@ namespace OctoTip.OctoTipPlus.Logging
 	/// <summary>
 	/// Description of EventLogLogger.
 	/// </summary>
-	public class EventLogLogger
+	public class EventLogLogger:Logger
 	{
 		private string SourceName;
 		
-		public EventLogLogger(string LogName)
+		
+		public EventLogLogger()
 		{
 			SourceName = System.AppDomain.CurrentDomain.FriendlyName;
 			if(!EventLog.SourceExists(SourceName))
@@ -26,17 +27,44 @@ namespace OctoTip.OctoTipPlus.Logging
 				EventLog.CreateEventSource(SourceName, "Application");
 				
 			}
-
+			
+			LoggerName = "Event Log";
+			
 		}
 		
-		public void Log(string dsgfa)
+		override public void Log(LoggingEntery LE)
 		{
 			// Create an EventLog instance and assign its source.
 			EventLog myLog = new EventLog();
 			myLog.Source = SourceName;
 
 			// Write an informational entry to the event log.
-			myLog.WriteEntry("Writing to event log.");
+			string Messeg = string.Format("{0}: {1}\n--------------\n{2}",LE.Sender,LE.Title,LE.Messege);
+			myLog.WriteEntry(Messeg,GetEntryType(LE.EnteryType));
+		}
+		
+		private EventLogEntryType GetEntryType(LoggingEntery.EnteryTypes LEET)
+		{
+			EventLogEntryType ET;
+			switch (LEET)
+			{
+				case LoggingEntery.EnteryTypes.Warning:
+					ET = EventLogEntryType.Warning;
+					break;
+				case LoggingEntery.EnteryTypes.Informational:
+					ET = EventLogEntryType.Information;
+					break;
+				case LoggingEntery.EnteryTypes.Error:
+					ET = EventLogEntryType.Error;
+					break;
+				case LoggingEntery.EnteryTypes.Critical:
+					ET = EventLogEntryType.Error;
+					break;
+				default:
+					ET = EventLogEntryType.Information;
+					break;
+			}
+			return ET;
 		}
 	}
 }

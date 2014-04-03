@@ -38,7 +38,7 @@ namespace OctoTip.OctoTipPlus
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-
+			InitAvailableLoggers();
 
 		}
 		
@@ -162,70 +162,48 @@ namespace OctoTip.OctoTipPlus
 		
 		#region Exception handling
 		
+		private List<Logging.Logger> AvailableLoggers = new List<Logging.Logger>();
 		
-		
-		
-		
-		
-		public event EventHandler<LoggingEnteryCreatedEventArgs> LoggingEnteryCreated;
-		
-		private void Log(LoggingEnteryCreatedEventArgs e)
+		private void InitAvailableLoggers()
 		{
-			EventHandler<LoggingEnteryCreatedEventArgs> handler = LoggingEnteryCreated;
-			if (handler != null)
-			{
-				handler(this, e);
-			}
+			
+			AvailableLoggers.Add(new Logging.EventLogLogger());
+			AvailableLoggers.Add(new Logging.DebugLogger());
+			AvailableLoggers.Add(new Logging.GoogleSpreadsheetLogger());
+			
+
+			System.Diagnostics.Debug.WriteLine(	AvailableLoggers[0].LoggerName);
+			
+			ActiveLoggersCheckedListBox.DataSource = AvailableLoggers;
+			ActiveLoggersCheckedListBox.DisplayMember = "LoggerName";
+			ActiveLoggersCheckedListBox.ValueMember = "ThisLogger";
+			
+			ActiveLoggersCheckedListBox.Refresh();
+
 		}
 		
-		public class LoggingEnteryCreatedEventArgs : EventArgs
+		public void Notify(LoggingEntery LE)
 		{
-			private LoggingEntery _CreatedLoggingEntery;
-
-			public LoggingEnteryCreatedEventArgs(LoggingEntery CreatedLoggingEntery)
-			{
-				this._CreatedLoggingEntery = CreatedLoggingEntery;
-			}
-			public LoggingEntery CreatedLoggingEntery
-			{
-				get { return _CreatedLoggingEntery; }
-			}
+			//get selected notifyer
 			
+			System.Windows.Forms.CheckedListBox.CheckedItemCollection SelectedLoggers =  ActiveLoggersCheckedListBox.CheckedItems;
+			
+			foreach (Logging.Logger L in SelectedLoggers)
+			{
+				L.Log(LE);
+			}
 		}
 		
 		public void Notify(string Subject,string Message)
 		{
 			System.Diagnostics.Debug.WriteLine(Subject + " " + Message);
-			
-//			if (this.NotificationcheckBox.Checked == true)
-//			{
-//				if (this.NotificationEmailtextBox.Text.Trim()!=string.Empty)
-//				{
-//					try
-//					{
-//					 EmailSMSSender.Sender.SendEmail(this.NotificationEmailtextBox.Text.Trim(),Subject , Message  + "\n" + DateTime.Now.ToString());
-//					}
-//					catch(Exception ex)
-//					{
-//						myLogger.Add(ex.ToString());
-//					}
-//				}
-//				if (this.NotificationPhonetextBox.Text.Trim()!=string.Empty)
-//				{
-//					try
-//					{
-//					EmailSMSSender.Sender.SendSMS(this.NotificationPhonetextBox.Text.Trim(),Subject);
-//					}
-//					catch(Exception ex)
-//					{
-//						myLogger.Add(ex.ToString());
-//					}
-//				}
-//			}
-			
+			throw new NotImplementedException("dd");
+		}
+		void CreateErrorButtonClick(object sender, EventArgs e)
+		{
+			Notify(new LoggingEntery("OctoTipPlus Appilcation",this.Name,"Test Error","Test 1234",LoggingEntery.EnteryTypes.Critical));
 		}
 		#endregion
-		
 		
 		
 		
