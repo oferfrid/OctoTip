@@ -10,9 +10,9 @@ using System;
 using System.IO;
 using Google.GData.Client;
 using Google.GData.Spreadsheets;
-using OctoTip.OctoTipPlus.Utils;
+using OctoTip.Lib.Utils;
 
-namespace OctoTip.OctoTipPlus.Logging
+namespace OctoTip.Lib.Logging
 {
 	/// <summary>
 	/// Description of GoogleSpreadsheetLogger.
@@ -21,7 +21,7 @@ namespace OctoTip.OctoTipPlus.Logging
 	{
 		
 		const string DateHeader = "date";
-		const string MessegeHeader  = "messege";
+		const string MessageHeader  = "Message";
 		
 		
 		public GoogleSpreadsheetLogger()
@@ -114,7 +114,7 @@ namespace OctoTip.OctoTipPlus.Logging
 				
 				CellEntry cellEntry= new CellEntry (1, 1,DateHeader);
 				cellFeed.Insert(cellEntry);
-				cellEntry= new CellEntry (1, 2, MessegeHeader);
+				cellEntry= new CellEntry (1, 2, MessageHeader);
 				cellFeed.Insert(cellEntry);
 				
 				
@@ -130,12 +130,12 @@ namespace OctoTip.OctoTipPlus.Logging
 			ListQuery listQuery = new ListQuery(listFeedLink.HRef.ToString());
 			ListFeed listFeed = myService.Query(listQuery);
 
-			string Messege = string.Format("{0}\n{1}",LE.Title,LE.Messege);
+			string Message = string.Format("{0}\n{1}",LE.Title,LE.Message);
 			
 			// Create a local representation of the new row.
 			ListEntry row = new ListEntry();
 			row.Elements.Add(new ListEntry.Custom() { LocalName = DateHeader, Value = DateTime.Now.ToString() });
-			row.Elements.Add(new ListEntry.Custom() { LocalName = MessegeHeader, Value = Messege });
+			row.Elements.Add(new ListEntry.Custom() { LocalName = MessageHeader, Value = Message });
 
 
 			// Send the new row to the API for insertion.

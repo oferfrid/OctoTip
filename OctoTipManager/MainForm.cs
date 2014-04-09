@@ -47,7 +47,7 @@ namespace OctoTip.Manager
 			InitializeComponent();
 			
 			
-			FormRobotJobsQueue = new RobotJobsQueue();
+			FormRobotJobsQueue = RobotJobsQueue.Instance;
 			
 			string ListeningPort = ConfigurationManager.AppSettings["ListeningPort"];
 			if (ListeningPort == null)
@@ -350,11 +350,11 @@ namespace OctoTip.Manager
 		{
 			if(e.RobotWorkerStatus==RobotWorker.RobotWorkerStatus.RunningJob && e.CurrentJob!=null)
 			{
-				myLogger.Add(string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Messege));
+				myLogger.Add(string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Message));
 			}
 			else
 			{
-				myLogger.Add(string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Messege));
+				myLogger.Add(string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Message));
 			}
 			
 			

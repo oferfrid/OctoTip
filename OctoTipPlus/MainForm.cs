@@ -15,7 +15,7 @@ using OctoTip.Lib.ExperimentsCore;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib;
-using OctoTip.OctoTipPlus.Logging;
+using OctoTip.Lib.Logging;
 
 namespace OctoTip.OctoTipPlus
 {
@@ -26,22 +26,19 @@ namespace OctoTip.OctoTipPlus
 	{
 		public MainForm()
 		{
-			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+			MainFormLog = Log.Instance;
+			MainFormLog.LogEnteryCreated += Notify;
+			RJQ = RobotJobsQueue.Instance;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
 			InitAvailableLoggers();
-
+			InitRobot();
+			
 		}
-		
 		
 		
 		#region Protocols
@@ -153,26 +150,228 @@ namespace OctoTip.OctoTipPlus
 		private RobotWorker FormRobotWorker ;
 		
 		
-		static public RobotJobsQueue FormRobotJobsQueue;
+		public RobotJobsQueue RJQ;
 		BindingSource BS = new BindingSource();
 		
 		static  private volatile RobotJob RuningJob;
 		
+		private void InitRobot()
+		{
+			
+			//init worker object
+			FormRobotWorker = new RobotWorker();
+			
+			FormRobotWorker.StatusChanged += FormRobotWorker_StatusChanged;
+			BindRobotJobsQueue();
+		}
+		
+		
+		void ButtonRobotStartClick(object sender, EventArgs e)
+		{
+			FormRobotWorker.RequestStart();
+		}
+		
+		private void BindRobotJobsQueue()
+		{
+
+					
+	
+			
+			dataGridViewRobotJobsQueue.Columns.Clear();
+			DataGridViewColumn column;
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "Priority";
+			column.Name = "Priority";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "JobStatus";
+			column.Name = "JobStatus";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+			
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "ScriptName";
+			column.Name = "Script Name";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+			
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "RobotJobDisplayParameters";
+			column.Name = "Parameters";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+			
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "UniqueID";
+			column.Name = "Unique ID";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+		}
+		private void  UpdateRobotJobsQueue()
+		{
+			if (RJQ.Count>0)
+			{
+				BS.DataSource =RJQ ;
+				dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
+				BS.Filter = "JobStatus = 'Queued'";
+				BS.Sort = "JobStatus ASC , Priority ASC";
+				dataGridViewRobotJobsQueue.DataSource = BS;
+			}
+			else
+			{
+				dataGridViewRobotJobsQueue.DataSource = null;
+			}
+		}
+		
+		
+		void FormRobotWorker_StatusChanged(object sender, RobotWorkerStatusChangeEventArgs e)
+		{
+			
+			string Message;
+			if(e.RobotWorkerStatus==RobotWorker.RobotWorkerStatus.RunningJob && e.CurrentJob!=null)
+			{
+				Message  = string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Message);
+			}
+			else
+			{
+				
+				Message  = string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Message);
+			}
+			Notify(new LoggingEntery("OctoTipPlus Appilcation","RobotWorker","RunningJob",Message,LoggingEntery.EnteryTypes.Informational));
+			
+			
+			if (e.CurrentJob == null)
+			{
+				RuningJob = null;
+				UpdateRunningJob();
+			}
+			else
+			{
+				
+				RuningJob = e.CurrentJob;
+				UpdateRunningJob();
+			}
+			
+			bool buttonPauseEnabled ;
+			bool buttonStartEnabled ;
+			bool buttonStopEnabled;
+			
+			string textBoxRuningJobStatusText = string.Empty;
+			
+			switch(e.RobotWorkerStatus)
+			{
+				case(RobotWorker.RobotWorkerStatus.Stopped):
+					buttonPauseEnabled = false;
+					buttonStartEnabled = true;
+					buttonStopEnabled = false;
+					break;
+				case(RobotWorker.RobotWorkerStatus.Paused):
+					buttonPauseEnabled = false;
+					buttonStartEnabled = true;
+					buttonStopEnabled = true;
+					break;
+				case(RobotWorker.RobotWorkerStatus.Stopping ):
+					buttonPauseEnabled = false;
+					buttonStartEnabled = false;
+					buttonStopEnabled = false;
+					break;
+				case( RobotWorker.RobotWorkerStatus.Pausing):
+					buttonPauseEnabled = false;
+					buttonStartEnabled = false;
+					buttonStopEnabled = false;
+					break;
+				default:
+					buttonPauseEnabled = true;
+					buttonStartEnabled = false;
+					buttonStopEnabled = true;
+					break;
+					
+			}
+			
+			if (!this.IsDisposed)
+			{
+				MethodInvoker buttonPauseInvoker = delegate
+				{
+					buttonRobotPause.Enabled = buttonPauseEnabled ;
+				};
+				buttonRobotPause.BeginInvoke(buttonPauseInvoker);
+				
+				MethodInvoker buttonStartInvoker = delegate
+				{
+					buttonRobotStart.Enabled = buttonStartEnabled ;
+				};
+				buttonRobotStart.BeginInvoke(buttonStartInvoker);
+				
+				MethodInvoker buttonStopInvoker = delegate
+				{
+					buttonRobotStop.Enabled = buttonStopEnabled ;
+				};
+				buttonRobotStop.BeginInvoke(buttonStopInvoker);
+				
+				MethodInvoker textBoxRuningJobStatusInvoker = delegate
+				{
+					RunningJobStatus.Text = textBoxRuningJobStatusText ;
+				};
+				RunningJobStatus.BeginInvoke(textBoxRuningJobStatusInvoker);
+			}
+			
+		}
+		
+		private void UpdateRunningJob()
+		{
+			string RunningJobNameText;
+			string RunningJobStatusText;
+			if (RuningJob!=null)
+			{
+				RunningJobNameText = RuningJob.ScriptName;
+				RunningJobStatusText = RuningJob.JobStatus.ToString();
+			}
+			else
+			{
+				RunningJobNameText = string.Empty;
+				RunningJobStatusText = string.Empty;
+			}
+			
+			if(!this.IsDisposed)
+			{
+				MethodInvoker UpdateRunningJobName = delegate
+				{
+					RunningJobName.Text = RunningJobNameText ;
+				};
+				RunningJobName.BeginInvoke(UpdateRunningJobName);
+				
+				MethodInvoker UpdateRunningJobStatus = delegate
+				{
+					RunningJobStatus.Text = RunningJobStatusText ;
+				};
+				RunningJobStatus.BeginInvoke(UpdateRunningJobStatus);
+			}
+			
+		}
+		
+		void RefreshToolStripButtonClick(object sender, EventArgs e)
+		{
+			UpdateRobotJobsQueue();
+		}
+		
 		#endregion
 		
-		#region Exception handling
 		
-		private List<Logging.Logger> AvailableLoggers = new List<Logging.Logger>();
+		
+		#region Exception handling
+		private Log MainFormLog;
+		
+		private List<Logger> AvailableLoggers = new List<Logger>();
 		
 		private void InitAvailableLoggers()
 		{
 			
-			AvailableLoggers.Add(new Logging.EventLogLogger());
-			AvailableLoggers.Add(new Logging.DebugLogger());
-			AvailableLoggers.Add(new Logging.GoogleSpreadsheetLogger());
+			AvailableLoggers.Add(new EventLogLogger());
+			AvailableLoggers.Add(new DebugLogger());
+			AvailableLoggers.Add(new GoogleSpreadsheetLogger());
 			
-
-			System.Diagnostics.Debug.WriteLine(	AvailableLoggers[0].LoggerName);
 			
 			ActiveLoggersCheckedListBox.DataSource = AvailableLoggers;
 			ActiveLoggersCheckedListBox.DisplayMember = "LoggerName";
@@ -188,24 +387,24 @@ namespace OctoTip.OctoTipPlus
 			
 			System.Windows.Forms.CheckedListBox.CheckedItemCollection SelectedLoggers =  ActiveLoggersCheckedListBox.CheckedItems;
 			
-			foreach (Logging.Logger L in SelectedLoggers)
+			foreach (Logger L in SelectedLoggers)
 			{
 				L.Log(LE);
 			}
 		}
 		
-		public void Notify(string Subject,string Message)
+		public void Notify(object sender, LogEnteryCreatedEventArgs e)
 		{
-			System.Diagnostics.Debug.WriteLine(Subject + " " + Message);
-			throw new NotImplementedException("dd");
+			Notify(e.LE);
 		}
+		
+
 		void CreateErrorButtonClick(object sender, EventArgs e)
 		{
-			Notify(new LoggingEntery("OctoTipPlus Appilcation",this.Name,"Test Error","Test 1234",LoggingEntery.EnteryTypes.Critical));
+			
+			Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation",this.Name,"Test Error","Test 1234",LoggingEntery.EnteryTypes.Critical));
 		}
 		#endregion
-		
-		
 		
 	}
 }

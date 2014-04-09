@@ -17,11 +17,32 @@ namespace OctoTip.Lib
 	/// Description of RobotJobsQueue.
 	/// </summary>
 //	public class RobotJobsQueue:BindingList<RobotJob>
-	public class RobotJobsQueue:BindingListView<RobotJob>
+	public sealed class RobotJobsQueue:BindingListView<RobotJob>
 	{
+	
+		
+		private static volatile RobotJobsQueue instance;
+		private static object syncRoot = new Object();
 		
 		public event EventHandler<RobotJobsQueueChangedEventArgs> RobotJobsQueueChanged;
 		
+		public static RobotJobsQueue Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					lock (syncRoot)
+					{
+						if (instance == null)
+							instance = new RobotJobsQueue();
+					}
+				}
+
+				return instance;
+			}
+		}
+
 		private  void OnRobotJobsQueueChanged(RobotJobsQueueChangedEventArgs e)
 		{
 			// Make a temporary copy of the event to avoid possibility of
@@ -35,10 +56,28 @@ namespace OctoTip.Lib
 		}
 		
 		
-		public RobotJobsQueue():base()
+		private RobotJobsQueue():base()
 		{
 			
 		}
+		
+		
+		public RobotJob.Status GetJobStatus(Guid UniqueID)
+		{
+			RobotJob.Status JobStatus = RobotJob.Status.Failed;
+			foreach(RobotJob RJ in this)
+			{
+				if (RJ.UniqueID == UniqueID)
+				{
+					JobStatus = RJ.JobStatus;
+				}
+			}
+			
+			//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+			//logger.Add(Message);
+			return JobStatus;
+		}
+		
 		
 //		protected override bool SupportsSortingCore
 //		{
@@ -88,6 +127,7 @@ namespace OctoTip.Lib
 		}
 		
 		
+		
 		public Guid InsertRobotJob(RobotJob RJ)
 		{
 			Guid UniqueID =  RJ.GenerateUniqueID();
@@ -98,7 +138,26 @@ namespace OctoTip.Lib
 			return UniqueID;
 		}
 		
+		
+//		public RobotJob.Status GetJobStatus(Guid UniqueID)
+//		{
+//			//RobotJob.Status SS = OctoTip.Manager.MainForm.FormRobotJobsQueueHestoryDictionary[UniqueID];
+//			RobotJob.Status JobStatus = RobotJob.Status.Failed;
+//			foreach(RobotJob RJ in MainForm.MainFormRobotJobsQueue)
+//			{
+//				if (RJ.UniqueID == UniqueID)
+//				{
+//					JobStatus = RJ.JobStatus;
+//				}
+//			}
+//			
+//			//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+//			//logger.Add(Message);
+//			return JobStatus;
+//		}
+		
 	}
+	
 	public class RobotJobsQueueChangedEventArgs : EventArgs
 	{
 		private string _Massege	;

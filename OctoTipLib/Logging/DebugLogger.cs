@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTip.OctoTipPlus.Logging
+namespace OctoTip.Lib.Logging
 {
 	/// <summary>
 	/// Description of DebugLogger.
@@ -22,13 +22,17 @@ namespace OctoTip.OctoTipPlus.Logging
 		
 		public override void Log(LoggingEntery LE)
 		{
-			System.Diagnostics.Debug.WriteLine("Looger Error");
-			System.Diagnostics.Debug.WriteLine("--------------");
+			System.Diagnostics.Debug.WriteLine(string.Empty);
+			
+			System.Diagnostics.Debug.WriteLine("-----Start Log---------");
+			System.Diagnostics.Debug.WriteLine("EnteryType:" + LE.EnteryType.ToString());
+			
 			System.Diagnostics.Debug.WriteLine("Sender:" + LE.Sender +"(" + LE.SubSender + ")");
 			System.Diagnostics.Debug.WriteLine("Title:" + LE.Title);
-			System.Diagnostics.Debug.WriteLine("Messege:" + LE.Messege);
+			System.Diagnostics.Debug.WriteLine("Message:" + LE.Message);
 			System.Diagnostics.Debug.WriteLine("EnteryType:" + LE.EnteryType.ToString());
-			System.Diagnostics.Debug.WriteLine("--------------");
+			System.Diagnostics.Debug.WriteLine("-----end Log---------");
+			System.Diagnostics.Debug.WriteLine(string.Empty);
 			
 		}
 	}

@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTip.OctoTipPlus.Logging
+namespace OctoTip.Lib.Logging
 {
 	/// <summary>
 	/// Description of ILogger.

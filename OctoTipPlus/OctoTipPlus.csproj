@@ -32,18 +32,6 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Google.GData.Client">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.GData.Documents">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Documents.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.GData.Extensions">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.GData.Spreadsheets">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\Google\Google Data API SDK\Redist\Google.GData.Spreadsheets.dll</HintPath>
-    </Reference>
     <Reference Include="Interop.Evoapi">
       <HintPath>..\OctoTipManager\bin\Debug\Interop.Evoapi.dll</HintPath>
     </Reference>
@@ -74,12 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlWrapper.cs" />
-    <Compile Include="Logging\DebugLogger.cs" />
-    <Compile Include="Logging\EventLogLogger.cs" />
-    <Compile Include="Logging\GoogleSpreadsheetLogger.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Logging\LogingEntery.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -107,7 +89,6 @@
     </Compile>
     <Compile Include="RobotWorker.cs" />
     <Compile Include="RobotWrapper.cs" />
-    <Compile Include="Utils\IniFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -127,8 +108,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logging" />
-    <Folder Include="Utils" />
     <Folder Include="ProtocolParametersFields" />
   </ItemGroup>
   <ItemGroup>

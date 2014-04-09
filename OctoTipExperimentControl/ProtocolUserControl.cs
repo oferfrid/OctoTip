@@ -127,7 +127,7 @@ namespace OctoTip.OctoTipExperimentControl
 		private void HandleProtocolStatusChanged(object sender, ProtocolStatusChangeEventArgs e)
 		{
 			
-			myLogger.Add(e.NewStatus + ">" + e.Messege);
+			myLogger.Add(e.NewStatus + ">" + e.Message);
 			
 			bool buttonStopEnabled ;
 			bool buttonStartEnabled ;
@@ -178,7 +178,7 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.DarkRed;
 					// notify 
-					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
+					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message));
 					break;
 				case (Protocol.Statuses.FatalError):
 					buttonStopEnabled  = false;
@@ -186,14 +186,14 @@ namespace OctoTip.OctoTipExperimentControl
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Black;
 					// notify 
-					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
+					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message));
 					break;
 				case (Protocol.Statuses.RuntimeError):
 					buttonStopEnabled  = true;
 					buttonStartEnabled =false;
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Yellow;
-					((MainForm)this.ParentForm).Notify(string.Format("Run time error {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
+					((MainForm)this.ParentForm).Notify(string.Format("Run time error {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message));
 					break;
 				default:
 					buttonStopEnabled  = true;
@@ -205,7 +205,7 @@ namespace OctoTip.OctoTipExperimentControl
 			
 			
 			
-			myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Messege));
+			myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Message));
 			
 			
 			
@@ -240,14 +240,14 @@ namespace OctoTip.OctoTipExperimentControl
 		private void HandleDisplayedDataChange(object sender, ProtocolDisplayedDataChangeEventArgs e)
 		{
 			MethodInvoker action = delegate
-			{ textBoxProtocolData.Text =e.Messege; };
+			{ textBoxProtocolData.Text =e.Message; };
 			textBoxProtocolData.BeginInvoke(action);
 		}
 		
 		private void HandleStateDisplayedDataChange(object sender, StateDisplayedDataChangeEventArgs e)
 		{
 			MethodInvoker action = delegate
-			{ textBoxStateData.Text = e.Messege ;};
+			{ textBoxStateData.Text = e.Message ;};
 			textBoxStateData.BeginInvoke(action);
 		}
 		
@@ -281,7 +281,7 @@ namespace OctoTip.OctoTipExperimentControl
 			ProtocolStatesViewer.BeginInvoke(action);
 			
 			
-			myLogger.Add( string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Messege));
+			myLogger.Add( string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Message));
 			
 			
 			

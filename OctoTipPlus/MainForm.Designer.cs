@@ -49,7 +49,7 @@ namespace OctoTip.OctoTipPlus
 			this.RobotQTab = new System.Windows.Forms.TabPage();
 			this.dataGridViewRobotJobsQueue = new OctoTip.Manager.ControlWrapper();
 			this.RobotQToolStrip = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+			this.RefreshToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -205,7 +205,7 @@ namespace OctoTip.OctoTipPlus
 			// RobotQToolStrip
 			// 
 			this.RobotQToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolStripButton1,
+									this.RefreshToolStripButton,
 									this.toolStripButton2,
 									this.toolStripButton3});
 			this.RobotQToolStrip.Location = new System.Drawing.Point(3, 3);
@@ -214,14 +214,15 @@ namespace OctoTip.OctoTipPlus
 			this.RobotQToolStrip.TabIndex = 0;
 			this.RobotQToolStrip.Text = "RobotQToolStrip";
 			// 
-			// toolStripButton1
+			// RefreshToolStripButton
 			// 
-			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton1.Text = "toolStripButton1";
+			this.RefreshToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.RefreshToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("RefreshToolStripButton.Image")));
+			this.RefreshToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.RefreshToolStripButton.Name = "RefreshToolStripButton";
+			this.RefreshToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.RefreshToolStripButton.Text = "Refresh";
+			this.RefreshToolStripButton.Click += new System.EventHandler(this.RefreshToolStripButtonClick);
 			// 
 			// toolStripButton2
 			// 
@@ -348,6 +349,7 @@ namespace OctoTip.OctoTipPlus
 			this.buttonRobotStart.TabIndex = 9;
 			this.buttonRobotStart.Text = "Start";
 			this.buttonRobotStart.UseVisualStyleBackColor = true;
+			this.buttonRobotStart.Click += new System.EventHandler(this.ButtonRobotStartClick);
 			// 
 			// buttonRobotPause
 			// 
@@ -473,7 +475,7 @@ namespace OctoTip.OctoTipPlus
 		private System.Windows.Forms.ToolStripButton ToolStripButtonRefreshProtocol;
 		private System.Windows.Forms.ToolStripButton toolStripButton3;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
-		private System.Windows.Forms.ToolStripButton toolStripButton1;
+		private System.Windows.Forms.ToolStripButton RefreshToolStripButton;
 		private System.Windows.Forms.ToolStrip RobotQToolStrip;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;

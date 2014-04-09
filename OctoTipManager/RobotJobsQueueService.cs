@@ -52,14 +52,13 @@ namespace OctoTip.Manager
 		{
 			Guid UniqueID = OctoTip.Manager.MainForm.FormRobotJobsQueue.InsertRobotJob(RJ);
 			//MainForm.FormRobotJobsQueueHestoryDictionary.Add(RJ.UniqueID,RobotJob.Status.Queued);
-			string Messege = string.Format("Added new job, {0} as UniqueID: {1}", RJ.ScriptName,UniqueID );
-			//logger.Add(Messege);
+			string Message = string.Format("Added new job, {0} as UniqueID: {1}", RJ.ScriptName,UniqueID );
+			//logger.Add(Message);
 			return UniqueID;
 		}
 		
 		public RobotJob.Status GetJobStatus(Guid UniqueID)
 		{
-			//RobotJob.Status SS = OctoTip.Manager.MainForm.FormRobotJobsQueueHestoryDictionary[UniqueID];
 			RobotJob.Status JobStatus = RobotJob.Status.Failed;
 			foreach(RobotJob RJ in OctoTip.Manager.MainForm.FormRobotJobsQueue)
 			{
@@ -69,8 +68,8 @@ namespace OctoTip.Manager
 				}
 			}
 			
-			//string Messege = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
-			//logger.Add(Messege);
+			//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+			//logger.Add(Message);
 			return JobStatus;
 		}
 		

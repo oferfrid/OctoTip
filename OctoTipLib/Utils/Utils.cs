@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTip.Lib
+namespace OctoTip.Lib.Utils
 {
 
 	public static class Utils

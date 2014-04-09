@@ -12,14 +12,12 @@ using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace OctoTip.Lib
 {
 	/// <summary>
 	/// Description of RobotJob.
 	/// </summary>
-	[Serializable]
 	public class RobotJob : IComparable<RobotJob>,INotifyPropertyChanged
 	{
 		
@@ -35,17 +33,15 @@ namespace OctoTip.Lib
 		private RobotJob.Status _JobStatus = RobotJob.Status.Created;
 		public string ParametersFilePath = string.Empty;
 		public bool PrametersFileHasHeader = true;
-		public string Script;
+		//public string Script;
 		private double _Priority;
 		public List<RobotJobParameter> RobotJobParameters;
 		#region RobotJob constructors
 
-		
-		public RobotJob()
+			public RobotJob()
 		{
 			
 		}
-		
 		public RobotJob(FileInfo ScriptFile):this(ScriptFile,0.5)
 		{
 			
@@ -63,7 +59,7 @@ namespace OctoTip.Lib
 		
 		public RobotJob(string ScriptFilePath,double Priority)
 		{
-			InitScript(ScriptFilePath);
+			this.ScriptFilePath = ScriptFilePath;
 			this.Priority = Priority;
 		}
 		
@@ -85,7 +81,7 @@ namespace OctoTip.Lib
 		
 		public RobotJob(string ScriptFilePath,List<RobotJobParameter> RobotJobParameters,double Priority)
 		{
-			InitScript(ScriptFilePath);
+			this.ScriptFilePath = ScriptFilePath;
 			this.RobotJobParameters = RobotJobParameters;
 			this.Priority = Priority;
 		}
@@ -107,7 +103,11 @@ namespace OctoTip.Lib
 		public string ScriptFilePath
 		{
 			get { return _ScriptFilePath; }
-			set { _ScriptFilePath = value;}
+			set 
+			{
+				_ScriptFilePath = value;
+				ParseScriptFile();
+			}
 		}
 		
 		public Guid UniqueID
@@ -182,16 +182,7 @@ namespace OctoTip.Lib
 			
 		}
 		
-		public void CreateScript()
-		{
-			// Write the string to a file.
-			string ScriptFileName = string.Format("{0}\\{1}",ConfigurationManager.AppSettings["DefultScriptFolder"],ScriptName);
-			StreamWriter file = new StreamWriter(ScriptFileName,false,Encoding.GetEncoding(1252));
-			file.Write(Script);
-			file.Close();
-			_ScriptFilePath = ScriptFileName;
-			WriteParameterFile();
-		}
+		
 		
 		public Guid GenerateUniqueID()
 		{
@@ -207,7 +198,7 @@ namespace OctoTip.Lib
 			
 			List<RobotJobParameter> ScriptParameters = new List<RobotJobParameter>();
 			
-			string[] ScriptLines = Script.Split('\n');
+			string[] ScriptLines = GetScript().Split('\n');
 			
 			for (int l=0; l<ScriptLines.Length;l++)
 			{
@@ -239,7 +230,7 @@ namespace OctoTip.Lib
 		private void ParseScriptFile()
 		{
 			string ScriptParameterFilePath = string.Empty;
-			string[] ScriptLines = Script.Split('\n');
+			string[] ScriptLines = GetScript().Split('\n');
 			
 			for (int l=0; l<ScriptLines.Length;l++)
 			{
@@ -263,26 +254,25 @@ namespace OctoTip.Lib
 
 		
 		
-		private void InitScript( string ScriptPath)
+		public string GetScript()
 		{
-			FileInfo FI = new FileInfo(ScriptPath);
+			FileInfo FI = new FileInfo(ScriptFilePath);
 			if (!FI.Exists)
 			{
-				throw new Exception("Script file "  + ScriptPath + " doesn't exsist");
+				throw new Exception("Script file "  + ScriptFilePath + " doesn't exsist");
 			}
 			
 			ScriptName = FI.Name;
 			
-			StreamReader streamReader = new StreamReader(ScriptPath,Encoding.GetEncoding(1252));
-			Script = streamReader.ReadToEnd();
+			StreamReader streamReader = new StreamReader(ScriptFilePath,Encoding.GetEncoding(1252));
+			string Script = streamReader.ReadToEnd();
 			streamReader.Close();
-			
-			ParseScriptFile();
-			
+			return Script;
+
 		}
 		
 		
-		private void WriteParameterFile()
+		public void WriteParameterFile()
 		{
 			if (ParametersFilePath!=string.Empty)
 			{

@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace OctoTip.OctoTipPlus.Logging
+namespace OctoTip.Lib.Logging
 {
 	/// <summary>
 	/// Description of LoggingEntery.
@@ -20,15 +20,23 @@ namespace OctoTip.OctoTipPlus.Logging
 		public string Sender;
 		public string SubSender;
 		public string Title;
-		public string Messege;
+		public string Message;
 		public EnteryTypes EnteryType;
 		
-		public LoggingEntery(string Sender,string SubSender,string Title, string Messege, EnteryTypes EnteryType)
+		public LoggingEntery(string Sender,string SubSender,string Title, string Message, EnteryTypes EnteryType)
 		{
 			this.Sender = Sender;
 			this.SubSender = SubSender;
 			this.Title = Title;
-			this.Messege = Messege; 
+			this.Message = Message; 
+			this.EnteryType = EnteryType;
+		}
+		public LoggingEntery(string Sender,string SubSender,string Title, EnteryTypes EnteryType)
+		{
+			this.Sender = Sender;
+			this.SubSender = SubSender;
+			this.Title = Title;
+			this.Message = string.Empty; 
 			this.EnteryType = EnteryType;
 		}
 		

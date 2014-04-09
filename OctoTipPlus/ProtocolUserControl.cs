@@ -16,15 +16,7 @@ using Microsoft.Msagl.Drawing;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore;
-using OctoTip.Lib.ExperimentsCore.Interfaces;
-using OctoTip.Lib;
-
-//using Microsoft.Msagl;
-
-
-
-
-
+using OctoTip.Lib.Logging;
 
 namespace OctoTip.OctoTipPlus
 {
@@ -44,7 +36,7 @@ namespace OctoTip.OctoTipPlus
 		//ProtocolLogForm PLog;
 		
 		public const string LOG_NAME = "OctoTipExperimentManager";
-		private LogString myLogger = LogString.GetLogString(LOG_NAME);
+		//private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		private int OldHeight;
 		
 		
@@ -121,14 +113,13 @@ namespace OctoTip.OctoTipPlus
 			UserControlProtocol.RequestPause();
 		}
 		
-		
-		
-		
-		
 		private void HandleProtocolStatusChanged(object sender, ProtocolStatusChangeEventArgs e)
 		{
-			
-			myLogger.Add(e.NewStatus + ">" + e.Messege);
+			string Titel ;
+			string Sendor  = UserControlProtocolParameters.Name; 
+			string Message = e.NewStatus + ">" + e.Message;
+					
+			//((MainForm)this.ParentForm).Notify(new Logging.LoggingEntery(this
 			
 			bool buttonStopEnabled ;
 			bool buttonStartEnabled ;
@@ -179,7 +170,9 @@ namespace OctoTip.OctoTipPlus
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.DarkRed;
 					// notify 
-					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
+					Titel = string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
+					Message = string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
+					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Error));
 					break;
 				case (Protocol.Statuses.FatalError):
 					buttonStopEnabled  = false;
@@ -187,14 +180,19 @@ namespace OctoTip.OctoTipPlus
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Black;
 					// notify 
-					((MainForm)this.ParentForm).Notify(string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
+					Titel = string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
+					Message = string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
+					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
 					break;
 				case (Protocol.Statuses.RuntimeError):
 					buttonStopEnabled  = true;
 					buttonStartEnabled =false;
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Yellow;
-					((MainForm)this.ParentForm).Notify(string.Format("Run time error {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text),string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Messege));
+					Titel = string.Format("Run time error {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
+					Message = string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
+					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
+		
 					break;
 				default:
 					buttonStopEnabled  = true;
@@ -204,13 +202,9 @@ namespace OctoTip.OctoTipPlus
 					break;
 			}
 			
-			
-			
-			myLogger.Add(string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Messege));
-			
-			
-			
-			
+			string Title	= string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Message);
+			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Informational));
+					
 			MethodInvoker buttonStopaction = delegate
 			{
 				buttonStop.Enabled=buttonStopEnabled;
@@ -241,14 +235,14 @@ namespace OctoTip.OctoTipPlus
 		private void HandleDisplayedDataChange(object sender, ProtocolDisplayedDataChangeEventArgs e)
 		{
 			MethodInvoker action = delegate
-			{ textBoxProtocolData.Text =e.Messege; };
+			{ textBoxProtocolData.Text =e.Message; };
 			textBoxProtocolData.BeginInvoke(action);
 		}
 		
 		private void HandleStateDisplayedDataChange(object sender, StateDisplayedDataChangeEventArgs e)
 		{
 			MethodInvoker action = delegate
-			{ textBoxStateData.Text = e.Messege ;};
+			{ textBoxStateData.Text = e.Message ;};
 			textBoxStateData.BeginInvoke(action);
 		}
 		
@@ -281,12 +275,9 @@ namespace OctoTip.OctoTipPlus
 				ProtocolStatesViewer.Refresh(); };
 			ProtocolStatesViewer.BeginInvoke(action);
 			
-			
-			myLogger.Add( string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Messege));
-			
-			
-			
-			
+			string Title	= string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Message);
+			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Informational));
+				
 			
 		}
 		

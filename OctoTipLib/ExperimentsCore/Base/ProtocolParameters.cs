@@ -36,7 +36,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		}
 		
 		public abstract bool IsValid();
-		public abstract string GetErrorMessege();
+		public abstract string GetErrorMessage();
 	
 
 	}

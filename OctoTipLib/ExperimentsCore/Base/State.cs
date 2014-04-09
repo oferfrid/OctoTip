@@ -59,20 +59,20 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			}
 		}
 	
-		protected void SetCurrentStatus(Statuses CurrentStatus,string Messege )
+		protected void SetCurrentStatus(Statuses CurrentStatus,string Message )
 		{
 			//Log the status change And Raise the event.
-			Log(string.Format("{0}>{1} {2}",_CurrentStatus , CurrentStatus , Messege));
+			Log(string.Format("{0}>{1} {2}",_CurrentStatus , CurrentStatus , Message));
 			_CurrentStatus = CurrentStatus;
-			OnStatusChanged(new StateStatusChangeEventArgs(this,CurrentStatus,Messege));
+			OnStatusChanged(new StateStatusChangeEventArgs(this,CurrentStatus,Message));
 		}
 		
 		public event EventHandler<StateDisplayedDataChangeEventArgs> StateDisplayedDataChange;
 		public event EventHandler<StateStatusChangeEventArgs> StateStatusChange;
 		
-		protected virtual void DisplayData(string Messege)
+		protected virtual void DisplayData(string Message)
 		{
-			StateDisplayedDataChangeEventArgs e = new StateDisplayedDataChangeEventArgs(this,Messege);
+			StateDisplayedDataChangeEventArgs e = new StateDisplayedDataChangeEventArgs(this,Message);
 			EventHandler<StateDisplayedDataChangeEventArgs> handler = StateDisplayedDataChange;
 			if (handler != null)
 			{
@@ -90,7 +90,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		}
 		
 		
-		public void RequestStop(string Messege)
+		public void RequestStop(string Message)
 		{
 			SetCurrentStatus(Statuses.Stoping,"Stop Request");
 			_ShouldStop = true;
@@ -135,9 +135,9 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		#endregion
 		
-		protected void Log (string Messege)
+		protected void Log (string Message)
 		{
-			myLogger.Add(this.GetType().Name + ":" + Messege );
+			myLogger.Add(this.GetType().Name + ":" + Message );
 		}
 		
 		#region static
@@ -167,19 +167,19 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	public class StateStatusChangeEventArgs : EventArgs
 	{
 		
-		private string _Messege;
+		private string _Message;
 		private State _CurrentState;
 		private State.Statuses _StateStatus;
 		
 		public StateStatusChangeEventArgs(State CurrentState,State.Statuses StateStatus,string Message)
 		{
 			this._CurrentState  = CurrentState;
-			this._Messege = Messege;
+			this._Message = Message;
 			this._StateStatus = StateStatus;
 		}
-		public string Messege
+		public string Message
 		{
-			get { return _Messege; }
+			get { return _Message; }
 		}
 		
 		public State CurrentState
@@ -197,17 +197,17 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		public class StateDisplayedDataChangeEventArgs:EventArgs
 	{
 		
-		private string _Messege;
+		private string _Message;
 		private State _State;
 
-		public StateDisplayedDataChangeEventArgs(State CurrentState,string Messege)
+		public StateDisplayedDataChangeEventArgs(State CurrentState,string Message)
 		{
 			this._State = CurrentState;
-			this._Messege = Messege;
+			this._Message = Message;
 		}
-		public string Messege
+		public string Message
 		{
-			get { return _Messege; }
+			get { return _Message; }
 		}
 		public State State
 		{

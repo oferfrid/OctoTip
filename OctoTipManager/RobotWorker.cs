@@ -289,7 +289,7 @@ namespace OctoTip.Manager
 		{
 			get { return _CurrentJob; }
 		}
-		public string Messege
+		public string Message
 		{
 			get { return _Message; }
 		}

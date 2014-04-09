@@ -9,7 +9,7 @@
 using System;
 using System.Diagnostics;
 
-namespace OctoTip.OctoTipPlus.Logging
+namespace OctoTip.Lib.Logging
 {
 	/// <summary>
 	/// Description of EventLogLogger.
@@ -39,7 +39,7 @@ namespace OctoTip.OctoTipPlus.Logging
 			myLog.Source = SourceName;
 
 			// Write an informational entry to the event log.
-			string Messeg = string.Format("{0}({1}): {2}\n--------------\n{2}",LE.Sender,LE.SubSender,LE.Title,LE.Messege);
+			string Messeg = string.Format("{0}({1}): {2}\n--------------\n{3}",LE.Sender,LE.SubSender,LE.Title,LE.Message);
 			myLog.WriteEntry(Messeg,GetEntryType(LE.EnteryType));
 		}
 		

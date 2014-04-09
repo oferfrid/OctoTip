@@ -21,12 +21,13 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	{
 		protected RobotJob RunRobotJob=null;
 		
-		RobotJobsQueueServiceClient RJQClient ;
+		
+		RobotJobsQueue RJQ ;
 		
 		
 		public RunRobotState():base()
 		{
-			
+			RJQ = RobotJobsQueue.Instance;
 		}
 		
 		
@@ -46,20 +47,12 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			
 			// Inserting the Job in the queue
 			RunRobotJob.TestJobParameters();
-			RJQClient = new RobotJobsQueueServiceClient();
+			RJQ =  RobotJobsQueue.Instance;
 			
-			Guid JobID ;
+			Guid JobID = RJQ.InsertRobotJob(RunRobotJob);
 			
-			try
-			{
-				JobID = RJQClient.AddRobotJob(RunRobotJob);
-				
-			}
-			catch (System.ServiceModel.EndpointNotFoundException e)
-			{
-				throw new Exception("No Listener on " + RJQClient.Endpoint.ListenUri ,e);
-			}
 			RunRobotJob.UniqueID = JobID;
+			
 			this.Log(string.Format("Queued {0}, UniqueID: {1} (parameters={2})",RunRobotJob.ScriptName,RunRobotJob.UniqueID,RunRobotJob.RobotJobDisplayParameters));
 			
 			do
@@ -132,19 +125,13 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		}
 		
 		
+		
 		private RobotJob.Status GetJobStatus(RobotJob RunRobotJob)
 		{
-			RobotJob.Status JobStatus;
-			try
-			{
-				JobStatus = RJQClient.GetJobStatus(RunRobotJob.UniqueID);
-			}
-			catch(System.ServiceModel.EndpointNotFoundException)
-			{
-				JobStatus = RobotJob.Status.RuntimeError;
-			}
-			string messege = string.Format("{0}({1})>{2}",RunRobotJob.ScriptName,RunRobotJob.UniqueID,JobStatus.ToString());
-			this.DisplayData(messege);
+			RobotJob.Status JobStatus = RJQ.GetJobStatus(RunRobotJob.UniqueID);
+			
+			string Message = string.Format("{0}({1})>{2}",RunRobotJob.ScriptName,RunRobotJob.UniqueID,JobStatus.ToString());
+			this.DisplayData(Message);
 			return JobStatus;
 		}
 	}

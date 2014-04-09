@@ -119,7 +119,7 @@ namespace OctoTip.OctoTipPlus
 			
 			if(!ErrorFlag &&!FormProtocolParameters.IsValid())
 			{
-				Errorlabel.Text = FormProtocolParameters.GetErrorMessege();
+				Errorlabel.Text = FormProtocolParameters.GetErrorMessage();
 				ErrorFlag = true;
 			}
 			

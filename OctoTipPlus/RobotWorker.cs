@@ -23,7 +23,7 @@ namespace OctoTip.OctoTipPlus
 		private Thread RunningThread;
 		
 		public  const string LOG_NAME = "OctoTipManager";
-		private LogString myLogger = LogString.GetLogString(LOG_NAME);
+		//private LogString myLogger = LogString.GetLogString(LOG_NAME);
 		
 		
 		public RobotWorkerStatus _Status = RobotWorkerStatus.Stopped;
@@ -33,7 +33,10 @@ namespace OctoTip.OctoTipPlus
 		
 		RobotJobsQueue WorkerRobotJobsQueue
 		{
-			get{return MainForm.FormRobotJobsQueue;}
+			get
+			{
+				return RobotJobsQueue.Instance;
+			}
 		}
 		
 				
@@ -231,15 +234,15 @@ namespace OctoTip.OctoTipPlus
 			switch (e.ScriptStatus)
 			{
 				case OctoTip.Lib.RobotJob.Status.RuntimeError:
-					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.RuntimeError;
+					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipPlus.Lib.RobotJob.Status.RuntimeError;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runtime Error"));
 					break;
 				case OctoTip.Lib.RobotJob.Status.Paused:
-					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Paused;
+					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipPlus.Lib.RobotJob.Status.Paused;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,e.Job,"Job Paused"));
 					break;
 				case OctoTip.Lib.RobotJob.Status.Running:
-					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.Lib.RobotJob.Status.Running;
+					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipPlus.Lib.RobotJob.Status.Running;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runing From Worker"));
 					break;
 					case OctoTip.Lib.RobotJob.Status.Finished:
@@ -289,7 +292,7 @@ namespace OctoTip.OctoTipPlus
 		{
 			get { return _CurrentJob; }
 		}
-		public string Messege
+		public string Message
 		{
 			get { return _Message; }
 		}
