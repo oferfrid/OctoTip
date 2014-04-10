@@ -2,7 +2,7 @@
  * Created by SharpDevelop.
  * User: Tecan
  * Date: 11/02/2014
- * Time: 10:58
+ * Time: 10:28
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -13,16 +13,16 @@ using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore.Interfaces;
 
-namespace MDK99
+namespace MDKPlate1
 {
 	/// <summary>
-	/// Description of MDKFinalIncubateState.
+	/// Description of MDKIncubateState.
 	/// </summary>
 	/// 
-	[State("Final incubation","Final incubation of plate")]
-	public class MDKFinalIncubateState:WaitState
+	[State("Incubation","Incubation of plate")]
+	public class MDKIncubateState:WaitState
 	{
-		public MDKFinalIncubateState(double Hours2Wait):base(DateTime.Now.AddHours(Hours2Wait))
+		public MDKIncubateState(double Hours2Wait):base(DateTime.Now.AddHours(Hours2Wait))
 		{
 		}
 		
@@ -39,7 +39,7 @@ namespace MDK99
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{};
+			return new List<Type>{typeof(MDKInoculateState),typeof(MDKDeactivateState)};
 		}
 		#endregion
 	}

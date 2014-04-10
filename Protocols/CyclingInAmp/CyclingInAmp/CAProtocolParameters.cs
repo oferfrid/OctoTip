@@ -43,4 +43,15 @@ namespace CyclingInAmp
 		[ProtocolParameterAtribute("Freezing Index","1",true)]
 		public int FreezeInd;
 	}
+	
+		public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
+		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 }

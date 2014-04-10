@@ -13,7 +13,7 @@ using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore.Interfaces;
 
-namespace MDK99
+namespace MDKPlate1
 {
 	/// <summary>
 	/// Description of MDKDeactivateState.
@@ -25,11 +25,14 @@ namespace MDK99
 		//Lic96PlateCart,Lic96PlatePos,BLacIndex
 		int LicPlateInd;
 		int BLacIndex;
+		int MIC;
 		
-		public MDKDeactivateState(int LicPlateInd,int BLacIndex):base()
+		public MDKDeactivateState(int LicPlateInd,int BLacIndex,bool MIC):base()
 		{
 			this.LicPlateInd = LicPlateInd;
 			this.BLacIndex = BLacIndex;
+			this.MIC = 0;
+			if(MIC) this.MIC = 1;
 		}
 		
 		public void Restart()
@@ -44,8 +47,9 @@ namespace MDK99
 			RJP.Add(new RobotJobParameter("Lic96PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic96PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("BLacIndex",RobotJobParameter.ParameterType.Number,BLacIndex));
+			RJP.Add(new RobotJobParameter("MICRow",RobotJobParameter.ParameterType.Number,MIC));
 				
-			RobotJob RJ = new RobotJob(@"D:\OctoTip\Protocols\MDK99\Scripts\Deactivate.esc",RJP,0.9);
+			RobotJob RJ = new RobotJob(@"D:\OctoTip\Protocols\MDK\MDKPlate1\Scripts\Deactivate.esc",RJP,0.9);
 			return RJ;
 		}
 		

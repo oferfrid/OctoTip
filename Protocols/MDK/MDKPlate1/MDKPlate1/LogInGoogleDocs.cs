@@ -13,7 +13,7 @@ using Google.GData.Spreadsheets;
 
 
 
-namespace MDK99
+namespace MDKPlate1
 {
 	/// <summary>
 	/// Description of LogInGoogleDocs.

@@ -56,6 +56,15 @@ namespace KillCurveExpPlaiting
 		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\KillCurveExpPlaiting\SharedResources\")]
 		public string SharedResourcesFilePath;
 		
+				public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
 		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 	}
 }

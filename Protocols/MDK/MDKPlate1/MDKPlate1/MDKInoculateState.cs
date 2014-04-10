@@ -13,7 +13,7 @@ using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore.Interfaces;
 
-namespace MDK99
+namespace MDKPlate1
 {
 	/// <summary>
 	/// Description of Class1.
@@ -49,7 +49,7 @@ namespace MDK99
 			RJP.Add(new RobotJobParameter("GermIndex",RobotJobParameter.ParameterType.Number,GermIndex));
 			RJP.Add(new RobotJobParameter("InoculationRow",RobotJobParameter.ParameterType.Number,InoculationRow));
 				
-			RobotJob RJ = new RobotJob(@"D:\OctoTip\Protocols\MDK99\Scripts\Inoculate.esc",RJP,0.9);
+			RobotJob RJ = new RobotJob(@"D:\OctoTip\Protocols\MDK\MDKPlate1\Scripts\Inoculate.esc",RJP,0.9);
 			return RJ;
 		}
 		

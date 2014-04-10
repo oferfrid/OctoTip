@@ -31,6 +31,15 @@ namespace KillingCurve
 		public double[] SamplingTimesArray;
 		[ProtocolParameterAtribute("Delay in MPN plate reading (hr)","12")]
 		public double ReadAfter;
-
+		public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
+		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 	}
 }

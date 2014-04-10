@@ -12,12 +12,12 @@ using System.IO;
 using System.Linq;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
-namespace MDK99
+namespace MDKPlate1
 {
 	/// <summary>
-	/// Description of MDK99Protocol.
+	/// Description of MDKPlate1Protocol.
 	/// </summary>
-	[Protocol("MDK","Asher","Preform MDK99 on single plate")]
+	[Protocol("MDK Plate 1","Asher","Preform MDKPlate1 on single plate")]
 	public class MDKProtocol:Protocol
 	{
 		
@@ -54,13 +54,9 @@ namespace MDK99
 			
 			if (ProtocolParameters.InoculateCycle==0)
 			{
-				double AntibioMinFrac = ProtocolParameters.MinConcentration/ProtocolParameters.TroughConcentration;
-				double AntibioMaxFrac = ProtocolParameters.MaxConcentration/ProtocolParameters.TroughConcentration;
+				ReportProtocolState(0,string.Format(@"Prepering plate {0} with logarithmic scale concentrations (twofold between adjacent columns)",ProtocolParameters.LicPlatePosition));
 				
-				
-				ReportProtocolState(0,string.Format("Prepering plate {0} with concentrations of {1:0.000}-{2:0.000}",ProtocolParameters.LicPlatePosition,ProtocolParameters.MinConcentration,ProtocolParameters.MaxConcentration));
-				
-				this.ChangeState(new MDKPreparePlateState(ProtocolParameters.LicPlatePosition,AntibioMinFrac,AntibioMaxFrac));
+				this.ChangeState(new MDKPreparePlateState(ProtocolParameters.LicPlatePosition));
 			}
 			
 			//Total time between inoculations (including inoculation time)+ casting
@@ -103,7 +99,7 @@ namespace MDK99
 			//Incubation
 								
 			ReportProtocolState(9,string.Format("Plate {0} in incubatorfor {1:0.0} Minutes",ProtocolParameters.LicPlatePosition,ProtocolParameters.MinTime*60));
-				
+			
 			this.ChangeState(new MDKIncubateState(ProtocolParameters.MinTime));
 				
 			
@@ -111,7 +107,7 @@ namespace MDK99
 			
 			ReportProtocolState(9,string.Format("Deactivating antibiotic in plate {0}",ProtocolParameters.LicPlatePosition));
 				
-			this.ChangeState(new MDKDeactivateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.BLacIndex));
+			this.ChangeState(new MDKDeactivateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.BLacIndex,ProtocolParameters.MIC));
 			
 			ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Plate {0} in incubatorfor {1:0.0} Minutes",ProtocolParameters.LicPlatePosition,ProtocolParameters.FinIncTime*60));
 				

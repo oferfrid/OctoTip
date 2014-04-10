@@ -32,4 +32,15 @@ namespace CalibrateL1210Growth
 		public string OutputFilePath;
 		
 	}
+	
+		public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
+		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 }
