@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{7D77BD06-076F-456F-8AC6-13CFFBB8D8FC}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MDK99</RootNamespace>
+    <AssemblyName>MDKPlate1</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.GData.Client">
+      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Documents">
+      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Documents.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions">
+      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Spreadsheets">
+      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Spreadsheets.dll</HintPath>
+    </Reference>
+    <Reference Include="OctoTip.Lib">
+      <HintPath>..\..\..\OctoTipLib\bin\Debug\OctoTip.Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MDKProtocol.cs" />
+    <Compile Include="MDKDeactivateState.cs" />
+    <Compile Include="MDKFinalIncubateState.cs" />
+    <Compile Include="MDKIncubateState.cs" />
+    <Compile Include="MDKInoculateState.cs" />
+    <Compile Include="IniFile.cs" />
+    <Compile Include="LogInGoogleDocs.cs" />
+    <Compile Include="MDKPreparePlateState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MDKProtocolParameters.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
