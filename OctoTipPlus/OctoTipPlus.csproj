@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.Evoapi">
-      <HintPath>..\OctoTipManager\bin\Debug\Interop.Evoapi.dll</HintPath>
+      <HintPath>Dependencies\Interop.Evoapi.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Msagl">
       <HintPath>Dependencies\Microsoft.Msagl.dll</HintPath>
