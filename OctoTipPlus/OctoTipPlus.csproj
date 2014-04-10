@@ -36,13 +36,13 @@
       <HintPath>..\OctoTipManager\bin\Debug\Interop.Evoapi.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Msagl">
-      <HintPath>..\OctoTipExperimentControl\Microsoft Automatic Graph Layout\Microsoft.Msagl.dll</HintPath>
+      <HintPath>Dependencies\Microsoft.Msagl.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Msagl.Drawing">
-      <HintPath>..\OctoTipExperimentControl\Microsoft Automatic Graph Layout\Microsoft.Msagl.Drawing.dll</HintPath>
+      <HintPath>Dependencies\Microsoft.Msagl.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Msagl.GraphViewerGdi">
-      <HintPath>..\OctoTipExperimentControl\Microsoft Automatic Graph Layout\Microsoft.Msagl.GraphViewerGdi.dll</HintPath>
+      <HintPath>Dependencies\Microsoft.Msagl.GraphViewerGdi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -106,8 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Dependencies\Microsoft.Msagl.dll" />
+    <None Include="Dependencies\Microsoft.Msagl.Drawing.dll" />
+    <None Include="Dependencies\Microsoft.Msagl.GraphViewerGdi.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dependencies" />
     <Folder Include="ProtocolParametersFields" />
   </ItemGroup>
   <ItemGroup>
