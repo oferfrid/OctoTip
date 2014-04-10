@@ -31,20 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Google.GData.Client">
-      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.GData.Documents">
-      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Documents.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.GData.Extensions">
-      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.GData.Spreadsheets">
-      <HintPath>C:\Program Files\Google\Google Data API SDK\Redist\Google.GData.Spreadsheets.dll</HintPath>
-    </Reference>
     <Reference Include="OctoTip.Lib">
-      <HintPath>..\..\..\OctoTipLib\bin\Debug\OctoTip.Lib.dll</HintPath>
+      <HintPath>..\..\..\..\OctoTipLib\bin\Debug\OctoTip.Lib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -62,7 +50,6 @@
     <Compile Include="MDKIncubateState.cs" />
     <Compile Include="MDKInoculateState.cs" />
     <Compile Include="IniFile.cs" />
-    <Compile Include="LogInGoogleDocs.cs" />
     <Compile Include="MDKPreparePlateState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MDKProtocolParameters.cs" />

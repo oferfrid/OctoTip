@@ -21,7 +21,7 @@ namespace OctoTip.Lib.Logging
 	{
 		
 		const string DateHeader = "date";
-		const string MessageHeader  = "Message";
+		const string MessageHeader  = "message";
 		
 		
 		public GoogleSpreadsheetLogger()
@@ -45,8 +45,15 @@ namespace OctoTip.Lib.Logging
 			string Sender = LE.Sender;
 			Squery.Title = Sender;
 			Squery.Exact = true;
-			SpreadsheetFeed Sfeed = myService.Query(Squery);
-
+			SpreadsheetFeed Sfeed;
+			try
+			{
+			Sfeed = myService.Query(Squery);
+			}
+			catch (Google.GData.Client.InvalidCredentialsException e)
+			{
+				throw(new Exception(string.Format("Credentials error in google acount for user:{0}",User),e));
+			}
 			
 			
 			if(Sfeed.Entries.Count == 0)

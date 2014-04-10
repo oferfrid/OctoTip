@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.Logging;
+
 namespace MDKPlate1
 {
 	/// <summary>
@@ -22,8 +24,8 @@ namespace MDKPlate1
 	{
 		
 		FileInfo ProtocolStateFile;
-		LogInGoogleDocs myLogInGoogleDocs;
-		
+		string LogName;
+
 		
 		public new MDKProtocolParameters ProtocolParameters
 		{
@@ -38,10 +40,9 @@ namespace MDKPlate1
 		
 		public MDKProtocol(MDKProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
-			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
+			LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
 			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + LogName+".txt");
-			myLogInGoogleDocs = new LogInGoogleDocs(LogName,this.ProtocolParameters.SharedResourcesFilePath);
-			ReportProtocolState(0,string.Format("Creating Protocol {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
+				ReportProtocolState(0,string.Format("Creating Protocol {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
 		}
 		
@@ -126,7 +127,7 @@ namespace MDKPlate1
 					sw.WriteLine("({0}){1}:\t{2}",InoculateCycle,DateTime.Now,Messege);
 					sw.Flush();
 				}
-				myLogInGoogleDocs.Log(LogMessege);
+				OctoTip.Lib.Logging.Log.LogEntery(new LoggingEntery("MDK Plate 1",LogName,LogMessege,LoggingEntery.EnteryTypes.Informational));
 				DisplayData(LogMessege);
 			}
 			catch(Exception e)

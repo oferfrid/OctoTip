@@ -75,7 +75,7 @@ namespace MDKPlate1
 			return true;
 		}
 		
-		public override string GetErrorMessege()
+		public override string GetErrorMessage()
 		{
 			string ErrorMsg = "";
 			
@@ -106,5 +106,7 @@ namespace MDKPlate1
 			
 			return ErrorMsg;
 		}
+		
+		
 	}
 }
