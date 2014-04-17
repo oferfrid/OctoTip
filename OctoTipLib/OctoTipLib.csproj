@@ -73,12 +73,13 @@
     <Compile Include="ExperimentsCore\Interfaces\IState.cs" />
     <Compile Include="ExperimentsCore\ProtocolProvider.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
+    <Compile Include="Logging\EmailLogger.cs" />
     <Compile Include="Logging\EventLogLogger.cs" />
     <Compile Include="Logging\GoogleSpreadsheetLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Logging\LogingEntery.cs" />
+    <Compile Include="Logging\LoggingEntery.cs" />
     <Compile Include="LogString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotJob.cs" />

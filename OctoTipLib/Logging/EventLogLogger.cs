@@ -29,6 +29,7 @@ namespace OctoTip.Lib.Logging
 			}
 			
 			LoggerName = "Event Log";
+			LoggigLevel = (int)LoggingEntery.EnteryTypes.Warning;
 			
 		}
 		

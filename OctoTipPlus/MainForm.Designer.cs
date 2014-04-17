@@ -36,6 +36,7 @@ namespace OctoTip.OctoTipPlus
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
 			this.ProtocolsCountToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -58,6 +59,7 @@ namespace OctoTip.OctoTipPlus
 			this.label2 = new System.Windows.Forms.Label();
 			this.CreateErrorButton = new System.Windows.Forms.Button();
 			this.ActiveLoggersCheckedListBox = new System.Windows.Forms.CheckedListBox();
+			this.LoggersContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.RobotGroupBox = new System.Windows.Forms.GroupBox();
 			this.RobotStatuslabel = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -297,11 +299,19 @@ namespace OctoTip.OctoTipPlus
 			// 
 			this.ActiveLoggersCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.ActiveLoggersCheckedListBox.ContextMenuStrip = this.LoggersContextMenuStrip;
 			this.ActiveLoggersCheckedListBox.FormattingEnabled = true;
 			this.ActiveLoggersCheckedListBox.Location = new System.Drawing.Point(6, 44);
 			this.ActiveLoggersCheckedListBox.Name = "ActiveLoggersCheckedListBox";
 			this.ActiveLoggersCheckedListBox.Size = new System.Drawing.Size(191, 94);
 			this.ActiveLoggersCheckedListBox.TabIndex = 0;
+			this.ActiveLoggersCheckedListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ActiveLoggersCheckedListBoxMouseDown);
+			// 
+			// LoggersContextMenuStrip
+			// 
+			this.LoggersContextMenuStrip.Name = "LoggersContextMenuStrip";
+			this.LoggersContextMenuStrip.Size = new System.Drawing.Size(153, 26);
+			this.LoggersContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.LoggersContextMenuStripOpening);
 			// 
 			// RobotGroupBox
 			// 
@@ -477,6 +487,7 @@ namespace OctoTip.OctoTipPlus
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ContextMenuStrip LoggersContextMenuStrip;
 		private System.Windows.Forms.ToolStripStatusLabel RuningProtocolsToolStripStatusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel ProtocolsCountToolStripStatusLabel;
 		private System.Windows.Forms.Label label2;

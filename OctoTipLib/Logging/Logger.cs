@@ -18,6 +18,9 @@ namespace OctoTip.Lib.Logging
 		
 		public string LoggerName { get; set; }
 		
+		public LoggingEntery.EnteryTypes LogEnteryTypeLevel { get; set; }
+		
+		
 		
 		public abstract void Log(LoggingEntery LE);
 		
@@ -30,6 +33,11 @@ namespace OctoTip.Lib.Logging
 			}
 		}
 		
+		
+		public int LoggigLevel {
+			get ;
+			set ;
+		}
 	}
 }
 

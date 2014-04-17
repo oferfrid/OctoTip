@@ -28,6 +28,7 @@ namespace OctoTip.Lib.Logging
 		{
 			
 			LoggerName = "Google Spreadsheet";
+			LoggigLevel = (int)LoggingEntery.EnteryTypes.Informational;
 		}
 		
 		public override void Log(LoggingEntery LE)

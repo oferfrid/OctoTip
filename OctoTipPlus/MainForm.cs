@@ -136,7 +136,7 @@ namespace OctoTip.OctoTipPlus
 				ProtocolPanel.Controls[i].Location =   new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
 			}
 
-						
+			
 			//TODO: update toolStripStatus
 			
 			ProtocolsCountToolStripStatusLabel.Text = string.Format("Active Protocols: {0:0}" ,ProtocolsCount);
@@ -238,9 +238,9 @@ namespace OctoTip.OctoTipPlus
 				dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
 				BS.Filter = "JobStatus = 'Queued'";
 				BS.Sort = "JobStatus ASC , Priority ASC";
-				dataGridViewRobotJobsQueue.DataSource = BS;				
+				dataGridViewRobotJobsQueue.DataSource = BS;
 			}
-		
+			
 		}
 		
 		
@@ -398,6 +398,8 @@ namespace OctoTip.OctoTipPlus
 			AvailableLoggers.Add(new EventLogLogger());
 			AvailableLoggers.Add(new DebugLogger());
 			AvailableLoggers.Add(new GoogleSpreadsheetLogger());
+			AvailableLoggers.Add(new EmailLogger());
+			
 			
 			
 			ActiveLoggersCheckedListBox.DataSource = AvailableLoggers;
@@ -405,6 +407,22 @@ namespace OctoTip.OctoTipPlus
 			ActiveLoggersCheckedListBox.ValueMember = "ThisLogger";
 			
 			ActiveLoggersCheckedListBox.Refresh();
+
+			
+		}
+		
+		void ActiveLoggersCheckedListBoxMouseDown(object sender, MouseEventArgs e)
+		{
+			if ( e.Button == MouseButtons.Right )
+			{
+				//select the item under the mouse pointer
+				ActiveLoggersCheckedListBox.SelectedIndex = ActiveLoggersCheckedListBox.IndexFromPoint( e.Location );
+				if ( ActiveLoggersCheckedListBox.SelectedIndex != -1)
+				{
+					LoggersContextMenuStrip.Show();
+				}
+			}
+			
 
 		}
 		
@@ -416,7 +434,10 @@ namespace OctoTip.OctoTipPlus
 			
 			foreach (Logger L in SelectedLoggers)
 			{
-				L.Log(LE);
+				if (L.LoggigLevel <= (int)LE.EnteryType)
+				{
+					L.Log(LE);
+				}
 			}
 		}
 		
@@ -432,6 +453,34 @@ namespace OctoTip.OctoTipPlus
 			Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation",this.Name,"Test Error","Test 1234",LoggingEntery.EnteryTypes.Critical));
 		}
 		#endregion
+		
+		void LoggersContextMenuStripOpening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			LoggersContextMenuStrip.Items.Clear();
+			
+			System.Windows.Forms.ToolStripComboBox LogLoggingLevelComboBox;
+			LogLoggingLevelComboBox =  new System.Windows.Forms.ToolStripComboBox();
+			LogLoggingLevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+			foreach (string name in Enum.GetNames(typeof(LoggingEntery.EnteryTypes)))
+			{
+				LogLoggingLevelComboBox.Items.Add(name);
+			}
+			//toolStripComboBox1.SelectedIndexChanged 
+			this.LoggersContextMenuStrip.Items.Add("Log Level");
+			//System.Diagnostics.Debug.WriteLine();
+			
+			LogLoggingLevelComboBox.SelectedIndex = ((Logger)ActiveLoggersCheckedListBox.SelectedItem).LoggigLevel;
+			LogLoggingLevelComboBox.SelectedIndexChanged += new System.EventHandler(this.LogLoggingLevelComboBoxIndexChanged);
+			this.LoggersContextMenuStrip.Items.Add(LogLoggingLevelComboBox);
+			
+			
+		}
+		
+		void LogLoggingLevelComboBoxIndexChanged(object sender, EventArgs e)
+		{
+			
+			((Logger)ActiveLoggersCheckedListBox.SelectedItem).LoggigLevel = ((System.Windows.Forms.ToolStripComboBox)sender).SelectedIndex;
+		}
 		
 	}
 }
