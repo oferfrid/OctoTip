@@ -38,6 +38,11 @@ namespace OctoTip.Lib.Logging
 			get ;
 			set ;
 		}
+		
+		public string ExtraData {
+			get ;
+			set;
+		}
 	}
 }
 

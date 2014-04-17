@@ -15,17 +15,22 @@ namespace OctoTip.Lib.Logging
 	/// </summary>
 	public interface ILogger
 	{
-		  string LoggerName
-    {
-        get;
-    }
-		  
-		  int LoggigLevel
-    {
-        get;
-        set;
-    }
-    
+		string LoggerName
+		{
+			get;
+		}
+		
+		int LoggigLevel
+		{
+			get;
+			set;
+		}
+		
+		string ExtraData
+		{
+			get;
+			set;
+		}
 		void Log(LoggingEntery LE);
 	}
 }

@@ -431,10 +431,10 @@ namespace OctoTip.OctoTipPlus
 			//get selected notifyer
 			
 			System.Windows.Forms.CheckedListBox.CheckedItemCollection SelectedLoggers =  ActiveLoggersCheckedListBox.CheckedItems;
-			
+			//TODO:what if this failes!
 			foreach (Logger L in SelectedLoggers)
 			{
-				if (L.LoggigLevel <= (int)LE.EnteryType)
+				if (L.LoggigLevel >= (int)LE.EnteryType)
 				{
 					L.Log(LE);
 				}
@@ -452,35 +452,51 @@ namespace OctoTip.OctoTipPlus
 			
 			Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation",this.Name,"Test Error","Test 1234",LoggingEntery.EnteryTypes.Critical));
 		}
-		#endregion
+		
 		
 		void LoggersContextMenuStripOpening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			Logger ContextLogger = (Logger)ActiveLoggersCheckedListBox.SelectedItem;
+				
 			LoggersContextMenuStrip.Items.Clear();
-			
-			System.Windows.Forms.ToolStripComboBox LogLoggingLevelComboBox;
-			LogLoggingLevelComboBox =  new System.Windows.Forms.ToolStripComboBox();
-			LogLoggingLevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+			this.LoggersContextMenuStrip.Items.Add("Log Level");
+		
+			//add LogLoggingLevelComboBox
+			ToolStripComboBox LoggerLoggingLevelComboBox;
+			LoggerLoggingLevelComboBox =  new System.Windows.Forms.ToolStripComboBox();
+			LoggerLoggingLevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 			foreach (string name in Enum.GetNames(typeof(LoggingEntery.EnteryTypes)))
 			{
-				LogLoggingLevelComboBox.Items.Add(name);
+				LoggerLoggingLevelComboBox.Items.Add(name);
 			}
-			//toolStripComboBox1.SelectedIndexChanged 
-			this.LoggersContextMenuStrip.Items.Add("Log Level");
-			//System.Diagnostics.Debug.WriteLine();
 			
-			LogLoggingLevelComboBox.SelectedIndex = ((Logger)ActiveLoggersCheckedListBox.SelectedItem).LoggigLevel;
-			LogLoggingLevelComboBox.SelectedIndexChanged += new System.EventHandler(this.LogLoggingLevelComboBoxIndexChanged);
-			this.LoggersContextMenuStrip.Items.Add(LogLoggingLevelComboBox);
+			LoggerLoggingLevelComboBox.SelectedIndex = ContextLogger.LoggigLevel;
+			LoggerLoggingLevelComboBox.SelectedIndexChanged += new System.EventHandler(this.LoggerLoggingLevelComboBoxIndexChanged);
 			
+			this.LoggersContextMenuStrip.Items.Add(LoggerLoggingLevelComboBox);
 			
+			//
+			if (ContextLogger.ExtraData!=null)
+			{
+				ToolStripTextBox ExtraDataTextBox = new ToolStripTextBox();
+				ExtraDataTextBox.Text = ContextLogger.ExtraData;
+				ExtraDataTextBox.TextChanged += new System.EventHandler(this.LoggerExtraDataTextChanged);
+				this.LoggersContextMenuStrip.Items.Add(ExtraDataTextBox);
+			
+			}
 		}
 		
-		void LogLoggingLevelComboBoxIndexChanged(object sender, EventArgs e)
+		void LoggerExtraDataTextChanged(object sender, EventArgs e)
 		{
 			
-			((Logger)ActiveLoggersCheckedListBox.SelectedItem).LoggigLevel = ((System.Windows.Forms.ToolStripComboBox)sender).SelectedIndex;
+			((Logger)ActiveLoggersCheckedListBox.SelectedItem).ExtraData = ((ToolStripTextBox)sender).Text;
+		}
+		void LoggerLoggingLevelComboBoxIndexChanged(object sender, EventArgs e)
+		{
+			
+			((Logger)ActiveLoggersCheckedListBox.SelectedItem).LoggigLevel = ((ToolStripComboBox)sender).SelectedIndex;
 		}
 		
+		#endregion
 	}
 }

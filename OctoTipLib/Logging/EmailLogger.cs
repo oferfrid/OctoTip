@@ -8,8 +8,10 @@
  */
 using System;
 using System.Configuration;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
+using OctoTip.Lib.Utils;
 
 namespace OctoTip.Lib.Logging
 {
@@ -22,6 +24,7 @@ namespace OctoTip.Lib.Logging
 		{
 			LoggerName = "Email Logger";
 			LoggigLevel = (int)LoggingEntery.EnteryTypes.Error;
+			ExtraData = "Enter Email";
 		}
 		
 		private void SendEmail(string FromGmailEmail,
@@ -56,9 +59,12 @@ namespace OctoTip.Lib.Logging
 		private void SendEmail(string Subject,
 		                       string Body)
 		{
-			string FromGmailEmail = ConfigurationManager.AppSettings["GmailSenderUser"];
-			string FromEmailPassword = ConfigurationManager.AppSettings["GmailSenderPassword"];
-			SendEmail(FromGmailEmail,FromEmailPassword,FromGmailEmail,Subject,Body);
+			IniFile Ini = new IniFile(Path.Combine(Environment.CurrentDirectory, "GoogleDocs.ini"));
+			
+			string User = Ini.IniReadValue("UserLogin","User");
+			string Password = Ini.IniReadValue("UserLogin","Password");
+			
+			SendEmail(User,Password,ExtraData,Subject,Body);
 		}
 		
 		
