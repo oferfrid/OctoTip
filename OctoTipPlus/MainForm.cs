@@ -114,14 +114,33 @@ namespace OctoTip.OctoTipPlus
 		
 		public void RefreshProtocolUserControls()
 		{
+			int ProtocolsCount = 0;
+			int RuningProtocols = 0;
+			
+			foreach(Control UC in ProtocolPanel.Controls)
+			{
+				ProtocolUserControl PUC = (ProtocolUserControl)UC;
+				if (PUC.Visible)
+				{
+					ProtocolsCount++;
+					if (PUC.ProtocolStatus != Protocol.Statuses.Stopped && PUC.ProtocolStatus != Protocol.Statuses.EndedSuccessfully)
+					{
+						RuningProtocols++;
+					}
+				}
+			}
+			
 			for(int i=1;i<ProtocolPanel.Controls.Count;i++)
 			{
 				Control LastProtocolUserControl = ProtocolPanel.Controls[i-1];
 				ProtocolPanel.Controls[i].Location =   new Point(LastProtocolUserControl.Left , LastProtocolUserControl.Bottom);
 			}
+
+						
 			//TODO: update toolStripStatus
-			//toolStripStatusLabelAllProtocolCount.Text = "All Protocol:" +ProtocolPanel.Controls.Count;
 			
+			ProtocolsCountToolStripStatusLabel.Text = string.Format("Active Protocols: {0:0}" ,ProtocolsCount);
+			RuningProtocolsToolStripStatusLabel.Text = string.Format("Runing Protocols: {0:0}" ,RuningProtocols);
 		}
 		
 		private List<Protocol>  Protocols = new List<Protocol>();
@@ -258,6 +277,9 @@ namespace OctoTip.OctoTipPlus
 			bool buttonStopEnabled;
 			
 			string textBoxRuningJobStatusText = string.Empty;
+			string textRobotWorkerStatusText = string.Empty;
+			
+			textRobotWorkerStatusText = e.RobotWorkerStatus.ToString();
 			
 			switch(e.RobotWorkerStatus)
 			{
@@ -314,6 +336,12 @@ namespace OctoTip.OctoTipPlus
 					RunningJobStatus.Text = textBoxRuningJobStatusText ;
 				};
 				RunningJobStatus.BeginInvoke(textBoxRuningJobStatusInvoker);
+				
+				MethodInvoker textRobotWorkerStatusInvoker = delegate
+				{
+					RobotStatuslabel.Text = textRobotWorkerStatusText ;
+				};
+				RunningJobStatus.BeginInvoke(textRobotWorkerStatusInvoker);
 			}
 			
 		}

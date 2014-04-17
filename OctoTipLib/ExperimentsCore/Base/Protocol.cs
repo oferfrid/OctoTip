@@ -317,6 +317,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			try
 			{
 				DoWork();
+				this.SetCurrentStatus(Statuses.EndedSuccessfully,"Ended at " +  DateTime.Now.ToString());
 			}
 			catch(Exception e)
 			{

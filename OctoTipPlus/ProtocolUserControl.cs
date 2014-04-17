@@ -60,6 +60,22 @@ namespace OctoTip.OctoTipPlus
 			ActivateUserControlProtocol();
 		}
 		
+		public Protocol.Statuses ProtocolStatus
+		{
+			get 
+			{
+				if (UserControlProtocol==null)
+				{
+				return  Protocol.Statuses.Stopped;
+				}
+				else
+				{
+					return UserControlProtocol.Status;
+				}
+			}
+		}
+
+		
 		private void ActivateUserControlProtocol()
 		{
 			this.EditParametersbutton.BackColor = System.Drawing.SystemColors.Control;
@@ -230,6 +246,8 @@ namespace OctoTip.OctoTipPlus
 				this.BeginInvoke(UserControlaction);
 			}
 			
+			((MainForm)this.ParentForm).RefreshProtocolUserControls();
+			
 		}
 		
 		private void HandleDisplayedDataChange(object sender, ProtocolDisplayedDataChangeEventArgs e)
@@ -249,8 +267,6 @@ namespace OctoTip.OctoTipPlus
 		private void HandleStateStatusChange(object sender, StateStatusChangeEventArgs e)
 		{
 			Node N;
-			
-			//if (e.StateStatus = State.Status.Active
 			
 			MethodInvoker action = delegate
 			{
@@ -431,8 +447,9 @@ namespace OctoTip.OctoTipPlus
 						//close protocol and remove from list
 						((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
 						this.Height = 0;
-						((MainForm)this.ParentForm).RefreshProtocolUserControls();
 						this.Hide();
+						((MainForm)this.ParentForm).RefreshProtocolUserControls();
+						
 					}
 					
 				}
@@ -440,15 +457,15 @@ namespace OctoTip.OctoTipPlus
 				{
 					((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
 					this.Height = 0;
-					((MainForm)this.ParentForm).RefreshProtocolUserControls();
 					this.Hide();
+					((MainForm)this.ParentForm).RefreshProtocolUserControls();
 				}
 			}
 			else
 			{
 				this.Height = 0;
-				((MainForm)this.ParentForm).RefreshProtocolUserControls();
 				this.Hide();
+				((MainForm)this.ParentForm).RefreshProtocolUserControls();
 			}
 			
 		}
