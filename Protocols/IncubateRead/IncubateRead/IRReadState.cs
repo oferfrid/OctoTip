@@ -16,6 +16,7 @@ using System.Xml.XPath;
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.Utils;
 
 namespace IncubateRead
 {
@@ -60,7 +61,7 @@ namespace IncubateRead
 			
 			
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\IncubateRead\Scripts\IRRead6.esc",RJP);
+				@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\Protocols\IncubateRead\Scripts\IRRead6.esc",RJP);
 			
 			return RJ;
 		}

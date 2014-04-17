@@ -27,5 +27,15 @@ namespace IncubateRead
 		public int StartRound;
 		[ProtocolParameterAtribute("Results file path and name",@"D:\OctoTip\Protocols\IncubateRead\Output\Out.csv")]
 		public string OutputFile;
+		
+		public override bool IsValid()
+		{
+			return true;
+		}
+		
+		public override string GetErrorMessage()
+		{
+			return String.Empty;
+		}
 	}
 }

@@ -57,5 +57,15 @@ namespace KillCurveExpPlaiting
 		public string SharedResourcesFilePath;
 		
 		
+		
+		public override bool IsValid()
+		{
+			return true;
+		}
+		
+		public override string GetErrorMessage()
+		{
+			return string.Empty;
+		}
 	}
 }

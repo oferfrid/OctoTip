@@ -35,5 +35,17 @@ namespace SerialDilutionONEvolution
 		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\SerialDilutionONEvolution\SharedResources\")]
 		public string SharedResourcesFilePath;
 		
+		
+		public override bool IsValid()
+		{
+			//throw new NotImplementedException();
+			return true;
+		}
+		
+		
+		public override string GetErrorMessage()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
