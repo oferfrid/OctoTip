@@ -32,20 +32,17 @@ namespace OctoTip.OctoTipPlus
 		
 		Graph graph ;
 		
-		//TODO: Logging
-		//ProtocolLogForm PLog;
-		
 		public const string LOG_NAME = "OctoTipExperimentManager";
-		//private LogString myLogger = LogString.GetLogString(LOG_NAME);
+		
 		private int OldHeight;
 		
 		
 		public ProtocolUserControl()
 		{
 			InitializeComponent();
-			 (ProtocolStatesViewer as Microsoft.Msagl.Drawing.IViewer).MouseDown += new EventHandler<Microsoft.Msagl.Drawing.MsaglMouseEventArgs>(ProtocolStatesViewerMouseDown);
-            (ProtocolStatesViewer as Microsoft.Msagl.Drawing.IViewer).MouseUp += new EventHandler<Microsoft.Msagl.Drawing.MsaglMouseEventArgs>(ProtocolStatesViewerMouseUp);
-            
+			(ProtocolStatesViewer as Microsoft.Msagl.Drawing.IViewer).MouseDown += new EventHandler<Microsoft.Msagl.Drawing.MsaglMouseEventArgs>(ProtocolStatesViewerMouseDown);
+			(ProtocolStatesViewer as Microsoft.Msagl.Drawing.IViewer).MouseUp += new EventHandler<Microsoft.Msagl.Drawing.MsaglMouseEventArgs>(ProtocolStatesViewerMouseUp);
+			
 		}
 		
 		public ProtocolUserControl(Type ProtocolType):this()
@@ -116,9 +113,9 @@ namespace OctoTip.OctoTipPlus
 		private void HandleProtocolStatusChanged(object sender, ProtocolStatusChangeEventArgs e)
 		{
 			string Titel ;
-			string Sendor  = UserControlProtocolParameters.Name; 
+			string Sendor  = UserControlProtocolParameters.Name;
 			string Message = e.NewStatus + ">" + e.Message;
-					
+			
 			//((MainForm)this.ParentForm).Notify(new Logging.LoggingEntery(this
 			
 			bool buttonStopEnabled ;
@@ -169,7 +166,7 @@ namespace OctoTip.OctoTipPlus
 					buttonStartEnabled =true;
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.DarkRed;
-					// notify 
+					// notify
 					Titel = string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
 					Message = string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
 					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Error));
@@ -179,7 +176,7 @@ namespace OctoTip.OctoTipPlus
 					buttonStartEnabled =true;
 					buttonPauseEnabled=false ;
 					ProtocolBackColor = System.Drawing.Color.Black;
-					// notify 
+					// notify
 					Titel = string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
 					Message = string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
 					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
@@ -192,7 +189,7 @@ namespace OctoTip.OctoTipPlus
 					Titel = string.Format("Run time error {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
 					Message = string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
 					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
-		
+					
 					break;
 				default:
 					buttonStopEnabled  = true;
@@ -204,31 +201,34 @@ namespace OctoTip.OctoTipPlus
 			
 			string Title	= string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Message);
 			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Informational));
-					
-			MethodInvoker buttonStopaction = delegate
-			{
-				buttonStop.Enabled=buttonStopEnabled;
-			};
-			buttonStop.BeginInvoke(buttonStopaction);
 			
-			MethodInvoker buttonStartaction = delegate
+			if			(this.ParentForm !=null)
 			{
-				buttonStart.Enabled=buttonStartEnabled;
-			};
-			buttonStart.BeginInvoke(buttonStartaction);
-			
-			MethodInvoker buttonPauseaction = delegate
-			{
-				buttonPause.Enabled=buttonPauseEnabled;
-			};
-			buttonPause.BeginInvoke(buttonPauseaction);
-			
-			
-			MethodInvoker UserControlaction = delegate
-			{
-				this.BackColor=ProtocolBackColor;
-			};
-			this.BeginInvoke(UserControlaction);
+				MethodInvoker buttonStopaction = delegate
+				{
+					buttonStop.Enabled=buttonStopEnabled;
+				};
+				buttonStop.BeginInvoke(buttonStopaction);
+				
+				MethodInvoker buttonStartaction = delegate
+				{
+					buttonStart.Enabled=buttonStartEnabled;
+				};
+				buttonStart.BeginInvoke(buttonStartaction);
+				
+				MethodInvoker buttonPauseaction = delegate
+				{
+					buttonPause.Enabled=buttonPauseEnabled;
+				};
+				buttonPause.BeginInvoke(buttonPauseaction);
+				
+				
+				MethodInvoker UserControlaction = delegate
+				{
+					this.BackColor=ProtocolBackColor;
+				};
+				this.BeginInvoke(UserControlaction);
+			}
 			
 		}
 		
@@ -277,7 +277,7 @@ namespace OctoTip.OctoTipPlus
 			
 			string Title	= string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Message);
 			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Informational));
-				
+			
 			
 		}
 		
@@ -376,7 +376,7 @@ namespace OctoTip.OctoTipPlus
 			this.labelProtocolName.Text = UserControlProtocolParameters.Name;
 			this.labelProtocolType.Text = ((ProtocolAttribute)UserControlProtocolType.GetCustomAttributes(typeof(ProtocolAttribute), true)[0]).ShortName;
 			//TODO: Logging
-		//PLog = new ProtocolLogForm(UserControlProtocol.ProtocolParameters.Name);
+			//PLog = new ProtocolLogForm(UserControlProtocol.ProtocolParameters.Name);
 		}
 		
 		
@@ -439,9 +439,9 @@ namespace OctoTip.OctoTipPlus
 				else
 				{
 					((MainForm)this.ParentForm).RemoveProtocol(this.UserControlProtocol);
-						this.Height = 0;
-						((MainForm)this.ParentForm).RefreshProtocolUserControls();
-						this.Hide();
+					this.Height = 0;
+					((MainForm)this.ParentForm).RefreshProtocolUserControls();
+					this.Hide();
 				}
 			}
 			else
@@ -458,62 +458,62 @@ namespace OctoTip.OctoTipPlus
 			if (this.Height <= 25)
 			{
 
-			this.Height = OldHeight;
-			
-			((MainForm)this.ParentForm).RefreshProtocolUserControls();
-			
+				this.Height = OldHeight;
+				
+				((MainForm)this.ParentForm).RefreshProtocolUserControls();
+				
 				
 			}
 			else
 			{
-			OldHeight = this.Height;
-			this.Height = 25;
-			
-			((MainForm)this.ParentForm).RefreshProtocolUserControls();
-			
+				OldHeight = this.Height;
+				this.Height = 25;
+				
+				((MainForm)this.ParentForm).RefreshProtocolUserControls();
+				
 			}
 		}
 		
 		void ProtocolStatesViewerMouseDown(object sender, Microsoft.Msagl.Drawing.MsaglMouseEventArgs e)
 		{
 			
-			 if (e.RightButtonIsPressed && !e.Handled) 
-			 {
-               //Microsoft.Msagl.Point  m_MouseRightButtonDownPoint = (ProtocolStatesViewer as Microsoft.Msagl.Drawing.IViewer).ScreenToSource(e);
+			if (e.RightButtonIsPressed && !e.Handled)
+			{
+				//Microsoft.Msagl.Point  m_MouseRightButtonDownPoint = (ProtocolStatesViewer as Microsoft.Msagl.Drawing.IViewer).ScreenToSource(e);
 
-               if (UserControlProtocol == null || UserControlProtocol.Status == Protocol.Statuses.EndedSuccessfully ||
-					UserControlProtocol.Status == Protocol.Statuses.Stopped)
-               {
-               ProtocolViewercontextMenuStrip.Show(this, new System.Drawing.Point(e.X, e.Y));
-               }
-			 }
+				if (UserControlProtocol == null || UserControlProtocol.Status == Protocol.Statuses.EndedSuccessfully ||
+				    UserControlProtocol.Status == Protocol.Statuses.Stopped)
+				{
+					ProtocolViewercontextMenuStrip.Show(this, new System.Drawing.Point(e.X, e.Y));
+				}
+			}
 		}
 		
 		void ProtocolStatesViewerMouseUp(object sender, Microsoft.Msagl.Drawing.MsaglMouseEventArgs e)
 		{
 //			  object obj = ProtocolStatesViewer.GetObjectAt(e.X, e.Y);
-//            Microsoft.Msagl.Drawing.Node node = null;
-//            Microsoft.Msagl.Drawing.Edge edge = null;
-//            Microsoft.Msagl.GraphViewerGdi.DNode dnode = obj as Microsoft.Msagl.GraphViewerGdi.DNode;
-//            Microsoft.Msagl.GraphViewerGdi.DEdge dedge = obj as Microsoft.Msagl.GraphViewerGdi.DEdge;
-//            Microsoft.Msagl.GraphViewerGdi.DLabel dl = obj as Microsoft.Msagl.GraphViewerGdi.DLabel;
-//            if (dnode!=null)
-//                node = dnode.DrawingNode;
-//            else if (dedge!=null)
-//                edge = dedge.DrawingEdge;
-//            else if (dl!=null) {
-//                if (dl.Parent is Microsoft.Msagl.GraphViewerGdi.DNode)
-//                    node = (dl.Parent as Microsoft.Msagl.GraphViewerGdi.DNode).DrawingNode;
-//                else if (dl.Parent is Microsoft.Msagl.GraphViewerGdi.DEdge)
-//                    edge = (dl.Parent as Microsoft.Msagl.GraphViewerGdi.DEdge).DrawingEdge;
-//            }
-//            if (node != null) {
-//                ShowEditorDelegate(node);
-//            } else if (edge != null) {
-//                ShowEditorDelegate(edge);
-//            } else {
-//                CloseEditorDelegate();
-//            }
+			//            Microsoft.Msagl.Drawing.Node node = null;
+			//            Microsoft.Msagl.Drawing.Edge edge = null;
+			//            Microsoft.Msagl.GraphViewerGdi.DNode dnode = obj as Microsoft.Msagl.GraphViewerGdi.DNode;
+			//            Microsoft.Msagl.GraphViewerGdi.DEdge dedge = obj as Microsoft.Msagl.GraphViewerGdi.DEdge;
+			//            Microsoft.Msagl.GraphViewerGdi.DLabel dl = obj as Microsoft.Msagl.GraphViewerGdi.DLabel;
+			//            if (dnode!=null)
+			//                node = dnode.DrawingNode;
+			//            else if (dedge!=null)
+			//                edge = dedge.DrawingEdge;
+			//            else if (dl!=null) {
+			//                if (dl.Parent is Microsoft.Msagl.GraphViewerGdi.DNode)
+			//                    node = (dl.Parent as Microsoft.Msagl.GraphViewerGdi.DNode).DrawingNode;
+			//                else if (dl.Parent is Microsoft.Msagl.GraphViewerGdi.DEdge)
+			//                    edge = (dl.Parent as Microsoft.Msagl.GraphViewerGdi.DEdge).DrawingEdge;
+			//            }
+			//            if (node != null) {
+			//                ShowEditorDelegate(node);
+			//            } else if (edge != null) {
+			//                ShowEditorDelegate(edge);
+			//            } else {
+			//                CloseEditorDelegate();
+			//            }
 
 		}
 	}

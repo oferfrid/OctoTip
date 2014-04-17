@@ -70,6 +70,9 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ProtocolsCountToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.RuningProtocolsToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.MainStatusStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).BeginInit();
 			this.MainSplitContainer.Panel1.SuspendLayout();
 			this.MainSplitContainer.Panel2.SuspendLayout();
@@ -88,6 +91,9 @@ namespace OctoTip.OctoTipPlus
 			// 
 			// MainStatusStrip
 			// 
+			this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.ProtocolsCountToolStripStatusLabel,
+									this.RuningProtocolsToolStripStatusLabel});
 			this.MainStatusStrip.Location = new System.Drawing.Point(0, 540);
 			this.MainStatusStrip.Name = "MainStatusStrip";
 			this.MainStatusStrip.Size = new System.Drawing.Size(923, 22);
@@ -423,6 +429,18 @@ namespace OctoTip.OctoTipPlus
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			// 
+			// ProtocolsCountToolStripStatusLabel
+			// 
+			this.ProtocolsCountToolStripStatusLabel.Name = "ProtocolsCountToolStripStatusLabel";
+			this.ProtocolsCountToolStripStatusLabel.Size = new System.Drawing.Size(105, 17);
+			this.ProtocolsCountToolStripStatusLabel.Text = "Active Protocols: 0";
+			// 
+			// RuningProtocolsToolStripStatusLabel
+			// 
+			this.RuningProtocolsToolStripStatusLabel.Name = "RuningProtocolsToolStripStatusLabel";
+			this.RuningProtocolsToolStripStatusLabel.Size = new System.Drawing.Size(110, 17);
+			this.RuningProtocolsToolStripStatusLabel.Text = "Runing Protocols: 0";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,6 +453,8 @@ namespace OctoTip.OctoTipPlus
 			this.Name = "MainForm";
 			this.Text = "OctoTip+";
 			this.Load += new System.EventHandler(this.MainFormLoad);
+			this.MainStatusStrip.ResumeLayout(false);
+			this.MainStatusStrip.PerformLayout();
 			this.MainSplitContainer.Panel1.ResumeLayout(false);
 			this.MainSplitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).EndInit();
@@ -457,6 +477,8 @@ namespace OctoTip.OctoTipPlus
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripStatusLabel RuningProtocolsToolStripStatusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel ProtocolsCountToolStripStatusLabel;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button CreateErrorButton;
 		private System.Windows.Forms.CheckedListBox ActiveLoggersCheckedListBox;

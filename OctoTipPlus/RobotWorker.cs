@@ -71,8 +71,8 @@ namespace OctoTip.OctoTipPlus
 			Robot = new RobotWrapper();
 			Robot.RobotJobStatusChanged += OnRobot_RobotJobStatusChanged;
 			//start StartReadingQueue loop in diferent Thread
-			
 			RunningThread = new Thread(_StartReadingQueue);
+			RunningThread.IsBackground = true;
 		}
 		
 		~RobotWorker()
@@ -194,6 +194,7 @@ namespace OctoTip.OctoTipPlus
 					{
 						RunningThread = null;
 						RunningThread = new Thread(_StartReadingQueue);
+						RunningThread.IsBackground = true;
 						RunningThread.Start();
 					}
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));

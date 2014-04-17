@@ -276,9 +276,7 @@ namespace OctoTip.Lib
 		{
 			if (ParametersFilePath!=string.Empty)
 			{
-				// Write the string to a file.
 				
-				//TODO:TestParameters
 				if ((RobotJobParameters==null || RobotJobParameters.Count<0) && ParametersFilePath !=string.Empty)
 				{
 					throw new Exception(string.Format("Script {0} contains parameter file, but parameters was not supplied",ParametersFilePath));

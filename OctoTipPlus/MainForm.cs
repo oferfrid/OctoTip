@@ -209,18 +209,19 @@ namespace OctoTip.OctoTipPlus
 		
 		private void  UpdateRobotJobsQueue()
 		{
-			//if (RJQ.Count>0)
-			//{
+			if (CheckForIllegalCrossThreadCalls && (RJQ.Count==0))
+			{
+				dataGridViewRobotJobsQueue.DataSource = null;
+			}
+			else
+			{
 				BS.DataSource =RJQ ;
 				dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
 				BS.Filter = "JobStatus = 'Queued'";
 				BS.Sort = "JobStatus ASC , Priority ASC";
-				dataGridViewRobotJobsQueue.DataSource = BS;
-			//}
-			//else
-			//{
-			//	dataGridViewRobotJobsQueue.DataSource = null;
-			//}
+				dataGridViewRobotJobsQueue.DataSource = BS;				
+			}
+		
 		}
 		
 		

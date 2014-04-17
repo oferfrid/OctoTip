@@ -50,6 +50,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		{
 			this.ProtocolParameters = ProtocolParameters;
 			RunningThread = new Thread(_DoWork);
+			RunningThread.IsBackground = true;
 			myProtocolLogger = LogString.GetLogString(ProtocolParameters.Name);
 			
 		}
@@ -64,7 +65,6 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		~Protocol()
 		{
 			CurrentState = null;
-			//TODO:maybe terminate runing RunningThread.
 		}
 		
 		
@@ -331,9 +331,6 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	}
 	
 	
-	// Special EventArgs class to hold info about The Status Change.
-	
-	//TODO:Add real Protocol Status Change Events args!
 	public class ProtocolStatusChangeEventArgs : EventArgs
 	{
 		private Protocol.Statuses _NewStatus;
