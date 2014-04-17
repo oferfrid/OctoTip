@@ -42,6 +42,15 @@ namespace SerialDilutionEvolution
 		public string OutputFilePath;
 		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\SerialDilutionEvolution\SharedResources\")]
 		public string SharedResourcesFilePath;
+				public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
 		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 	}
 }

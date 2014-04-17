@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace MDK99
+namespace MDKPlate1
 {
     /// <summary>
     /// Create a New INI file to store or load data

@@ -12,18 +12,20 @@ using System.IO;
 using System.Linq;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
-namespace MDK99
+using OctoTip.Lib.Logging;
+
+namespace MDKPlate1
 {
 	/// <summary>
-	/// Description of MDK99Protocol.
+	/// Description of MDKPlate1Protocol.
 	/// </summary>
-	[Protocol("MDK","Asher","Preform MDK99 on single plate")]
+	[Protocol("MDK Plate 1","Asher","Preform MDKPlate1 on single plate")]
 	public class MDKProtocol:Protocol
 	{
 		
 		FileInfo ProtocolStateFile;
-		LogInGoogleDocs myLogInGoogleDocs;
-		
+		string LogName;
+
 		
 		public new MDKProtocolParameters ProtocolParameters
 		{
@@ -38,10 +40,9 @@ namespace MDK99
 		
 		public MDKProtocol(MDKProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
-			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
+			LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
 			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + LogName+".txt");
-			myLogInGoogleDocs = new LogInGoogleDocs(LogName,this.ProtocolParameters.SharedResourcesFilePath);
-			ReportProtocolState(0,string.Format("Creating Protocol {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
+				ReportProtocolState(0,string.Format("Creating Protocol {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
 		}
 		
@@ -54,13 +55,9 @@ namespace MDK99
 			
 			if (ProtocolParameters.InoculateCycle==0)
 			{
-				double AntibioMinFrac = ProtocolParameters.MinConcentration/ProtocolParameters.TroughConcentration;
-				double AntibioMaxFrac = ProtocolParameters.MaxConcentration/ProtocolParameters.TroughConcentration;
+				ReportProtocolState(0,string.Format(@"Prepering plate {0} with logarithmic scale concentrations (twofold between adjacent columns)",ProtocolParameters.LicPlatePosition));
 				
-				
-				ReportProtocolState(0,string.Format("Prepering plate {0} with concentrations of {1:0.000}-{2:0.000}",ProtocolParameters.LicPlatePosition,ProtocolParameters.MinConcentration,ProtocolParameters.MaxConcentration));
-				
-				this.ChangeState(new MDKPreparePlateState(ProtocolParameters.LicPlatePosition,AntibioMinFrac,AntibioMaxFrac));
+				this.ChangeState(new MDKPreparePlateState(ProtocolParameters.LicPlatePosition));
 			}
 			
 			//Total time between inoculations (including inoculation time)+ casting
@@ -103,7 +100,7 @@ namespace MDK99
 			//Incubation
 								
 			ReportProtocolState(9,string.Format("Plate {0} in incubatorfor {1:0.0} Minutes",ProtocolParameters.LicPlatePosition,ProtocolParameters.MinTime*60));
-				
+			
 			this.ChangeState(new MDKIncubateState(ProtocolParameters.MinTime));
 				
 			
@@ -111,7 +108,7 @@ namespace MDK99
 			
 			ReportProtocolState(9,string.Format("Deactivating antibiotic in plate {0}",ProtocolParameters.LicPlatePosition));
 				
-			this.ChangeState(new MDKDeactivateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.BLacIndex));
+			this.ChangeState(new MDKDeactivateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.BLacIndex,ProtocolParameters.MIC));
 			
 			ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Plate {0} in incubatorfor {1:0.0} Minutes",ProtocolParameters.LicPlatePosition,ProtocolParameters.FinIncTime*60));
 				
@@ -130,7 +127,7 @@ namespace MDK99
 					sw.WriteLine("({0}){1}:\t{2}",InoculateCycle,DateTime.Now,Messege);
 					sw.Flush();
 				}
-				myLogInGoogleDocs.Log(LogMessege);
+				OctoTip.Lib.Logging.Log.LogEntery(new LoggingEntery("MDK Plate 1",LogName,LogMessege,LoggingEntery.EnteryTypes.Informational));
 				DisplayData(LogMessege);
 			}
 			catch(Exception e)

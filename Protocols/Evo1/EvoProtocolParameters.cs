@@ -37,6 +37,17 @@ namespace Evo1
 		[ProtocolParameterAtribute("Net OD For Amp dilution","0.1")]
 		public double NetODAMPDilution;
 		
+				public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
 		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 	}
+	
+
 }

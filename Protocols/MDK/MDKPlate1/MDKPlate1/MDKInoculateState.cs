@@ -2,7 +2,7 @@
  * Created by SharpDevelop.
  * User: Tecan
  * Date: 11/02/2014
- * Time: 10:50
+ * Time: 09:35
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
@@ -12,24 +12,28 @@ using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore.Interfaces;
+using OctoTip.Lib.Utils;
 
-namespace MDK99
+namespace MDKPlate1
 {
 	/// <summary>
-	/// Description of MDKDeactivateState.
+	/// Description of Class1.
 	/// </summary>
 	/// 
-	[State("Deactivation","Deactivation of antibiotic in plate")]
-	public class MDKDeactivateState:RunRobotState,IRestartableState
+	[State("Inoculation","Inoculation of a row in plate")]
+	public class MDKInoculateState:RunRobotState,IRestartableState
 	{
-		//Lic96PlateCart,Lic96PlatePos,BLacIndex
-		int LicPlateInd;
-		int BLacIndex;
+		//Lic96PlateCart,Lic96PlatePos,GermIndex,InoculationRow
 		
-		public MDKDeactivateState(int LicPlateInd,int BLacIndex):base()
+		int LicPlateInd;
+		int GermIndex;
+		int InoculationRow;
+		
+		public MDKInoculateState(int LicPlateInd,int GermIndex,int InoculationRow):base()
 		{
 			this.LicPlateInd = LicPlateInd;
-			this.BLacIndex = BLacIndex;
+			this.GermIndex = GermIndex;
+			this.InoculationRow = InoculationRow;	
 		}
 		
 		public void Restart()
@@ -43,9 +47,10 @@ namespace MDK99
 			System.Collections.Generic.List<RobotJobParameter> RJP = new List<RobotJobParameter>(4);
 			RJP.Add(new RobotJobParameter("Lic96PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic96PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
-			RJP.Add(new RobotJobParameter("BLacIndex",RobotJobParameter.ParameterType.Number,BLacIndex));
+			RJP.Add(new RobotJobParameter("GermIndex",RobotJobParameter.ParameterType.Number,GermIndex));
+			RJP.Add(new RobotJobParameter("InoculationRow",RobotJobParameter.ParameterType.Number,InoculationRow));
 				
-			RobotJob RJ = new RobotJob(@"D:\OctoTip\Protocols\MDK99\Scripts\Deactivate.esc",RJP,0.9);
+			RobotJob RJ = new RobotJob(@"D:\OctoTip\Protocols\MDK\MDKPlate1\Scripts\Inoculate.esc",RJP,0.9);
 			return RJ;
 		}
 		
@@ -57,7 +62,7 @@ namespace MDK99
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(MDKFinalIncubateState)};
+			return new List<Type>{typeof(MDKIncubateState)};
 		}
 		#endregion
 	}

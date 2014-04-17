@@ -23,5 +23,16 @@ namespace TestWait
 		public double Time2Wait;
 		[ProtocolParameterAtribute("UseRobot?","true",true)]
 		public bool UseRobot;
+		
+		public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
+		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 	}
 }

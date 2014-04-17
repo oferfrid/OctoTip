@@ -38,14 +38,13 @@ namespace SerialDilutionONEvolution
 		
 		public override bool IsValid()
 		{
-			//throw new NotImplementedException();
+			//TODO:Really test 4 validity!
 			return true;
 		}
 		
-		
-		public override string GetErrorMessage()
+		public override string GetErrorMessege()
 		{
-			throw new NotImplementedException();
+			return string.Empty;
 		}
 	}
 }

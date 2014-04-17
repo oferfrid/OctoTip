@@ -44,7 +44,16 @@ namespace KillCurvePlaiting
 		[ProtocolParameterAtribute("AMP Posision in block","24",true)]
 		public int AMPPosision;
 		
+				public override bool IsValid()
+		{
+			//TODO:Really test 4 validity!
+			return true;
+		}
 		
+		public override string GetErrorMessege()
+		{
+			return string.Empty;
+		}
 		
 		
 	}
