@@ -37,6 +37,7 @@ namespace OctoTip.OctoTipPlus
 		{
 			InitAvailableLoggers();
 			InitRobot();
+			UpdateRobotJobsQueue();
 			
 		}
 		
@@ -173,10 +174,6 @@ namespace OctoTip.OctoTipPlus
 		
 		private void BindRobotJobsQueue()
 		{
-
-					
-	
-			
 			dataGridViewRobotJobsQueue.Columns.Clear();
 			DataGridViewColumn column;
 			column = new DataGridViewTextBoxColumn();
@@ -209,20 +206,21 @@ namespace OctoTip.OctoTipPlus
 			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
 			dataGridViewRobotJobsQueue.Columns.Add(column);
 		}
+		
 		private void  UpdateRobotJobsQueue()
 		{
-			if (RJQ.Count>0)
-			{
+			//if (RJQ.Count>0)
+			//{
 				BS.DataSource =RJQ ;
 				dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
 				BS.Filter = "JobStatus = 'Queued'";
 				BS.Sort = "JobStatus ASC , Priority ASC";
 				dataGridViewRobotJobsQueue.DataSource = BS;
-			}
-			else
-			{
-				dataGridViewRobotJobsQueue.DataSource = null;
-			}
+			//}
+			//else
+			//{
+			//	dataGridViewRobotJobsQueue.DataSource = null;
+			//}
 		}
 		
 		
