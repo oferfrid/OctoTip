@@ -53,8 +53,8 @@ namespace OctoTip.OctoTipPlus
 			this.dataGridViewRobotJobsQueue = new OctoTip.Manager.ControlWrapper();
 			this.RobotQToolStrip = new System.Windows.Forms.ToolStrip();
 			this.RefreshToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+			this.ActivateJobToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.DeactivateJobToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.ErrorExtendedRichTextBox = new OctoTip.OctoTipPlus.ExtendedRichTextBox();
 			this.LastErrorLabel = new System.Windows.Forms.Label();
@@ -228,8 +228,8 @@ namespace OctoTip.OctoTipPlus
 			// 
 			this.RobotQToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.RefreshToolStripButton,
-									this.toolStripButton2,
-									this.toolStripButton3});
+									this.ActivateJobToolStripButton,
+									this.DeactivateJobToolStripButton});
 			this.RobotQToolStrip.Location = new System.Drawing.Point(3, 3);
 			this.RobotQToolStrip.Name = "RobotQToolStrip";
 			this.RobotQToolStrip.Size = new System.Drawing.Size(739, 25);
@@ -246,25 +246,25 @@ namespace OctoTip.OctoTipPlus
 			this.RefreshToolStripButton.Text = "Refresh";
 			this.RefreshToolStripButton.Click += new System.EventHandler(this.RefreshToolStripButtonClick);
 			// 
-			// toolStripButton2
+			// ActivateJobToolStripButton
 			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton2.Text = "ActivateJubToolStripButton";
-			this.toolStripButton2.Click += new System.EventHandler(this.ToolStripButton2Click);
+			this.ActivateJobToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.ActivateJobToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("ActivateJobToolStripButton.Image")));
+			this.ActivateJobToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ActivateJobToolStripButton.Name = "ActivateJobToolStripButton";
+			this.ActivateJobToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.ActivateJobToolStripButton.Text = "Activate Job";
+			this.ActivateJobToolStripButton.Click += new System.EventHandler(this.ActivateJobToolStripButtonClick);
 			// 
-			// toolStripButton3
+			// DeactivateJobToolStripButton
 			// 
-			this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-			this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton3.Name = "toolStripButton3";
-			this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton3.Text = "DeactivateJubToolStripButton";
-			this.toolStripButton3.Click += new System.EventHandler(this.ToolStripButton3Click);
+			this.DeactivateJobToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.DeactivateJobToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("DeactivateJobToolStripButton.Image")));
+			this.DeactivateJobToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.DeactivateJobToolStripButton.Name = "DeactivateJobToolStripButton";
+			this.DeactivateJobToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.DeactivateJobToolStripButton.Text = "Deactivate Job";
+			this.DeactivateJobToolStripButton.Click += new System.EventHandler(this.DeactivateJobToolStripButtonClick);
 			// 
 			// groupBox2
 			// 
@@ -533,8 +533,8 @@ namespace OctoTip.OctoTipPlus
 		private System.Windows.Forms.ToolStripSeparator ProtocolsToolStripSeparator;
 		private System.Windows.Forms.Panel ProtocolPanel;
 		private System.Windows.Forms.ToolStripButton ToolStripButtonRefreshProtocol;
-		private System.Windows.Forms.ToolStripButton toolStripButton3;
-		private System.Windows.Forms.ToolStripButton toolStripButton2;
+		private System.Windows.Forms.ToolStripButton DeactivateJobToolStripButton;
+		private System.Windows.Forms.ToolStripButton ActivateJobToolStripButton;
 		private System.Windows.Forms.ToolStripButton RefreshToolStripButton;
 		private System.Windows.Forms.ToolStrip RobotQToolStrip;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;

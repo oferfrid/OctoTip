@@ -379,6 +379,18 @@ namespace OctoTip.OctoTipPlus
 			UpdateRobotJobsQueue();
 		}
 		
+		void ActivateJobToolStripButtonClick(object sender, EventArgs e)
+		{
+			//dataGridViewRobotJobsQueue.SelectedRows
+			//RobotJob RJ = (RobotJob)Row.DataBoundItem;
+			//RJ.JobStatus = RobotJob.Status.Queued;
+		}
+		
+		void DeactivateJobToolStripButtonClick(object sender, EventArgs e)
+		{
+			//RobotJob RJ = (RobotJob)Row.DataBoundItem;
+			//RJ.JobStatus = RobotJob.Status.TerminatedByUser;
+		}
 		#endregion
 		
 		
@@ -542,9 +554,8 @@ namespace OctoTip.OctoTipPlus
 		
 		
 		
-		void ToolStripButton2Click(object sender, EventArgs e)
-		{
-			
-		}
+		
+		
+		
 	}
 }
