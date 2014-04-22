@@ -56,10 +56,12 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.label2 = new System.Windows.Forms.Label();
+			this.ErrorExtendedRichTextBox = new OctoTip.OctoTipPlus.ExtendedRichTextBox();
+			this.LastErrorLabel = new System.Windows.Forms.Label();
 			this.CreateErrorButton = new System.Windows.Forms.Button();
 			this.ActiveLoggersCheckedListBox = new System.Windows.Forms.CheckedListBox();
 			this.LoggersContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.label2 = new System.Windows.Forms.Label();
 			this.RobotGroupBox = new System.Windows.Forms.GroupBox();
 			this.RobotStatuslabel = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -251,7 +253,8 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButton2.Name = "toolStripButton2";
 			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton2.Text = "toolStripButton2";
+			this.toolStripButton2.Text = "ActivateJubToolStripButton";
+			this.toolStripButton2.Click += new System.EventHandler(this.ToolStripButton2Click);
 			// 
 			// toolStripButton3
 			// 
@@ -260,34 +263,47 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButton3.Name = "toolStripButton3";
 			this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton3.Text = "toolStripButton3";
+			this.toolStripButton3.Text = "DeactivateJubToolStripButton";
+			this.toolStripButton3.Click += new System.EventHandler(this.ToolStripButton3Click);
 			// 
 			// groupBox2
 			// 
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.Controls.Add(this.label2);
+			this.groupBox2.Controls.Add(this.ErrorExtendedRichTextBox);
+			this.groupBox2.Controls.Add(this.LastErrorLabel);
 			this.groupBox2.Controls.Add(this.CreateErrorButton);
 			this.groupBox2.Controls.Add(this.ActiveLoggersCheckedListBox);
-			this.groupBox2.Location = new System.Drawing.Point(3, 287);
+			this.groupBox2.Controls.Add(this.label2);
+			this.groupBox2.Location = new System.Drawing.Point(3, 201);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(203, 225);
+			this.groupBox2.Size = new System.Drawing.Size(203, 311);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Logging and Errors";
 			// 
-			// label2
+			// ErrorExtendedRichTextBox
 			// 
-			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-			this.label2.Location = new System.Drawing.Point(6, 20);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(181, 23);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "Avalble Loggers:";
+			this.ErrorExtendedRichTextBox.Location = new System.Drawing.Point(7, 169);
+			this.ErrorExtendedRichTextBox.Name = "ErrorExtendedRichTextBox";
+			this.ErrorExtendedRichTextBox.ReadOnly = true;
+			this.ErrorExtendedRichTextBox.Size = new System.Drawing.Size(190, 136);
+			this.ErrorExtendedRichTextBox.TabIndex = 4;
+			this.ErrorExtendedRichTextBox.Text = "";
+			this.ErrorExtendedRichTextBox.DoubleClick += new System.EventHandler(this.ErrorExtendedRichTextBoxDoubleClick);
+			// 
+			// LastErrorLabel
+			// 
+			this.LastErrorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.LastErrorLabel.Location = new System.Drawing.Point(6, 141);
+			this.LastErrorLabel.Name = "LastErrorLabel";
+			this.LastErrorLabel.Size = new System.Drawing.Size(140, 24);
+			this.LastErrorLabel.TabIndex = 3;
+			this.LastErrorLabel.Text = "Last Error";
 			// 
 			// CreateErrorButton
 			// 
-			this.CreateErrorButton.Location = new System.Drawing.Point(6, 144);
+			this.CreateErrorButton.Location = new System.Drawing.Point(152, 135);
 			this.CreateErrorButton.Name = "CreateErrorButton";
 			this.CreateErrorButton.Size = new System.Drawing.Size(45, 24);
 			this.CreateErrorButton.TabIndex = 1;
@@ -301,7 +317,7 @@ namespace OctoTip.OctoTipPlus
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.ActiveLoggersCheckedListBox.ContextMenuStrip = this.LoggersContextMenuStrip;
 			this.ActiveLoggersCheckedListBox.FormattingEnabled = true;
-			this.ActiveLoggersCheckedListBox.Location = new System.Drawing.Point(6, 44);
+			this.ActiveLoggersCheckedListBox.Location = new System.Drawing.Point(6, 35);
 			this.ActiveLoggersCheckedListBox.Name = "ActiveLoggersCheckedListBox";
 			this.ActiveLoggersCheckedListBox.Size = new System.Drawing.Size(191, 94);
 			this.ActiveLoggersCheckedListBox.TabIndex = 0;
@@ -310,8 +326,17 @@ namespace OctoTip.OctoTipPlus
 			// LoggersContextMenuStrip
 			// 
 			this.LoggersContextMenuStrip.Name = "LoggersContextMenuStrip";
-			this.LoggersContextMenuStrip.Size = new System.Drawing.Size(153, 26);
+			this.LoggersContextMenuStrip.Size = new System.Drawing.Size(61, 4);
 			this.LoggersContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.LoggersContextMenuStripOpening);
+			// 
+			// label2
+			// 
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+			this.label2.Location = new System.Drawing.Point(6, 20);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(181, 23);
+			this.label2.TabIndex = 2;
+			this.label2.Text = "Avalble Loggers:";
 			// 
 			// RobotGroupBox
 			// 
@@ -487,6 +512,8 @@ namespace OctoTip.OctoTipPlus
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private OctoTip.OctoTipPlus.ExtendedRichTextBox ErrorExtendedRichTextBox;
+		private System.Windows.Forms.Label LastErrorLabel;
 		private System.Windows.Forms.ContextMenuStrip LoggersContextMenuStrip;
 		private System.Windows.Forms.ToolStripStatusLabel RuningProtocolsToolStripStatusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel ProtocolsCountToolStripStatusLabel;

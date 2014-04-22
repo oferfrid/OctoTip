@@ -87,8 +87,13 @@
     <Compile Include="ProtocolUserControl.Designer.cs">
       <DependentUpon>ProtocolUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtendedRichTextBox.cs" />
     <Compile Include="RobotWorker.cs" />
     <Compile Include="RobotWrapper.cs" />
+    <Compile Include="ShowLogForm.cs" />
+    <Compile Include="ShowLogForm.Designer.cs">
+      <DependentUpon>ShowLogForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -102,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProtocolUserControl.resx">
       <DependentUpon>ProtocolUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowLogForm.resx">
+      <DependentUpon>ShowLogForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

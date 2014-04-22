@@ -391,8 +391,6 @@ namespace OctoTip.OctoTipPlus
 		{
 			this.labelProtocolName.Text = UserControlProtocolParameters.Name;
 			this.labelProtocolType.Text = ((ProtocolAttribute)UserControlProtocolType.GetCustomAttributes(typeof(ProtocolAttribute), true)[0]).ShortName;
-			//TODO: Logging
-			//PLog = new ProtocolLogForm(UserControlProtocol.ProtocolParameters.Name);
 		}
 		
 		
@@ -422,16 +420,7 @@ namespace OctoTip.OctoTipPlus
 			ProtocolStatesViewer.Invalidate();
 		}
 		
-		void TextBoxProtocolDataDoubleClick(object sender, EventArgs e)
-		{
-			
-			if (UserControlProtocolParameters!=null)
-			{
-				//TODO: Logging
-				//PLog.ShowDialog();
-			}
-			
-		}
+		
 		
 		void ClosebuttonClick(object sender, EventArgs e)
 		{

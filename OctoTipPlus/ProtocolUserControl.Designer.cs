@@ -160,7 +160,6 @@ namespace OctoTip.OctoTipPlus
 			this.textBoxProtocolData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxProtocolData.Size = new System.Drawing.Size(114, 149);
 			this.textBoxProtocolData.TabIndex = 1;
-			this.textBoxProtocolData.DoubleClick += new System.EventHandler(this.TextBoxProtocolDataDoubleClick);
 			// 
 			// textBoxStateData
 			// 

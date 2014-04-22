@@ -38,6 +38,7 @@ namespace OctoTip.OctoTipPlus
 			InitAvailableLoggers();
 			InitRobot();
 			UpdateRobotJobsQueue();
+			AddAvailableProtocols();
 			
 		}
 		
@@ -137,8 +138,6 @@ namespace OctoTip.OctoTipPlus
 			}
 
 			
-			//TODO: update toolStripStatus
-			
 			ProtocolsCountToolStripStatusLabel.Text = string.Format("Active Protocols: {0:0}" ,ProtocolsCount);
 			RuningProtocolsToolStripStatusLabel.Text = string.Format("Runing Protocols: {0:0}" ,RuningProtocols);
 		}
@@ -149,14 +148,11 @@ namespace OctoTip.OctoTipPlus
 		public void AddProtocol(Protocol Protocol2Add)
 		{
 			Protocols.Add(Protocol2Add);
-			//TODO: update toolStripStatus
-			//toolStripStatusLabelProtocolCount.Text = "Active Protocols:" + Protocols.Count;
 		}
 		public void RemoveProtocol(Protocol Protocol2Remove)
 		{
 			Protocols.Remove(Protocol2Remove);
-			//TODO: update toolStripStatus
-			//toolStripStatusLabelProtocolCount.Text = "Active Protocols:" + Protocols.Count;
+			
 		}
 		
 		void ToolStripButtonRefreshProtocolClick(object sender, EventArgs e)
@@ -399,6 +395,7 @@ namespace OctoTip.OctoTipPlus
 			AvailableLoggers.Add(new DebugLogger());
 			AvailableLoggers.Add(new GoogleSpreadsheetLogger());
 			AvailableLoggers.Add(new EmailLogger());
+			AvailableLoggers.Add(new FileLogger());
 			
 			
 			
@@ -428,15 +425,52 @@ namespace OctoTip.OctoTipPlus
 		
 		public void Notify(LoggingEntery LE)
 		{
+			Color TextColor;
+			switch (LE.EnteryType)
+			{
+				case LoggingEntery.EnteryTypes.Informational:
+					TextColor = Color.Black;
+					break;
+				case LoggingEntery.EnteryTypes.Warning:
+					TextColor = Color.Yellow;
+					break;
+				case LoggingEntery.EnteryTypes.Error:
+					TextColor = Color.Red;
+					break;
+				case LoggingEntery.EnteryTypes.Critical:
+					TextColor = Color.DarkRed;
+					break;
+				default:
+					TextColor = Color.Black;
+					break;
+			}
+			
+			//TODO:Chack for the size
+			MethodInvoker LastErrorTextBoxInvoker = delegate
+			{
+				string Message = string.Format("{0} {1} ({2})\n{3}\n*************\n",DateTime.Now,LE.Title,LE.EnteryType,LE.Message);
+				ErrorExtendedRichTextBox.AppendText(Message,TextColor);
+			};
+			ErrorExtendedRichTextBox.BeginInvoke(LastErrorTextBoxInvoker);
+			
+			
+			
 			//get selected notifyer
 			
 			System.Windows.Forms.CheckedListBox.CheckedItemCollection SelectedLoggers =  ActiveLoggersCheckedListBox.CheckedItems;
-			//TODO:what if this failes!
 			foreach (Logger L in SelectedLoggers)
 			{
 				if (L.LoggigLevel >= (int)LE.EnteryType)
 				{
-					L.Log(LE);
+					try
+					{
+						L.Log(LE);
+					}
+					catch (Exception e)
+					{
+						System.Diagnostics.Debug.WriteLine(e.ToString());
+						
+					}
 				}
 			}
 		}
@@ -457,10 +491,10 @@ namespace OctoTip.OctoTipPlus
 		void LoggersContextMenuStripOpening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			Logger ContextLogger = (Logger)ActiveLoggersCheckedListBox.SelectedItem;
-				
+			
 			LoggersContextMenuStrip.Items.Clear();
 			this.LoggersContextMenuStrip.Items.Add("Log Level");
-		
+			
 			//add LogLoggingLevelComboBox
 			ToolStripComboBox LoggerLoggingLevelComboBox;
 			LoggerLoggingLevelComboBox =  new System.Windows.Forms.ToolStripComboBox();
@@ -482,7 +516,7 @@ namespace OctoTip.OctoTipPlus
 				ExtraDataTextBox.Text = ContextLogger.ExtraData;
 				ExtraDataTextBox.TextChanged += new System.EventHandler(this.LoggerExtraDataTextChanged);
 				this.LoggersContextMenuStrip.Items.Add(ExtraDataTextBox);
-			
+				
 			}
 		}
 		
@@ -497,6 +531,20 @@ namespace OctoTip.OctoTipPlus
 			((Logger)ActiveLoggersCheckedListBox.SelectedItem).LoggigLevel = ((ToolStripComboBox)sender).SelectedIndex;
 		}
 		
+		void ErrorExtendedRichTextBoxDoubleClick(object sender, EventArgs e)
+		{
+				ShowLogForm ShowLogForm = new ShowLogForm(ErrorExtendedRichTextBox.Rtf);
+				ShowLogForm.ShowDialog();
+		}
+		
 		#endregion
+		
+		
+		
+		
+		void ToolStripButton2Click(object sender, EventArgs e)
+		{
+			
+		}
 	}
 }
