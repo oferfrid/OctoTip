@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.Evoapi">
-      <HintPath>..\..\..\..\..\..\..\Program Files\TECAN\EVOware\API\Interop.Evoapi.dll</HintPath>
+      <HintPath>C:\Program Files\Tecan\EVOware\API\Interop.Evoapi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
