@@ -27,8 +27,10 @@ namespace MDKPlate1
 		public int GermIndex;
 		[ProtocolParameterAtribute("Beta-Lac eppendorf index","2",true)]
 		public int BLacIndex;
-		[ProtocolParameterAtribute(@"Antibiotic concentration in truogh (ug/ml)","420",true)]
+		[ProtocolParameterAtribute(@"Antibiotic concentration in truogh (ug/ml)","200",true)]
 		public double TroughConcentration;
+		[ProtocolParameterAtribute(@"Antibiotic dilution factor (ug/ml)","0.5",true)]
+		public double DilutionFactor;
 		[ProtocolParameterAtribute("Minimum time in antibiotic (hours)","1",true)]
 		public double MinTime;
 		[ProtocolParameterAtribute("Maximum time in antibiotic (hours)","40",true)]
@@ -41,7 +43,7 @@ namespace MDKPlate1
 		public string OutputFilePath;
 		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\MDK\MDKPlate1\SharedResources\")]
 		public string SharedResourcesFilePath;
-		[ProtocolParameterAtribute("Check MIC in bottom row?","true",true)]
+		[ProtocolParameterAtribute("Check MIC in top row?","true",true)]
 		public bool MIC;
 		
 		
@@ -58,6 +60,11 @@ namespace MDKPlate1
 			}
 			
 			if(BLacIndex<1||BLacIndex>24)
+			{
+				return false;
+			}
+			
+			if(DilutionFactor<0.5||DilutionFactor>0.9)
 			{
 				return false;
 			}
@@ -92,6 +99,11 @@ namespace MDKPlate1
 			if(BLacIndex<1||BLacIndex>24)
 			{
 				ErrorMsg += string.Format("Eppendorf position {0} not in range (1-24)/n",BLacIndex);
+			}
+			
+			if(DilutionFactor<0.5||DilutionFactor>0.9)
+			{
+				ErrorMsg += string.Format("Dilution factor {0} not in range (0.5-0.9)/n",DilutionFactor);
 			}
 			
 			if(MinTime>MaxTime)

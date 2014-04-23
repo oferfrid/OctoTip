@@ -24,10 +24,12 @@ namespace MDKPlate1
 	{
 		
 		int LicPlateInd;
+		double DilutionFactor;
 		
-		public MDKPreparePlateState(int LicPlateInd):base()
+		public MDKPreparePlateState(int LicPlateInd,double DilutionFactor):base()
 		{
 			this.LicPlateInd = LicPlateInd;
+			this.DilutionFactor = DilutionFactor;
 		}
 		
 		public void Restart()
@@ -43,6 +45,7 @@ namespace MDKPlate1
 			System.Collections.Generic.List<RobotJobParameter> RJP = new List<RobotJobParameter>(4);
 			RJP.Add(new RobotJobParameter("Lic96PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic96PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
+			RJP.Add(new RobotJobParameter("DilutionFactor",RobotJobParameter.ParameterType.Number,DilutionFactor));
 			
 			RobotJob RJ = new RobotJob(@"D:\OctoTip\Protocols\MDK\MDKPlate1\Scripts\PrepareLogPlate.esc",RJP,0.2);
 			return RJ;

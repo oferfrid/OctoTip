@@ -27,12 +27,12 @@ namespace MDKPlate1
 		int BLacIndex;
 		int MIC;
 		
-		public MDKDeactivateState(int LicPlateInd,int BLacIndex,bool MIC):base()
+		public MDKDeactivateState(int LicPlateInd,int BLacIndex,int MIC):base()
 		{
 			this.LicPlateInd = LicPlateInd;
 			this.BLacIndex = BLacIndex;
-			this.MIC = 0;
-			if(MIC) this.MIC = 1;
+			this.MIC = MIC;
+			
 		}
 		
 		public void Restart()

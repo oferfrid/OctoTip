@@ -1,5 +1,5 @@
-F526AC52
-20140410_095120 Tecan           
+87873FC5
+20140416_133449 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -129,24 +129,26 @@ V;200
 Wash(255,1,1,1,0,"0.2",500,"0.2",500,10,70,30,0,0,1000,0);
 Periodic_Wash(255,1,1,1,0,"0.5",500,"0.5",500,10,70,30,0,0,"1",1000,0);
 ActivateADH("Box DiTi 200 ul","D:\OctoTip\Protocols\MDK\MDKPlate1\Scripts\ReplaceDiTi200.esc");
-ImportVariable(Lic96PlateCart#Lic96PlatePos,"D:\OctoTip\Protocols\MDK\MDKPlate1\Scripts\PrepareLogPlate.csv",0#0,"1#1",0,1,0,1,1);
+ImportVariable(Lic96PlateCart#Lic96PlatePos#DilutionFactor,"D:\OctoTip\Protocols\MDK\MDKPlate1\Scripts\PrepareLogPlate.csv",0#0#0,"1#1#0.5",0,1,0,1,1);
 FACTS("StoreX","StoreX_PresentPlate","~Lic96PlateCart~,~Lic96PlatePos~","1","96WellMicroplate");
 FACTS("StoreX","StoreX_EndAccess","","0","");
 Transfer_Rack("26","11",1,1,0,0,1,"17","96WellMicroplate","Narrow","","","Storex","MP 3Pos Flat","MP 3Pos Flat","1","3","3");
 Comment("LB for dilution");
 GetDITI2(255,"Box DiTi 200 ul",0,0,10,70);
 Mix(255,"Water free dispense LD & Trace","200","200","200","200","200","200","200","200",0,0,0,0,1,5,1,"0108¯1",3,0,0);
-BeginLoop("12","FillLB");
-Aspirate(255,"Water free dispense LD & Trace","180","180","180","180","180","180","180","180",0,0,0,0,1,5,1,"0108¯1",0,0);
-Dispense(255,"Water free dispense no LD","180","180","180","180","180","180","180","180",0,0,0,0,11,2,1,"0C08¯1000000000000",1,"FillLB",0,1,0);
+BeginLoop("11","FillLB");
+Aspirate(255,"Water free dispense LD & Trace","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor",0,0,0,0,1,5,1,"0108¯1",0,0);
+Dispense(255,"Water free dispense no LD","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor","180*(1-DilutionFactor)/DilutionFactor",0,0,0,0,11,2,1,"0C080®300000000000",1,"FillLB",0,1,0);
 EndLoop();
 Comment("Dilution");
 Mix(255,"Water free dispense LD & Trace","200","200","200","200","200","200","200","200",0,0,0,0,1,4,1,"0108¯1",3,0,0);
 Aspirate(255,"Water free dispense LD & Trace","180","180","180","180","180","180","180","180",0,0,0,0,1,4,1,"0108¯1",0,0);
+Dispense(255,"Water free dispense no LD","180","180","180","180","180","180","180","180",0,0,0,0,11,2,1,"0C08¯1000000000000",0,0);
+Aspirate(255,"Water free dispense LD & Trace","180","180","180","180","180","180","180","180",0,0,0,0,1,4,1,"0108¯1",0,0);
 BeginLoop("11","FillAntibiotic");
-Dispense(255,"Water free dispense no LD","180","180","180","180","180","180","180","180",0,0,0,0,11,2,1,"0C080®300000000000",1,"FillAntibiotic",0,1,0);
-Mix(255,">> Water free dispense LD & Trace <<	172","200","200","200","200","200","200","200","200",0,0,0,0,11,2,1,"0C080®300000000000",3,1,"FillAntibiotic",0,1,0);
-Aspirate(255,">> Water free dispense LD & Trace <<	169","180","180","180","180","180","180","180","180",0,0,0,0,11,2,1,"0C080®300000000000",1,"FillAntibiotic",0,1,0);
+Dispense(255,"Water free dispense no LD","180","180","180","180","180","180","180","180",0,0,0,0,11,2,1,"0C08¯1000000000000",1,"FillAntibiotic",0,1,0);
+Mix(255,">> Water free dispense LD & Trace <<	175","200","200","200","200","200","200","200","200",0,0,0,0,11,2,1,"0C08¯1000000000000",3,1,"FillAntibiotic",0,1,0);
+Aspirate(255,">> Water free dispense LD & Trace <<	174","180","180","180","180","180","180","180","180",0,0,0,0,11,2,1,"0C08¯1000000000000",1,"FillAntibiotic",0,1,0);
 EndLoop();
 Dispense(255,"Water free dispense no LD","180","180","180","180","180","180","180","180",0,0,0,0,1,1,1,"0108¯1",0,0);
 DropDITI(255,1,6,10,70,0);
