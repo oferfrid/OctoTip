@@ -55,6 +55,9 @@ namespace OctoTip.Lib.Logging
 				case LoggingEntery.EnteryTypes.Informational:
 					ET = EventLogEntryType.Information;
 					break;
+				case LoggingEntery.EnteryTypes.Debug:
+					ET = EventLogEntryType.Information;
+					break;
 				case LoggingEntery.EnteryTypes.Error:
 					ET = EventLogEntryType.Error;
 					break;

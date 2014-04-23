@@ -15,7 +15,7 @@ namespace OctoTip.Lib.Logging
 	/// </summary>
 	public class LoggingEntery
 	{
-		public enum EnteryTypes {Critical=0,Error=1,Warning=2,Informational=3};
+		public enum EnteryTypes {Critical=0,Error=1,Warning=2,Informational=3,Debug=4};
 	
 		public string Sender;
 		public string SubSender;

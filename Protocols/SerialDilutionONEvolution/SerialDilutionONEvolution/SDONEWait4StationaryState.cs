@@ -16,11 +16,11 @@ namespace SerialDilutionONEvolution
 	/// <summary>
 	/// Description of SDONEWait2ODState.
 	/// </summary>
-	[State("Wait 4 OD","Wait for Net OD")]
-	public class SDONEWait24State:WaitState
+	[State("Wait 2 Stationary","Wait for Stationary State")]
+	public class SDONEWait4StationaryState:SDONEWaitState
 	{
 		
-		public SDONEWait24State(double Hours2Wait):base(DateTime.Now.AddHours(Hours2Wait))
+		public SDONEWait4StationaryState(double Hours2Wait):base(Hours2Wait)
 		{
 		}
 		

@@ -18,7 +18,7 @@ namespace OctoTip.Lib.Logging
 		public DebugLogger()
 		{
 			LoggerName = "Debug Logger";
-			LoggigLevel = (int)LoggingEntery.EnteryTypes.Informational;
+			LoggigLevel = (int)LoggingEntery.EnteryTypes.Debug;
 		}
 		
 		public override void Log(LoggingEntery LE)

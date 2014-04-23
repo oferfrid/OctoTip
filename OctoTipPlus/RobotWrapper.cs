@@ -47,7 +47,7 @@ namespace OctoTip.OctoTipPlus
 			{
 				
 				string Title = string.Format("Status From Evo:{0}" , Status);
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title,LoggingEntery.EnteryTypes.Informational));
+				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title,LoggingEntery.EnteryTypes.Debug));
 			};
 			
 //			Evo.UserPromptEvent += delegate(int ID, string Text, string Caption, int Choices, out int Answer)
@@ -92,7 +92,7 @@ namespace OctoTip.OctoTipPlus
 			try
 			{
 				string Title = "RobotWrapper.Logon (UserName: " + UserName + ")";
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title, LoggingEntery.EnteryTypes.Informational));
+				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title, LoggingEntery.EnteryTypes.Debug));
 				Evo.Logon(UserName,Password,0,0);
 			}
 			catch(Exception e)
@@ -112,7 +112,7 @@ namespace OctoTip.OctoTipPlus
 			}
 			catch(Exception e)
 			{
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper","RobotWrapper.Logoff",LoggingEntery.EnteryTypes.Informational));
+				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper","RobotWrapper.Logoff",LoggingEntery.EnteryTypes.Debug));
 				Evo.Logoff();
 				throw e;
 			}
@@ -189,7 +189,7 @@ namespace OctoTip.OctoTipPlus
 				SC_ScriptStatus ScriptStatus   = Evo.GetScriptStatus(ScriptID);
 				
 				string Title = "ScriptStatusEx:" + ScriptStatusEx.ToString() + "ScriptStatus:" + ScriptStatus.ToString();
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title,LoggingEntery.EnteryTypes.Informational));
+				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title,LoggingEntery.EnteryTypes.Debug));
 
 				
 				while(ScriptStatus == SC_ScriptStatus.SS_BUSY && !_ShouldStop)
@@ -253,7 +253,7 @@ namespace OctoTip.OctoTipPlus
 				else
 				{
 					ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
-					Log.LogEntery(new LoggingEntery("Robot","RobotWrapper","ScriptStatusEx:" + ScriptStatusEx.ToString(),LoggingEntery.EnteryTypes.Informational));
+					Log.LogEntery(new LoggingEntery("Robot","RobotWrapper","ScriptStatusEx:" + ScriptStatusEx.ToString(),LoggingEntery.EnteryTypes.Debug));
 
 					// determain script termination status
 					switch (ScriptStatusEx)

@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
+using OctoTip.Lib.Logging;
 
 namespace SerialDilutionONEvolution
 {
@@ -21,8 +22,6 @@ namespace SerialDilutionONEvolution
 	[Protocol("Serial Dilution ON Evolution","Ofer Fridman","Serial Dilution Over night Evolution experiment")]
 	public class SDONEProtocol:Protocol
 	{
-		FileInfo ProtocolStateFile;
-		LogInGoogleDocs myLogInGoogleDocs;
 		
 		public new SDONEProtocolParameters ProtocolParameters
 		{
@@ -34,21 +33,16 @@ namespace SerialDilutionONEvolution
 		public SDONEProtocol(SDONEProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
 			//create protocol File
-			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
-			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + LogName+".txt");
-			myLogInGoogleDocs = new LogInGoogleDocs(LogName,this.ProtocolParameters.SharedResourcesFilePath);
+			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm");
 			ReportProtocolState(0,string.Format("Creating Protoclo {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
 		}
 		
 		protected override void DoWork()
 		{
-			
-			
 			ReportProtocolState(ProtocolParameters.Cycle,string.Format("Starting Protocol {0}({1})",ProtocolParameters.Name,this.GetType().Name));
 			
-			
-			while((ProtocolParameters.CurentWell<24)&& !this.ShouldStop)
+			while((ProtocolParameters.CurentWell<24) && !this.ShouldStop)
 			{
 				DateTime StartCycleTime = DateTime.Now;
 				int freezeIndex = 0;
@@ -58,8 +52,8 @@ namespace SerialDilutionONEvolution
 					//Log(ProtocolParameters.Name.ToString() +" " + ProtocolParameters.Cycle.ToString() + " " + ProtocolParameters.LicPlatePosition.ToString() + " " + ProtocolParameters.CurentWell.ToString());
 					//myLogInGoogleDocs.Log(ProtocolParameters.Name.ToString() +" " + ProtocolParameters.Cycle.ToString() + " " + ProtocolParameters.LicPlatePosition.ToString() + " " + ProtocolParameters.CurentWell.ToString());
 					
-						freezeIndex = LocalUtils.GetNextFreezPos(ProtocolParameters.SharedResourcesFilePath,string.Format("{0}-Cycle:{1}(Plate:{2} Well:{3})",ProtocolParameters.Name, ProtocolParameters.Cycle,ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell));
-						
+					freezeIndex = LocalUtils.GetNextFreezPos(ProtocolParameters.SharedResourcesFilePath,string.Format("{0}-Cycle:{1}(Plate:{2} Well:{3})",ProtocolParameters.Name, ProtocolParameters.Cycle,ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell));
+					
 					if (freezeIndex>24)
 					{
 						ReportProtocolState(ProtocolParameters.Cycle,string.Format("No freeze in pos:{0} (> 24)",freezeIndex));
@@ -76,18 +70,48 @@ namespace SerialDilutionONEvolution
 				}
 				else
 				{
-					ReportProtocolState(ProtocolParameters.Cycle,string.Format("No more wells plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("No more wells in plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
 					this.RequestStop();
 					break;
 					
 				}
 				
-			TimeSpan TimeFromDilution = (DateTime.Now - StartCycleTime);
-			double TotalHours4Dilution =  (TimeSpan.FromHours(ProtocolParameters.Time4Dilution) - TimeFromDilution).TotalHours;
+				
+				if (this.ProtocolParameters.UseReader)
+				{
+					DateTime StartWait4StationaryState = DateTime.Now;
+					
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("Read background from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
+					SDONEReadWellBackgroundState ReadBackgroundState =new SDONEReadWellBackgroundState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell);
+					ChangeState(ReadBackgroundState);
+					double BackgroundOD = ReadBackgroundState.BackgroundWellOD;
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("End of read Background from plate {0} Well {1} Background OD:{2:0.000}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,BackgroundOD));
+					
+					while( ((DateTime.Now - StartCycleTime).TotalHours < ProtocolParameters.Time4Dilution) && !this.ShouldStop)
+					{
+						//wait
+						double TimeTillNextRead = Math.Min(ProtocolParameters.TimeBetweenReads, ProtocolParameters.Time4Dilution - (DateTime.Now - StartCycleTime).TotalHours);
+						ReportProtocolState(ProtocolParameters.Cycle,string.Format("Wait for next day. plate {0} Well {1}, {2:0.00} Hours Reading in {3:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeTillNextRead));
+						ChangeState(new SDONEWait4ReadState(TimeTillNextRead));
+						//read
+						ReportProtocolState(ProtocolParameters.Cycle,string.Format("Read well from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
+						SDONEReadWellState ReadWellState =new SDONEReadWellState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell);
+						ChangeState(ReadWellState);
+						double WellOD = ReadWellState.WellOD;
+						ReportProtocolState(ProtocolParameters.Cycle,string.Format("End of read OD from plate {0} Well {1} OD:{2:0.000}(absolute={3:0.000})",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,BackgroundOD-WellOD,WellOD));
+					}
+				}
+				else
+				{
+					double TotalHours4Dilution =  (DateTime.Now - StartCycleTime).TotalHours;
+					ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for next day. plate {0} Well {1}, {2:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TotalHours4Dilution));
+					ChangeState(new SDONEWait4StationaryState(TotalHours4Dilution));
+				}
 				
 				
-				ReportProtocolState(ProtocolParameters.Cycle,string.Format("wait for first next day. plate {0} Well {1}, {2:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TotalHours4Dilution));
-				ChangeState(new SDONEWait24State(TotalHours4Dilution));
+				
+				
+				
 			}
 		}
 		
@@ -96,21 +120,7 @@ namespace SerialDilutionONEvolution
 		{
 			string LogMessege = string.Format("({0}):{1}",Cycle,Messege);
 			
-			try
-			{
-				using (StreamWriter sw = ProtocolStateFile.AppendText())
-			{
-				sw.WriteLine("({0}){1}:\t{2}",Cycle,DateTime.Now,Messege);
-				sw.Flush();
-			}
-			myLogInGoogleDocs.Log(LogMessege);
-			DisplayData(LogMessege);
-			}
-			catch(Exception e)
-			{
-				myProtocolLogger.Add("Error:" + e.ToString());
-			}
-			myProtocolLogger.Add(LogMessege);
+			this.ProtocolLog(Cycle.ToString("0") + Messege,LoggingEntery.EnteryTypes.Debug);
 			
 		}
 		
@@ -121,7 +131,10 @@ namespace SerialDilutionONEvolution
 		{
 			return new List<Type>{
 				typeof(SDONEDiluteState),
-				typeof(SDONEWait24State),
+				typeof(SDONEWait4StationaryState),
+				typeof(SDONEWait4ReadState),
+				typeof(SDONEReadWellBackgroundState),
+				typeof(SDONEReadWellState)
 			};
 		}
 		#endregion

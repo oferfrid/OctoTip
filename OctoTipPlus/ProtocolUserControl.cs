@@ -216,7 +216,7 @@ namespace OctoTip.OctoTipPlus
 			}
 			
 			string Title	= string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Message);
-			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Informational));
+			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Debug));
 			
 			if			(this.ParentForm !=null)
 			{
@@ -292,7 +292,7 @@ namespace OctoTip.OctoTipPlus
 			ProtocolStatesViewer.BeginInvoke(action);
 			
 			string Title	= string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Message);
-			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Informational));
+			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Debug));
 			
 			
 		}

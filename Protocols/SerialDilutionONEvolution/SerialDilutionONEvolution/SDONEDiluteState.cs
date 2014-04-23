@@ -8,11 +8,11 @@
  */
 using System;
 using System.Collections.Generic;
-
 using OctoTip.Lib;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 using OctoTip.Lib.ExperimentsCore.Interfaces;
+using OctoTip.Lib.Utils;
 
 namespace SerialDilutionONEvolution
 {
@@ -68,7 +68,7 @@ namespace SerialDilutionONEvolution
 		#region static
 		public static new List<Type> NextStates()
 		{
-			return new List<Type>{typeof(SDONEWait24State)};
+			return new List<Type>{typeof(SDONEWait4StationaryState),typeof(SDONEReadWellBackgroundState)};
 		}
 		#endregion
 	}

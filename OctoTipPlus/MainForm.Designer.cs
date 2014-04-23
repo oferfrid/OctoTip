@@ -221,6 +221,7 @@ namespace OctoTip.OctoTipPlus
 			this.dataGridViewRobotJobsQueue.Location = new System.Drawing.Point(3, 28);
 			this.dataGridViewRobotJobsQueue.Name = "dataGridViewRobotJobsQueue";
 			this.dataGridViewRobotJobsQueue.ReadOnly = true;
+			this.dataGridViewRobotJobsQueue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewRobotJobsQueue.Size = new System.Drawing.Size(739, 459);
 			this.dataGridViewRobotJobsQueue.TabIndex = 1;
 			// 

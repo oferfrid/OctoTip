@@ -253,7 +253,7 @@ namespace OctoTip.OctoTipPlus
 				
 				Message  = string.Format("{0} - {1}" , e.RobotWorkerStatus,e.Message);
 			}
-			Notify(new LoggingEntery("OctoTipPlus Appilcation","RobotWorker","RunningJob",Message,LoggingEntery.EnteryTypes.Informational));
+			Notify(new LoggingEntery("OctoTipPlus Appilcation","RobotWorker","RunningJob",Message,LoggingEntery.EnteryTypes.Debug));
 			
 			
 			if (e.CurrentJob == null)
@@ -381,19 +381,24 @@ namespace OctoTip.OctoTipPlus
 		
 		void ActivateJobToolStripButtonClick(object sender, EventArgs e)
 		{
-			//dataGridViewRobotJobsQueue.SelectedRows
-			//RobotJob RJ = (RobotJob)Row.DataBoundItem;
-			//RJ.JobStatus = RobotJob.Status.Queued;
+			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
+			{
+				
+				RobotJob RJ = (RobotJob)Row.DataBoundItem;
+				RJ.JobStatus = RobotJob.Status.Queued;
+			}
 		}
 		
 		void DeactivateJobToolStripButtonClick(object sender, EventArgs e)
 		{
-			//RobotJob RJ = (RobotJob)Row.DataBoundItem;
-			//RJ.JobStatus = RobotJob.Status.TerminatedByUser;
+			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
+			{
+				
+				RobotJob RJ = (RobotJob)Row.DataBoundItem;
+				RJ.JobStatus = RobotJob.Status.TerminatedByUser;
+			}
 		}
 		#endregion
-		
-		
 		
 		#region Exception handling
 		private Log MainFormLog;
@@ -545,8 +550,8 @@ namespace OctoTip.OctoTipPlus
 		
 		void ErrorExtendedRichTextBoxDoubleClick(object sender, EventArgs e)
 		{
-				ShowLogForm ShowLogForm = new ShowLogForm(ErrorExtendedRichTextBox.Rtf);
-				ShowLogForm.ShowDialog();
+			ShowLogForm ShowLogForm = new ShowLogForm(ErrorExtendedRichTextBox.Rtf);
+			ShowLogForm.ShowDialog();
 		}
 		
 		#endregion
