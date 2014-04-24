@@ -1,5 +1,5 @@
-A266912F
-20130106_115801 Tecan           
+78C60E15
+20140423_134343 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -113,26 +113,24 @@ V;200
 998;2;
 998;252;17;
 998;252;22;
-998;5;
+998;4;
 998;4;0;System;
-998;0;0;Infinite 200;
-998;0;1;Storex;
+998;0;0;Storex;
+998;0;1;Hotel 3Pos DiTi;
 998;0;2;Hotel 3Pos DiTi;
-998;0;3;Hotel 3Pos DiTi;
 998;3;
 998;251;6WellCaCo2Plate;
 998;252;Box DiTi 200 ul;
 998;252;Box DiTi 200 ul;
 998;1;
 998;27;
-998;27;
 998;17;
 998;22;
 996;0;0;
 --{ RPG }--
-ImportVariable(DiTi200Ind,"D:\OctoTip\Protocols\SerialDilutionEvolution\SharedResources\DiTi200Ind.csv",0,"1",0,1,0,1,1);
+ImportVariable(DiTi200Ind,"D:\OctoTip\Protocols\SerialDilutionONEvolution\SharedResources\DiTi200Ind.csv",0,"1",0,1,0,1,1);
 IfThen("DiTi200Ind",2,"3");
-UserPrompt("No More DiTi replace Diti50 In Hotels",0,-1);
+UserPrompt("No More DiTi replace Diti200 In Hotels",0,-1);
 Variable(DiTi50Ind,"1",0,"",0,1.000000,10.000000,0,2,0,0);
 Else();
 EndIf();
@@ -151,6 +149,6 @@ Transfer_Rack("22","22",1,0,0,0,0,"","12 Well CaCo2 Plate","Narrow","","","Hotel
 EndIf();
 Comment("Incriment DiTi Pos");
 Variable(DiTi200Ind,"DiTi200Ind+1",0,"",0,1.000000,10.000000,0,2,0,0);
-ExportVariable(DiTi200Ind,"D:\OctoTip\Protocols\SerialDilutionEvolution\SharedResources\DiTi200Ind.csv",1,1);
+ExportVariable(DiTi200Ind,"D:\OctoTip\Protocols\SerialDilutionONEvolution\SharedResources\DiTi200Ind.csv",1,1);
 Set_DITI_Counter2("Box DiTi 200 ul","4","1","96",1);
 Set_DITI_Counter2("Box DiTi 200 ul","4","1","1",0);

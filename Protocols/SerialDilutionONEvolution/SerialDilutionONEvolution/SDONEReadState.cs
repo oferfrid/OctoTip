@@ -38,13 +38,10 @@ namespace SerialDilutionONEvolution
 			
 			LicPos LP = Utils.Ind2LicPos(LicPlateInd);
 
-			//ImportVariable(Lic24PlateCart#Lic24PlatePos#Dilution348Ind#FromWell#FreezeInd,"D:\OctoTip\Protocols\SerialDilutionONEvolution\Scripts\DiluteData.csv",0#0#0#0#0,"1#1#1#1#0",0,1,0,1,1);
-
-
 			RJP.Add(new RobotJobParameter("Lic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RobotJob RJ = new RobotJob(
-				@"D:\OctoTip\Protocols\SerialDilutionONEvolution\Scripts\Dilute.esc",RJP,0.5);
+				@"D:\OctoTip\Protocols\SerialDilutionONEvolution\Scripts\Read.esc",RJP,0.5);
 			return RJ;
 		}
 		
@@ -52,7 +49,6 @@ namespace SerialDilutionONEvolution
 		{
 			Dictionary<int,List<double>> MeasurementsResults = this.GetMeasurementsResults(24);
 			_WellOD = MeasurementsResults[Well].Average();
-			throw new NotImplementedException();
 		}
 	}
 }
