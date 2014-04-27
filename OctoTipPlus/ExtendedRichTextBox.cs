@@ -16,13 +16,17 @@ namespace OctoTip.OctoTipPlus
 	/// Description of RichTextBox.
 	/// </summary>
 	public class ExtendedRichTextBox:RichTextBox 
-	{
+	{		
 		public void AppendText(string text, Color color)
 		{
 			this.SelectionStart = this.TextLength;
 			this.SelectionLength = 0;
 
 			this.SelectionColor = color;
+			if (this.MaxLength <= (this.TextLength + text.Length))
+			{
+				this.Rtf = this.Rtf.Substring(text.Length);                
+			}
 			this.AppendText(text);
 			this.SelectionColor = this.ForeColor;
 			this.ScrollToCaret();

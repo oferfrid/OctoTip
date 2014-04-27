@@ -24,8 +24,7 @@ namespace MDKPlate1
 	{
 		
 		FileInfo ProtocolStateFile;
-		string LogName;
-
+		
 		
 		public new MDKProtocolParameters ProtocolParameters
 		{
@@ -40,9 +39,9 @@ namespace MDKPlate1
 		
 		public MDKProtocol(MDKProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
-			LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
+			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm") ;
 			ProtocolStateFile = new FileInfo(ProtocolParameters.OutputFilePath + LogName+".txt");
-				ReportProtocolState(0,string.Format("Creating Protocol {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
+			ReportProtocolState(0,string.Format("Creating Protocol {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
 		}
 		
@@ -55,28 +54,43 @@ namespace MDKPlate1
 			
 			if (ProtocolParameters.InoculateCycle==0)
 			{
-				ReportProtocolState(0,string.Format(@"Prepering plate {0} with logarithmic scale concentrations (twofold between adjacent columns)",ProtocolParameters.LicPlatePosition));
+				ReportProtocolState(0,string.Format(@"Prepering plate {0} with logarithmic scale concentrations ({1}μg/ml-{2}μg/ml)",ProtocolParameters.LicPlatePosition));
 				
-				this.ChangeState(new MDKPreparePlateState(ProtocolParameters.LicPlatePosition));
+				this.ChangeState(new MDKPreparePlateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.mu()));
 			}
 			
 			//Total time between inoculations (including inoculation time)+ casting
 			
 			double TotIncTime = (ProtocolParameters.MaxTime-ProtocolParameters.MinTime)/7;
+			int MIC = 0;
+			
+			if(ProtocolParameters.MIC)
+			{
+				MIC = 1;
+				TotIncTime	= (ProtocolParameters.MaxTime-ProtocolParameters.MinTime)/6;
+				
+				ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Inoculating MIC row in plate {1}",ProtocolParameters.LicPlatePosition));
+				
+				this.ChangeState(new MDKInoculateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.GermIndex,1));
+				
+			}
+			
 			double InoculateLength;
 			double Time2Incubate;
+			
 			DateTime StartInoculte = new DateTime();
 			
-			//Inoculation loop, rows 1-7
+			//Inoculation loop, except last row
 			
 			ProtocolParameters.InoculateCycle++;
-			while(ProtocolParameters.InoculateCycle<8&&!this.ShouldStop)
+			
+			while(ProtocolParameters.InoculateCycle<8-MIC&&!this.ShouldStop)
 			{
 				StartInoculte = DateTime.Now;
 				
-				ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Inoculating row {0} in plate {1}",ProtocolParameters.InoculateCycle,ProtocolParameters.LicPlatePosition));
+				ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Inoculating row {0} in plate {1}",(ProtocolParameters.InoculateCycle+MIC),ProtocolParameters.LicPlatePosition));
 				
-				this.ChangeState(new MDKInoculateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.GermIndex,ProtocolParameters.InoculateCycle));
+				this.ChangeState(new MDKInoculateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.GermIndex,(ProtocolParameters.InoculateCycle+MIC)));
 				
 				InoculateLength = (DateTime.Now-StartInoculte).TotalHours;
 				
@@ -91,11 +105,11 @@ namespace MDKPlate1
 				ProtocolParameters.InoculateCycle++;
 			}
 			
-			//Inoculation - row 8
+			//Inoculation - last row
 						
-			ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Inoculating row {0} in plate {1}",ProtocolParameters.InoculateCycle,ProtocolParameters.LicPlatePosition));
+			ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Inoculating row {0} in plate {1}",(ProtocolParameters.InoculateCycle+MIC),ProtocolParameters.LicPlatePosition));
 				
-			this.ChangeState(new MDKInoculateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.GermIndex,ProtocolParameters.InoculateCycle));
+			this.ChangeState(new MDKInoculateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.GermIndex,(ProtocolParameters.InoculateCycle+MIC)));
 						
 			//Incubation
 								
@@ -108,7 +122,7 @@ namespace MDKPlate1
 			
 			ReportProtocolState(9,string.Format("Deactivating antibiotic in plate {0}",ProtocolParameters.LicPlatePosition));
 				
-			this.ChangeState(new MDKDeactivateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.BLacIndex,ProtocolParameters.MIC));
+			this.ChangeState(new MDKDeactivateState(ProtocolParameters.LicPlatePosition,ProtocolParameters.BLacIndex,MIC));
 			
 			ReportProtocolState(ProtocolParameters.InoculateCycle,string.Format("Plate {0} in incubatorfor {1:0.0} Minutes",ProtocolParameters.LicPlatePosition,ProtocolParameters.FinIncTime*60));
 				
@@ -120,22 +134,9 @@ namespace MDKPlate1
 		{
 			string LogMessege = string.Format("({0}):{1}",InoculateCycle,Messege);
 			
-			try
-			{
-				using (StreamWriter sw = ProtocolStateFile.AppendText())
-				{
-					sw.WriteLine("({0}){1}:\t{2}",InoculateCycle,DateTime.Now,Messege);
-					sw.Flush();
-				}
-				OctoTip.Lib.Logging.Log.LogEntery(new LoggingEntery("MDK Plate 1",LogName,LogMessege,LoggingEntery.EnteryTypes.Informational));
-				DisplayData(LogMessege);
-			}
-			catch(Exception e)
-			{
-				myProtocolLogger.Add("Error:" + e.ToString());
-			}
-			myProtocolLogger.Add(LogMessege);
 			
+				this.ProtocolLog(LogMessege,LoggingEntery.EnteryTypes.Informational);
+				DisplayData(LogMessege);
 		}
 		
 		#region static

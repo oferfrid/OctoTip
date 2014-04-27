@@ -27,8 +27,10 @@ namespace MDKPlate1
 		public int GermIndex;
 		[ProtocolParameterAtribute("Beta-Lac eppendorf index","2",true)]
 		public int BLacIndex;
-		[ProtocolParameterAtribute(@"Antibiotic concentration in truogh (ug/ml)","420",true)]
+		[ProtocolParameterAtribute(@"Antibiotic concentration in truogh (μg/ml)","200",true)]
 		public double TroughConcentration;
+		[ProtocolParameterAtribute(@"Minimum antibiotic concentration (μg/ml)","2",true)]
+		public double MinConcentration;
 		[ProtocolParameterAtribute("Minimum time in antibiotic (hours)","1",true)]
 		public double MinTime;
 		[ProtocolParameterAtribute("Maximum time in antibiotic (hours)","40",true)]
@@ -41,7 +43,7 @@ namespace MDKPlate1
 		public string OutputFilePath;
 		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\MDK\MDKPlate1\SharedResources\")]
 		public string SharedResourcesFilePath;
-		[ProtocolParameterAtribute("Check MIC in bottom row?","true",true)]
+		[ProtocolParameterAtribute("Check MIC in top row?","true",true)]
 		public bool MIC;
 		
 		
@@ -62,6 +64,11 @@ namespace MDKPlate1
 				return false;
 			}
 			
+			if(mu()<0.2||mu()>1)
+			{
+				return false;
+			}
+			
 			if(MinTime>MaxTime)
 			{
 				return false;
@@ -73,6 +80,13 @@ namespace MDKPlate1
 			}
 			
 			return true;
+		}
+		
+		// Amount taken from previous column during dilution, normalized to 180 microliters 
+		public double mu()
+		{
+			double alpha = Math.Pow((TroughConcentration/MinConcentration),0.1);
+			return alpha*alpha/(1-alpha*alpha);
 		}
 		
 		public override string GetErrorMessage()
@@ -92,6 +106,16 @@ namespace MDKPlate1
 			if(BLacIndex<1||BLacIndex>24)
 			{
 				ErrorMsg += string.Format("Eppendorf position {0} not in range (1-24)/n",BLacIndex);
+			}
+			
+			if(mu()<0.2)
+			{
+				ErrorMsg += string.Format("Maximum-minimum concentrations too far apart");
+			}
+			
+			if(mu()>1)
+			{
+				ErrorMsg += string.Format("Maximum-minimum concentrations too close together");
 			}
 			
 			if(MinTime>MaxTime)

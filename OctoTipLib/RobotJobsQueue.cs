@@ -19,7 +19,7 @@ namespace OctoTip.Lib
 //	public class RobotJobsQueue:BindingList<RobotJob>
 	public sealed class RobotJobsQueue:BindingListView<RobotJob>
 	{
-	
+		
 		
 		private static volatile RobotJobsQueue instance;
 		private static object syncRoot = new Object();
@@ -117,6 +117,7 @@ namespace OctoTip.Lib
 				if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority >= Priority)
 				{
 					RJ = this[i];
+					Priority = RJ.Priority;
 				}
 			}
 			if (RJ!=null)
@@ -125,6 +126,7 @@ namespace OctoTip.Lib
 			}
 			return RJ;
 		}
+		
 		
 		
 		
@@ -150,7 +152,7 @@ namespace OctoTip.Lib
 //					JobStatus = RJ.JobStatus;
 //				}
 //			}
-//			
+//
 //			//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
 //			//logger.Add(Message);
 //			return JobStatus;

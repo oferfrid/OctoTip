@@ -33,7 +33,8 @@ namespace OctoTip.OctoTipPlus
 		
 		void ShowLogFormLoad(object sender, EventArgs e)
 		{
-			LogRichTextBox.Rtf = LogText;			
+			LogRichTextBox.Rtf = LogText;
+			LogRichTextBox.ScrollToCaret();			
 		}
 	}
 }

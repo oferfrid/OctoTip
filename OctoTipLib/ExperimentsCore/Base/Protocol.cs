@@ -293,7 +293,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 				SubSendor = string.Format("{0}({1})",this.GetType().Name,this.ProtocolParameters.Name);
 			}
 				
-			Logging.Log.LogEntery(new Logging.LoggingEntery("Protocol",SubSendor ,title,ET));
+			Logging.Log.LogEntery(new Logging.LoggingEntery("OctoTipPlus Appilcation",SubSendor ,title,ET));
 		}
 		
 		public void Start()

@@ -32,8 +32,6 @@ namespace OctoTip.OctoTipPlus
 		
 		Graph graph ;
 		
-		public const string LOG_NAME = "OctoTipExperimentManager";
-		
 		private int OldHeight;
 		
 		
@@ -185,7 +183,7 @@ namespace OctoTip.OctoTipPlus
 					// notify
 					Titel = string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
 					Message = string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
-					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Error));
+					Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Error));
 					break;
 				case (Protocol.Statuses.FatalError):
 					buttonStopEnabled  = false;
@@ -195,7 +193,7 @@ namespace OctoTip.OctoTipPlus
 					// notify
 					Titel = string.Format("Error in {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
 					Message = string.Format("Error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
-					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
+					Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
 					break;
 				case (Protocol.Statuses.RuntimeError):
 					buttonStopEnabled  = true;
@@ -204,7 +202,7 @@ namespace OctoTip.OctoTipPlus
 					ProtocolBackColor = System.Drawing.Color.Yellow;
 					Titel = string.Format("Run time error {0} ({1})",this.labelProtocolType.Text,this.labelProtocolName.Text);
 					Message = string.Format("Run time error in {0} ({1}\n {2})",this.labelProtocolType.Text,this.labelProtocolName.Text,e.Message);
-					Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
+					Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","ProtocolUserControl",Titel,Message,LoggingEntery.EnteryTypes.Critical));
 					
 					break;
 				default:
@@ -216,7 +214,7 @@ namespace OctoTip.OctoTipPlus
 			}
 			
 			string Title	= string.Format("{0}:{1}>{2}",this.Name, e.NewStatus ,e.Message);
-			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Debug));
+			Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Debug));
 			
 			if			(this.ParentForm !=null)
 			{
@@ -292,7 +290,7 @@ namespace OctoTip.OctoTipPlus
 			ProtocolStatesViewer.BeginInvoke(action);
 			
 			string Title	= string.Format("{0}:{1}\n{2}",ProtocolProvider.GetStateDesplayName(e.CurrentState),  e.StateStatus,e.Message);
-			Log.LogEntery(new LoggingEntery("Protocol","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Debug));
+			Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","ProtocolUserControl",Title,LoggingEntery.EnteryTypes.Debug));
 			
 			
 		}

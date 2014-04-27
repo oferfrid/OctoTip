@@ -21,11 +21,7 @@ namespace OctoTip.OctoTipPlus
 	{
 
 		private Thread RunningThread;
-		
-		public  const string LOG_NAME = "OctoTipManager";
-		//private LogString myLogger = LogString.GetLogString(LOG_NAME);
-		
-		
+				
 		public RobotWorkerStatus _Status = RobotWorkerStatus.Stopped;
 
 		int QueueSumplelingRate ;
@@ -39,7 +35,7 @@ namespace OctoTip.OctoTipPlus
 			}
 		}
 		
-				
+		
 		// Volatile is used as hint to the compiler that this data
 		// member will be accessed by multiple threads.
 		
@@ -98,12 +94,12 @@ namespace OctoTip.OctoTipPlus
 		
 		private void StartReadingQueue()
 		{
-					
+			
 			while (!_ShouldStop)
 			{
 				if (_Status != RobotWorkerStatus.WaitingForQueuedItems)
 				{
-				OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
 				}
 				
 				if(_ShouldPause && !_ShouldStop)
@@ -162,7 +158,7 @@ namespace OctoTip.OctoTipPlus
 		{
 			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopping,null,"Stopping..."));
 			_ShouldStop = true;
-			_ShouldPause = false;			
+			_ShouldPause = false;
 			Robot.RequestStop();
 		}
 		public void RequestPause()
@@ -176,16 +172,16 @@ namespace OctoTip.OctoTipPlus
 			switch(this.Status)
 			{
 				case( RobotWorkerStatus.Paused):
-						
-						OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Resume..."));
+					
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Resume..."));
 					_ShouldPause  = false;
 					Robot.RequestResume();
 					break;
 					
 				case( RobotWorkerStatus.Stopped):
-						
-						_ShouldPause  = false;
-						_ShouldStop = false;
+					
+					_ShouldPause  = false;
+					_ShouldStop = false;
 					try
 					{
 						RunningThread.Start();
@@ -246,7 +242,7 @@ namespace OctoTip.OctoTipPlus
 					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipPlus.Lib.RobotJob.Status.Running;
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runing From Worker"));
 					break;
-					case OctoTip.Lib.RobotJob.Status.Finished:
+				case OctoTip.Lib.RobotJob.Status.Finished:
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.FinishRunningJob,e.Job,"Job Runing From Worker"));
 					break;
 			}
@@ -269,6 +265,29 @@ namespace OctoTip.OctoTipPlus
 			FinishRunningJob,
 			Pausing,
 			Paused
+		}
+		static public string GetRobotWorkerStatusText(RobotWorkerStatus RWS)
+		{
+			//TODO: fix
+			switch(RWS)
+			{
+				case RobotWorkerStatus.Stopping:
+					return "Stopping";
+				case RobotWorkerStatus.Stopped:
+					return "Stopped";
+				case RobotWorkerStatus.WaitingForQueuedItems:
+					return "Waiting for queued items";
+					case RobotWorkerStatus.RunningJob:
+					return "Running Job";
+				case RobotWorkerStatus.FinishRunningJob:
+					return "Finish running job";
+				case RobotWorkerStatus.Pausing:
+					return "Pausing";
+				case RobotWorkerStatus.Paused:
+					return "Paused";
+				default:
+					return "Stopped";
+			}
 		}
 	}
 	

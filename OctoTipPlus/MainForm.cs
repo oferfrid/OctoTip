@@ -187,6 +187,16 @@ namespace OctoTip.OctoTipPlus
 			FormRobotWorker.RequestStart();
 		}
 		
+		void ButtonRobotPauseClick(object sender, EventArgs e)
+		{
+			FormRobotWorker.RequestPause();
+		}
+		
+		void ButtonRobotStopClick(object sender, EventArgs e)
+		{
+			FormRobotWorker.RequestStop();
+		}
+		
 		private void BindRobotJobsQueue()
 		{
 			dataGridViewRobotJobsQueue.Columns.Clear();
@@ -275,7 +285,7 @@ namespace OctoTip.OctoTipPlus
 			string textBoxRuningJobStatusText = string.Empty;
 			string textRobotWorkerStatusText = string.Empty;
 			
-			textRobotWorkerStatusText = e.RobotWorkerStatus.ToString();
+			textRobotWorkerStatusText = RobotWorker.GetRobotWorkerStatusText(e.RobotWorkerStatus);
 			
 			switch(e.RobotWorkerStatus)
 			{
@@ -442,9 +452,13 @@ namespace OctoTip.OctoTipPlus
 		
 		public void Notify(LoggingEntery LE)
 		{
+			//print to ErrorExtendedRichTextBox
 			Color TextColor;
 			switch (LE.EnteryType)
 			{
+				case LoggingEntery.EnteryTypes.Debug:
+				TextColor = Color.Green;
+				break;
 				case LoggingEntery.EnteryTypes.Informational:
 					TextColor = Color.Black;
 					break;
@@ -452,24 +466,22 @@ namespace OctoTip.OctoTipPlus
 					TextColor = Color.Yellow;
 					break;
 				case LoggingEntery.EnteryTypes.Error:
-					TextColor = Color.Red;
+					TextColor = Color.DarkRed;
 					break;
 				case LoggingEntery.EnteryTypes.Critical:
-					TextColor = Color.DarkRed;
+					TextColor = Color.Red;
 					break;
 				default:
 					TextColor = Color.Black;
 					break;
 			}
 			
-			//TODO:Chack for the size
 			MethodInvoker LastErrorTextBoxInvoker = delegate
 			{
 				string Message = string.Format("{0} {1} ({2})\n{3}\n*************\n",DateTime.Now,LE.Title,LE.EnteryType,LE.Message);
 				ErrorExtendedRichTextBox.AppendText(Message,TextColor);
 			};
 			ErrorExtendedRichTextBox.BeginInvoke(LastErrorTextBoxInvoker);
-			
 			
 			
 			//get selected notifyer
@@ -555,10 +567,6 @@ namespace OctoTip.OctoTipPlus
 		}
 		
 		#endregion
-		
-		
-		
-		
 		
 		
 		

@@ -48,6 +48,7 @@ namespace OctoTip.OctoTipPlus
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.LogRichTextBox.Location = new System.Drawing.Point(12, 12);
 			this.LogRichTextBox.Name = "LogRichTextBox";
+			this.LogRichTextBox.ReadOnly = true;
 			this.LogRichTextBox.Size = new System.Drawing.Size(722, 512);
 			this.LogRichTextBox.TabIndex = 0;
 			this.LogRichTextBox.Text = "";

@@ -34,7 +34,7 @@ namespace SerialDilutionONEvolution
 		{
 			//create protocol File
 			string LogName =  ProtocolParameters.Name + "_" + DateTime.Now.ToString("yyyyMMddHHmm");
-			ReportProtocolState(0,string.Format("Creating Protoclo {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
+			ReportProtocolState(0,string.Format("Creating Protoco1 {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString()));
 			
 		}
 		
@@ -90,8 +90,9 @@ namespace SerialDilutionONEvolution
 					while( ((DateTime.Now - StartCycleTime).TotalHours < ProtocolParameters.Time4Dilution) && !this.ShouldStop)
 					{
 						//wait
-						double TimeTillNextRead = Math.Min(ProtocolParameters.TimeBetweenReads, ProtocolParameters.Time4Dilution - (DateTime.Now - StartCycleTime).TotalHours);
-						ReportProtocolState(ProtocolParameters.Cycle,string.Format("Wait for next day. plate {0} Well {1}, {2:0.00} Hours Reading in {3:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeTillNextRead));
+						double TimeTillNextCycel =  ProtocolParameters.Time4Dilution - (DateTime.Now - StartCycleTime).TotalHours;
+						double TimeTillNextRead = Math.Min(ProtocolParameters.TimeBetweenReads, TimeTillNextCycel);
+						ReportProtocolState(ProtocolParameters.Cycle,string.Format("Wait for next day. plate {0} Well {1}, {2:0.00} Hours Reading in {3:0.00} Hours",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,TimeTillNextCycel,TimeTillNextRead));
 						ChangeState(new SDONEWait4ReadState(TimeTillNextRead));
 						//read
 						ReportProtocolState(ProtocolParameters.Cycle,string.Format("Read well from plate {0} Well {1}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell));
@@ -120,7 +121,7 @@ namespace SerialDilutionONEvolution
 		{
 			string LogMessege = string.Format("({0}):{1}",Cycle,Messege);
 			
-			this.ProtocolLog(Cycle.ToString("0") + Messege,LoggingEntery.EnteryTypes.Debug);
+			this.ProtocolLog(LogMessege,LoggingEntery.EnteryTypes.Informational);
 			
 		}
 		

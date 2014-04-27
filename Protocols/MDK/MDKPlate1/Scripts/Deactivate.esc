@@ -1,5 +1,5 @@
-0844AB55
-20140319_153127 Tecan           
+6D0B0AD0
+20140424_153132 Tecan           
                                                                                                                                 
 Tecan                                                                                                                           
 --{ RES }--
@@ -113,14 +113,16 @@ V;200
 998;2;
 998;252;17;
 998;252;22;
-998;4;
+998;5;
 998;4;0;System;
+998;0;3;Infinite 200;
 998;0;0;Storex;
 998;0;2;Hotel 3Pos DiTi;
 998;0;1;Hotel 3Pos DiTi;
 998;1;
 998;251;96WellMicroplate;
 998;1;
+998;27;
 998;26;
 998;17;
 998;22;
@@ -138,11 +140,15 @@ Variable(WELL_OFFSET,"BLacIndex-1",0,"",0,1.000000,10.000000,0,2,0,0);
 Mix(1,"Water free dispense LD & Trace","200",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",3,0,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
 BeginLoop("8-MICRow","BLacRow");
+BeginLoop("2","HalfRow");
 Variable(WELL_OFFSET,"BLacIndex-1",0,"",0,1.000000,10.000000,0,2,0,0);
-Aspirate(1,"Water free dispense LD & Trace","120",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",0,0);
+Aspirate(1,"Water free dispense LD & Trace","140",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",0,0);
+Dispense(1,"Water free dispense no LD","20",0,0,0,0,0,0,0,0,0,0,0,4,2,1,"06041000",0,0);
+BeginLoop("6","GermCell");
+Variable(WELL_OFFSET,"48*(LOOP_HalfRow-1)+MICRow",0,"",0,1.000000,10.000000,0,2,0,0);
+Dispense(1,"Water free dispense no LD","20",0,0,0,0,0,0,0,0,0,0,0,11,2,1,"0C0810000000000000",2,"GermCell",0,1,"BLacRow",1,1,0);
 Variable(WELL_OFFSET,"0",0,"",0,1.000000,10.000000,0,2,0,0);
-BeginLoop("12","BLacCell");
-Dispense(1,"Water free dispense no LD","10",0,0,0,0,0,0,0,0,0,0,0,11,2,1,"0C0810000000000000",2,"BLacCell",0,1,"BLacRow",1,1,0);
+EndLoop();
 EndLoop();
 EndLoop();
 DropDITI(1,1,6,10,70,0);

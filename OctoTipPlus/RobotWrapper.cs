@@ -23,9 +23,6 @@ namespace OctoTip.OctoTipPlus
 	{
 		private EVOAPILib.System Evo;
 		
-		public  const string LOG_NAME = "OctoTipManager";
-		//private LogString myLogger = LogString.GetLogString(LOG_NAME);
-		
 		// Volatile is used as hint to the compiler that this data
 		// member will be accessed by multiple threads.
 		private volatile bool _ShouldStop = false;
@@ -41,13 +38,24 @@ namespace OctoTip.OctoTipPlus
 			Evo.ErrorEvent += delegate(DateTime StartTime, DateTime EndTime, string Device, string Macro, string Object, string Message, short Status, string ProcessName, int ProcessID, string MacroID)
 			{
 				string Title = string.Format("Error from Evo:StartTime={0} EndTime={1} Device={2} Macro={3} Object={4} Message={5} Status={6} ProcessName={7} ProcessID={8} MacroID={9}", StartTime,  EndTime,  Device,  Macro,  Object,  Message,  Status,  ProcessName,  ProcessID,  MacroID);
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title,LoggingEntery.EnteryTypes.Error));
+				if (Status==11)
+				{
+				Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper",Title,LoggingEntery.EnteryTypes.Debug));
+				}
+				else if (Status==5)
+				{
+				Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper",Title,LoggingEntery.EnteryTypes.Warning));
+				}
+				else
+				{
+					Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper",Title,LoggingEntery.EnteryTypes.Error));
+				}
 			};
 			Evo.StatusChanged += delegate(SC_Status Status)
 			{
 				
 				string Title = string.Format("Status From Evo:{0}" , Status);
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title,LoggingEntery.EnteryTypes.Debug));
+				Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper",Title,LoggingEntery.EnteryTypes.Debug));
 			};
 			
 //			Evo.UserPromptEvent += delegate(int ID, string Text, string Caption, int Choices, out int Answer)
@@ -92,7 +100,7 @@ namespace OctoTip.OctoTipPlus
 			try
 			{
 				string Title = "RobotWrapper.Logon (UserName: " + UserName + ")";
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title, LoggingEntery.EnteryTypes.Debug));
+				Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper",Title, LoggingEntery.EnteryTypes.Debug));
 				Evo.Logon(UserName,Password,0,0);
 			}
 			catch(Exception e)
@@ -112,7 +120,7 @@ namespace OctoTip.OctoTipPlus
 			}
 			catch(Exception e)
 			{
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper","RobotWrapper.Logoff",LoggingEntery.EnteryTypes.Debug));
+				Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper","RobotWrapper.Logoff",LoggingEntery.EnteryTypes.Debug));
 				Evo.Logoff();
 				throw e;
 			}
@@ -189,7 +197,7 @@ namespace OctoTip.OctoTipPlus
 				SC_ScriptStatus ScriptStatus   = Evo.GetScriptStatus(ScriptID);
 				
 				string Title = "ScriptStatusEx:" + ScriptStatusEx.ToString() + "ScriptStatus:" + ScriptStatus.ToString();
-				Log.LogEntery(new LoggingEntery("Robot","RobotWrapper",Title,LoggingEntery.EnteryTypes.Debug));
+				Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper",Title,LoggingEntery.EnteryTypes.Debug));
 
 				
 				while(ScriptStatus == SC_ScriptStatus.SS_BUSY && !_ShouldStop)
@@ -253,7 +261,7 @@ namespace OctoTip.OctoTipPlus
 				else
 				{
 					ScriptStatusEx = Evo.GetScriptStatusEx(ScriptID);
-					Log.LogEntery(new LoggingEntery("Robot","RobotWrapper","ScriptStatusEx:" + ScriptStatusEx.ToString(),LoggingEntery.EnteryTypes.Debug));
+					Log.LogEntery(new LoggingEntery("OctoTipPlus Appilcation","RobotWrapper","ScriptStatusEx:" + ScriptStatusEx.ToString(),LoggingEntery.EnteryTypes.Debug));
 
 					// determain script termination status
 					switch (ScriptStatusEx)

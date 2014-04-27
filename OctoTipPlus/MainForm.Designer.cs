@@ -107,13 +107,13 @@ namespace OctoTip.OctoTipPlus
 			// ProtocolsCountToolStripStatusLabel
 			// 
 			this.ProtocolsCountToolStripStatusLabel.Name = "ProtocolsCountToolStripStatusLabel";
-			this.ProtocolsCountToolStripStatusLabel.Size = new System.Drawing.Size(105, 17);
+			this.ProtocolsCountToolStripStatusLabel.Size = new System.Drawing.Size(97, 17);
 			this.ProtocolsCountToolStripStatusLabel.Text = "Active Protocols: 0";
 			// 
 			// RuningProtocolsToolStripStatusLabel
 			// 
 			this.RuningProtocolsToolStripStatusLabel.Name = "RuningProtocolsToolStripStatusLabel";
-			this.RuningProtocolsToolStripStatusLabel.Size = new System.Drawing.Size(110, 17);
+			this.RuningProtocolsToolStripStatusLabel.Size = new System.Drawing.Size(100, 17);
 			this.RuningProtocolsToolStripStatusLabel.Text = "Runing Protocols: 0";
 			// 
 			// MainSplitContainer
@@ -161,9 +161,9 @@ namespace OctoTip.OctoTipPlus
 			// 
 			this.ProtocolPanel.AutoScroll = true;
 			this.ProtocolPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.ProtocolPanel.Location = new System.Drawing.Point(67, 3);
+			this.ProtocolPanel.Location = new System.Drawing.Point(62, 3);
 			this.ProtocolPanel.Name = "ProtocolPanel";
-			this.ProtocolPanel.Size = new System.Drawing.Size(675, 484);
+			this.ProtocolPanel.Size = new System.Drawing.Size(680, 484);
 			this.ProtocolPanel.TabIndex = 1;
 			// 
 			// ProtocolsToolStrip
@@ -175,14 +175,14 @@ namespace OctoTip.OctoTipPlus
 									this.ProtocolsToolStripSeparator});
 			this.ProtocolsToolStrip.Location = new System.Drawing.Point(3, 3);
 			this.ProtocolsToolStrip.Name = "ProtocolsToolStrip";
-			this.ProtocolsToolStrip.Size = new System.Drawing.Size(64, 484);
+			this.ProtocolsToolStrip.Size = new System.Drawing.Size(59, 484);
 			this.ProtocolsToolStrip.TabIndex = 0;
 			this.ProtocolsToolStrip.Text = "ProtocolsToolStrip";
 			// 
 			// toolStripAvailableProtocolsLabel
 			// 
 			this.toolStripAvailableProtocolsLabel.Name = "toolStripAvailableProtocolsLabel";
-			this.toolStripAvailableProtocolsLabel.Size = new System.Drawing.Size(61, 15);
+			this.toolStripAvailableProtocolsLabel.Size = new System.Drawing.Size(56, 13);
 			this.toolStripAvailableProtocolsLabel.Text = " Protocols:";
 			// 
 			// ToolStripButtonRefreshProtocol
@@ -191,14 +191,14 @@ namespace OctoTip.OctoTipPlus
 			this.ToolStripButtonRefreshProtocol.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButtonRefreshProtocol.Image")));
 			this.ToolStripButtonRefreshProtocol.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolStripButtonRefreshProtocol.Name = "ToolStripButtonRefreshProtocol";
-			this.ToolStripButtonRefreshProtocol.Size = new System.Drawing.Size(61, 20);
+			this.ToolStripButtonRefreshProtocol.Size = new System.Drawing.Size(56, 20);
 			this.ToolStripButtonRefreshProtocol.Text = "Refresh protocols list";
 			this.ToolStripButtonRefreshProtocol.Click += new System.EventHandler(this.ToolStripButtonRefreshProtocolClick);
 			// 
 			// ProtocolsToolStripSeparator
 			// 
 			this.ProtocolsToolStripSeparator.Name = "ProtocolsToolStripSeparator";
-			this.ProtocolsToolStripSeparator.Size = new System.Drawing.Size(61, 6);
+			this.ProtocolsToolStripSeparator.Size = new System.Drawing.Size(56, 6);
 			// 
 			// RobotQTab
 			// 
@@ -285,6 +285,8 @@ namespace OctoTip.OctoTipPlus
 			// 
 			// ErrorExtendedRichTextBox
 			// 
+			this.ErrorExtendedRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.ErrorExtendedRichTextBox.Location = new System.Drawing.Point(7, 169);
 			this.ErrorExtendedRichTextBox.Name = "ErrorExtendedRichTextBox";
 			this.ErrorExtendedRichTextBox.ReadOnly = true;
@@ -417,6 +419,7 @@ namespace OctoTip.OctoTipPlus
 			this.buttonRobotPause.TabIndex = 8;
 			this.buttonRobotPause.Text = "Pause";
 			this.buttonRobotPause.UseVisualStyleBackColor = true;
+			this.buttonRobotPause.Click += new System.EventHandler(this.ButtonRobotPauseClick);
 			// 
 			// buttonRobotStop
 			// 
@@ -430,6 +433,7 @@ namespace OctoTip.OctoTipPlus
 			this.buttonRobotStop.TabIndex = 7;
 			this.buttonRobotStop.Text = "Stop";
 			this.buttonRobotStop.UseVisualStyleBackColor = true;
+			this.buttonRobotStop.Click += new System.EventHandler(this.ButtonRobotStopClick);
 			// 
 			// MainMenuStrip
 			// 
@@ -448,7 +452,7 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.exitToolStripMenuItem});
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(35, 20);
 			this.toolStripMenuItem1.Text = "File";
 			// 
 			// exitToolStripMenuItem
@@ -460,7 +464,7 @@ namespace OctoTip.OctoTipPlus
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(39, 20);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(37, 20);
 			this.toolStripMenuItem2.Text = "Edit";
 			// 
 			// toolStripMenuItem3
@@ -468,13 +472,13 @@ namespace OctoTip.OctoTipPlus
 			this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.aboutToolStripMenuItem});
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(44, 20);
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(40, 20);
 			this.toolStripMenuItem3.Text = "Help";
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			// 
 			// MainForm
