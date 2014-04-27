@@ -70,7 +70,7 @@ namespace OctoTip.Lib.Logging
 		
 		public override void Log(LoggingEntery LE)
 		{
-			string Subject = string.Format("{0}--{1}({2}):{3}",LE.EnteryType.ToString(),LE.Sender,LE.SubSender,LE.Title);
+			string Subject = string.Format("{0}-{1}({2}):{3}",LE.EnteryType.ToString(),LE.Sender,LE.SubSender,LE.Title);
 			string Body = LE.Message;
 			SendEmail(Subject, Body);
 				
