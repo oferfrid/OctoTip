@@ -280,6 +280,10 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		{
 			Logging.Log.LogEntery(new Logging.LoggingEntery(this.GetType().Name,this.ProtocolParameters.Name,title,ET));
 		}
+		protected void ProtocolLog(string Title,string Messege , Logging.LoggingEntery.EnteryTypes ET)
+		{
+			Logging.Log.LogEntery(new Logging.LoggingEntery(this.GetType().Name,this.ProtocolParameters.Name,Title,Messege,ET));
+		}
 		
 		private void Log(string title,Logging.LoggingEntery.EnteryTypes ET)
 		{
