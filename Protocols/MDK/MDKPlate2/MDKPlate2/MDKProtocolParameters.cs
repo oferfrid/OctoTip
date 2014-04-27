@@ -10,7 +10,7 @@ using System;
 using OctoTip.Lib.ExperimentsCore.Attributes;
 using OctoTip.Lib.ExperimentsCore.Base;
 
-namespace MDKPlate1
+namespace MDKPlate2
 {
 	/// <summary>
 	/// Description of SDONEProtocolParameters.
@@ -27,10 +27,12 @@ namespace MDKPlate1
 		public int GermIndex;
 		[ProtocolParameterAtribute("Beta-Lac eppendorf index","2",true)]
 		public int BLacIndex;
-		[ProtocolParameterAtribute(@"Antibiotic concentration in truogh (μg/ml)","200",true)]
+		[ProtocolParameterAtribute(@"Antibiotic concentration in truogh (ug/ml)","500",true)]
 		public double TroughConcentration;
-		[ProtocolParameterAtribute(@"Minimum antibiotic concentration (μg/ml)","2",true)]
+		[ProtocolParameterAtribute(@"Minimum antibiotic concentration (ug/ml)","100",true)]
 		public double MinConcentration;
+		[ProtocolParameterAtribute(@"Maximum antibiotic concentration (ug/ml)","400",true)]
+		public double MaxConcentration;
 		[ProtocolParameterAtribute("Minimum time in antibiotic (hours)","1",true)]
 		public double MinTime;
 		[ProtocolParameterAtribute("Maximum time in antibiotic (hours)","40",true)]
@@ -39,14 +41,10 @@ namespace MDKPlate1
 		public double FinIncTime;
 		[ProtocolParameterAtribute("Current inoculation cycle","0",true)]
 		public int InoculateCycle;
-		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\MDK\MDKPlate1\Output\")]
+		[ProtocolParameterAtribute("Log file path",@"D:\OctoTip\Protocols\MDK\MDKPlate2\Output\")]
 		public string OutputFilePath;
-		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\MDK\MDKPlate1\SharedResources\")]
+		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\MDK\MDKPlate2\SharedResources\")]
 		public string SharedResourcesFilePath;
-		[ProtocolParameterAtribute("Check MIC in top row?","true",true)]
-		public bool MIC;
-		[ProtocolParameterAtribute("Prepare plate?","true",true)]
-		public bool Prep;
 		
 		
 		public override bool IsValid()
@@ -66,7 +64,12 @@ namespace MDKPlate1
 				return false;
 			}
 			
-			if(mu()<0.2||mu()>1)
+			if((MinConcentration/TroughConcentration)<0.1||MinConcentration>MaxConcentration)
+			{
+				return false;
+			}
+			
+			if((MaxConcentration/TroughConcentration)>0.9)
 			{
 				return false;
 			}
@@ -82,13 +85,6 @@ namespace MDKPlate1
 			}
 			
 			return true;
-		}
-		
-		// Amount taken from previous column during dilution, normalized to 180 microliters 
-		public double mu()
-		{
-			double alpha = Math.Pow((MinConcentration/TroughConcentration),0.1);
-			return alpha*alpha/(1-alpha*alpha);
 		}
 		
 		public override string GetErrorMessage()
@@ -110,14 +106,19 @@ namespace MDKPlate1
 				ErrorMsg += string.Format("Eppendorf position {0} not in range (1-24)/n",BLacIndex);
 			}
 			
-			if(mu()<0.2)
+			if((MinConcentration/TroughConcentration)<0.1)
 			{
-				ErrorMsg += string.Format("Maximum-minimum concentrations too far apart");
+				ErrorMsg += string.Format("Minimum concentration {0} too small (must be >10% of trough concentration)\n",MinConcentration);
 			}
 			
-			if(mu()>1)
+			if(MinConcentration>MaxConcentration)
 			{
-				ErrorMsg += string.Format("Maximum-minimum concentrations too close together");
+				ErrorMsg += string.Format("Minimum concentration {0} greater than Maximum concentration {1}\n",MinConcentration,MaxConcentration);
+			}
+			
+			if((MaxConcentration/TroughConcentration)>0.9)
+			{
+				ErrorMsg += string.Format("Maximum concentration {0} too large (must be <90% of trough concentration)\n",MaxConcentration);
 			}
 			
 			if(MinTime>MaxTime)
@@ -133,6 +134,6 @@ namespace MDKPlate1
 			return ErrorMsg;
 		}
 		
-		
+	
 	}
 }
