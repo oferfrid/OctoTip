@@ -31,21 +31,17 @@ namespace IncubateRead
 		int ReadPlateFirstInd;
 		int LicInd;
 		FileInfo OutputFile;
+		string ScriptName;
 		
 		double[] ReadResults = new double[2];
 			
 
-		
-		
-		
-		public IRReadState(int ReadPlateFirstInd,int LicInd,string OutputFilePath):base()
+		public IRReadState(int ReadPlateFirstInd,int LicInd,string OutputFilePath, int NWells, string MeasurmentType):base()
 		{
 			this.ReadPlateFirstInd = ReadPlateFirstInd;
 			this.LicInd = LicInd;
 			this.OutputFile = new FileInfo(OutputFilePath);
-			
-			
-
+			this.ScriptName = @"D:\RobotScripts\Irit\IncubateRead\Scripts\IRRead" +MeasurmentType +NWells.ToString()+@".esc";
 		}
 		
 		protected override RobotJob BeforeRobotRun()
@@ -58,10 +54,7 @@ namespace IncubateRead
 			RJP.Add(new RobotJobParameter("PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("ReadPlateFirstInd",RobotJobParameter.ParameterType.Number,ReadPlateFirstInd));
 			
-			
-			
-			RobotJob RJ = new RobotJob(
-				@"C:\Users\Public\Documents\Learn\BioLab\programing\OctoTip\Protocols\IncubateRead\Scripts\IRRead6.esc",RJP);
+			RobotJob RJ = new RobotJob(ScriptName,RJP);
 			
 			return RJ;
 		}

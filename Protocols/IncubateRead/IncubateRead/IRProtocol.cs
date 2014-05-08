@@ -55,19 +55,19 @@ namespace IncubateRead
 			
         	if (OutputFile.Exists) 
         	{
-        	OutputFile.Delete();
-            using (StreamWriter sw = OutputFile.CreateText()) 
-            {
-            	sw.WriteLine("Time\tOD reads");
-            	sw.Flush();
-            }	
-        }
+	        	OutputFile.Delete();
+	            using (StreamWriter sw = OutputFile.CreateText()) 
+	            {
+	            	sw.WriteLine("Time\tOD reads");
+	            	sw.Flush();
+	            }	
+        	}
 			
 			while (DateTime.Now.Subtract(StartTime).TotalHours < this.ProtocolParameters.TotalTime && !ShouldStop)
 			{
 				 
 				UpdateProtocolMessege();
-				IRReadState _IRReadState = new IRReadState(round++,ProtocolParameters.LicInd,ProtocolParameters.OutputFile );
+				IRReadState _IRReadState = new IRReadState(round++,ProtocolParameters.LicInd,ProtocolParameters.OutputFile,ProtocolParameters.TypeOfPlate, ProtocolParameters.TypeOfMeasurment );
 				this.ChangeState(_IRReadState);
 				double[] Result = 	 _IRReadState.GetReadResult();
 				OD[0].Add(Result[0]);
