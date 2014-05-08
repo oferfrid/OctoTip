@@ -17,7 +17,7 @@ namespace OctoTip.OctoTipPlus.ProtocolParametersFields
 	public class DoubleField:FieldInterface
 	{
 		
-			public Control getFieldControl(object Value)
+		public Control getFieldControl(object Value)
 		{
 			TextBox doubleFieldControl = new TextBox();
 			doubleFieldControl.Text = Value.ToString();
