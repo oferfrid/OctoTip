@@ -134,7 +134,8 @@ namespace OctoTip.Lib
 		{
 			Guid UniqueID =  RJ.GenerateUniqueID();
 			RJ.UniqueID = UniqueID;
-			this.Insert(Count, RJ);
+			//this.Insert(Count, RJ);
+			this.Add(RJ);
 			RJ.JobStatus = RobotJob.Status.Queued;
 			//OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("Insert 1"));
 			return UniqueID;
