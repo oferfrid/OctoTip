@@ -57,6 +57,10 @@ namespace OctoTip.OctoTipPlus.ProtocolParametersFields
 			{
 				Field = new DoubleArrayField();
 			}
+			else if(FieldType==typeof(DateTime))
+			{
+				Field = new DateTimeField();
+			}
 			else
 			{
 				throw new NotImplementedException("Parameter Type (" +  FieldType.ToString()  + ") Not Implemented yet");
@@ -93,7 +97,7 @@ namespace OctoTip.OctoTipPlus.ProtocolParametersFields
 		}
 		public  void SetFormatError()
 		{
-			ControlErrorProvider.SetError(this.Fieldlabel, "Value Not In the write fromat \n");
+			ControlErrorProvider.SetError(this.Fieldlabel, "Value not in the right fromat\n");
 		}
 		
 		
