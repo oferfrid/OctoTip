@@ -24,12 +24,14 @@ namespace SerialDilutionONEvolution
 	{
 		int LicPlateInd;
 		int FromWell;
+		int DiluteUsing384PlatePos;
 		int FreezeInd;
 		
-		public SDONEDiluteState(int LicPlateInd,int FromWell,int FreezeInd):base()
+		public SDONEDiluteState(int LicPlateInd,int FromWell,int DiluteUsing384PlatePos,int FreezeInd):base()
 		{
 			this.LicPlateInd=LicPlateInd;
 			this.FromWell=FromWell;
+			this.DiluteUsing384PlatePos = DiluteUsing384PlatePos;
 			this.FreezeInd=FreezeInd;
 		}
 		protected override RobotJob BeforeRobotRun()
@@ -45,6 +47,7 @@ namespace SerialDilutionONEvolution
 			RJP.Add(new RobotJobParameter("Lic24PlateCart",RobotJobParameter.ParameterType.Number,LP.Cart));
 			RJP.Add(new RobotJobParameter("Lic24PlatePos",RobotJobParameter.ParameterType.Number,LP.Pos));
 			RJP.Add(new RobotJobParameter("FromWell",RobotJobParameter.ParameterType.Number,FromWell));
+			RJP.Add(new RobotJobParameter("Dilution384Index",RobotJobParameter.ParameterType.Number,DiluteUsing384PlatePos));
 			RJP.Add(new RobotJobParameter("FreezeInd",RobotJobParameter.ParameterType.Number,FreezeInd));
 
 			

@@ -33,7 +33,7 @@ namespace SerialDilutionONEvolution
 		public SDONEProtocol(SDONEProtocolParameters ProtocolParameters):base((ProtocolParameters)ProtocolParameters)
 		{
 			string Title = 	"Creating Protocol";
-			string Messege = string.Format("Creating Protoco1 {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString());				
+			string Messege = string.Format("Creating Protoco1 {0} ({1}), using parameters: \n{2}",ProtocolParameters.Name,this.GetType().Name,ProtocolParameters.ToString());
 			ReportProtocolState(Title,Messege);
 			
 		}
@@ -66,10 +66,13 @@ namespace SerialDilutionONEvolution
 				if(ProtocolParameters.CurentWell<24)
 				{
 					//dilute
-					 Title = "Dilute";
-					 Messege = string.Format("Dilute from plate {0} Well {1} after {2:0.00} Hours freeze:{3}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,24,freezeIndex);
+					
+					int DiluteUsing384PlateIndex = LocalUtils.GetNext384Index(ProtocolParameters.SharedResourcesFilePath);
+					int DiluteUsing384PlatePos = LocalUtils.GetNext384Pos(DiluteUsing384PlateIndex);
+					Title = "Dilute";
+					Messege = string.Format("Dilute from plate {0} Well {1} after {2:0.00} Hours freeze:{3}",ProtocolParameters.LicPlatePosition ,ProtocolParameters.CurentWell,24,freezeIndex);
 					ReportProtocolState(Title,Messege);
-					ChangeState(new SDONEDiluteState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,freezeIndex));
+					ChangeState(new SDONEDiluteState(ProtocolParameters.LicPlatePosition,ProtocolParameters.CurentWell,DiluteUsing384PlatePos,freezeIndex));
 					ProtocolParameters.CurentWell++;
 					ProtocolParameters.Cycle++;
 				}

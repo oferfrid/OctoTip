@@ -111,6 +111,29 @@ namespace SerialDilutionONEvolution
 			return ASCIIEncoding.ASCII.GetString(line);
 		}
 
+		public static int GetNext384Index(string SharedResourcesFilePath)
+		{
+			string FilePath  =SharedResourcesFilePath +  @"384PlateIndex.txt";
+			FileStream fileStream = new FileStream( FilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+			TextReader TRead = new StreamReader(fileStream);
+			int Index = Convert.ToInt32(TRead.ReadLine());
+			
+			// Set the stream position to the beginning of the file.
+			fileStream.Seek(0, SeekOrigin.Begin);
+			TextWriter TWrite = new StreamWriter(fileStream);
+			int NewIndex = Index + 1;
+			TWrite.WriteLine(NewIndex.ToString());
+			TWrite.Flush();
+			fileStream.Close();
+			return Index;
+			
+		}
+		public static int GetNext384Pos(int Index)
+		{
+			int Pos =Convert.ToInt32(((double)Index-1)%WellsInRow+1 + Math.Floor(((double)Index-1)/WellsInRow)*(WellsInDilution*WellsInRow));
+			return Pos;
+		}
+		
 		
 		
 	}
