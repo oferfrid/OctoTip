@@ -24,7 +24,7 @@ namespace OctoTip.Lib.Logging
 		{
 			LoggerName = "Email Logger";
 			LoggigLevel = (int)LoggingEntery.EnteryTypes.Error;
-			ExtraData = "Enter Email";
+			ExtraData = @"oferfridsms1@gmail.com";
 		}
 		
 		private void SendEmail(string FromGmailEmail,

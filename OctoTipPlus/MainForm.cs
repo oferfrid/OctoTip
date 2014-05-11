@@ -41,7 +41,17 @@ namespace OctoTip.OctoTipPlus
 			AddAvailableProtocols();
 			
 		}
-		
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(MessageBox.Show("Are you sure you want to exit",this.Text, MessageBoxButtons.YesNo,MessageBoxIcon.Question)!= DialogResult.Yes)
+			{
+				e.Cancel=true;
+			}
+		}
+		void ExitToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			this.Close();
+		}
 		
 		#region Protocols
 		private void AddAvailableProtocols()
@@ -66,9 +76,10 @@ namespace OctoTip.OctoTipPlus
 			
 			
 			// remove all items but the first 3. (refresh btn etc..)
-			for (int i=3;i<(this.ProtocolsToolStrip.Items.Count);i++)
+			int ProtocolsToolStripItemsCount = this.ProtocolsToolStrip.Items.Count;
+			for (int i=ProtocolsToolStripItemsCount;i>3;i--)
 			{
-				this.ProtocolsToolStrip.Items.RemoveAt(i);
+				this.ProtocolsToolStrip.Items.RemoveAt(i-1);
 			}
 			
 			
@@ -567,6 +578,9 @@ namespace OctoTip.OctoTipPlus
 		}
 		
 		#endregion
+		
+		
+		
 		
 		
 		
