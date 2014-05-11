@@ -35,7 +35,7 @@ namespace SerialDilutionONEvolution
 		public bool UseReader;
 		[ProtocolParameterAtribute("Time between reads (Hours)","1",true)]
 		public double TimeBetweenReads;
-		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\Protocols\SerialDilutionONEvolution\SharedResources\")]
+		[ProtocolParameterAtribute("Shared Resources file path",@"D:\OctoTip\OctoTipPlus\SharedResources\")]
 		public string SharedResourcesFilePath;
 
 		
