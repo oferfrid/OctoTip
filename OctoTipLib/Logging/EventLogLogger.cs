@@ -22,12 +22,21 @@ namespace OctoTip.Lib.Logging
 		public EventLogLogger()
 		{
 			SourceName = System.AppDomain.CurrentDomain.FriendlyName;
-			if(!EventLog.SourceExists(SourceName))
+			try
 			{
-				EventLog.CreateEventSource(SourceName, "Application");
+				if(!EventLog.SourceExists(SourceName))
+				{
+					
+					EventLog.CreateEventSource(SourceName, "Application");
+					
+					
+				}
 				
 			}
-			
+			catch(System.Security.SecurityException e)
+			{
+				throw new Exception("Event Log Logger is not registered! \n run as administrator for the first time.",e);
+			}
 			LoggerName = "Event Log";
 			LoggigLevel = (int)LoggingEntery.EnteryTypes.Warning;
 			
