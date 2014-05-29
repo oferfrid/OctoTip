@@ -27,6 +27,13 @@ namespace OctoTip.Lib.Logging
 			ExtraData = @"oferfridsms1@gmail.com";
 		}
 		
+			public  override bool IsChecked
+		{
+			get
+			{
+				return true;
+			}
+		}
 		private void SendEmail(string FromGmailEmail,
 		                       string GmailPassword ,
 		                       string ToEmail,

@@ -24,6 +24,16 @@ namespace OctoTip.Lib.Logging
 		const string MessageHeader  = "message";
 		
 		
+		public  override bool IsChecked
+		{
+			get
+			{
+				return true;
+			}
+		}
+		
+			
+		
 		public GoogleSpreadsheetLogger()
 		{
 			
@@ -49,7 +59,7 @@ namespace OctoTip.Lib.Logging
 			SpreadsheetFeed Sfeed;
 			try
 			{
-			Sfeed = myService.Query(Squery);
+				Sfeed = myService.Query(Squery);
 			}
 			catch (Google.GData.Client.InvalidCredentialsException e)
 			{

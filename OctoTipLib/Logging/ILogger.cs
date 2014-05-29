@@ -31,6 +31,12 @@ namespace OctoTip.Lib.Logging
 			get;
 			set;
 		}
+		bool IsChecked
+		{
+			get;
+		}
+		
+		
 		void Log(LoggingEntery LE);
 	}
 }

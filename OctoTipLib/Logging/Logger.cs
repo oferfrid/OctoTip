@@ -43,6 +43,12 @@ namespace OctoTip.Lib.Logging
 			get ;
 			set;
 		}
+		
+		public virtual bool IsChecked {
+			get {
+				return false;
+			}
+		}
 	}
 }
 

@@ -18,8 +18,11 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	/// </summary>
 	public abstract class ProtocolParameters:IProtocolParameters
 	{
+		[ProtocolParameterAtribute("Shared Resources File Path",@"C:\Users\OWNER\Documents\Programing\OctoTipProtocols\SharedResources\",true)]
+		public string SharedResourcesFilePath;
 		[ProtocolParameterAtribute("Name Of The Protocol","",true)]
 		public string Name;
+		
 		public bool IsInitialized = false;
 		
 		public override string ToString()
