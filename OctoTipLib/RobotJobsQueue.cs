@@ -114,7 +114,7 @@ namespace OctoTip.Lib
 			
 			for (int i=0;i<this.Count;i++)
 			{
-				if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority >= Priority)
+				if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority > Priority)
 				{
 					RJ = this[i];
 					Priority = RJ.Priority;
