@@ -30,7 +30,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		}
 		#endregion
 		
-		
+				
 		public State CurrentState;
 		
 		private Thread RunningThread;
@@ -38,20 +38,13 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		protected int StateSamplelingRate;
 		
-		//Log
-		public const string LOG_NAME = "OctoTipExperimentManager";
-		private LogString myLogger = LogString.GetLogString(LOG_NAME);
-		protected LogString myProtocolLogger;
-		
-		
 		public  ProtocolParameters ProtocolParameters;
 		
 		public  Protocol(ProtocolParameters ProtocolParameters)
 		{
 			this.ProtocolParameters = ProtocolParameters;
 			RunningThread = new Thread(_DoWork);
-			myProtocolLogger = LogString.GetLogString(ProtocolParameters.Name);
-			
+			RunningThread.IsBackground = true;
 		}
 		public  Protocol()
 		{
@@ -64,7 +57,6 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		~Protocol()
 		{
 			CurrentState = null;
-			//TODO:maybe terminate runing RunningThread.
 		}
 		
 		
@@ -119,7 +111,6 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 					CurrentState = NewState;
 					CurrentState.StateDisplayedDataChange += OnProtocolStateDisplayedDataChange;
 					CurrentState.StateStatusChange +=	OnProtocolStateStatusChange;
-					Log(CurrentState.GetType().ToString() + " Started");
 					CurrentState.Start();
 					
 					while (!this.ShouldStop && CurrentState is IRestartableState && CurrentState.CurrentStatus == State.Statuses.FatalError)
@@ -144,12 +135,12 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			}
 		}
 
-		protected void SetCurrentStatus(Statuses CurrentStatus,string Messege )
+		protected void SetCurrentStatus(Statuses CurrentStatus,string Message )
 		{
 			//Log the status change And Raise the event.
-			Log(string.Format("{0}>{1} {2}",_CurrentStatus , CurrentStatus , Messege));
+			Log(string.Format("{0}>{1} {2}",_CurrentStatus , CurrentStatus , Message),Logging.LoggingEntery.EnteryTypes.Debug);
 			_CurrentStatus = CurrentStatus;
-			OnStatusChanged(new  ProtocolStatusChangeEventArgs(CurrentStatus,Messege));
+			OnStatusChanged(new  ProtocolStatusChangeEventArgs(CurrentStatus,Message));
 		}
 		
 
@@ -168,9 +159,9 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			}
 		}
 		
-		protected  void DisplayData(string Messege)
+		protected  void DisplayData(string Message)
 		{
-			ProtocolDisplayedDataChangeEventArgs e = new ProtocolDisplayedDataChangeEventArgs(Messege);
+			ProtocolDisplayedDataChangeEventArgs e = new ProtocolDisplayedDataChangeEventArgs(Message);
 			EventHandler<ProtocolDisplayedDataChangeEventArgs> handler = DisplayedDataChange;
 			if (handler != null)
 			{
@@ -198,25 +189,25 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			switch(e.StateStatus)
 			{
 					case State.Statuses.Paused:
-					this.SetCurrentStatus(Statuses.Paused,"Paused from state:" + e.Messege );
+					this.SetCurrentStatus(Statuses.Paused,"Paused from state:" + e.Message );
 					break;
 					case State.Statuses.Started:
-					this.SetCurrentStatus(Statuses.Started,"started from state:" + e.Messege );
+					this.SetCurrentStatus(Statuses.Started,"started from state:" + e.Message );
 					break;
 					case State.Statuses.Stopped:
-					this.SetCurrentStatus(Statuses.Stopped,"Stopped From State:" + e.Messege );
+					this.SetCurrentStatus(Statuses.Stopped,"Stopped From State:" + e.Message );
 					break;
 					case State.Statuses.FatalError:
-					this.SetCurrentStatus(Statuses.FatalError,"FatalError From State:" + e.Messege );
+					this.SetCurrentStatus(Statuses.FatalError,"FatalError From State:" + e.Message );
 					ShouldPause  = true;
 					break;
 					
 					case State.Statuses.RuntimeError:
-					this.SetCurrentStatus(Statuses.RuntimeError,"RuntimeError From State:" + e.Messege );
+					this.SetCurrentStatus(Statuses.RuntimeError,"RuntimeError From State:" + e.Message );
 					break;
 					
 					case State.Statuses.EndedSuccessfully:
-					this.SetCurrentStatus(Statuses.EndedSuccessfully,"Ended Successfully From State:" + e.Messege );
+					this.SetCurrentStatus(Statuses.EndedSuccessfully,"Ended Successfully From State:" + e.Message );
 					break;
 		
 			//Stoping ??,
@@ -227,7 +218,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			}
 			
 			
-			this.Log(string.Format("State {0} status changed to: {1}",e.CurrentState.GetType().Name,e.StateStatus));
+			this.Log(string.Format("State {0} status changed to: {1}",e.CurrentState.GetType().Name,e.StateStatus),Logging.LoggingEntery.EnteryTypes.Debug);
 		}
 		
 		
@@ -284,24 +275,43 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 		
 		
 		#endregion
-		protected void Log (string Messege)
+		
+		protected void ProtocolLog(string title, Logging.LoggingEntery.EnteryTypes ET)
 		{
-			myLogger.Add(this.GetType().Name  + "(" + this.ProtocolParameters.Name  + ")>" + Messege );
+			Logging.Log.LogEntery(new Logging.LoggingEntery(this.GetType().Name,this.ProtocolParameters.Name,title,ET));
+		}
+		protected void ProtocolLog(string Title,string Messege , Logging.LoggingEntery.EnteryTypes ET)
+		{
+			Logging.Log.LogEntery(new Logging.LoggingEntery(this.GetType().Name,this.ProtocolParameters.Name,Title,Messege,ET));
+		}
+		
+		private void Log(string title,Logging.LoggingEntery.EnteryTypes ET)
+		{
+			string SubSendor;
+			if (this.ProtocolParameters.Name==null)
+			{
+				SubSendor = this.GetType().Name;
+			}
+			else 
+			{
+				SubSendor = string.Format("{0}({1})",this.GetType().Name,this.ProtocolParameters.Name);
+			}
+				
+			Logging.Log.LogEntery(new Logging.LoggingEntery("OctoTipPlus Appilcation",SubSendor ,title,ET));
 		}
 		
 		public void Start()
 		{
 			OnStatusChanged(new ProtocolStatusChangeEventArgs(Statuses.Started,"Started"));
-			Log("Started");
+			Log("Started",Logging.LoggingEntery.EnteryTypes.Debug);
 			try {
 				this.Start();
 				OnStatusChanged(new ProtocolStatusChangeEventArgs(Statuses.Stopped,"Ended Successfully!"));
 			}
 			catch (Exception e)
 			{
-				myLogger.Add(e.ToString());
 				OnStatusChanged(new ProtocolStatusChangeEventArgs(Statuses.Error,"Error:" + e.Message ));
-				Log("Error:" + e.Message);
+				Log("Error:" + e.Message,Logging.LoggingEntery.EnteryTypes.Error);
 				RunningThread.Abort();
 				
 			}
@@ -317,6 +327,7 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			try
 			{
 				DoWork();
+				this.SetCurrentStatus(Statuses.EndedSuccessfully,"Ended at " +  DateTime.Now.ToString());
 			}
 			catch(Exception e)
 			{
@@ -331,26 +342,23 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	}
 	
 	
-	// Special EventArgs class to hold info about The Status Change.
-	
-	//TODO:Add real Protocol Status Change Events args!
 	public class ProtocolStatusChangeEventArgs : EventArgs
 	{
 		private Protocol.Statuses _NewStatus;
-		private string _Messege;
+		private string _Message;
 
-		public ProtocolStatusChangeEventArgs(Protocol.Statuses NewStatus,string Messege)
+		public ProtocolStatusChangeEventArgs(Protocol.Statuses NewStatus,string Message)
 		{
 			this._NewStatus = NewStatus;
-			this._Messege = Messege;
+			this._Message = Message;
 		}
 		public Protocol.Statuses NewStatus
 		{
 			get { return _NewStatus; }
 		}
-		public string Messege
+		public string Message
 		{
-			get { return _Messege; }
+			get { return _Message; }
 		}
 	}
 	
@@ -360,16 +368,16 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 	public class ProtocolDisplayedDataChangeEventArgs : EventArgs
 	{
 		
-		private string _Messege;
+		private string _Message;
 
-		public ProtocolDisplayedDataChangeEventArgs(string Messege)
+		public ProtocolDisplayedDataChangeEventArgs(string Message)
 		{
 			
-			this._Messege = Messege;
+			this._Message = Message;
 		}
-		public string Messege
+		public string Message
 		{
-			get { return _Messege; }
+			get { return _Message; }
 		}
 	}
 	

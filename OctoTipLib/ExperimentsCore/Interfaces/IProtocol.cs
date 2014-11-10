@@ -24,7 +24,6 @@ namespace OctoTip.Lib.ExperimentsCore.Interfaces
 		void RequestStart();
 		void ChangeState(State NewState);
 		
-		//TODO: Save State!
 	}
 	
 	

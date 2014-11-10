@@ -35,6 +35,5 @@ namespace OctoTip.Lib.ExperimentsCore.Attributes
 			get { return m_DisplayName; }
 		}
 		
-		//TODO:Add Vertion And creator...
 	}
 }
