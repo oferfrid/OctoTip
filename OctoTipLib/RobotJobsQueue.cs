@@ -17,7 +17,7 @@ namespace OctoTip.Lib
 	/// Description of RobotJobsQueue.
 	/// </summary>
 //	public class RobotJobsQueue:BindingList<RobotJob>
-	public sealed class RobotJobsQueue:BindingListView<RobotJob>
+	public sealed class RobotJobsQueue:BindingList<RobotJob>
 	{
 		
 		

@@ -210,54 +210,54 @@ namespace OctoTip.OctoTipPlus
 		
 		private void BindRobotJobsQueue()
 		{
-//			dataGridViewRobotJobsQueue.Columns.Clear();
-//			DataGridViewColumn column;
-//			column = new DataGridViewTextBoxColumn();
-//			column.DataPropertyName = "Priority";
-//			column.Name = "Priority";
-//			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
-//			dataGridViewRobotJobsQueue.Columns.Add(column);
-//
-//			column = new DataGridViewTextBoxColumn();
-//			column.DataPropertyName = "JobStatus";
-//			column.Name = "JobStatus";
-//			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
-//			dataGridViewRobotJobsQueue.Columns.Add(column);
-//			
-//			column = new DataGridViewTextBoxColumn();
-//			column.DataPropertyName = "ScriptName";
-//			column.Name = "Script Name";
-//			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
-//			dataGridViewRobotJobsQueue.Columns.Add(column);
-//			
-//			column = new DataGridViewTextBoxColumn();
-//			column.DataPropertyName = "RobotJobDisplayParameters";
-//			column.Name = "Parameters";
-//			column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-//			dataGridViewRobotJobsQueue.Columns.Add(column);
-//			
-//			column = new DataGridViewTextBoxColumn();
-//			column.DataPropertyName = "UniqueID";
-//			column.Name = "Unique ID";
-//			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
-//			dataGridViewRobotJobsQueue.Columns.Add(column);
+			dataGridViewRobotJobsQueue.Columns.Clear();
+			DataGridViewColumn column;
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "Priority";
+			column.Name = "Priority";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "JobStatus";
+			column.Name = "JobStatus";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+			
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "ScriptName";
+			column.Name = "Script Name";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+			
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "RobotJobDisplayParameters";
+			column.Name = "Parameters";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
+			
+			column = new DataGridViewTextBoxColumn();
+			column.DataPropertyName = "UniqueID";
+			column.Name = "Unique ID";
+			column.DefaultCellStyle.WrapMode = DataGridViewTriState.NotSet;
+			dataGridViewRobotJobsQueue.Columns.Add(column);
 		}
 		
 		private void  UpdateRobotJobsQueue()
 		{
-//			if (CheckForIllegalCrossThreadCalls && (RJQ.Count==0))
-//			{
-//				dataGridViewRobotJobsQueue.DataSource = null;
-//			}
-//			else
-//			{
-//				BS.DataSource =RJQ ;
-//				dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
-//				BS.Filter = "JobStatus = 'Queued'";
-//				BS.Sort = "JobStatus ASC , Priority ASC";
-//				dataGridViewRobotJobsQueue.DataSource = BS;
-//			}
-//			
+			if (CheckForIllegalCrossThreadCalls && (RJQ.Count==0))
+			{
+				dataGridViewRobotJobsQueue.DataSource = null;
+			}
+			else
+			{
+				BS.DataSource =RJQ ;
+				dataGridViewRobotJobsQueue.AutoGenerateColumns = false;
+				BS.Filter = "JobStatus = 'Queued'";
+				BS.Sort = "JobStatus ASC , Priority ASC";
+				dataGridViewRobotJobsQueue.DataSource = BS;
+			}
+			
 		}
 		
 		
@@ -402,22 +402,22 @@ namespace OctoTip.OctoTipPlus
 		
 		void ActivateJobToolStripButtonClick(object sender, EventArgs e)
 		{
-//			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
-//			{
-//				
-//				RobotJob RJ = (RobotJob)Row.DataBoundItem;
-//				RJ.JobStatus = RobotJob.Status.Queued;
-//			}
+			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
+			{
+				
+				RobotJob RJ = (RobotJob)Row.DataBoundItem;
+				RJ.JobStatus = RobotJob.Status.Queued;
+			}
 		}
 		
 		void DeactivateJobToolStripButtonClick(object sender, EventArgs e)
 		{
-//			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
-//			{
-//				
-//				RobotJob RJ = (RobotJob)Row.DataBoundItem;
-//				RJ.JobStatus = RobotJob.Status.TerminatedByUser;
-//			}
+			foreach (DataGridViewRow Row in dataGridViewRobotJobsQueue.SelectedRows)
+			{
+				
+				RobotJob RJ = (RobotJob)Row.DataBoundItem;
+				RJ.JobStatus = RobotJob.Status.TerminatedByUser;
+			}
 		}
 		#endregion
 		
