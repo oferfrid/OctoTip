@@ -23,7 +23,7 @@ namespace OctoTip.Lib
 		
 		private static volatile RobotJobsQueue instance;
 		private static object syncRoot = new Object();
-		
+
 		public event EventHandler<RobotJobsQueueChangedEventArgs> RobotJobsQueueChanged;
 		
 		public static RobotJobsQueue Instance
@@ -65,14 +65,16 @@ namespace OctoTip.Lib
 		public RobotJob.Status GetJobStatus(Guid UniqueID)
 		{
 			RobotJob.Status JobStatus = RobotJob.Status.Failed;
-			foreach(RobotJob RJ in this)
+			lock (syncRoot)
 			{
-				if (RJ.UniqueID == UniqueID)
+				foreach(RobotJob RJ in this)
 				{
-					JobStatus = RJ.JobStatus;
+					if (RJ.UniqueID == UniqueID)
+					{
+						JobStatus = RJ.JobStatus;
+					}
 				}
-			}
-			
+			}    
 			//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
 			//logger.Add(Message);
 			return JobStatus;
@@ -112,12 +114,15 @@ namespace OctoTip.Lib
 			
 			double Priority = 0;
 			
-			for (int i=0;i<this.Count;i++)
+			lock (syncRoot)
 			{
-				if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority > Priority)
+				for (int i=0;i<this.Count;i++)
 				{
-					RJ = this[i];
-					Priority = RJ.Priority;
+					if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority > Priority)
+					{
+						RJ = this[i];
+						Priority = RJ.Priority;
+					}
 				}
 			}
 			if (RJ!=null)
@@ -135,7 +140,10 @@ namespace OctoTip.Lib
 			Guid UniqueID =  RJ.GenerateUniqueID();
 			RJ.UniqueID = UniqueID;
 			//this.Insert(Count, RJ);
-			this.Add(RJ);
+			lock (syncRoot)
+			{
+				this.Add(RJ);
+			}
 			RJ.JobStatus = RobotJob.Status.Queued;
 			//OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("Insert 1"));
 			return UniqueID;

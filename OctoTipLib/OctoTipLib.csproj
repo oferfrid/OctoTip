@@ -43,6 +43,9 @@
     <Reference Include="Google.GData.Spreadsheets">
       <HintPath>Dependencies\Google.GData.Spreadsheets.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Dependencies\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
@@ -88,10 +91,12 @@
     <Folder Include="Utils" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Dependencies\Google.GData.AccessControl.dll" />
     <None Include="Dependencies\Google.GData.Client.dll" />
     <None Include="Dependencies\Google.GData.Documents.dll" />
     <None Include="Dependencies\Google.GData.Extensions.dll" />
     <None Include="Dependencies\Google.GData.Spreadsheets.dll" />
+    <None Include="Dependencies\Newtonsoft.Json.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
