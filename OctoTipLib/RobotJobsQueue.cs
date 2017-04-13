@@ -64,9 +64,10 @@ namespace OctoTip.Lib
 		
 		public RobotJob.Status GetJobStatus(Guid UniqueID)
 		{
-			RobotJob.Status JobStatus = RobotJob.Status.Failed;
 			lock (syncRoot)
 			{
+				RobotJob.Status JobStatus = RobotJob.Status.Failed;
+				
 				foreach(RobotJob RJ in this)
 				{
 					if (RJ.UniqueID == UniqueID)
@@ -74,10 +75,11 @@ namespace OctoTip.Lib
 						JobStatus = RJ.JobStatus;
 					}
 				}
+				
+				//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+				//logger.Add(Message);
+				return JobStatus;
 			}    
-			//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
-			//logger.Add(Message);
-			return JobStatus;
 		}
 		
 		
@@ -110,12 +112,12 @@ namespace OctoTip.Lib
 		
 		public RobotJob GetNextRobotJob()
 		{
-			RobotJob RJ = null;
-			
-			double Priority = 0;
-			
 			lock (syncRoot)
 			{
+				RobotJob RJ = null;
+			
+				double Priority = 0;
+			
 				for (int i=0;i<this.Count;i++)
 				{
 					if (this[i].JobStatus == RobotJob.Status.Queued && this[i].Priority > Priority)
@@ -124,12 +126,13 @@ namespace OctoTip.Lib
 						Priority = RJ.Priority;
 					}
 				}
+				
+				if (RJ!=null)
+				{
+					RJ.JobStatus = RobotJob.Status.Enqueued;
+				}
+				return RJ;
 			}
-			if (RJ!=null)
-			{
-				RJ.JobStatus = RobotJob.Status.Enqueued;
-			}
-			return RJ;
 		}
 		
 		
@@ -137,16 +140,17 @@ namespace OctoTip.Lib
 		
 		public Guid InsertRobotJob(RobotJob RJ)
 		{
-			Guid UniqueID =  RJ.GenerateUniqueID();
-			RJ.UniqueID = UniqueID;
-			//this.Insert(Count, RJ);
+			
 			lock (syncRoot)
 			{
+				Guid UniqueID =  RJ.GenerateUniqueID();
+				RJ.UniqueID = UniqueID;
+			
 				this.Add(RJ);
+				RJ.JobStatus = RobotJob.Status.Queued;
+				
+				return UniqueID;
 			}
-			RJ.JobStatus = RobotJob.Status.Queued;
-			//OnRobotJobsQueueChanged(new RobotJobsQueueChangedEventArgs("Insert 1"));
-			return UniqueID;
 		}
 		
 		
@@ -166,6 +170,20 @@ namespace OctoTip.Lib
 //			//logger.Add(Message);
 //			return JobStatus;
 //		}
+		
+		public void setJobStatus(Guid UniqueID,RobotJob.Status NewStatus)
+        {
+            lock (syncRoot)
+            {
+                foreach (RobotJob RJ in this)
+                {
+                    if (RJ.UniqueID == UniqueID)
+                    {
+                        RJ.JobStatus=NewStatus;
+                    }
+                }
+            }
+        }
 		
 	}
 	

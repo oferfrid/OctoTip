@@ -51,7 +51,6 @@ namespace OctoTip.Lib.ExperimentsCore.Base
 			
 			Guid JobID = RJQ.InsertRobotJob(RunRobotJob);
 			
-			RunRobotJob.UniqueID = JobID;
 			
 			this.Log(string.Format("Queued {0}, UniqueID: {1} (parameters={2})",RunRobotJob.ScriptName,RunRobotJob.UniqueID,RunRobotJob.RobotJobDisplayParameters));
 			

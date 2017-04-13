@@ -116,9 +116,13 @@ namespace OctoTip.OctoTipPlus
 				if(RJ!=null)
 				{
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,RJ,"Running...."));
-					
-					
-					Robot.RunScript(RJ);
+
+// Delete 2 following lines and uncomment the comment region
+					WorkerRobotJobsQueue.setJobStatus(RJ.UniqueID,RobotJob.Status.Finished);
+				//RJ.JobStatus = RobotJob.Status.Finished;
+					//OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job terminated Successfuly "));
+
+					Robot.RunScript(RJ,WorkerRobotJobsQueue);
 					
 					
 					switch (RJ.JobStatus)

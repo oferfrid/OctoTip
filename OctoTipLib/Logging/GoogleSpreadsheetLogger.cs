@@ -12,7 +12,6 @@ using Google.GData.Client;
 using Google.GData.Spreadsheets;
 using OctoTip.Lib.Utils;
 using Newtonsoft.Json;
-//using Google.Apis.Drive.v2;
 
 namespace OctoTip.Lib.Logging
 {
@@ -155,6 +154,7 @@ namespace OctoTip.Lib.Logging
 			
 			if(Sfeed.Entries.Count == 0)
 			{
+				/**
 				//DriveService service1 = new DriveService();
 				
 	         	//service.SetAuthenticationToken(parameters.AccessToken);//.setUserCredentials(User,Password);
@@ -183,7 +183,7 @@ namespace OctoTip.Lib.Logging
 				Squery.Title = Sender;
 				Squery.Exact = true;
 				Sfeed = myService.Query(Squery);
-
+				*/
 			}
 			
 			

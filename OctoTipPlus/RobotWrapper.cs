@@ -144,7 +144,7 @@ namespace OctoTip.OctoTipPlus
 		}
 		
 		
-		public void RunScript(RobotJob Job)
+		public void RunScript(RobotJob Job,RobotJobsQueue q)
 		{
 			int ScriptID;
 			Job.WriteParameterFile();
@@ -177,13 +177,14 @@ namespace OctoTip.OctoTipPlus
 				
 				
 				//myLogger.Add("After OctoTip.Manager.RobotWrapper.StartScript");
-
-				Job.JobStatus = RobotJob.Status.Running;
+				q.setJobStatus(Job.UniqueID,RobotJob.Status.Running);
+				//Job.JobStatus = RobotJob.Status.Running;
 				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
 			}
 			catch(Exception e)
 			{
-				Job.JobStatus = RobotJob.Status.Failed;
+				q.setJobStatus(Job.UniqueID,RobotJob.Status.Failed);
+				//Job.JobStatus = RobotJob.Status.Failed;
 				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
 				Logoff();
 				throw e;
@@ -208,7 +209,8 @@ namespace OctoTip.OctoTipPlus
 					if (_ShouldPause)
 					{
 						Evo.Pause();
-						Job.JobStatus=RobotJob.Status.Paused;
+						q.setJobStatus(Job.UniqueID,RobotJob.Status.Paused);
+						//Job.JobStatus=RobotJob.Status.Paused;
 						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 						
 						while (_ShouldPause)
@@ -219,7 +221,8 @@ namespace OctoTip.OctoTipPlus
 						if (!_ShouldStop)
 						{
 							Evo.Resume();
-							Job.JobStatus = RobotJob.Status.Running;
+							q.setJobStatus(Job.UniqueID,RobotJob.Status.Running);
+							//Job.JobStatus = RobotJob.Status.Running;
 							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 						}
 					}
@@ -227,8 +230,8 @@ namespace OctoTip.OctoTipPlus
 					//Chack for runtime error and wait
 					if(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR)
 					{
-						
-						Job.JobStatus = RobotJob.Status.RuntimeError;
+						q.setJobStatus(Job.UniqueID,RobotJob.Status.RuntimeError);
+						//Job.JobStatus = RobotJob.Status.RuntimeError;
 						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 						
 						while(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR &&
@@ -239,7 +242,8 @@ namespace OctoTip.OctoTipPlus
 						
 						if (!_ShouldStop)
 						{
-							Job.JobStatus = RobotJob.Status.Running;
+							q.setJobStatus(Job.UniqueID,RobotJob.Status.Running);
+							//Job.JobStatus = RobotJob.Status.Running;
 							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 						}
 						
@@ -255,7 +259,8 @@ namespace OctoTip.OctoTipPlus
 				if (_ShouldStop)
 				{
 					Evo.Stop();
-					Job.JobStatus = RobotJob.Status.TerminatedByUser;
+					q.setJobStatus(Job.UniqueID,RobotJob.Status.TerminatedByUser);
+					//Job.JobStatus = RobotJob.Status.TerminatedByUser;
 					OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 				}
 				else
@@ -267,19 +272,23 @@ namespace OctoTip.OctoTipPlus
 					switch (ScriptStatusEx)
 					{
 						case SC_ScriptStatus.SS_IDLE:
-							Job.JobStatus = RobotJob.Status.Finished;
+							q.setJobStatus(Job.UniqueID,RobotJob.Status.Finished);
+							//Job.JobStatus = RobotJob.Status.Finished;
 							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 							break;
 						case SC_ScriptStatus.SS_STOPPED:
-							Job.JobStatus = RobotJob.Status.TerminatedByUser;
+							q.setJobStatus(Job.UniqueID,RobotJob.Status.TerminatedByUser);
+							//Job.JobStatus = RobotJob.Status.TerminatedByUser;
 							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 							break;
 						case SC_ScriptStatus.SS_ABORTED:
-							Job.JobStatus = RobotJob.Status.TerminatedByUser;
+							q.setJobStatus(Job.UniqueID,RobotJob.Status.TerminatedByUser);
+							//Job.JobStatus = RobotJob.Status.TerminatedByUser;
 							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 							break;
 						case SC_ScriptStatus.SS_STATUS_ERROR:
-							Job.JobStatus = RobotJob.Status.Failed;
+							q.setJobStatus(Job.UniqueID,RobotJob.Status.Failed);
+							//Job.JobStatus = RobotJob.Status.Failed;
 							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
 							break;
 					}
@@ -287,7 +296,8 @@ namespace OctoTip.OctoTipPlus
 			}
 			catch(Exception e)
 			{
-				Job.JobStatus = RobotJob.Status.Failed;
+				q.setJobStatus(Job.UniqueID,RobotJob.Status.Failed);
+				//Job.JobStatus = RobotJob.Status.Failed;
 				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
 				throw e;
 			}

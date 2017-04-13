@@ -520,6 +520,7 @@ namespace OctoTip.OctoTipPlus
 				{
 					try
 					{
+						//System.Threading.Thread.Sleep(2000);
 						L.Log(LE);
 					}
 					catch (Exception e)

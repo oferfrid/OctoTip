@@ -365,7 +365,7 @@ namespace OctoTip.OctoTipPlus
 			this.RobotStatuslabel.Name = "RobotStatuslabel";
 			this.RobotStatuslabel.Size = new System.Drawing.Size(173, 45);
 			this.RobotStatuslabel.TabIndex = 11;
-			this.RobotStatuslabel.Text = "Stoped";
+			this.RobotStatuslabel.Text = "Stopped";
 			// 
 			// groupBox1
 			// 
