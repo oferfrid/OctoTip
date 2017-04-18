@@ -27,6 +27,7 @@ namespace OctoTip.Lib
 		const string ImportVariableFunctionName = "ImportVariable";
 		
 		private Guid _UniqueID;
+		public static Guid NULL_ID = new Guid("dddddddddddddddddddddddddddddddd");
 		private string _ScriptFilePath = string.Empty;
 		private string _ScriptName ;
 		
@@ -38,7 +39,7 @@ namespace OctoTip.Lib
 		public List<RobotJobParameter> RobotJobParameters;
 		#region RobotJob constructors
 
-			public RobotJob()
+		public RobotJob()
 		{
 			
 		}
@@ -186,7 +187,9 @@ namespace OctoTip.Lib
 		
 		public Guid GenerateUniqueID()
 		{
-			UniqueID = Guid.NewGuid();
+			Guid UniqueID = NULL_ID;// 2017-04-14 added
+			while (UniqueID.Equals(NULL_ID))// 2017-04-14 added while
+				UniqueID = Guid.NewGuid();
 			return UniqueID;
 		}
 		#endregion

@@ -62,7 +62,7 @@ namespace OctoTip.Lib
 		}
 		
 		
-		public RobotJob.Status GetJobStatus(Guid UniqueID)
+		public RobotJob.Status GetJobStatus(Guid UniqueID)// 2017-04-13 changed "RobotJob" to "Guid"
 		{
 			lock (syncRoot)
 			{
@@ -70,7 +70,7 @@ namespace OctoTip.Lib
 				
 				foreach(RobotJob RJ in this)
 				{
-					if (RJ.UniqueID == UniqueID)
+					if (RJ.UniqueID.Equals(UniqueID))
 					{
 						JobStatus = RJ.JobStatus;
 					}
@@ -79,6 +79,84 @@ namespace OctoTip.Lib
 				//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
 				//logger.Add(Message);
 				return JobStatus;
+			}    
+		}
+		
+		public string GetScriptName(Guid UniqueID)// 2017-04-13 new
+		{
+			lock (syncRoot)
+			{
+				string ScriptName = string.Empty;
+				
+				foreach(RobotJob RJ in this)
+				{
+					if (RJ.UniqueID.Equals(UniqueID))
+					{
+						ScriptName = RJ.ScriptName;
+					}
+				}
+				
+				//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+				//logger.Add(Message);
+				return ScriptName;
+			}    
+		}
+		
+		public string GetRobotJobDisplayParameters(Guid UniqueID)// 2017-04-13 new
+		{
+			lock (syncRoot)
+			{
+				string RobotJobDisplayParameters = string.Empty;
+				
+				foreach(RobotJob RJ in this)
+				{
+					if (RJ.UniqueID.Equals(UniqueID))
+					{
+						RobotJobDisplayParameters = RJ.RobotJobDisplayParameters;
+					}
+				}
+				
+				//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+				//logger.Add(Message);
+				return RobotJobDisplayParameters;
+			}    
+		}
+		
+		public string GetScriptFilePath(Guid UniqueID)// 2017-04-13 new
+		{
+			lock (syncRoot)
+			{
+				string ScriptFilePath = string.Empty;
+				
+				foreach(RobotJob RJ in this)
+				{
+					if (RJ.UniqueID.Equals(UniqueID))
+					{
+						ScriptFilePath = RJ.ScriptFilePath;
+					}
+				}
+				
+				//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+				//logger.Add(Message);
+				return ScriptFilePath;
+			}    
+		}
+		
+		public void WriteJobParameterFile(Guid UniqueID)// 2017-04-13 new
+		{
+			lock (syncRoot)
+			{
+				
+				foreach(RobotJob RJ in this)
+				{
+					if (RJ.UniqueID.Equals(UniqueID))
+					{
+						RJ.WriteParameterFile();
+					}
+				}
+				
+				//string Message = string.Format("Statuses of Script UniqueID: {0} is: {1} ",UniqueID,SS );
+				//logger.Add(Message);
 			}    
 		}
 		
@@ -110,7 +188,7 @@ namespace OctoTip.Lib
 //		}
 //
 		
-		public RobotJob GetNextRobotJob()
+		public Guid GetNextRobotJob()
 		{
 			lock (syncRoot)
 			{
@@ -127,11 +205,12 @@ namespace OctoTip.Lib
 					}
 				}
 				
-				if (RJ!=null)
+				if (RJ != null)
 				{
 					RJ.JobStatus = RobotJob.Status.Enqueued;
+					return new Guid(RJ.UniqueID.ToByteArray());// 2017-04-13 was "return RJ", moved into "if"
 				}
-				return RJ;
+				return RobotJob.NULL_ID;// 2017-04-18 added
 			}
 		}
 		
@@ -143,7 +222,8 @@ namespace OctoTip.Lib
 			
 			lock (syncRoot)
 			{
-				Guid UniqueID =  RJ.GenerateUniqueID();
+				
+				Guid UniqueID = RJ.GenerateUniqueID();
 				RJ.UniqueID = UniqueID;
 			
 				this.Add(RJ);

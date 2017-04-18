@@ -180,7 +180,7 @@ namespace OctoTip.OctoTipPlus
 		public RobotJobsQueue RJQ;
 		BindingSource BS = new BindingSource();
 		
-		static  private volatile RobotJob RuningJob;
+		static  private  Guid RuningJob;//2017-04-13 canged "RobotJob" to "Guid", removed "volatile"
 		
 		private void InitRobot()
 		{
@@ -267,7 +267,9 @@ namespace OctoTip.OctoTipPlus
 			string Message;
 			if(e.RobotWorkerStatus==RobotWorker.RobotWorkerStatus.RunningJob && e.CurrentJob!=null)
 			{
-				Message  = string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Message);
+				//2017-04-13
+				//Message  = string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,e.CurrentJob.ScriptName,e.CurrentJob.UniqueID,e.CurrentJob.RobotJobDisplayParameters,e.Message);
+				Message  = string.Format("{0}-{1}({2}), parameters:{3}) ,{4}" , e.RobotWorkerStatus,RJQ.GetScriptName(e.CurrentJob),e.CurrentJob,RJQ.GetRobotJobDisplayParameters(e.CurrentJob),e.Message);
 			}
 			else
 			{
@@ -279,7 +281,7 @@ namespace OctoTip.OctoTipPlus
 			
 			if (e.CurrentJob == null)
 			{
-				RuningJob = null;
+				RuningJob = RobotJob.NULL_ID;// 2017-04-23 was "null"
 				UpdateRunningJob();
 			}
 			else
@@ -368,9 +370,11 @@ namespace OctoTip.OctoTipPlus
 			string RunningJobNameText;
 			string RunningJobStatusText;
 			if (RuningJob!=null)
-			{
-				RunningJobNameText = RuningJob.ScriptName;
-				RunningJobStatusText = RuningJob.JobStatus.ToString();
+			{// 2017-04-14
+				// RunningJobNameText = RuningJob.ScriptName;
+				RunningJobNameText = RJQ.GetScriptName(RuningJob);
+				// RunningJobStatusText = RuningJob.JobStatus.ToString();
+				RunningJobStatusText = RJQ.GetJobStatus(RuningJob).ToString();
 			}
 			else
 			{

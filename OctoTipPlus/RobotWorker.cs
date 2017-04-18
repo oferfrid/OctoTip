@@ -86,8 +86,8 @@ namespace OctoTip.OctoTipPlus
 				StartReadingQueue();
 			}
 			catch(Exception e)
-			{
-				OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,null,"Exception:" + e.ToString()));
+			{// 2017-04-14 replaced "null"
+				OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,RobotJob.NULL_ID,"Exception:" + e.ToString()));
 			}
 			
 		}
@@ -98,13 +98,13 @@ namespace OctoTip.OctoTipPlus
 			while (!_ShouldStop)
 			{
 				if (_Status != RobotWorkerStatus.WaitingForQueuedItems)
-				{
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
+				{// 2017-04-14 replaced "null"
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RobotJob.NULL_ID,"Waiting..."));
 				}
 				
 				if(_ShouldPause && !_ShouldStop)
-				{
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,null,"Paused..."));
+				{// 2017-04-14 replaced "null"
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,RobotJob.NULL_ID,"Paused..."));
 					while (_ShouldPause && !_ShouldStop)
 					{
 						Thread.Sleep(QueueSumplelingRate);
@@ -112,20 +112,21 @@ namespace OctoTip.OctoTipPlus
 				}
 				//not paused or stoped read job from Q
 				
-				RobotJob RJ =  WorkerRobotJobsQueue.GetNextRobotJob();
-				if(RJ!=null)
+				Guid RJ =  WorkerRobotJobsQueue.GetNextRobotJob();//2017-04-13 canged RobotJob to Guid
+				if(RJ!=RobotJob.NULL_ID)// 2017-04-14 replaced "null"
 				{
 					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,RJ,"Running...."));
 
-// Delete 2 following lines and uncomment the comment region
-					WorkerRobotJobsQueue.setJobStatus(RJ.UniqueID,RobotJob.Status.Finished);
+// To reconnect the robot, delete the 3 following lines and uncomment the comment region
+					WorkerRobotJobsQueue.setJobStatus(RJ,RobotJob.Status.Finished);
 				//RJ.JobStatus = RobotJob.Status.Finished;
-					//OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job terminated Successfuly "));
-
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job terminated Successfuly "));
+					Thread.Sleep(1000);
+					/*
 					Robot.RunScript(RJ,WorkerRobotJobsQueue);
 					
 					
-					switch (RJ.JobStatus)
+					switch (WorkerRobotJobsQueue.GetJobStatus(RJ))
 					{
 						case OctoTip.Lib.RobotJob.Status.Finished:
 							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RJ,"Job terminated Successfuly "));
@@ -138,36 +139,36 @@ namespace OctoTip.OctoTipPlus
 							OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,RJ,"Job Failed"));
 							_ShouldPause = true;
 							break;
-					}
+					}*/
 				}
 				
 				
 				if (_ShouldPause)
-				{
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,null,"Paused..."));
+				{// 2017-04-14 replaced "null"
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,RobotJob.NULL_ID,"Paused..."));
 					while(_ShouldPause)
 					{
 						System.Threading.Thread.Sleep(QueueSumplelingRate);
-					}
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
+					}// 2017-04-14 replaced "null"
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RobotJob.NULL_ID,"Waiting..."));
 				}
 				
 				Thread.Sleep(QueueSumplelingRate);
-			}
-			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,null,"Stopped..."));
+			}// 2017-04-14 replaced "null"
+			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopped,RobotJob.NULL_ID,"Stopped..."));
 		}
 		
 		
 		public void  RequestStop()
-		{
-			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopping,null,"Stopping..."));
+		{// 2017-04-14 replaced "null"
+			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Stopping,RobotJob.NULL_ID,"Stopping..."));
 			_ShouldStop = true;
 			_ShouldPause = false;
 			Robot.RequestStop();
 		}
 		public void RequestPause()
-		{
-			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Pausing,null,"Pausing..."));
+		{// 2017-04-14 replaced "null"
+			OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Pausing,RobotJob.NULL_ID,"Pausing..."));
 			_ShouldPause  = true;
 			Robot.RequestPause();
 		}
@@ -176,8 +177,8 @@ namespace OctoTip.OctoTipPlus
 			switch(this.Status)
 			{
 				case( RobotWorkerStatus.Paused):
-					
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,null,"Resume..."));
+					// 2017-04-14 replaced "null"
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,RobotJob.NULL_ID,"Resume..."));
 					_ShouldPause  = false;
 					Robot.RequestResume();
 					break;
@@ -196,8 +197,8 @@ namespace OctoTip.OctoTipPlus
 						RunningThread = new Thread(_StartReadingQueue);
 						RunningThread.IsBackground = true;
 						RunningThread.Start();
-					}
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,null,"Waiting..."));
+					}// 2017-04-14 replaced "null"
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.WaitingForQueuedItems,RobotJob.NULL_ID,"Waiting..."));
 					break;
 					
 
@@ -232,22 +233,22 @@ namespace OctoTip.OctoTipPlus
 		
 		private void OnRobot_RobotJobStatusChanged(object sender,RobotJobStatusChangedEventArgs  e)
 		{
-			switch (e.ScriptStatus)
+			switch (WorkerRobotJobsQueue.GetJobStatus(e.JobID))
 			{
 				case OctoTip.Lib.RobotJob.Status.RuntimeError:
 					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipPlus.Lib.RobotJob.Status.RuntimeError;
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runtime Error"));
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.JobID,"Job Runtime Error"));
 					break;
 				case OctoTip.Lib.RobotJob.Status.Paused:
 					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipPlus.Lib.RobotJob.Status.Paused;
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,e.Job,"Job Paused"));
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.Paused,e.JobID,"Job Paused"));
 					break;
 				case OctoTip.Lib.RobotJob.Status.Running:
 					//WorkerRobotJobsQueueHestoryDictionary[e.Job.UniqueID]=OctoTip.OctoTipPlus.Lib.RobotJob.Status.Running;
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.Job,"Job Runing From Worker"));
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.RunningJob,e.JobID,"Job Runing From Worker"));
 					break;
 				case OctoTip.Lib.RobotJob.Status.Finished:
-					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.FinishRunningJob,e.Job,"Job Runing From Worker"));
+					OnStatusChanged(new RobotWorkerStatusChangeEventArgs(RobotWorkerStatus.FinishRunningJob,e.JobID,"Job Runing From Worker"));
 					break;
 			}
 			
@@ -299,20 +300,20 @@ namespace OctoTip.OctoTipPlus
 	{
 		
 		private RobotWorker.RobotWorkerStatus _RobotWorkerStatus;
-		private RobotJob _CurrentJob;
+		private Guid _CurrentJob;// 2017-04-13 changed "RobotJob" to "Guid"
 		private string _Message;
 		
-		public RobotWorkerStatusChangeEventArgs(RobotWorker.RobotWorkerStatus RobotWorkerStatus,RobotJob CurrentJob,string Message)
+		public RobotWorkerStatusChangeEventArgs(RobotWorker.RobotWorkerStatus RobotWorkerStatus,Guid CurrentJobID,string Message)// 2017-04-13 changed "RobotJob" to "Guid"
 		{
 			_RobotWorkerStatus = RobotWorkerStatus;
-			_CurrentJob=CurrentJob;
+			_CurrentJob = CurrentJobID;
 			_Message = Message;
 		}
 		public RobotWorker.RobotWorkerStatus RobotWorkerStatus
 		{
 			get { return _RobotWorkerStatus; }
 		}
-		public RobotJob CurrentJob
+		public Guid CurrentJob// 2017-04-13 changed "RobotJob" to "Guid"
 		{
 			get { return _CurrentJob; }
 		}

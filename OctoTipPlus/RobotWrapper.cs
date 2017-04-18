@@ -144,28 +144,25 @@ namespace OctoTip.OctoTipPlus
 		}
 		
 		
-		public void RunScript(RobotJob Job,RobotJobsQueue q)
+		public void RunScript(Guid JobID,RobotJobsQueue q)
 		{
 			int ScriptID;
-			Job.WriteParameterFile();
-
-
-			
+			q.WriteJobParameterFile(JobID);
 			Logon();
 
-			
-			
 			try
 			{
 				try
-				{
-					ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
+				{// 2014-04-14
+					// ScriptID = Evo.PrepareScript(JobID.ScriptFilePath);
+					ScriptID = Evo.PrepareScript(q.GetScriptFilePath(JobID));
 				}
 				catch (System.Runtime.InteropServices.COMException e)
 				{
 					if (e.Message.Contains("Previous script could not be unloaded"))
-					{
-						ScriptID = Evo.PrepareScript(Job.ScriptFilePath);
+					{// 2014-04-14
+						// ScriptID = Evo.PrepareScript(JobID.ScriptFilePath);
+						ScriptID = Evo.PrepareScript(q.GetScriptFilePath(JobID));
 					}
 					else
 					{
@@ -177,15 +174,15 @@ namespace OctoTip.OctoTipPlus
 				
 				
 				//myLogger.Add("After OctoTip.Manager.RobotWrapper.StartScript");
-				q.setJobStatus(Job.UniqueID,RobotJob.Status.Running);
+				q.setJobStatus(JobID,RobotJob.Status.Running);
 				//Job.JobStatus = RobotJob.Status.Running;
-				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
+				OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 			}
 			catch(Exception e)
 			{
-				q.setJobStatus(Job.UniqueID,RobotJob.Status.Failed);
+				q.setJobStatus(JobID,RobotJob.Status.Failed);
 				//Job.JobStatus = RobotJob.Status.Failed;
-				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
+				OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 				Logoff();
 				throw e;
 			}
@@ -209,9 +206,9 @@ namespace OctoTip.OctoTipPlus
 					if (_ShouldPause)
 					{
 						Evo.Pause();
-						q.setJobStatus(Job.UniqueID,RobotJob.Status.Paused);
+						q.setJobStatus(JobID,RobotJob.Status.Paused);
 						//Job.JobStatus=RobotJob.Status.Paused;
-						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 						
 						while (_ShouldPause)
 						{
@@ -221,18 +218,18 @@ namespace OctoTip.OctoTipPlus
 						if (!_ShouldStop)
 						{
 							Evo.Resume();
-							q.setJobStatus(Job.UniqueID,RobotJob.Status.Running);
+							q.setJobStatus(JobID,RobotJob.Status.Running);
 							//Job.JobStatus = RobotJob.Status.Running;
-							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 						}
 					}
 					
 					//Chack for runtime error and wait
 					if(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR)
 					{
-						q.setJobStatus(Job.UniqueID,RobotJob.Status.RuntimeError);
+						q.setJobStatus(JobID,RobotJob.Status.RuntimeError);
 						//Job.JobStatus = RobotJob.Status.RuntimeError;
-						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+						OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 						
 						while(Evo.GetScriptStatusEx(ScriptID) == SC_ScriptStatus.SS_ERROR &&
 						      !_ShouldStop)
@@ -242,9 +239,9 @@ namespace OctoTip.OctoTipPlus
 						
 						if (!_ShouldStop)
 						{
-							q.setJobStatus(Job.UniqueID,RobotJob.Status.Running);
+							q.setJobStatus(JobID,RobotJob.Status.Running);
 							//Job.JobStatus = RobotJob.Status.Running;
-							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 						}
 						
 						
@@ -259,9 +256,9 @@ namespace OctoTip.OctoTipPlus
 				if (_ShouldStop)
 				{
 					Evo.Stop();
-					q.setJobStatus(Job.UniqueID,RobotJob.Status.TerminatedByUser);
+					q.setJobStatus(JobID,RobotJob.Status.TerminatedByUser);
 					//Job.JobStatus = RobotJob.Status.TerminatedByUser;
-					OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+					OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 				}
 				else
 				{
@@ -272,33 +269,33 @@ namespace OctoTip.OctoTipPlus
 					switch (ScriptStatusEx)
 					{
 						case SC_ScriptStatus.SS_IDLE:
-							q.setJobStatus(Job.UniqueID,RobotJob.Status.Finished);
+							q.setJobStatus(JobID,RobotJob.Status.Finished);
 							//Job.JobStatus = RobotJob.Status.Finished;
-							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 							break;
 						case SC_ScriptStatus.SS_STOPPED:
-							q.setJobStatus(Job.UniqueID,RobotJob.Status.TerminatedByUser);
+							q.setJobStatus(JobID,RobotJob.Status.TerminatedByUser);
 							//Job.JobStatus = RobotJob.Status.TerminatedByUser;
-							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 							break;
 						case SC_ScriptStatus.SS_ABORTED:
-							q.setJobStatus(Job.UniqueID,RobotJob.Status.TerminatedByUser);
+							q.setJobStatus(JobID,RobotJob.Status.TerminatedByUser);
 							//Job.JobStatus = RobotJob.Status.TerminatedByUser;
-							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 							break;
 						case SC_ScriptStatus.SS_STATUS_ERROR:
-							q.setJobStatus(Job.UniqueID,RobotJob.Status.Failed);
+							q.setJobStatus(JobID,RobotJob.Status.Failed);
 							//Job.JobStatus = RobotJob.Status.Failed;
-							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(Job));
+							OnRobotJobStatusChanged(new RobotJobStatusChangedEventArgs(JobID));
 							break;
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				q.setJobStatus(Job.UniqueID,RobotJob.Status.Failed);
+				q.setJobStatus(JobID,RobotJob.Status.Failed);
 				//Job.JobStatus = RobotJob.Status.Failed;
-				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(Job));
+				OnRobotJobStatusChanged( new RobotJobStatusChangedEventArgs(JobID));
 				throw e;
 			}
 			finally
@@ -349,21 +346,21 @@ namespace OctoTip.OctoTipPlus
 
 	public class RobotJobStatusChangedEventArgs : EventArgs
 	{
-		private RobotJob _Job;
+		private Guid _JobID;
 		
-		public RobotJobStatusChangedEventArgs(RobotJob Job)
+		public RobotJobStatusChangedEventArgs(Guid JobID)
 		{
-			this._Job = Job;
+			this._JobID = JobID;
 		}
 		
-		public RobotJob.Status ScriptStatus
+//		public RobotJob.Status ScriptStatus //2017-04-14
+//		{
+//			get { return _Job.JobStatus; }
+//			//set { _ScriptStatus = value;}
+//		}
+		public Guid JobID
 		{
-			get { return _Job.JobStatus; }
-			//set { _ScriptStatus = value;}
-		}
-		public RobotJob Job
-		{
-			get { return _Job; }
+			get { return _JobID; }
 			//	set { _ScriptStatus = value;}
 		}
 	}
